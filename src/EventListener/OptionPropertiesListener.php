@@ -17,12 +17,12 @@ use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class ProductOptionsPropertyListener implements EventSubscriberInterface
+final class OptionPropertiesListener implements EventSubscriberInterface
 {
     /**
      * @param TransformEvent $event
      */
-    public function addProductOptionProperty(TransformEvent $event): void
+    public function addOptionProperties(TransformEvent $event): void
     {
         /** @var ProductInterface $product */
         $product = $event->getObject();
@@ -37,7 +37,7 @@ final class ProductOptionsPropertyListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            TransformEvent::POST_TRANSFORM => 'addProductOptionProperty',
+            TransformEvent::POST_TRANSFORM => 'addOptionProperties',
         ];
     }
 
