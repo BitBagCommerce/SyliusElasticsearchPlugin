@@ -1,0 +1,5 @@
+services:
+    bitbag_sylius_elasticsearch_plugin.event_listener.product_options_property:
+        class: BitBag\SyliusElasticsearchPlugin\EventListener\ProductOptionsPropertyListener
+        tags:
+            - { name: kernel.event_subscriber }

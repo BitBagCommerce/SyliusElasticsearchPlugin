@@ -1,0 +1,57 @@
+imports:
+    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services.yml" }
+
+parameters:
+    elasticsearch_host: localhost
+    elasticsearch_port: 9200
+
+fos_elastica:
+    clients:
+        default:
+            host: "%elasticsearch_host%"
+            port: "%elasticsearch_port%"
+    indexes:
+        bitbag:
+            index_name: "bitbag_%kernel.environment%"
+            types:
+                product:
+                    properties:
+                        code: ~
+                        name: ~
+                        enabled: ~
+                        shortDescription: ~
+                        options:
+                            property_path: false
+#                        variants:
+#                            code: ~
+#                            name: ~
+#                            onHand: ~
+#                            onHold: ~
+#                            tracked: ~
+#                            optionValues:
+#                                type: nested
+#                                properties:
+#                                    value: ~
+#                        channelPricings:
+#                            property_path: variants.first.channelPricings
+#                            type: nested
+#                            properties:
+#                                channelCode: ~
+#                                price: ~
+#                        channels:
+#                            type: nested
+#                            properties:
+#                                name: ~
+#                        attributes:
+#                            type: nested
+#                            properties:
+#                                value: ~
+#                                type: ~
+                    persistence:
+                        driver: orm
+                        model: "%sylius.model.product.class%"
+                        listener:
+                            defer: true
+                            logger: true
+                        elastica_to_model_transformer:
+                            ignore_missing: true

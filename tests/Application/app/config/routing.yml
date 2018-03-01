@@ -1,0 +1,7 @@
+sylius:
+    resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
+
+# Put your own routes here
+
+bitbag_sylius_elasticsearch_plugin:
+    resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/routing.yml"

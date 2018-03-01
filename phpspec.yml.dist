@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: BitBag\SyliusElasticsearchPlugin
+        psr4_prefix: BitBag\SyliusElasticsearchPlugin
