@@ -10,15 +10,28 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\EventListener;
+namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class OptionPropertiesListener implements EventSubscriberInterface
+final class OptionPropertyBuilder implements EventSubscriberInterface
 {
+    /**
+     * @var string
+     */
+    private $optionPropertyPrefix;
+
+    /**
+     * @param string $optionPropertyPrefix
+     */
+    public function __construct(string $optionPropertyPrefix)
+    {
+        $this->optionPropertyPrefix = $optionPropertyPrefix;
+    }
+
     /**
      * @param TransformEvent $event
      */
@@ -50,16 +63,20 @@ final class OptionPropertiesListener implements EventSubscriberInterface
         foreach ($product->getVariants() as $productVariant) {
             foreach ($productVariant->getOptionValues() as $productOptionValue) {
                 $optionCode = $productOptionValue->getOption()->getCode();
-                $index = 'option_' . $optionCode;
+                $index = $this->optionPropertyPrefix . $optionCode;
 
                 if (!$document->has($index)) {
                     $document->set($index, []);
                 }
 
                 $reference = $document->get($index);
-                $reference[] = $productOptionValue->getValue();
+                $value = $productOptionValue->getValue();
 
-                $document->set($index, $reference);
+                if (!in_array($value, $reference)) {
+                    $reference[] = $productOptionValue->getValue();
+
+                    $document->set($index, $reference);
+                }
             }
         }
     }

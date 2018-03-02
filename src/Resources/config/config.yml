@@ -1,5 +1,6 @@
 imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services.yml" }
+    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_shop.yml" }
 
 parameters:
     elasticsearch_host: localhost
@@ -10,21 +11,3 @@ fos_elastica:
         default:
             host: "%elasticsearch_host%"
             port: "%elasticsearch_port%"
-    indexes:
-        bitbag:
-            index_name: "bitbag_%kernel.environment%"
-            types:
-                product:
-                    properties:
-                        code: ~
-                        name: ~
-                        enabled: ~
-                        shortDescription: ~
-                    persistence:
-                        driver: orm
-                        model: "%sylius.model.product.class%"
-                        listener:
-                            defer: true
-                            logger: true
-                        elastica_to_model_transformer:
-                            ignore_missing: true

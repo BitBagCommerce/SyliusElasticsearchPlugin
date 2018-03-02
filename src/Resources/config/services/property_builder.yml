@@ -1,0 +1,21 @@
+services:
+    bitbag_sylius_elasticsearch_plugin.property_builder.option:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionPropertyBuilder
+        arguments:
+           - "%bitbag_es_shop_option_property_prefix%"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    bitbag_sylius_elasticsearch_plugin.property_builder.attribute:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributePropertyBuilder
+        arguments:
+            - "%bitbag_es_shop_attribute_property_prefix%"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    bitbag_sylius_elasticsearch_plugin.property_builder.taxon:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\TaxonPropertyBuilder
+        arguments:
+            - "%bitbag_es_shop_taxons_property%"
+        tags:
+            - { name: kernel.event_subscriber }

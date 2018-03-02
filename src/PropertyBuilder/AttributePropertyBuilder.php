@@ -10,15 +10,28 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\EventListener;
+namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class AttributePropertiesListener implements EventSubscriberInterface
+final class AttributePropertyBuilder implements EventSubscriberInterface
 {
+    /**
+     * @var string
+     */
+    private $attributePropertyPrefix;
+
+    /**
+     * @param string $attributePropertyPrefix
+     */
+    public function __construct(string $attributePropertyPrefix)
+    {
+        $this->attributePropertyPrefix = $attributePropertyPrefix;
+    }
+
     /**
      * @param TransformEvent $event
      */
@@ -34,7 +47,7 @@ final class AttributePropertiesListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             TransformEvent::POST_TRANSFORM => 'addAttributeProperties',
@@ -49,7 +62,7 @@ final class AttributePropertiesListener implements EventSubscriberInterface
     {
         foreach ($product->getAttributes() as $attributeValue) {
             $attributeCode = $attributeValue->getAttribute()->getCode();
-            $index = 'attribute_' . $attributeCode;
+            $index = $this->attributePropertyPrefix . $attributeCode;
 
             if (!$document->has($index)) {
                 $document->set($index, []);
