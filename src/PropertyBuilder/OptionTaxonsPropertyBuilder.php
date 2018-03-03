@@ -67,9 +67,9 @@ final class OptionTaxonsPropertyBuilder implements PropertyBuilderInterface
                 foreach ($productVariant->getOptionValues() as $productOptionValue) {
                     if ($documentProductOption === $productOptionValue->getOption()) {
                         foreach ($product->getTaxons() as $taxon) {
-                            $slug = $taxon->getCode();
-                            if (!in_array($slug, $taxons)) {
-                                $taxons[] = $taxon->getSlug();
+                            $code = $taxon->getCode();
+                            if (!in_array($code, $taxons)) {
+                                $taxons[] = $code;
                             }
                         }
                     }
