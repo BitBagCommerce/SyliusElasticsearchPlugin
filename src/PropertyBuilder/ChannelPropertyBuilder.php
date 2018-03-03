@@ -40,6 +40,11 @@ final class ChannelPropertyBuilder implements PropertyBuilderInterface
     {
         /** @var ProductInterface $product */
         $product = $event->getObject();
+
+        if (!$product instanceof ProductInterface) {
+            return;
+        }
+
         $document = $event->getDocument();
 
         $document->set($this->channelProperty, []);

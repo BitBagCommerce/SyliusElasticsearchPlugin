@@ -1,0 +1,17 @@
+fos_elastica:
+    indexes:
+        bitbag_taxon:
+            index_name: "bitbag_taxon_%kernel.environment%"
+            types:
+                product:
+                    properties:
+                        code: ~
+                        name: ~
+                    persistence:
+                        driver: orm
+                        model: "%sylius.model.taxon.class%"
+                        listener:
+                            defer: true
+                            logger: true
+                        elastica_to_model_transformer:
+                            ignore_missing: true

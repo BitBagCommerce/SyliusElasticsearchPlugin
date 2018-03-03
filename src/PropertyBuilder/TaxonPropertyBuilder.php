@@ -39,7 +39,12 @@ final class TaxonPropertyBuilder implements PropertyBuilderInterface
     public function buildProperty(TransformEvent $event): void
     {
         /** @var ProductInterface $product */
-        $product = $event->getObject();
+        $product = $event->getDocument();
+
+        if (!$product instanceof ProductInterface) {
+            return;
+        }
+
         $document = $event->getDocument();
 
         $document->set($this->taxonProperty, []);
