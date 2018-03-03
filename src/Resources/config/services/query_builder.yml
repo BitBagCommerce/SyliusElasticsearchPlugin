@@ -1,36 +1,36 @@
 services:
-    bitbag_sylius_elasticsearch_plugin.query_builder.enabled:
-        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\EnabledQueryBuilder
+    bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\IsEnabledQueryBuilder
         arguments:
            - "%bitbag_es_shop_enabled_property%"
 
-    bitbag_sylius_elasticsearch_plugin.query_builder.channel:
-        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ChannelQueryBuilder
+    bitbag_sylius_elasticsearch_plugin.query_builder.has_channel:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasChannelQueryBuilder
         arguments:
            - "@sylius.context.channel"
            - "%bitbag_es_shop_channels_property%"
 
-    bitbag_sylius_elasticsearch_plugin.query_builder.name:
-        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\NameQueryBuilder
+    bitbag_sylius_elasticsearch_plugin.query_builder.contains_name:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder
         arguments:
            - "%bitbag_es_shop_name_property%"
 
-    bitbag_sylius_elasticsearch_plugin.query_builder.taxon:
-        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\TaxonQueryBuilder
+    bitbag_sylius_elasticsearch_plugin.query_builder.has_taxons:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonsQueryBuilder
         arguments:
            - "%bitbag_es_shop_taxons_property%"
 
-    bitbag_sylius_elasticsearch_plugin.query_builder.option:
-        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\OptionQueryBuilder
+    bitbag_sylius_elasticsearch_plugin.query_builder.has_options:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasOptionsQueryBuilder
         arguments:
            - "%bitbag_es_shop_option_property_prefix%"
 
     bitbag_sylius_elasticsearch_plugin.query_builder.shop_products:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder
         arguments:
-           - "@bitbag_sylius_elasticsearch_plugin.query_builder.enabled"
-           - "@bitbag_sylius_elasticsearch_plugin.query_builder.channel"
-           - "@bitbag_sylius_elasticsearch_plugin.query_builder.name"
-           - "@bitbag_sylius_elasticsearch_plugin.query_builder.taxon"
-           - "@bitbag_sylius_elasticsearch_plugin.query_builder.option"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_channel"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.contains_name"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_taxons"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_options"
            - "%bitbag_es_shop_option_property_prefix%"

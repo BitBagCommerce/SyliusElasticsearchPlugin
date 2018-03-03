@@ -20,27 +20,27 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     /**
      * @var QueryBuilderInterface
      */
-    private $enabledQueryBuilder;
+    private $isEnabledQueryBuilder;
 
     /**
      * @var QueryBuilderInterface
      */
-    private $channelQueryBuilder;
+    private $hasChannelQueryBuilder;
 
     /**
      * @var QueryBuilderInterface
      */
-    private $nameQueryBuilder;
+    private $containsNameQueryBuilder;
 
     /**
      * @var QueryBuilderInterface
      */
-    private $taxonQueryBuilder;
+    private $hasTaxonsQueryBuilder;
 
     /**
      * @var QueryBuilderInterface
      */
-    private $optionQueryBuilder;
+    private $hasOptionsQueryBuilder;
 
     /**
      * @var string
@@ -48,27 +48,27 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     private $optionPropertyPrefix;
 
     /**
-     * @param QueryBuilderInterface $enabledQueryBuilder
-     * @param QueryBuilderInterface $channelQueryBuilder
-     * @param QueryBuilderInterface $nameQueryBuilder
-     * @param QueryBuilderInterface $taxonQueryBuilder
-     * @param QueryBuilderInterface $optionQueryBuilder
+     * @param QueryBuilderInterface $isEnabledQueryBuilder
+     * @param QueryBuilderInterface $hasChannelQueryBuilder
+     * @param QueryBuilderInterface $containsNameQueryBuilder
+     * @param QueryBuilderInterface $hasTaxonsQueryBuilder
+     * @param QueryBuilderInterface $hasOptionsQueryBuilder
      * @param string $optionPropertyPrefix
      */
     public function __construct(
-        QueryBuilderInterface $enabledQueryBuilder,
-        QueryBuilderInterface $channelQueryBuilder,
-        QueryBuilderInterface $nameQueryBuilder,
-        QueryBuilderInterface $taxonQueryBuilder,
-        QueryBuilderInterface $optionQueryBuilder,
+        QueryBuilderInterface $isEnabledQueryBuilder,
+        QueryBuilderInterface $hasChannelQueryBuilder,
+        QueryBuilderInterface $containsNameQueryBuilder,
+        QueryBuilderInterface $hasTaxonsQueryBuilder,
+        QueryBuilderInterface $hasOptionsQueryBuilder,
         string $optionPropertyPrefix
     )
     {
-        $this->enabledQueryBuilder = $enabledQueryBuilder;
-        $this->channelQueryBuilder = $channelQueryBuilder;
-        $this->nameQueryBuilder = $nameQueryBuilder;
-        $this->taxonQueryBuilder = $taxonQueryBuilder;
-        $this->optionQueryBuilder = $optionQueryBuilder;
+        $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
+        $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
+        $this->containsNameQueryBuilder = $containsNameQueryBuilder;
+        $this->hasTaxonsQueryBuilder = $hasTaxonsQueryBuilder;
+        $this->hasOptionsQueryBuilder = $hasOptionsQueryBuilder;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
     }
 
@@ -79,14 +79,14 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     {
         $boolQuery = new BoolQuery();
 
-        $boolQuery->addMust($this->enabledQueryBuilder->buildQuery($data));
-        $boolQuery->addMust($this->channelQueryBuilder->buildQuery($data));
+        $boolQuery->addMust($this->isEnabledQueryBuilder->buildQuery($data));
+        $boolQuery->addMust($this->hasChannelQueryBuilder->buildQuery($data));
 
-        if ($nameQuery = $this->nameQueryBuilder->buildQuery($data)) {
+        if ($nameQuery = $this->containsNameQueryBuilder->buildQuery($data)) {
             $boolQuery->addMust($nameQuery);
         }
 
-        if ($taxonQuery = $this->taxonQueryBuilder->buildQuery($data)) {
+        if ($taxonQuery = $this->hasTaxonsQueryBuilder->buildQuery($data)) {
             $boolQuery->addMust($taxonQuery);
         }
 
@@ -103,7 +103,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     {
         foreach ($data as $key => $value) {
             if (0 === strpos($key, $this->optionPropertyPrefix)) {
-                $optionQuery = $this->optionQueryBuilder->buildQuery(['option_index' => $key, 'options' => $value]);
+                $optionQuery = $this->hasOptionsQueryBuilder->buildQuery(['option_index' => $key, 'options' => $value]);
 
                 $boolQuery->addMust($optionQuery);
             }

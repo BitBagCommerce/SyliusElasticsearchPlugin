@@ -16,7 +16,7 @@ use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 
-final class ChannelQueryBuilder implements QueryBuilderInterface
+final class HasChannelQueryBuilder implements QueryBuilderInterface
 {
     /**
      * @var ChannelContextInterface

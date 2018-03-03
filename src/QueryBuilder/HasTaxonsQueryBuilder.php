@@ -15,19 +15,19 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms;
 
-final class OptionQueryBuilder implements QueryBuilderInterface
+final class HasTaxonsQueryBuilder implements QueryBuilderInterface
 {
     /**
      * @var string
      */
-    private $optionPropertyPrefix;
+    private $taxonsProperty;
 
     /**
-     * @param string $optionPropertyPrefix
+     * @param string $taxonsProperty
      */
-    public function __construct(string $optionPropertyPrefix)
+    public function __construct(string $taxonsProperty)
     {
-        $this->optionPropertyPrefix = $optionPropertyPrefix;
+        $this->taxonsProperty = $taxonsProperty;
     }
 
     /**
@@ -35,9 +35,13 @@ final class OptionQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $optionQuery = new Terms();
-        $optionQuery->setTerms($data['option_index'], (array) $data['options']);
+        if (!$taxons = $data[$this->taxonsProperty]) {
+            return null;
+        }
 
-        return $optionQuery;
+        $taxonQuery = new Terms();
+        $taxonQuery->setTerms($this->taxonsProperty, (array) $taxons);
+
+        return $taxonQuery;
     }
 }

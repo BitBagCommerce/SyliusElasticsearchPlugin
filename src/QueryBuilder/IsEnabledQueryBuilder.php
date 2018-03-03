@@ -13,21 +13,21 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use Elastica\Query\AbstractQuery;
-use Elastica\Query\Match;
+use Elastica\Query\Term;
 
-final class NameQueryBuilder implements QueryBuilderInterface
+final class IsEnabledQueryBuilder implements QueryBuilderInterface
 {
     /**
      * @var string
      */
-    private $nameProperty;
+    private $enabledProperty;
 
     /**
-     * @param string $nameProperty
+     * @param string $enabledProperty
      */
-    public function __construct(string $nameProperty)
+    public function __construct(string $enabledProperty)
     {
-        $this->nameProperty = $nameProperty;
+        $this->enabledProperty = $enabledProperty;
     }
 
     /**
@@ -35,13 +35,9 @@ final class NameQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        if (!$name = $data[$this->nameProperty]) {
-            return null;
-        }
+        $enabledQuery = new Term();
+        $enabledQuery->setTerm($this->enabledProperty, true);
 
-        $nameQuery = new Match();
-        $nameQuery->setFieldQuery($this->nameProperty, $name);
-
-        return $nameQuery;
+        return $enabledQuery;
     }
 }
