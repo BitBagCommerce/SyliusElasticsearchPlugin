@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
-use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use BitBag\SyliusElasticsearchPlugin\Finder\FinderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
 final class ListProductsAction
 {
     /**
-     * @var PaginatedFinderInterface
+     * @var FinderInterface
      */
-    private $productFinder;
+    private $shopProductsFinder;
 
     /**
      * @var DataHandlerInterface
@@ -32,24 +31,15 @@ final class ListProductsAction
     private $shopProductListDataHandler;
 
     /**
-     * @var QueryBuilderInterface
-     */
-    private $shopProductsQueryBuilder;
-
-    /**
-     * @param PaginatedFinderInterface $productFinder
+     * @param FinderInterface $shopProductsFinder
      * @param DataHandlerInterface $shopProductListDataHandler
-     * @param QueryBuilderInterface $shopProductsQueryBuilder
      */
     public function __construct(
-        PaginatedFinderInterface $productFinder,
-        DataHandlerInterface $shopProductListDataHandler,
-        QueryBuilderInterface $shopProductsQueryBuilder
-    )
+        FinderInterface $shopProductsFinder,
+        DataHandlerInterface $shopProductListDataHandler)
     {
-        $this->productFinder = $productFinder;
+        $this->shopProductsFinder = $shopProductsFinder;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
-        $this->shopProductsQueryBuilder = $shopProductsQueryBuilder;
     }
 
     /**
@@ -60,8 +50,7 @@ final class ListProductsAction
     public function __invoke(Request $request): Response
     {
         $data = $this->shopProductListDataHandler->retrieveData($request);
-        $query = $this->shopProductsQueryBuilder->buildQuery($data);
-        $result = $this->productFinder->find($query);
+        $result = $this->shopProductsFinder->find($data);
 
         return new JsonResponse($result);
     }

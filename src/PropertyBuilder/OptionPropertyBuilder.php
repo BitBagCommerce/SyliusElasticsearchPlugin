@@ -37,7 +37,7 @@ final class OptionPropertyBuilder implements PropertyBuilderInterface
     public function buildProperty(TransformEvent $event): void
     {
         /** @var ProductInterface $product */
-        $product = $event->getDocument();
+        $product = $event->getObject();
 
         if (!$product instanceof ProductInterface) {
             return;

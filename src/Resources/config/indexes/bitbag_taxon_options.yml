@@ -4,12 +4,9 @@ fos_elastica:
             index_name: "bitbag_taxon_%kernel.environment%"
             types:
                 product:
-                    properties:
-                        code: ~
-                        name: ~
                     persistence:
                         driver: orm
-                        model: "%sylius.model.taxon.class%"
+                        model: "%sylius.model.product_option_value.class%"
                         listener:
                             defer: true
                             logger: true
