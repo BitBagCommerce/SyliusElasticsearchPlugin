@@ -44,7 +44,7 @@ final class ChannelQueryBuilder implements QueryBuilderInterface
     public function buildQuery(array $data): ?AbstractQuery
     {
         $channelQuery = new Terms();
-        $channelQuery->setTerms($this->channelProperty, [$this->channelContext->getChannel()->getCode()]);
+        $channelQuery->setTerms('channels', [strtolower($this->channelContext->getChannel()->getCode())]);
 
         return $channelQuery;
     }
