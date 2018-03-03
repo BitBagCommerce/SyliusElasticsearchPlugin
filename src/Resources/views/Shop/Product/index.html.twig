@@ -1,0 +1,21 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block content %}
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_filterForm.html.twig' %}
+        </div>
+        <div class="twelve wide column">
+            <div class="ui clearing hidden divider"></div>
+
+            <div class="ui three column stackable grid" id="products">
+                {% for product in products %}
+                    <div class="column">
+                        {% include '@SyliusShop/Product/_box.html.twig' %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="ui hidden divider"></div>
+        </div>
+    </div>
+{% endblock %}
