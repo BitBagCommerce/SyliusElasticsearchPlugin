@@ -1,9 +1,9 @@
 fos_elastica:
     indexes:
         bitbag_option_taxons:
-            index_name: "bitbag_option_taxons_%kernel.environment%"
+            index_name: "bitbag_%kernel.environment%"
             types:
-                product:
+                default:
                     properties:
                         code: ~
                     persistence:

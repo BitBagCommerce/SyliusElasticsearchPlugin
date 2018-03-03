@@ -3,4 +3,4 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder
         arguments:
             - "@bitbag_sylius_elasticsearch_plugin.query_builder.shop_products"
-            - "@fos_elastica.finder.bitbag_shop.product"
+            - "@fos_elastica.finder.bitbag_shop_product.default"

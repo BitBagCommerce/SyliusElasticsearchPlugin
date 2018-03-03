@@ -8,10 +8,10 @@ parameters:
 
 fos_elastica:
     indexes:
-        bitbag_shop:
-            index_name: "bitbag_shop_%kernel.environment%"
+        bitbag_shop_product:
+            index_name: "bitbag_shop_products_%kernel.environment%"
             types:
-                product:
+                default:
                     properties:
                         name: ~
                         enabled: ~
