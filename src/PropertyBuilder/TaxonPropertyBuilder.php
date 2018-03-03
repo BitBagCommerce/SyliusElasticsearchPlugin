@@ -69,10 +69,10 @@ final class TaxonPropertyBuilder implements PropertyBuilderInterface
     {
         foreach ($taxons as $taxon) {
             $reference = $document->get($this->taxonProperty);
-            $name = $taxon->getName();
+            $code = $taxon->getCode();
 
-            if (!in_array($name, $reference)) {
-                $reference[] = $name;
+            if (!in_array($code, $reference)) {
+                $reference[] = $code;
                 $document->set($this->taxonProperty, $reference);
             }
 

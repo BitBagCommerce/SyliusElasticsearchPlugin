@@ -26,3 +26,12 @@ services:
             - "%bitbag_es_shop_channels_property%"
         tags:
             - { name: kernel.event_subscriber }
+
+    bitbag_sylius_elasticsearch_plugin.property_builder.option_taxons:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionTaxonsPropertyBuilder
+        arguments:
+            - "@sylius.repository.product"
+            - "%bitbag_es_shop_option_property_prefix%"
+            - "%bitbag_es_shop_taxons_property%"
+        tags:
+            - { name: kernel.event_subscriber }

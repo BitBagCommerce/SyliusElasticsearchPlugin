@@ -21,25 +21,26 @@ use Symfony\Component\HttpFoundation\Response;
 final class ListProductsAction
 {
     /**
-     * @var FinderInterface
-     */
-    private $shopProductsFinder;
-
-    /**
      * @var DataHandlerInterface
      */
     private $shopProductListDataHandler;
 
     /**
-     * @param FinderInterface $shopProductsFinder
+     * @var FinderInterface
+     */
+    private $shopProductsFinder;
+
+    /**
      * @param DataHandlerInterface $shopProductListDataHandler
+     * @param FinderInterface $shopProductsFinder
      */
     public function __construct(
-        FinderInterface $shopProductsFinder,
-        DataHandlerInterface $shopProductListDataHandler)
+        DataHandlerInterface $shopProductListDataHandler,
+        FinderInterface $shopProductsFinder
+    )
     {
-        $this->shopProductsFinder = $shopProductsFinder;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
+        $this->shopProductsFinder = $shopProductsFinder;
     }
 
     /**

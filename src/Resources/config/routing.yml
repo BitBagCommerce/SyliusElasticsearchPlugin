@@ -1,4 +1,4 @@
 bitbag_sylius_elasticsearch_plugin_shop_list_products:
-    path: /list-products
+    path: /list-products/{taxonSlug}
     defaults:
         _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.list_products

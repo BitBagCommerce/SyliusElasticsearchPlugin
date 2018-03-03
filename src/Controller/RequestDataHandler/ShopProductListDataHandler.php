@@ -12,10 +12,23 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
+use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
+    /**
+     * @var TaxonRepositoryInterface
+     */
+    private $taxonRepository;
+
+    /**
+     * @var LocaleContextInterface
+     */
+    private $localeContext;
+
     /**
      * @var string
      */
@@ -37,18 +50,24 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private $attributePropertyPrefix;
 
     /**
+     * @param TaxonRepositoryInterface $taxonRepository
+     * @param LocaleContextInterface $localeContext
      * @param string $nameProperty
      * @param string $taxonsProperty
      * @param string $optionPropertyPrefix
      * @param string $attributePropertyPrefix
      */
     public function __construct(
+        TaxonRepositoryInterface $taxonRepository,
+        LocaleContextInterface $localeContext,
         string $nameProperty,
         string $taxonsProperty,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
     )
     {
+        $this->taxonRepository = $taxonRepository;
+        $this->localeContext = $localeContext;
         $this->nameProperty = $nameProperty;
         $this->taxonsProperty = $taxonsProperty;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
@@ -60,9 +79,16 @@ final class ShopProductListDataHandler implements DataHandlerInterface
      */
     public function retrieveData(Request $request): array
     {
+        $slug = $request->get('taxonSlug');
+        $taxon = $this->taxonRepository->findOneBySlug($slug, $this->localeContext->getLocaleCode());
+
+        if (null === $taxon) {
+            throw new NotFoundHttpException();
+        }
+
         $data = [];
         $data[$this->nameProperty] = $request->query->get($this->nameProperty);
-        $data[$this->taxonsProperty] = $request->query->get($this->taxonsProperty);
+        $data[$this->taxonsProperty] = $taxon->getCode();
 
         $this->handlePrefixedProperty($request, $this->optionPropertyPrefix, $data);
         $this->handlePrefixedProperty($request, $this->attributePropertyPrefix, $data);

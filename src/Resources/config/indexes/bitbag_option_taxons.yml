@@ -1,12 +1,14 @@
 fos_elastica:
     indexes:
-        bitbag_taxon:
-            index_name: "bitbag_taxon_%kernel.environment%"
+        bitbag_option_taxons:
+            index_name: "bitbag_option_taxons_%kernel.environment%"
             types:
                 product:
+                    properties:
+                        code: ~
                     persistence:
                         driver: orm
-                        model: "%sylius.model.product_option_value.class%"
+                        model: "%sylius.model.product_option.class%"
                         listener:
                             defer: true
                             logger: true

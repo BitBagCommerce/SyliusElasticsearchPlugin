@@ -1,6 +1,7 @@
 imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_shop.yml" }
+    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_option_taxons.yml" }
 
 parameters:
     elasticsearch_host: localhost
