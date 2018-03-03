@@ -19,3 +19,10 @@ services:
             - "%bitbag_es_shop_taxons_property%"
         tags:
             - { name: kernel.event_subscriber }
+
+    bitbag_sylius_elasticsearch_plugin.property_builder.channel:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelPropertyBuilder
+        arguments:
+            - "%bitbag_es_shop_channels_property%"
+        tags:
+            - { name: kernel.event_subscriber }

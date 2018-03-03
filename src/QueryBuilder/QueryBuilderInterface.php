@@ -19,7 +19,7 @@ interface QueryBuilderInterface
     /**
      * @param array $data
      *
-     * @return AbstractQuery
+     * @return AbstractQuery|null
      */
-    public function buildQuery(array $data): AbstractQuery;
+    public function buildQuery(array $data): ?AbstractQuery;
 }

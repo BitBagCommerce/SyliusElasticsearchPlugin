@@ -1,0 +1,36 @@
+services:
+    bitbag_sylius_elasticsearch_plugin.query_builder.enabled:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\EnabledQueryBuilder
+        arguments:
+           - "%bitbag_es_shop_enabled_property%"
+
+    bitbag_sylius_elasticsearch_plugin.query_builder.channel:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ChannelQueryBuilder
+        arguments:
+           - "@sylius.context.channel"
+           - "%bitbag_es_shop_channels_property%"
+
+    bitbag_sylius_elasticsearch_plugin.query_builder.name:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\NameQueryBuilder
+        arguments:
+           - "%bitbag_es_shop_name_property%"
+
+    bitbag_sylius_elasticsearch_plugin.query_builder.taxon:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\TaxonQueryBuilder
+        arguments:
+           - "%bitbag_es_shop_taxons_property%"
+
+    bitbag_sylius_elasticsearch_plugin.query_builder.option:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\OptionQueryBuilder
+        arguments:
+           - "%bitbag_es_shop_option_property_prefix%"
+
+    bitbag_sylius_elasticsearch_plugin.query_builder.shop_products:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder
+        arguments:
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.enabled"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.channel"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.name"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.taxon"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.option"
+           - "%bitbag_es_shop_option_property_prefix%"

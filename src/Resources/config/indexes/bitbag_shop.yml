@@ -1,4 +1,5 @@
 parameters:
+    bitbag_es_shop_channels_property: channels
     bitbag_es_shop_name_property: name
     bitbag_es_shop_enabled_property: enabled
     bitbag_es_shop_taxons_property: taxons
@@ -13,7 +14,7 @@ fos_elastica:
                 product:
                     properties:
                         name: ~
-                        enabled:
+                        enabled: ~
                     persistence:
                         driver: orm
                         model: "%sylius.model.product.class%"
