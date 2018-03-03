@@ -15,9 +15,8 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class AttributePropertyBuilder implements EventSubscriberInterface
+final class AttributePropertyBuilder implements PropertyBuilderInterface
 {
     /**
      * @var string
@@ -35,7 +34,7 @@ final class AttributePropertyBuilder implements EventSubscriberInterface
     /**
      * @param TransformEvent $event
      */
-    public function addAttributeProperties(TransformEvent $event): void
+    public function buildProperty(TransformEvent $event): void
     {
         /** @var ProductInterface $product */
         $product = $event->getObject();
@@ -50,7 +49,7 @@ final class AttributePropertyBuilder implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            TransformEvent::POST_TRANSFORM => 'addAttributeProperties',
+            TransformEvent::POST_TRANSFORM => 'buildProperty',
         ];
     }
 
@@ -62,7 +61,7 @@ final class AttributePropertyBuilder implements EventSubscriberInterface
     {
         foreach ($product->getAttributes() as $attributeValue) {
             $attributeCode = $attributeValue->getAttribute()->getCode();
-            $index = $this->attributePropertyPrefix . $attributeCode;
+            $index = $this->attributePropertyPrefix . '_' . $attributeCode;
 
             if (!$document->has($index)) {
                 $document->set($index, []);

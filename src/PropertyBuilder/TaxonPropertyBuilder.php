@@ -17,9 +17,8 @@ use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class TaxonPropertyBuilder implements EventSubscriberInterface
+final class TaxonPropertyBuilder implements PropertyBuilderInterface
 {
     /**
      * @var string
@@ -37,7 +36,7 @@ final class TaxonPropertyBuilder implements EventSubscriberInterface
     /**
      * @param TransformEvent $event
      */
-    public function addAttributeProperties(TransformEvent $event): void
+    public function buildProperty(TransformEvent $event): void
     {
         /** @var ProductInterface $product */
         $product = $event->getObject();
@@ -53,7 +52,7 @@ final class TaxonPropertyBuilder implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            TransformEvent::POST_TRANSFORM => 'addAttributeProperties',
+            TransformEvent::POST_TRANSFORM => 'buildProperty',
         ];
     }
 

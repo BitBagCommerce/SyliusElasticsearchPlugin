@@ -78,20 +78,9 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private function handlePrefixedProperty(Request $request, string $propertyPrefix, array &$data): void
     {
         foreach ($request->query->all() as $key => $value) {
-            if ($this->startsWith($propertyPrefix, $key)) {
+            if (0 === strpos($propertyPrefix, $key)) {
                 $data[$key] = $value;
             }
         }
-    }
-
-    /**
-     * @param string $haystack
-     * @param string $needle
-     *
-     * @return bool
-     */
-    private function startsWith(string $haystack, string $needle): bool
-    {
-        return $haystack === substr($haystack, 0, strlen($needle));
     }
 }

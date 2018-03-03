@@ -102,7 +102,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     private function buildOptionQuery(BoolQuery $boolQuery, array $data): void
     {
         foreach ($data as $key => $value) {
-            if (substr($this->optionPropertyPrefix, 0, strlen($key))) {
+            if (0 === strpos($this->optionPropertyPrefix, $key)) {
                 $optionQuery = new Terms();
                 $optionQuery->setTerms($key, (array)$value);
                 $boolQuery->addMust($optionQuery);
