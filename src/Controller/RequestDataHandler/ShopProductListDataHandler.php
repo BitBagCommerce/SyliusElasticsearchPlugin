@@ -78,8 +78,8 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private function handlePrefixedProperty(Request $request, string $propertyPrefix, array &$data): void
     {
         foreach ($request->query->all() as $key => $value) {
-            if (0 === strpos($propertyPrefix, $key)) {
-                $data[$key] = $value;
+            if (0 === strpos($key, $propertyPrefix)) {
+                $data[$key] = array_map('strtolower', $value);
             }
         }
     }
