@@ -46,8 +46,8 @@ final class ShopProductsFinder implements FinderInterface
     public function find(array $data): array
     {
         $query = $this->shopProductsQueryBuilder->buildQuery($data);
-        $result = $this->productFinder->find($query);
+        $result = $this->productFinder->findPaginated($query);
 
-        return $result;
+        return $result->getCurrentPageResults();
     }
 }

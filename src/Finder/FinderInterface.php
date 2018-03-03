@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
 interface FinderInterface
 {
     /**
      * @param array $data
      *
-     * @return array|ResourceInterface[]
+     * @return array
      */
     public function find(array $data): array;
 }
