@@ -95,8 +95,8 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         }
 
         $data = $this->paginationDataHandler->retrieveData($request);
-        $data[$this->nameProperty] = $request->query->get($this->nameProperty);
-        $data[$this->taxonsProperty] = strtolower($taxon->getCode());
+        $data[$this->nameProperty] = (string) $request->query->get($this->nameProperty);
+        $data[$this->taxonsProperty] = (string) strtolower($taxon->getCode());
 
         $this->handlePrefixedProperty($request, $this->optionPropertyPrefix, $data);
         $this->handlePrefixedProperty($request, $this->attributePropertyPrefix, $data);

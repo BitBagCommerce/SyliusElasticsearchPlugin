@@ -69,11 +69,12 @@ final class ListProductsAction
     public function __invoke(Request $request): Response
     {
         $form = $this->formFactory->create(ShopProductsFilterType::class);
+        $form->handleRequest($request);
+
         $data = $this->shopProductListDataHandler->retrieveData($request);
         $products = $this->shopProductsFinder->find($data);
         $template = $request->get('template');
 
-        $form->handleRequest($request);
 
         return $this->templatingEngine->renderResponse($template, [
             'form' => $form->createView(),

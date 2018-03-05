@@ -22,6 +22,17 @@ class AbstractFilterType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefault('data_class', null);
+        $resolver->setDefaults([
+            'data_class', null,
+            'csrf_protection' => false,
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix(): string
+    {
+        return '';
     }
 }
