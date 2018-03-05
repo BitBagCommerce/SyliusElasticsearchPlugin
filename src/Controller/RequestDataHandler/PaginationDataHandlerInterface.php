@@ -12,14 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
-use Symfony\Component\HttpFoundation\Request;
-
-interface DataHandlerInterface
+interface PaginationDataHandlerInterface extends DataHandlerInterface
 {
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function retrieveData(Request $request): array;
+    const PAGE_INDEX = 'page';
 }
