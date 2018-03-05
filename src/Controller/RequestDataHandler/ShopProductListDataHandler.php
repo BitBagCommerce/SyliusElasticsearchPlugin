@@ -35,6 +35,11 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private $nameProperty;
 
     /**
+     * @var PaginationDataHandler
+     */
+    private $paginationDataHandler;
+
+    /**
      * @var string
      */
     private $taxonsProperty;
@@ -52,6 +57,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     /**
      * @param TaxonRepositoryInterface $taxonRepository
      * @param LocaleContextInterface $localeContext
+     * @param PaginationDataHandler $paginationDataHandler
      * @param string $nameProperty
      * @param string $taxonsProperty
      * @param string $optionPropertyPrefix
@@ -60,6 +66,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     public function __construct(
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
+        PaginationDataHandler $paginationDataHandler,
         string $nameProperty,
         string $taxonsProperty,
         string $optionPropertyPrefix,
@@ -68,6 +75,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     {
         $this->taxonRepository = $taxonRepository;
         $this->localeContext = $localeContext;
+        $this->paginationDataHandler = $paginationDataHandler;
         $this->nameProperty = $nameProperty;
         $this->taxonsProperty = $taxonsProperty;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
@@ -86,8 +94,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
             throw new NotFoundHttpException();
         }
 
-        $data = [];
-        $data[self::PAGE_INDEX] = $request->query->get(self::PAGE_INDEX);
+        $data = $this->paginationDataHandler->retrieveData($request);
         $data[$this->nameProperty] = $request->query->get($this->nameProperty);
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
@@ -105,7 +112,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private function handlePrefixedProperty(Request $request, string $propertyPrefix, array &$data): void
     {
         foreach ($request->query->all() as $key => $value) {
-            if (0 === strpos($key, $propertyPrefix)) {
+            if (is_array($value) && 0 === strpos($key, $propertyPrefix)) {
                 $data[$key] = array_map('strtolower', $value);
             }
         }
