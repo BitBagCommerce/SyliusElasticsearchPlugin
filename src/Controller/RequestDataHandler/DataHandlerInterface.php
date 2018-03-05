@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface DataHandlerInterface
 {
+    const PAGE_INDEX = 'page';
+
     /**
      * @param Request $request
      *

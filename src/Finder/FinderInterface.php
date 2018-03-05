@@ -21,5 +21,5 @@ interface FinderInterface
      *
      * @return Pagerfanta
      */
-    public function find(array $data);
+    public function find(array $data): Pagerfanta;
 }

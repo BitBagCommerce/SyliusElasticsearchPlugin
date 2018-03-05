@@ -87,7 +87,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         }
 
         $data = [];
-        $data['page'] = $request->query->get('page');
+        $data[self::PAGE_INDEX] = $request->query->get(self::PAGE_INDEX);
         $data[$this->nameProperty] = $request->query->get($this->nameProperty);
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
