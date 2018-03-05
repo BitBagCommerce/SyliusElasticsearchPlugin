@@ -12,12 +12,14 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
+use Pagerfanta\Pagerfanta;
+
 interface FinderInterface
 {
     /**
      * @param array $data
      *
-     * @return array
+     * @return Pagerfanta
      */
-    public function find(array $data): array;
+    public function find(array $data);
 }

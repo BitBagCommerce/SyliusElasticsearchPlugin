@@ -15,7 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms;
 
-final class HasTaxonsQueryBuilder implements QueryBuilderInterface
+final class HasTaxonQueryBuilder implements QueryBuilderInterface
 {
     /**
      * @var string
@@ -35,12 +35,12 @@ final class HasTaxonsQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        if (!$taxons = $data[$this->taxonsProperty]) {
+        if (!$taxon = $data[$this->taxonsProperty]) {
             return null;
         }
 
         $taxonQuery = new Terms();
-        $taxonQuery->setTerms($this->taxonsProperty, (array) $taxons);
+        $taxonQuery->setTerms($this->taxonsProperty, [$taxon]);
 
         return $taxonQuery;
     }

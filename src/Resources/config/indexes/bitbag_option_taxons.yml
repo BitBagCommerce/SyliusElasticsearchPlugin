@@ -1,3 +1,6 @@
+parameters:
+    bitbag_es_shop_product_taxons_property: product_taxons
+
 fos_elastica:
     indexes:
         bitbag_option_taxons:

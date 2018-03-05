@@ -1,21 +1,30 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
-{% block content %}
-    <div class="ui stackable grid">
-        <div class="four wide column">
-            {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_filterForm.html.twig' %}
-        </div>
-        <div class="twelve wide column">
-            <div class="ui clearing hidden divider"></div>
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+{% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
 
-            <div class="ui three column stackable grid" id="products">
-                {% for product in products %}
-                    <div class="column">
-                        {% include '@SyliusShop/Product/_box.html.twig' %}
-                    </div>
-                {% endfor %}
+{% block content %}
+    {% if products|length > 0 %}
+        <div class="ui stackable grid">
+            <div class="four wide column">
+                {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_filterForm.html.twig' %}
             </div>
-            <div class="ui hidden divider"></div>
+            <div class="twelve wide column">
+                <div class="ui clearing hidden divider"></div>
+
+                <div class="ui three column stackable grid" id="products">
+                    {% for product in products %}
+                        <div class="column">
+                            {% include '@SyliusShop/Product/_box.html.twig' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ui hidden divider"></div>
+            </div>
         </div>
-    </div>
+
+        {{ pagination.simple(products) }}
+    {% else %}
+        {{ messages.info('sylius.ui.no_results_to_display') }}
+    {% endif %}
 {% endblock %}

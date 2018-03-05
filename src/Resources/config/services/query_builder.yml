@@ -15,8 +15,8 @@ services:
         arguments:
            - "%bitbag_es_shop_name_property%"
 
-    bitbag_sylius_elasticsearch_plugin.query_builder.has_taxons:
-        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonsQueryBuilder
+    bitbag_sylius_elasticsearch_plugin.query_builder.has_taxon:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder
         arguments:
            - "%bitbag_es_shop_taxons_property%"
 
@@ -31,6 +31,6 @@ services:
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled"
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_channel"
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.contains_name"
-           - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_taxons"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_taxon"
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_options"
            - "%bitbag_es_shop_option_property_prefix%"

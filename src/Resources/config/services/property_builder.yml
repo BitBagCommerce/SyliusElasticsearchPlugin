@@ -13,15 +13,15 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    bitbag_sylius_elasticsearch_plugin.property_builder.taxon:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\TaxonPropertyBuilder
+    bitbag_sylius_elasticsearch_plugin.property_builder.taxons:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\TaxonsPropertyBuilder
         arguments:
             - "%bitbag_es_shop_taxons_property%"
         tags:
             - { name: kernel.event_subscriber }
 
-    bitbag_sylius_elasticsearch_plugin.property_builder.channel:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelPropertyBuilder
+    bitbag_sylius_elasticsearch_plugin.property_builder.channels:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelsPropertyBuilder
         arguments:
             - "%bitbag_es_shop_channels_property%"
         tags:
@@ -32,6 +32,6 @@ services:
         arguments:
             - "@sylius.repository.product"
             - "%bitbag_es_shop_option_property_prefix%"
-            - "%bitbag_es_shop_taxons_property%"
+            - "%bitbag_es_shop_product_taxons_property%"
         tags:
             - { name: kernel.event_subscriber }

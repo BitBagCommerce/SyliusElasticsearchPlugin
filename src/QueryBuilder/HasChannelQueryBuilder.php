@@ -26,16 +26,16 @@ final class HasChannelQueryBuilder implements QueryBuilderInterface
     /**
      * @var string
      */
-    private $channelProperty;
+    private $channelsProperty;
 
     /**
      * @param ChannelContextInterface $channelContext
-     * @param string $channelProperty
+     * @param string $channelsProperty
      */
-    public function __construct(ChannelContextInterface $channelContext, string $channelProperty)
+    public function __construct(ChannelContextInterface $channelContext, string $channelsProperty)
     {
         $this->channelContext = $channelContext;
-        $this->channelProperty = $channelProperty;
+        $this->channelsProperty = $channelsProperty;
     }
 
     /**
@@ -44,7 +44,7 @@ final class HasChannelQueryBuilder implements QueryBuilderInterface
     public function buildQuery(array $data): ?AbstractQuery
     {
         $channelQuery = new Terms();
-        $channelQuery->setTerms($this->channelProperty, [strtolower($this->channelContext->getChannel()->getCode())]);
+        $channelQuery->setTerms($this->channelsProperty, [strtolower($this->channelContext->getChannel()->getCode())]);
 
         return $channelQuery;
     }

@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use Pagerfanta\Pagerfanta;
 
 final class ShopProductsFinder implements FinderInterface
 {
@@ -43,11 +44,13 @@ final class ShopProductsFinder implements FinderInterface
     /**
      * {@inheritdoc}
      */
-    public function find(array $data): array
+    public function find(array $data)
     {
         $query = $this->shopProductsQueryBuilder->buildQuery($data);
         $result = $this->productFinder->findPaginated($query);
 
-        return $result->getCurrentPageResults();
+        $result->setCurrentPage($data['page']);
+
+        return $result;
     }
 }

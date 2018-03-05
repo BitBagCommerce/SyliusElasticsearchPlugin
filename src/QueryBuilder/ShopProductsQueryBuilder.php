@@ -35,7 +35,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     /**
      * @var QueryBuilderInterface
      */
-    private $hasTaxonsQueryBuilder;
+    private $hasTaxonQueryBuilder;
 
     /**
      * @var QueryBuilderInterface
@@ -51,7 +51,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
      * @param QueryBuilderInterface $isEnabledQueryBuilder
      * @param QueryBuilderInterface $hasChannelQueryBuilder
      * @param QueryBuilderInterface $containsNameQueryBuilder
-     * @param QueryBuilderInterface $hasTaxonsQueryBuilder
+     * @param QueryBuilderInterface $hasTaxonQueryBuilder
      * @param QueryBuilderInterface $hasOptionsQueryBuilder
      * @param string $optionPropertyPrefix
      */
@@ -59,7 +59,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         QueryBuilderInterface $isEnabledQueryBuilder,
         QueryBuilderInterface $hasChannelQueryBuilder,
         QueryBuilderInterface $containsNameQueryBuilder,
-        QueryBuilderInterface $hasTaxonsQueryBuilder,
+        QueryBuilderInterface $hasTaxonQueryBuilder,
         QueryBuilderInterface $hasOptionsQueryBuilder,
         string $optionPropertyPrefix
     )
@@ -67,7 +67,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
         $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
         $this->containsNameQueryBuilder = $containsNameQueryBuilder;
-        $this->hasTaxonsQueryBuilder = $hasTaxonsQueryBuilder;
+        $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
         $this->hasOptionsQueryBuilder = $hasOptionsQueryBuilder;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
     }
@@ -86,7 +86,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
             $boolQuery->addMust($nameQuery);
         }
 
-        if ($taxonQuery = $this->hasTaxonsQueryBuilder->buildQuery($data)) {
+        if ($taxonQuery = $this->hasTaxonQueryBuilder->buildQuery($data)) {
             $boolQuery->addMust($taxonQuery);
         }
 

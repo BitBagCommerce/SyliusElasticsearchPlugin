@@ -32,22 +32,22 @@ final class OptionTaxonsPropertyBuilder implements PropertyBuilderInterface
     /**
      * @var string
      */
-    private $taxonsProperty;
+    private $productTaxonsProperty;
 
     /**
      * @param ProductRepositoryInterface $productRepository
      * @param string $optionProperty
-     * @param string $taxonsProperty
+     * @param string $productTaxonsProperty
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         string $optionProperty,
-        string $taxonsProperty
+        string $productTaxonsProperty
     )
     {
         $this->productRepository = $productRepository;
         $this->optionProperty = $optionProperty;
-        $this->taxonsProperty = $taxonsProperty;
+        $this->productTaxonsProperty = $productTaxonsProperty;
     }
 
     /**
@@ -77,7 +77,7 @@ final class OptionTaxonsPropertyBuilder implements PropertyBuilderInterface
             }
         }
 
-        $document->set($this->taxonsProperty, $taxons);
+        $document->set($this->productTaxonsProperty, $taxons);
     }
 
     /**
