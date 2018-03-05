@@ -14,7 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 use Symfony\Component\HttpFoundation\Request;
 
-final class PaginationDataHandler implements DataHandlerInterface
+final class PaginationDataHandler implements PaginationDataHandlerInterface
 {
     /**
      * {@inheritdoc}
