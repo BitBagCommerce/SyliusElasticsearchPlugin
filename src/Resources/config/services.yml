@@ -4,3 +4,4 @@ imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/controller.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/finder.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/form.yml" }
+    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/context.yml" }

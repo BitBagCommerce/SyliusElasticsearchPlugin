@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
+use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
@@ -87,11 +87,11 @@ final class ShopProductListDataHandler implements DataHandlerInterface
      */
     public function retrieveData(Request $request): array
     {
-        $slug = $request->get('taxonSlug');
+        $slug = $request->get('slug');
         $taxon = $this->taxonRepository->findOneBySlug($slug, $this->localeContext->getLocaleCode());
 
         if (null === $taxon) {
-            throw new NotFoundHttpException();
+            throw new TaxonNotFoundException();
         }
 
         $data = $this->paginationDataHandler->retrieveData($request);

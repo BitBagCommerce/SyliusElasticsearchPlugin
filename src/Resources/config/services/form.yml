@@ -2,6 +2,8 @@ services:
     bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType
         arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.context.product_options"
             - "%bitbag_es_shop_name_property%"
+            - "%bitbag_es_shop_option_property_prefix%"
         tags:
             - { name: form.type }

@@ -16,7 +16,7 @@ services:
     bitbag_sylius_elasticsearch_plugin.property_builder.taxons:
         class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\TaxonsPropertyBuilder
         arguments:
-            - "%bitbag_es_shop_taxons_property%"
+            - "%bitbag_es_shop_product_taxons_property%"
         tags:
             - { name: kernel.event_subscriber }
 
@@ -32,6 +32,6 @@ services:
         arguments:
             - "@sylius.repository.product"
             - "%bitbag_es_shop_option_property_prefix%"
-            - "%bitbag_es_shop_product_taxons_property%"
+            - "%bitbag_es_shop_option_taxons_property%"
         tags:
             - { name: kernel.event_subscriber }

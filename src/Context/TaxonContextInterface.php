@@ -10,16 +10,14 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\Finder;
+namespace BitBag\SyliusElasticsearchPlugin\Context;
 
-use Pagerfanta\Pagerfanta;
+use Sylius\Component\Core\Model\TaxonInterface;
 
-interface FinderInterface
+interface TaxonContextInterface
 {
     /**
-     * @param array $data
-     *
-     * @return Pagerfanta
+     * @return TaxonInterface
      */
-    public function find(array $data): Pagerfanta;
+    public function getTaxon(): TaxonInterface;
 }

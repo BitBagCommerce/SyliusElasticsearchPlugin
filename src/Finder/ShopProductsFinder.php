@@ -17,7 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Pagerfanta\Pagerfanta;
 
-final class ShopProductsFinder implements FinderInterface
+final class ShopProductsFinder implements ShopProductsFinderInterface
 {
     /**
      * @var QueryBuilderInterface
@@ -48,10 +48,10 @@ final class ShopProductsFinder implements FinderInterface
     public function find(array $data): Pagerfanta
     {
         $query = $this->shopProductsQueryBuilder->buildQuery($data);
-        $result = $this->productFinder->findPaginated($query);
+        $products = $this->productFinder->findPaginated($query);
 
-        $result->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
+        $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
 
-        return $result;
+        return $products;
     }
 }

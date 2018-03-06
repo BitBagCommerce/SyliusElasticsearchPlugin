@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
-use BitBag\SyliusElasticsearchPlugin\Finder\FinderInterface;
+use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -33,7 +33,7 @@ final class ListProductsAction
     private $shopProductListDataHandler;
 
     /**
-     * @var FinderInterface
+     * @var ShopProductsFinderInterface
      */
     private $shopProductsFinder;
 
@@ -45,13 +45,13 @@ final class ListProductsAction
     /**
      * @param FormFactoryInterface $formFactory
      * @param DataHandlerInterface $shopProductListDataHandler
-     * @param FinderInterface $shopProductsFinder
+     * @param ShopProductsFinderInterface $shopProductsFinder
      * @param EngineInterface $templatingEngine
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         DataHandlerInterface $shopProductListDataHandler,
-        FinderInterface $shopProductsFinder,
+        ShopProductsFinderInterface $shopProductsFinder,
         EngineInterface $templatingEngine
     )
     {
@@ -74,7 +74,6 @@ final class ListProductsAction
         $data = $this->shopProductListDataHandler->retrieveData($request);
         $products = $this->shopProductsFinder->find($data);
         $template = $request->get('template');
-
 
         return $this->templatingEngine->renderResponse($template, [
             'form' => $form->createView(),

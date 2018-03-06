@@ -1,0 +1,13 @@
+services:
+    bitbag.sylius_elasticsearch_plugin.context.taxon:
+        class: BitBag\SyliusElasticsearchPlugin\Context\TaxonContext
+        arguments:
+            - "@request_stack"
+            - "@sylius.repository.taxon"
+            - "@sylius.context.locale"
+
+    bitbag.sylius_elasticsearch_plugin.context.product_options:
+        class: BitBag\SyliusElasticsearchPlugin\Context\ProductOptionsContext
+        arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.context.taxon"
+            - "@bitbag_sylius_elasticsearch_plugin.finder.options"
