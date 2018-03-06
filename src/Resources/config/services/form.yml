@@ -1,12 +1,7 @@
 services:
-    bitbag_sylius_elasticsearch_plugin.form.type.name_filter:
-        class: BitBag\SyliusElasticsearchPlugin\Form\Type\NameFilterType
-        arguments:
-            - "%bitbag_es_shop_name_property%"
-        tags:
-            - { name: form.type }
-
     bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType
+        arguments:
+            - "%bitbag_es_shop_name_property%"
         tags:
             - { name: form.type }
