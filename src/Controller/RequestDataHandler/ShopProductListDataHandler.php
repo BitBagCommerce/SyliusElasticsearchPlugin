@@ -113,7 +113,9 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     {
         foreach ($request->query->all() as $key => $value) {
             if (is_array($value) && 0 === strpos($key, $propertyPrefix)) {
-                $data[$key] = array_map('strtolower', $value);
+                $data[$key] = array_map(function (string $property): string {
+                    return strtolower($property);
+                }, $value);
             }
         }
     }

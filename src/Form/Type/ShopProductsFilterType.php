@@ -73,7 +73,7 @@ final class ShopProductsFilterType extends AbstractFilterType
         /** @var ProductOptionInterface $productOption */
         foreach ($this->productOptionsContext as $productOption) {
             $name = $this->optionPropertyPrefix . '_' . $productOption->getCode();
-            $choices = array_map(function (ProductOptionValueInterface $productOptionValue) {
+            $choices = array_map(function (ProductOptionValueInterface $productOptionValue): ?string {
                 return $productOptionValue->getValue();
             }, $productOption->getValues());
 
