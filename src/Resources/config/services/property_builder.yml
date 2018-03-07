@@ -13,8 +13,8 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    bitbag_sylius_elasticsearch_plugin.property_builder.taxons:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\TaxonsPropertyBuilder
+    bitbag_sylius_elasticsearch_plugin.property_builder.product_taxons:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonsPropertyBuilder
         arguments:
             - "%bitbag_es_shop_product_taxons_property%"
         tags:
