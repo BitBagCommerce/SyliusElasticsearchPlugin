@@ -68,7 +68,7 @@ final class ListProductsAction
      */
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->create(ShopProductsFilterType::class);
+        $form = $this->formFactory->createNamed(null,ShopProductsFilterType::class);
         $form->handleRequest($request);
 
         $data = $this->shopProductListDataHandler->retrieveData($request);

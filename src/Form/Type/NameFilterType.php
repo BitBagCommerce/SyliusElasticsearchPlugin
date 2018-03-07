@@ -12,27 +12,29 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AbstractFilterType extends AbstractType
+final class NameFilterType extends AbstractFilterType
 {
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
-            'data_class', null,
-            'csrf_protection' => false,
+            'label' => 'bitbag_sylius_elasticsearch_plugin.ui.name',
+            'required' => false,
         ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix(): ?string
+    public function getParent(): string
     {
-        return null;
+        return TextType::class;
     }
 }

@@ -98,20 +98,29 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         $data[$this->nameProperty] = (string) $request->query->get($this->nameProperty);
         $data[$this->taxonsProperty] = (string) strtolower($taxon->getCode());
 
-        $this->handlePrefixedProperty($request, $this->optionPropertyPrefix, $data);
-        $this->handlePrefixedProperty($request, $this->attributePropertyPrefix, $data);
+        $this->handlePrefixedProperty($request, 'options', $this->optionPropertyPrefix, $data);
 
         return $data;
     }
 
     /**
      * @param Request $request
+     * @param string $formName
      * @param string $propertyPrefix
      * @param array $data
      */
-    private function handlePrefixedProperty(Request $request, string $propertyPrefix, array &$data): void
+    private function handlePrefixedProperty(
+        Request $request,
+        string $formName,
+        string $propertyPrefix,
+        array &$data
+    ): void
     {
-        foreach ($request->query->all() as $key => $value) {
+        if (!isset($request->query->all()[$formName])) {
+            return;
+        }
+
+        foreach ($request->query->all()[$formName] as $key => $value) {
             if (is_array($value) && 0 === strpos($key, $propertyPrefix)) {
                 $data[$key] = array_map(function (string $property): string {
                     return strtolower($property);
