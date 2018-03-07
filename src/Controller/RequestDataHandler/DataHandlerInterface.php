@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
-use Symfony\Component\HttpFoundation\Request;
-
 interface DataHandlerInterface
 {
     /**
-     * @param Request $request
+     * @param array $requestData
      *
      * @return array
      */
-    public function retrieveData(Request $request): array;
+    public function retrieveData(array $requestData): array;
 }

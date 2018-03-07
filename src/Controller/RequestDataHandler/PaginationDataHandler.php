@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
-use Symfony\Component\HttpFoundation\Request;
-
 final class PaginationDataHandler implements PaginationDataHandlerInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function retrieveData(Request $request): array
+    public function retrieveData(array $requestData): array
     {
         $data = [];
         $page = 1;
 
-        if ($currentPage = $request->query->get(self::PAGE_INDEX)) {
-            $page = (int) $currentPage;
+        if (isset($requestData[self::PAGE_INDEX])) {
+            $page = (int) $requestData[self::PAGE_INDEX];
         }
 
         $data[self::PAGE_INDEX] = $page;

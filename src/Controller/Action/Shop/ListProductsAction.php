@@ -68,10 +68,15 @@ final class ListProductsAction
      */
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->createNamed(null,ShopProductsFilterType::class);
+        $form = $this->formFactory->createNamed(null, ShopProductsFilterType::class);
         $form->handleRequest($request);
 
-        $data = $this->shopProductListDataHandler->retrieveData($request);
+        $requestData = array_merge(
+            $form->getData(),
+            $request->query->all(),
+            ['slug' => $request->get('slug')]
+        );
+        $data = $this->shopProductListDataHandler->retrieveData($requestData);
         $products = $this->shopProductsFinder->find($data);
         $template = $request->get('template');
 

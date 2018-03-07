@@ -15,7 +15,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
@@ -85,42 +84,42 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function retrieveData(Request $request): array
+    public function retrieveData(array $requestData): array
     {
-        $slug = $request->get('slug');
+        $slug = $requestData['slug'];
         $taxon = $this->taxonRepository->findOneBySlug($slug, $this->localeContext->getLocaleCode());
 
         if (null === $taxon) {
             throw new TaxonNotFoundException();
         }
 
-        $data = $this->paginationDataHandler->retrieveData($request);
-        $data[$this->nameProperty] = (string) $request->query->get($this->nameProperty);
+        $data = $this->paginationDataHandler->retrieveData($requestData);
+        $data[$this->nameProperty] = (string) $requestData[$this->nameProperty];
         $data[$this->taxonsProperty] = (string) strtolower($taxon->getCode());
 
-        $this->handlePrefixedProperty($request, 'options', $this->optionPropertyPrefix, $data);
+        $this->handlePrefixedProperty($requestData, $data, 'options', $this->optionPropertyPrefix);
 
         return $data;
     }
 
     /**
-     * @param Request $request
+     * @param array $requestData
+     * @param array $data
      * @param string $formName
      * @param string $propertyPrefix
-     * @param array $data
      */
     private function handlePrefixedProperty(
-        Request $request,
+        array $requestData,
+        array &$data,
         string $formName,
-        string $propertyPrefix,
-        array &$data
+        string $propertyPrefix
     ): void
     {
-        if (!isset($request->query->all()[$formName])) {
+        if (!isset($requestData[$formName])) {
             return;
         }
 
-        foreach ($request->query->all()[$formName] as $key => $value) {
+        foreach ($requestData[$formName] as $key => $value) {
             if (is_array($value) && 0 === strpos($key, $propertyPrefix)) {
                 $data[$key] = array_map(function (string $property): string {
                     return strtolower($property);
