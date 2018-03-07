@@ -35,12 +35,12 @@ final class HasTaxonQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        if (!$taxon = $data[$this->taxonsProperty]) {
+        if (!$taxonCode = $data[$this->taxonsProperty]) {
             return null;
         }
 
         $taxonQuery = new Terms();
-        $taxonQuery->setTerms($this->taxonsProperty, [$taxon]);
+        $taxonQuery->setTerms($this->taxonsProperty, [$taxonCode]);
 
         return $taxonQuery;
     }

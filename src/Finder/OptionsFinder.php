@@ -55,7 +55,7 @@ final class OptionsFinder implements OptionsFinderInterface
     public function findByTaxon(TaxonInterface $taxon): ?array
     {
         $data = [];
-        $data[$this->taxonsProperty] = $taxon;
+        $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
         $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);
         $options = $this->optionsFinder->find($query);

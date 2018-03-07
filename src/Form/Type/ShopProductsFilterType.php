@@ -71,16 +71,18 @@ final class ShopProductsFilterType extends AbstractFilterType
     private function resolveProductOptions(FormBuilderInterface $builder): void
     {
         /** @var ProductOptionInterface $productOption */
-        foreach ($this->productOptionsContext as $productOption) {
+        foreach ($this->productOptionsContext->getOptions() as $productOption) {
             $name = $this->optionPropertyPrefix . '_' . $productOption->getCode();
-            $choices = array_map(function (ProductOptionValueInterface $productOptionValue): ?string {
+            $optionValues = array_map(function (ProductOptionValueInterface $productOptionValue): ?string {
                 return $productOptionValue->getValue();
-            }, $productOption->getValues());
+            }, $productOption->getValues()->toArray());
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productOption->getName(),
                 'required' => false,
-                'choices' => $choices,
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => array_combine($optionValues, $optionValues),
             ]);
         }
     }
