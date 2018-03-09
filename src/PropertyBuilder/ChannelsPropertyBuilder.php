@@ -15,7 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class ChannelsPropertyBuilder implements PropertyBuilderInterface
+final class ChannelsPropertyBuilder extends AbstractPropertyBuilder
 {
     /**
      * @var string
@@ -49,15 +49,5 @@ final class ChannelsPropertyBuilder implements PropertyBuilderInterface
         }
 
         $event->getDocument()->set($this->channelsProperty, $channels);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            TransformEvent::POST_TRANSFORM => 'buildProperty',
-        ];
     }
 }

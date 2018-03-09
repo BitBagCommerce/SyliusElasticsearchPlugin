@@ -2,6 +2,7 @@ imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_shop_products.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_option_taxons.yml" }
+    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_attribute_taxons.yml" }
 
 parameters:
     elasticsearch_host: localhost

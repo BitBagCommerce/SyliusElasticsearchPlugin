@@ -25,6 +25,11 @@ services:
         arguments:
            - "%bitbag_es_shop_option_taxons_property%"
 
+    bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder
+        arguments:
+           - "%bitbag_es_shop_attribute_taxons_property%"
+
     bitbag_sylius_elasticsearch_plugin.query_builder.has_options:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasOptionsQueryBuilder
         arguments:
@@ -44,3 +49,8 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductOptionsByTaxonQueryBuilder
         arguments:
             - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_option_taxon"
+
+    bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductAttributesByTaxonQueryBuilder
+        arguments:
+            - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon"

@@ -16,7 +16,7 @@ use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class OptionPropertyBuilder implements PropertyBuilderInterface
+final class OptionPropertyBuilder extends AbstractPropertyBuilder
 {
     /**
      * @var string
@@ -46,16 +46,6 @@ final class OptionPropertyBuilder implements PropertyBuilderInterface
         $document = $event->getDocument();
 
         $this->resolveProductOptions($product, $document);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            TransformEvent::POST_TRANSFORM => 'buildProperty',
-        ];
     }
 
     /**

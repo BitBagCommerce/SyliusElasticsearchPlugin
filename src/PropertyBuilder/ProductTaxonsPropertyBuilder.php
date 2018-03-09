@@ -15,7 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class ProductTaxonsPropertyBuilder implements PropertyBuilderInterface
+final class ProductTaxonsPropertyBuilder extends AbstractPropertyBuilder
 {
     /**
      * @var string
@@ -49,15 +49,5 @@ final class ProductTaxonsPropertyBuilder implements PropertyBuilderInterface
         }
 
         $event->getDocument()->set($this->taxonsProperty, $taxons);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            TransformEvent::POST_TRANSFORM => 'buildProperty',
-        ];
     }
 }
