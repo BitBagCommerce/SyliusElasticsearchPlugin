@@ -18,3 +18,8 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver
         arguments:
             - "%bitbag_es_shop_product_price_property%"
+
+    bitbag_sylius_elasticsearch_plugin.property_name_resolver.price_name:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolver
+        arguments:
+            - "%bitbag_es_shop_product_price_property%"

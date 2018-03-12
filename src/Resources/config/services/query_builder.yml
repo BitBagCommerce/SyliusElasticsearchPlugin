@@ -38,6 +38,13 @@ services:
     bitbag_sylius_elasticsearch_plugin.query_builder.has_attributes:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasAttributesQueryBuilder
 
+    bitbag_sylius_elasticsearch_plugin.query_builder.has_price_between:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasPriceBetweenQueryBuilder
+        arguments:
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.price_name"
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.name"
+            - "@sylius.context.locale"
+
     bitbag_sylius_elasticsearch_plugin.query_builder.shop_products:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder
         arguments:

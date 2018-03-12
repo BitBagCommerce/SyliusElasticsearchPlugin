@@ -38,6 +38,7 @@ final class ShopProductsFilterType extends AbstractFilterType
             ->add($this->namePropertyPrefix, NameFilterType::class)
             ->add('options', ProductOptionsFilterType::class)
             ->add('attributes', ProductAttributesFilterType::class)
+            ->add('price', PriceFilterType::class)
         ;
     }
 }
