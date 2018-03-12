@@ -17,12 +17,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 final class ShopProductsFilterType extends AbstractFilterType
 {
     /**
+     * @var string
+     */
+    private $namePropertyPrefix;
+
+    /**
+     * @param string $namePropertyPrefix
+     */
+    public function __construct(string $namePropertyPrefix)
+    {
+        $this->namePropertyPrefix = $namePropertyPrefix;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', NameFilterType::class)
+            ->add($this->namePropertyPrefix, NameFilterType::class)
             ->add('options', ProductOptionsFilterType::class)
             ->add('attributes', ProductAttributesFilterType::class)
         ;

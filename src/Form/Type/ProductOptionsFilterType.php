@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Context\ProductOptionsContextInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Sylius\Component\Product\Model\ProductOptionInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,21 +27,21 @@ final class ProductOptionsFilterType extends AbstractFilterType
     private $productOptionsContext;
 
     /**
-     * @var string
+     * @var ConcatedNameResolverInterface
      */
-    private $optionPropertyPrefix;
+    private $optionNameResolver;
 
     /**
      * @param ProductOptionsContextInterface $productOptionsContext
-     * @param string $optionPropertyPrefix
+     * @param ConcatedNameResolverInterface $optionNameResolver
      */
     public function __construct(
         ProductOptionsContextInterface $productOptionsContext,
-        string $optionPropertyPrefix
+        ConcatedNameResolverInterface $optionNameResolver
     )
     {
         $this->productOptionsContext = $productOptionsContext;
-        $this->optionPropertyPrefix = $optionPropertyPrefix;
+        $this->optionNameResolver = $optionNameResolver;
     }
 
     /**
@@ -50,7 +51,7 @@ final class ProductOptionsFilterType extends AbstractFilterType
     {
         /** @var ProductOptionInterface $productOption */
         foreach ($this->productOptionsContext->getOptions() as $productOption) {
-            $name = $this->optionPropertyPrefix . '_' . $productOption->getCode();
+            $name = $this->optionNameResolver->resolvePropertyName($productOption->getCode());
             $optionValues = array_map(function (ProductOptionValueInterface $productOptionValue): ?string {
                 return $productOptionValue->getValue();
             }, $productOption->getValues()->toArray());

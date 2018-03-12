@@ -31,7 +31,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     /**
      * @var string
      */
-    private $nameProperty;
+    private $namePropertyPrefix;
 
     /**
      * @var PaginationDataHandler
@@ -57,7 +57,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
      * @param TaxonRepositoryInterface $taxonRepository
      * @param LocaleContextInterface $localeContext
      * @param PaginationDataHandler $paginationDataHandler
-     * @param string $nameProperty
+     * @param string $namePropertyPrefix
      * @param string $taxonsProperty
      * @param string $optionPropertyPrefix
      * @param string $attributePropertyPrefix
@@ -66,7 +66,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
         PaginationDataHandler $paginationDataHandler,
-        string $nameProperty,
+        string $namePropertyPrefix,
         string $taxonsProperty,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
@@ -75,7 +75,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         $this->taxonRepository = $taxonRepository;
         $this->localeContext = $localeContext;
         $this->paginationDataHandler = $paginationDataHandler;
-        $this->nameProperty = $nameProperty;
+        $this->namePropertyPrefix = $namePropertyPrefix;
         $this->taxonsProperty = $taxonsProperty;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
         $this->attributePropertyPrefix = $attributePropertyPrefix;
@@ -94,7 +94,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         }
 
         $data = $this->paginationDataHandler->retrieveData($requestData);
-        $data[$this->nameProperty] = (string) $requestData[$this->nameProperty];
+        $data[$this->namePropertyPrefix] = (string) $requestData[$this->namePropertyPrefix];
         $data[$this->taxonsProperty] = (string) strtolower($taxon->getCode());
 
         $this->handlePrefixedProperty($requestData, $data, 'options', $this->optionPropertyPrefix);

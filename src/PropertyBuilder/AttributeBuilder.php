@@ -12,23 +12,24 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class AttributePropertyBuilder extends AbstractPropertyBuilder
+final class AttributeBuilder extends AbstractBuilder
 {
     /**
-     * @var string
+     * @var ConcatedNameResolverInterface
      */
-    private $attributePropertyPrefix;
+    private $attributeNameResolver;
 
     /**
-     * @param string $attributePropertyPrefix
+     * @param ConcatedNameResolverInterface $attributeNameResolver
      */
-    public function __construct(string $attributePropertyPrefix)
+    public function __construct(ConcatedNameResolverInterface $attributeNameResolver)
     {
-        $this->attributePropertyPrefix = $attributePropertyPrefix;
+        $this->attributeNameResolver = $attributeNameResolver;
     }
 
     /**
@@ -56,7 +57,7 @@ final class AttributePropertyBuilder extends AbstractPropertyBuilder
     {
         foreach ($product->getAttributes() as $attributeValue) {
             $attributeCode = $attributeValue->getAttribute()->getCode();
-            $index = $this->attributePropertyPrefix . '_' . $attributeCode;
+            $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
 
             if (!$document->has($index)) {
                 $document->set($index, []);

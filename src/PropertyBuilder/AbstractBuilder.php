@@ -14,7 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use FOS\ElasticaBundle\Event\TransformEvent;
 
-abstract class AbstractPropertyBuilder implements PropertyBuilderInterface
+abstract class AbstractBuilder implements PropertyBuilderInterface
 {
     /**
      * {@inheritdoc}

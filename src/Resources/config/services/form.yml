@@ -8,7 +8,7 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ProductOptionsFilterType
         arguments:
             - "@bitbag.sylius_elasticsearch_plugin.context.product_options"
-            - "%bitbag_es_shop_option_property_prefix%"
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.option"
         tags:
             - { name: form.type }
 
@@ -17,11 +17,13 @@ services:
         arguments:
             - "@bitbag.sylius_elasticsearch_plugin.context.product_attributes"
             - "@sylius.repository.product_attribute_value"
-            - "%bitbag_es_shop_attribute_property_prefix%"
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute"
         tags:
             - { name: form.type }
 
     bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType
+        arguments:
+            - "%bitbag_es_shop_name_property_prefix%"
         tags:
             - { name: form.type }

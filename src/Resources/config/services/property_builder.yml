@@ -1,41 +1,48 @@
 services:
-    bitbag_sylius_elasticsearch_plugin.property_builder.option:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionPropertyBuilder
+    bitbag_sylius_elasticsearch_plugin.property_builder.product_name:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductNameBuilder
         arguments:
-           - "%bitbag_es_shop_option_property_prefix%"
+           - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.name"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    bitbag_sylius_elasticsearch_plugin.property_builder.option:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionBuilder
+        arguments:
+           - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.option"
         tags:
             - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.attribute:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributePropertyBuilder
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeBuilder
         arguments:
-            - "%bitbag_es_shop_attribute_property_prefix%"
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute"
         tags:
             - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.product_taxons:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonsPropertyBuilder
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonsBuilder
         arguments:
             - "%bitbag_es_shop_product_taxons_property%"
         tags:
             - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.channels:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelsPropertyBuilder
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelsBuilder
         arguments:
             - "%bitbag_es_shop_channels_property%"
         tags:
             - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.channel_pricing:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelPricingPropertyBuilder
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelPricingBuilder
         arguments:
-            - "%bitbag_es_shop_product_price_property%"
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing"
         tags:
             - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.option_taxons:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionTaxonsPropertyBuilder
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionTaxonsBuilder
         arguments:
             - "@sylius.repository.product"
             - "%bitbag_es_shop_option_property_prefix%"
@@ -44,7 +51,7 @@ services:
             - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.attribute_taxons:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsPropertyBuilder
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder
         arguments:
             - "@sylius.repository.product"
             - "%bitbag_es_shop_attribute_property_prefix%"

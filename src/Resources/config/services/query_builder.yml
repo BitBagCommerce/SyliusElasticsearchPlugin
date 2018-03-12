@@ -13,7 +13,9 @@ services:
     bitbag_sylius_elasticsearch_plugin.query_builder.contains_name:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder
         arguments:
-           - "%bitbag_es_shop_name_property%"
+           - "@sylius.context.locale"
+           - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.name"
+           - "%bitbag_es_shop_name_property_prefix%"
 
     bitbag_sylius_elasticsearch_plugin.query_builder.has_product_taxon:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder

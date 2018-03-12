@@ -13,11 +13,11 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use FOS\ElasticaBundle\Event\TransformEvent;
-use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
+use Sylius\Component\Product\Model\ProductOptionInterface;
 
-final class AttributeTaxonsPropertyBuilder extends AbstractPropertyBuilder
+final class OptionTaxonsBuilder extends AbstractBuilder
 {
     /**
      * @var ProductRepositoryInterface
@@ -27,7 +27,7 @@ final class AttributeTaxonsPropertyBuilder extends AbstractPropertyBuilder
     /**
      * @var string
      */
-    private $attributeProperty;
+    private $optionProperty;
 
     /**
      * @var string
@@ -36,17 +36,17 @@ final class AttributeTaxonsPropertyBuilder extends AbstractPropertyBuilder
 
     /**
      * @param ProductRepositoryInterface $productRepository
-     * @param string $attributeProperty
+     * @param string $optionProperty
      * @param string $taxonsProperty
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        string $attributeProperty,
+        string $optionProperty,
         string $taxonsProperty
     )
     {
         $this->productRepository = $productRepository;
-        $this->attributeProperty = $attributeProperty;
+        $this->optionProperty = $optionProperty;
         $this->taxonsProperty = $taxonsProperty;
     }
 
@@ -55,10 +55,10 @@ final class AttributeTaxonsPropertyBuilder extends AbstractPropertyBuilder
      */
     public function buildProperty(TransformEvent $event): void
     {
-        /** @var AttributeInterface $documentAttribute */
-        $documentAttribute = $event->getObject();
+        /** @var ProductOptionInterface $documentProductOption */
+        $documentProductOption = $event->getObject();
 
-        if (!$documentAttribute instanceof AttributeInterface) {
+        if (!$documentProductOption instanceof ProductOptionInterface) {
             return;
         }
 
@@ -68,12 +68,14 @@ final class AttributeTaxonsPropertyBuilder extends AbstractPropertyBuilder
 
         /** @var ProductInterface $product */
         foreach ($products as $product) {
-            foreach ($product->getAttributes() as $attributeValue) {
-                if ($documentAttribute === $attributeValue->getAttribute()) {
-                    foreach ($product->getTaxons() as $taxon) {
-                        $code = $taxon->getCode();
-                        if (!in_array($code, $taxons)) {
-                            $taxons[] = $code;
+            foreach ($product->getVariants() as $productVariant) {
+                foreach ($productVariant->getOptionValues() as $productOptionValue) {
+                    if ($documentProductOption === $productOptionValue->getOption()) {
+                        foreach ($product->getTaxons() as $taxon) {
+                            $code = $taxon->getCode();
+                            if (!in_array($code, $taxons)) {
+                                $taxons[] = $code;
+                            }
                         }
                     }
                 }

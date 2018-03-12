@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContextInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
@@ -32,24 +33,24 @@ final class ProductAttributesFilterType extends AbstractFilterType
     private $productAttributeValueRepository;
 
     /**
-     * @var string
+     * @var ConcatedNameResolverInterface
      */
-    private $attributePropertyPrefix;
+    private $attributeNameResolver;
 
     /**
      * @param ProductAttributesContextInterface $productAttributesContext
      * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
-     * @param string $attributePropertyPrefix
+     * @param ConcatedNameResolverInterface $attributeNameResolver
      */
     public function __construct(
         ProductAttributesContextInterface $productAttributesContext,
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
-        string $attributePropertyPrefix
+        ConcatedNameResolverInterface $attributeNameResolver
     )
     {
         $this->productAttributesContext = $productAttributesContext;
         $this->productAttributeValueRepository = $productAttributeValueRepository;
-        $this->attributePropertyPrefix = $attributePropertyPrefix;
+        $this->attributeNameResolver = $attributeNameResolver;
     }
 
     /**
@@ -59,7 +60,7 @@ final class ProductAttributesFilterType extends AbstractFilterType
     {
         /** @var ProductAttributeInterface $productAttribute */
         foreach ($this->productAttributesContext->getAttributes() as $productAttribute) {
-            $name = $this->attributePropertyPrefix . '_' . $productAttribute->getCode();
+            $name = $this->attributeNameResolver->resolvePropertyName($productAttribute->getCode());
             $attributeValues = array_map(function (?ProductAttributeValueInterface $productAttributeValue): ?string {
                 return $productAttributeValue ? $productAttributeValue->getValue(): null;
             }, $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]));

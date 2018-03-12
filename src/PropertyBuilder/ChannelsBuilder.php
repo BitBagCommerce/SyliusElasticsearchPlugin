@@ -15,7 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class ChannelsPropertyBuilder extends AbstractPropertyBuilder
+final class ChannelsBuilder extends AbstractBuilder
 {
     /**
      * @var string

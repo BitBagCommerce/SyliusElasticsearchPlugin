@@ -12,22 +12,42 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Match;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class ContainsNameQueryBuilder implements QueryBuilderInterface
 {
     /**
-     * @var string
+     * @var LocaleContextInterface
      */
-    private $nameProperty;
+    private $localeContext;
 
     /**
-     * @param string $nameProperty
+     * @var ConcatedNameResolverInterface
      */
-    public function __construct(string $nameProperty)
+    private $productNameNameResolver;
+
+    /**
+     * @var string
+     */
+    private $namePropertyPrefix;
+
+    /**
+     * @param LocaleContextInterface $localeContext
+     * @param ConcatedNameResolverInterface $productNameNameResolver
+     * @param string $namePropertyPrefix
+     */
+    public function __construct(
+        LocaleContextInterface $localeContext,
+        ConcatedNameResolverInterface $productNameNameResolver,
+        string $namePropertyPrefix
+    )
     {
-        $this->nameProperty = $nameProperty;
+        $this->localeContext = $localeContext;
+        $this->productNameNameResolver = $productNameNameResolver;
+        $this->namePropertyPrefix = $namePropertyPrefix;
     }
 
     /**
@@ -35,12 +55,15 @@ final class ContainsNameQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        if (!$name = $data[$this->nameProperty]) {
+        $localeCode = $this->localeContext->getLocaleCode();
+        $propertyName = $this->productNameNameResolver->resolvePropertyName($localeCode);
+
+        if (!$name = $data[$this->namePropertyPrefix]) {
             return null;
         }
 
         $nameQuery = new Match();
-        $nameQuery->setFieldQuery($this->nameProperty, $name);
+        $nameQuery->setFieldQuery($propertyName, $name);
 
         return $nameQuery;
     }

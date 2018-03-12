@@ -12,23 +12,24 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-final class ChannelPricingPropertyBuilder extends AbstractPropertyBuilder
+final class ChannelPricingBuilder extends AbstractBuilder
 {
     /**
-     * @var string
+     * @var ConcatedNameResolverInterface
      */
-    private $priceProperty;
+    private $channelPricingNameResolver;
 
     /**
-     * @param string $priceProperty
+     * @param ConcatedNameResolverInterface $channelPricingNameResolver
      */
-    public function __construct(string $priceProperty)
+    public function __construct(ConcatedNameResolverInterface $channelPricingNameResolver)
     {
-        $this->priceProperty = $priceProperty;
+        $this->channelPricingNameResolver = $channelPricingNameResolver;
     }
 
     /**
@@ -47,7 +48,7 @@ final class ChannelPricingPropertyBuilder extends AbstractPropertyBuilder
         /** @var ProductVariantInterface $productVariant */
         foreach ($product->getVariants() as $productVariant) {
             foreach($productVariant->getChannelPricings() as $channelPricing) {
-                $propertyName = $this->priceProperty . '_' . strtolower($channelPricing->getChannelCode());
+                $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelPricing->getChannelCode());
 
                 $document->set($propertyName, $channelPricing->getPrice());
             }

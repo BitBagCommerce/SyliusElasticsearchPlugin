@@ -15,7 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class ProductTaxonsPropertyBuilder extends AbstractPropertyBuilder
+final class ProductTaxonsBuilder extends AbstractBuilder
 {
     /**
      * @var string
