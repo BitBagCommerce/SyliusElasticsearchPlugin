@@ -15,16 +15,16 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms;
 
-final class HasOptionsQueryBuilder implements QueryBuilderInterface
+final class HasAttributesQueryBuilder implements QueryBuilderInterface
 {
     /**
      * {@inheritdoc}
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $optionQuery = new Terms();
-        $optionQuery->setTerms($data['option'], (array) $data['option_values']);
+        $attributeQuery = new Terms();
+        $attributeQuery->setTerms($data['attribute'], (array) $data['attribute_values']);
 
-        return $optionQuery;
+        return $attributeQuery;
     }
 }

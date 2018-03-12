@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContextInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolverInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
@@ -38,19 +39,27 @@ final class ProductAttributesFilterType extends AbstractFilterType
     private $attributeNameResolver;
 
     /**
+     * @var AttributeValueResolverInterface
+     */
+    private $attributeValueResolver;
+
+    /**
      * @param ProductAttributesContextInterface $productAttributesContext
      * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
      * @param ConcatedNameResolverInterface $attributeNameResolver
+     * @param AttributeValueResolverInterface $attributeValueResolver
      */
     public function __construct(
         ProductAttributesContextInterface $productAttributesContext,
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
-        ConcatedNameResolverInterface $attributeNameResolver
+        ConcatedNameResolverInterface $attributeNameResolver,
+        AttributeValueResolverInterface $attributeValueResolver
     )
     {
         $this->productAttributesContext = $productAttributesContext;
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->attributeNameResolver = $attributeNameResolver;
+        $this->attributeValueResolver = $attributeValueResolver;
     }
 
     /**
@@ -61,16 +70,18 @@ final class ProductAttributesFilterType extends AbstractFilterType
         /** @var ProductAttributeInterface $productAttribute */
         foreach ($this->productAttributesContext->getAttributes() as $productAttribute) {
             $name = $this->attributeNameResolver->resolvePropertyName($productAttribute->getCode());
-            $attributeValues = array_map(function (?ProductAttributeValueInterface $productAttributeValue): ?string {
-                return $productAttributeValue ? $productAttributeValue->getValue(): null;
-            }, $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]));
+            $attributeValues = $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]);
+            $choices = [];
+            array_walk($attributeValues, function (?ProductAttributeValueInterface $productAttributeValue) use (&$choices) {
+                $choices[$productAttributeValue->getValue()] = $this->attributeValueResolver->resolve($productAttributeValue);
+            });
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productAttribute->getName(),
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
-                'choices' => array_combine($attributeValues, $attributeValues),
+                'choices' => $choices,
             ]);
         }
     }

@@ -98,7 +98,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         $data[$this->taxonsProperty] = (string) strtolower($taxon->getCode());
 
         $this->handlePrefixedProperty($requestData, $data, 'options', $this->optionPropertyPrefix);
-        $this->handlePrefixedProperty($requestData, $data, 'attributes', $this->optionPropertyPrefix);
+        $this->handlePrefixedProperty($requestData, $data, 'attributes', $this->attributePropertyPrefix);
 
         return $data;
     }

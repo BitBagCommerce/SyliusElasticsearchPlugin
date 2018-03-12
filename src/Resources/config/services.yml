@@ -6,3 +6,7 @@ imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/finder.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/form.yml" }
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/context.yml" }
+
+services:
+    bitbag.sylius_elasticsearch_plugin.property_value_resolver:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolver

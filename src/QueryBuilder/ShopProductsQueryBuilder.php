@@ -43,9 +43,19 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     private $hasOptionsQueryBuilder;
 
     /**
+     * @var QueryBuilderInterface
+     */
+    private $hasAttributesQueryBuilder;
+
+    /**
      * @var string
      */
     private $optionPropertyPrefix;
+
+    /**
+     * @var string
+     */
+    private $attributePropertyPrefix;
 
     /**
      * @param QueryBuilderInterface $isEnabledQueryBuilder
@@ -53,7 +63,9 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
      * @param QueryBuilderInterface $containsNameQueryBuilder
      * @param QueryBuilderInterface $hasTaxonQueryBuilder
      * @param QueryBuilderInterface $hasOptionsQueryBuilder
+     * @param QueryBuilderInterface $hasAttributesQueryBuilder
      * @param string $optionPropertyPrefix
+     * @param string $attributePropertyPrefix
      */
     public function __construct(
         QueryBuilderInterface $isEnabledQueryBuilder,
@@ -61,7 +73,9 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         QueryBuilderInterface $containsNameQueryBuilder,
         QueryBuilderInterface $hasTaxonQueryBuilder,
         QueryBuilderInterface $hasOptionsQueryBuilder,
-        string $optionPropertyPrefix
+        QueryBuilderInterface $hasAttributesQueryBuilder,
+        string $optionPropertyPrefix,
+        string $attributePropertyPrefix
     )
     {
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
@@ -69,7 +83,9 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         $this->containsNameQueryBuilder = $containsNameQueryBuilder;
         $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
         $this->hasOptionsQueryBuilder = $hasOptionsQueryBuilder;
+        $this->hasAttributesQueryBuilder = $hasAttributesQueryBuilder;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
+        $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
     /**
@@ -90,7 +106,8 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
             $boolQuery->addMust($taxonQuery);
         }
 
-        $this->buildOptionQuery($boolQuery, $data);
+        $this->resolveOptionQuery($boolQuery, $data);
+        $this->resolveAttributeQuery($boolQuery, $data);
 
         return $boolQuery;
     }
@@ -99,11 +116,26 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
      * @param BoolQuery $boolQuery
      * @param array $data
      */
-    private function buildOptionQuery(BoolQuery $boolQuery, array $data): void
+    private function resolveOptionQuery(BoolQuery $boolQuery, array $data): void
     {
         foreach ($data as $key => $value) {
-            if (0 === strpos($key, $this->optionPropertyPrefix && 0 < count($value))) {
-                $optionQuery = $this->hasOptionsQueryBuilder->buildQuery(['option_index' => $key, 'options' => $value]);
+            if (0 === strpos($key, $this->optionPropertyPrefix) && 0 < count($value)) {
+                $optionQuery = $this->hasOptionsQueryBuilder->buildQuery(['option' => $key, 'option_values' => $value]);
+
+                $boolQuery->addMust($optionQuery);
+            }
+        }
+    }
+
+    /**
+     * @param BoolQuery $boolQuery
+     * @param array $data
+     */
+    private function resolveAttributeQuery(BoolQuery $boolQuery, array $data): void
+    {
+        foreach ($data as $key => $value) {
+            if (0 === strpos($key, $this->attributePropertyPrefix) && 0 < count($value)) {
+                $optionQuery = $this->hasAttributesQueryBuilder->buildQuery(['attribute' => $key, 'attribute_values' => $value]);
 
                 $boolQuery->addMust($optionQuery);
             }

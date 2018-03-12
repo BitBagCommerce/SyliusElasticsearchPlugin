@@ -17,6 +17,7 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeBuilder
         arguments:
             - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute"
+            - "@bitbag.sylius_elasticsearch_plugin.property_value_resolver"
         tags:
             - { name: kernel.event_subscriber }
 

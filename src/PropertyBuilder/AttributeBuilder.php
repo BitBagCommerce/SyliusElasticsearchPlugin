@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolverInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -25,11 +26,21 @@ final class AttributeBuilder extends AbstractBuilder
     private $attributeNameResolver;
 
     /**
-     * @param ConcatedNameResolverInterface $attributeNameResolver
+     * @var AttributeValueResolverInterface
      */
-    public function __construct(ConcatedNameResolverInterface $attributeNameResolver)
+    private $attributeValueResolver;
+
+    /**
+     * @param ConcatedNameResolverInterface $attributeNameResolver
+     * @param AttributeValueResolverInterface $attributeValueResolver
+     */
+    public function __construct(
+        ConcatedNameResolverInterface $attributeNameResolver,
+        AttributeValueResolverInterface $attributeValueResolver
+    )
     {
         $this->attributeNameResolver = $attributeNameResolver;
+        $this->attributeValueResolver = $attributeValueResolver;
     }
 
     /**
@@ -64,7 +75,7 @@ final class AttributeBuilder extends AbstractBuilder
             }
 
             $reference = $document->get($index);
-            $reference[] = $attributeValue->getValue();
+            $reference[] = $this->attributeValueResolver->resolve($attributeValue);
 
             $document->set($index, $reference);
         }
