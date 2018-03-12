@@ -10,4 +10,10 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\Context\ProductOptionsContext
         arguments:
             - "@bitbag.sylius_elasticsearch_plugin.context.taxon"
-            - "@bitbag_sylius_elasticsearch_plugin.finder.options"
+            - "@bitbag_sylius_elasticsearch_plugin.finder.product_options"
+
+    bitbag.sylius_elasticsearch_plugin.context.product_attributes:
+        class: BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContext
+        arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.context.taxon"
+            - "@bitbag_sylius_elasticsearch_plugin.finder.product_attributes"

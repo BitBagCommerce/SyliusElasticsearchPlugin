@@ -23,7 +23,8 @@ final class ShopProductsFilterType extends AbstractFilterType
     {
         $builder
             ->add('name', NameFilterType::class)
-            ->add('options', OptionsFilterType::class)
+            ->add('options', ProductOptionsFilterType::class)
+            ->add('attributes', ProductAttributesFilterType::class)
         ;
     }
 }

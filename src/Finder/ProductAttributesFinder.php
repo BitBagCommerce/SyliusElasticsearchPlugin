@@ -16,17 +16,17 @@ use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 
-final class OptionsFinder implements OptionsFinderInterface
+final class ProductAttributesFinder implements ProductAttributesFinderInterface
 {
     /**
      * @var FinderInterface
      */
-    private $optionsFinder;
+    private $attributesFinder;
 
     /**
      * @var QueryBuilderInterface
      */
-    private $productOptionsByTaxonQueryBuilder;
+    private $attributesByTaxonQueryBuilder;
 
     /**
      * @var string
@@ -34,18 +34,18 @@ final class OptionsFinder implements OptionsFinderInterface
     private $taxonsProperty;
 
     /**
-     * @param FinderInterface $optionsFinder
-     * @param QueryBuilderInterface $productOptionsByTaxonQueryBuilder
+     * @param FinderInterface $attributesFinder
+     * @param QueryBuilderInterface $attributesByTaxonQueryBuilder
      * @param string $taxonsProperty
      */
     public function __construct(
-        FinderInterface $optionsFinder,
-        QueryBuilderInterface $productOptionsByTaxonQueryBuilder,
+        FinderInterface $attributesFinder,
+        QueryBuilderInterface $attributesByTaxonQueryBuilder,
         string $taxonsProperty
     )
     {
-        $this->optionsFinder = $optionsFinder;
-        $this->productOptionsByTaxonQueryBuilder = $productOptionsByTaxonQueryBuilder;
+        $this->attributesFinder = $attributesFinder;
+        $this->attributesByTaxonQueryBuilder = $attributesByTaxonQueryBuilder;
         $this->taxonsProperty = $taxonsProperty;
     }
 
@@ -57,9 +57,9 @@ final class OptionsFinder implements OptionsFinderInterface
         $data = [];
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
-        $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);
-        $options = $this->optionsFinder->find($query);
+        $query = $this->attributesByTaxonQueryBuilder->buildQuery($data);
+        $attributes = $this->attributesFinder->find($query);
 
-        return $options;
+        return $attributes;
     }
 }

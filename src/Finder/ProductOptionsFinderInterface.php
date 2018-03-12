@@ -14,7 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use Sylius\Component\Core\Model\TaxonInterface;
 
-interface AttributesFinderInterface
+interface ProductOptionsFinderInterface
 {
     /**
      * @param TaxonInterface $taxon

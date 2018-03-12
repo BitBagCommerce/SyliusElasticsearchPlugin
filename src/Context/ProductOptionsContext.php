@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Context;
 
-use BitBag\SyliusElasticsearchPlugin\Finder\OptionsFinderInterface;
+use BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinderInterface;
 
 final class ProductOptionsContext implements ProductOptionsContextInterface
 {
@@ -22,17 +22,17 @@ final class ProductOptionsContext implements ProductOptionsContextInterface
     private $taxonContext;
 
     /**
-     * @var OptionsFinderInterface
+     * @var ProductOptionsFinderInterface
      */
     private $optionsFinder;
 
     /**
      * @param TaxonContextInterface $taxonContext
-     * @param OptionsFinderInterface $optionsFinder
+     * @param ProductOptionsFinderInterface $optionsFinder
      */
     public function __construct(
         TaxonContextInterface $taxonContext,
-        OptionsFinderInterface $optionsFinder
+        ProductOptionsFinderInterface $optionsFinder
     )
     {
         $this->taxonContext = $taxonContext;

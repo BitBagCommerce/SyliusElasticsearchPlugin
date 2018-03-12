@@ -18,7 +18,7 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class OptionsFilterType extends AbstractFilterType
+final class ProductOptionsFilterType extends AbstractFilterType
 {
     /**
      * @var ProductOptionsContextInterface

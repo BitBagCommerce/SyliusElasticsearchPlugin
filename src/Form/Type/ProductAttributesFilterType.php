@@ -15,15 +15,21 @@ namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 use BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
+use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class AttributesFilterType extends AbstractFilterType
+final class ProductAttributesFilterType extends AbstractFilterType
 {
     /**
      * @var ProductAttributesContextInterface
      */
     private $productAttributesContext;
+
+    /**
+     * @var ProductAttributeValueRepositoryInterface
+     */
+    private $productAttributeValueRepository;
 
     /**
      * @var string
@@ -32,14 +38,17 @@ final class AttributesFilterType extends AbstractFilterType
 
     /**
      * @param ProductAttributesContextInterface $productAttributesContext
+     * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
      * @param string $attributePropertyPrefix
      */
     public function __construct(
         ProductAttributesContextInterface $productAttributesContext,
+        ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         string $attributePropertyPrefix
     )
     {
         $this->productAttributesContext = $productAttributesContext;
+        $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
@@ -51,9 +60,9 @@ final class AttributesFilterType extends AbstractFilterType
         /** @var ProductAttributeInterface $productAttribute */
         foreach ($this->productAttributesContext->getAttributes() as $productAttribute) {
             $name = $this->attributePropertyPrefix . '_' . $productAttribute->getCode();
-            $attributeValues = array_map(function (ProductAttributeValueInterface $productAttributeValue): ?string {
-                return $productAttributeValue->getValue();
-            }, $productAttribute->getValues()->toArray());
+            $attributeValues = array_map(function (?ProductAttributeValueInterface $productAttributeValue): ?string {
+                return $productAttributeValue ? $productAttributeValue->getValue(): null;
+            }, $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]));
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productAttribute->getName(),

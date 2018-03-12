@@ -14,7 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Context;
 
 use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinderInterface;
 
-final class ProductProductAttributesContext implements ProductAttributesContextInterface
+final class ProductAttributesContext implements ProductAttributesContextInterface
 {
     /**
      * @var TaxonContextInterface
