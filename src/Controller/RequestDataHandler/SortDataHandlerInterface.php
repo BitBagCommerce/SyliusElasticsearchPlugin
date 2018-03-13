@@ -18,9 +18,4 @@ interface SortDataHandlerInterface extends DataHandlerInterface
     const SORT_INDEX = 'sort';
     const SORT_ASC_INDEX = 'asc';
     const SORT_DESC_INDEX = 'desc';
-
-    /**
-     * @return array
-     */
-    public function getAvailableSorters(): array;
 }

@@ -105,7 +105,6 @@ final class ListProductsAction
         return $this->templatingEngine->renderResponse($template, [
             'form' => $form->createView(),
             'products' => $products,
-            'availableSorters' => $this->shopProductsSortDataHandler->getAvailableSorters(),
         ]);
     }
 }

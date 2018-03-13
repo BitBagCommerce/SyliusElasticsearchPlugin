@@ -6,6 +6,7 @@
 {% block content %}
     <div class="ui stackable grid">
         <div class="four wide column">
+            {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_sorting.html.twig' %}
             {{ form_start(form, {'method' : 'GET'}) }}
                 {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_filterForm.html.twig' %}
 

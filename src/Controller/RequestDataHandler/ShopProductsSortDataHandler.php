@@ -74,7 +74,7 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $orderBy = isset($requestData[self::ORDER_BY_INDEX]) ? $requestData[self::ORDER_BY_INDEX] : $this->soldUnitsProperty;
         $sort = isset($requestData[self::SORT_INDEX]) ? $requestData[self::SORT_INDEX] : self::SORT_DESC_INDEX;
 
-        $availableSorters = $this->getAvailableSorters();
+        $availableSorters = [$this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
         $availableSorting = [self::SORT_ASC_INDEX, self::SORT_DESC_INDEX];
 
         if (!in_array($orderBy, $availableSorters) || !in_array($sort, $availableSorting)) {
@@ -89,17 +89,5 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $data['sort'] = [$orderBy => ['order' => strtolower($sort)]];
 
         return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAvailableSorters(): array
-    {
-        return [
-            $this->soldUnitsProperty,
-            $this->createdAtProperty,
-            $this->pricePropertyPrefix,
-        ];
     }
 }
