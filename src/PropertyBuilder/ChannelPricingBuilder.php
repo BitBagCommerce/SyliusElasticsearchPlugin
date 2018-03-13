@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag. 
+ * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project. 
+ * another great project.
  * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl. 
+ * an email on mikolaj.krol@bitbag.pl.
  */
 
 declare(strict_types=1);
@@ -47,7 +47,7 @@ final class ChannelPricingBuilder extends AbstractBuilder
 
         /** @var ProductVariantInterface $productVariant */
         foreach ($product->getVariants() as $productVariant) {
-            foreach($productVariant->getChannelPricings() as $channelPricing) {
+            foreach ($productVariant->getChannelPricings() as $channelPricing) {
                 $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelPricing->getChannelCode());
 
                 $document->set($propertyName, $channelPricing->getPrice());

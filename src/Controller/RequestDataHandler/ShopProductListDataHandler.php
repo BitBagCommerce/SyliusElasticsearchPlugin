@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag. 
+ * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project. 
+ * another great project.
  * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl. 
+ * an email on mikolaj.krol@bitbag.pl.
  */
 
 declare(strict_types=1);
@@ -70,8 +70,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         string $taxonsProperty,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
-    )
-    {
+    ) {
         $this->taxonRepository = $taxonRepository;
         $this->localeContext = $localeContext;
         $this->paginationDataHandler = $paginationDataHandler;
@@ -114,8 +113,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         array &$data,
         string $formName,
         string $propertyPrefix
-    ): void
-    {
+    ): void {
         if (!isset($requestData[$formName])) {
             return;
         }

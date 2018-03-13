@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag. 
+ * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project. 
+ * another great project.
  * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl. 
+ * an email on mikolaj.krol@bitbag.pl.
  */
 
 declare(strict_types=1);
@@ -44,8 +44,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
         LocaleContextInterface $localeContext
-    )
-    {
+    ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
         $this->priceNameResolver = $priceNameResolver;
         $this->localeContext = $localeContext;
@@ -56,8 +55,8 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        if (!$minPrice = $data[$this->priceNameResolver->resolveMinPrice()] ||
-            !$maxPrice = $data[$this->priceNameResolver->resolveMinPrice()]) {
+        if (!$minPrice = $data[$this->priceNameResolver->resolveMinPriceName()] ||
+            !$maxPrice = $data[$this->priceNameResolver->resolveMinPriceName()]) {
             return null;
         }
 

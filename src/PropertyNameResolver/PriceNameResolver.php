@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag. 
+ * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project. 
+ * another great project.
  * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl. 
+ * an email on mikolaj.krol@bitbag.pl.
  */
 
 declare(strict_types=1);
@@ -30,7 +30,7 @@ final class PriceNameResolver implements PriceNameResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveMinPrice(): string
+    public function resolveMinPriceName(): string
     {
         return 'min_' . $this->pricePropertyPrefix;
     }
@@ -38,7 +38,7 @@ final class PriceNameResolver implements PriceNameResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveMaxPrice(): string
+    public function resolveMaxPriceName(): string
     {
         return 'max_' . $this->pricePropertyPrefix;
     }
