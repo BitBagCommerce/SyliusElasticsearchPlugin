@@ -34,11 +34,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private $namePropertyPrefix;
 
     /**
-     * @var PaginationDataHandler
-     */
-    private $paginationDataHandler;
-
-    /**
      * @var string
      */
     private $taxonsProperty;
@@ -56,7 +51,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     /**
      * @param TaxonRepositoryInterface $taxonRepository
      * @param LocaleContextInterface $localeContext
-     * @param PaginationDataHandler $paginationDataHandler
      * @param string $namePropertyPrefix
      * @param string $taxonsProperty
      * @param string $optionPropertyPrefix
@@ -65,7 +59,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     public function __construct(
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
-        PaginationDataHandler $paginationDataHandler,
         string $namePropertyPrefix,
         string $taxonsProperty,
         string $optionPropertyPrefix,
@@ -73,7 +66,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     ) {
         $this->taxonRepository = $taxonRepository;
         $this->localeContext = $localeContext;
-        $this->paginationDataHandler = $paginationDataHandler;
         $this->namePropertyPrefix = $namePropertyPrefix;
         $this->taxonsProperty = $taxonsProperty;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
@@ -92,7 +84,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
             throw new TaxonNotFoundException();
         }
 
-        $data = $this->paginationDataHandler->retrieveData($requestData);
         $data[$this->namePropertyPrefix] = (string) $requestData[$this->namePropertyPrefix];
         $data[$this->taxonsProperty] = (string) strtolower($taxon->getCode());
         $data = array_merge($data, $requestData['price']);

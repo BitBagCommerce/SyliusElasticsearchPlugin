@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
+use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
+use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -33,6 +35,16 @@ final class ListProductsAction
     private $shopProductListDataHandler;
 
     /**
+     * @var SortDataHandlerInterface
+     */
+    private $shopProductsSortDataHandler;
+
+    /**
+     * @var PaginationDataHandlerInterface
+     */
+    private $paginationDataHandler;
+
+    /**
      * @var ShopProductsFinderInterface
      */
     private $shopProductsFinder;
@@ -45,17 +57,24 @@ final class ListProductsAction
     /**
      * @param FormFactoryInterface $formFactory
      * @param DataHandlerInterface $shopProductListDataHandler
+     * @param SortDataHandlerInterface $shopProductsSortDataHandler
+     * @param PaginationDataHandlerInterface $paginationDataHandler
      * @param ShopProductsFinderInterface $shopProductsFinder
      * @param EngineInterface $templatingEngine
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         DataHandlerInterface $shopProductListDataHandler,
+        SortDataHandlerInterface $shopProductsSortDataHandler,
+        PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
         EngineInterface $templatingEngine
-    ) {
+    )
+    {
         $this->formFactory = $formFactory;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
+        $this->shopProductsSortDataHandler = $shopProductsSortDataHandler;
+        $this->paginationDataHandler = $paginationDataHandler;
         $this->shopProductsFinder = $shopProductsFinder;
         $this->templatingEngine = $templatingEngine;
     }
@@ -75,13 +94,18 @@ final class ListProductsAction
             $request->query->all(),
             ['slug' => $request->get('slug')]
         );
-        $data = $this->shopProductListDataHandler->retrieveData($requestData);
+        $data = array_merge(
+            $this->shopProductListDataHandler->retrieveData($requestData),
+            $this->shopProductsSortDataHandler->retrieveData($requestData),
+            $this->paginationDataHandler->retrieveData($requestData)
+        );
         $products = $this->shopProductsFinder->find($data);
         $template = $request->get('template');
 
         return $this->templatingEngine->renderResponse($template, [
             'form' => $form->createView(),
             'products' => $products,
+            'availableSorters' => $this->shopProductsSortDataHandler->getAvailableSorters(),
         ]);
     }
 }

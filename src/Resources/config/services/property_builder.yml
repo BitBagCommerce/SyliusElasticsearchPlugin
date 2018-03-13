@@ -42,6 +42,20 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    bitbag_sylius_elasticsearch_plugin.property_builder.sold_units:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\SoldUnitsPropertyBuilder
+        arguments:
+            - "@sylius.repository.order_item"
+            - "%bitbag_es_shop_product_sold_units%"
+        tags:
+
+    bitbag_sylius_elasticsearch_plugin.property_builder.product_created_at:
+        class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductCreatedAtPropertyBuilder
+        arguments:
+            - "%bitbag_es_shop_product_created_at%"
+        tags:
+            - { name: kernel.event_subscriber }
+
     bitbag_sylius_elasticsearch_plugin.property_builder.option_taxons:
         class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionTaxonsBuilder
         arguments:
