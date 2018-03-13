@@ -26,7 +26,6 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\PriceFilterType
         arguments:
             - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.price"
-            - "@bitbag_sylius_elasticsearch_plugin.form.data_transformer.price"
         tags:
             - { name: form.type }
 
@@ -36,6 +35,3 @@ services:
             - "%bitbag_es_shop_name_property_prefix%"
         tags:
             - { name: form.type }
-
-    bitbag_sylius_elasticsearch_plugin.form.data_transformer.price:
-        class: BitBag\SyliusElasticsearchPlugin\Form\DataTransformer\PriceTransformer

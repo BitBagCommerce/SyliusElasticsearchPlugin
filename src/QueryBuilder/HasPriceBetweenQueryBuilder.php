@@ -16,7 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInterface;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Range;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 
 final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 {
@@ -31,23 +31,23 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
     private $priceNameResolver;
 
     /**
-     * @var LocaleContextInterface
+     * @var ChannelContextInterface
      */
-    private $localeContext;
+    private $channelContext;
 
     /**
      * @param PriceNameResolverInterface $priceNameResolver
      * @param ConcatedNameResolverInterface $channelPricingNameResolver
-     * @param LocaleContextInterface $localeContext
+     * @param ChannelContextInterface $channelContext
      */
     public function __construct(
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        LocaleContextInterface $localeContext
+        ChannelContextInterface $channelContext
     ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
         $this->priceNameResolver = $priceNameResolver;
-        $this->localeContext = $localeContext;
+        $this->channelContext = $channelContext;
     }
 
     /**
@@ -55,14 +55,27 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        if (!$minPrice = $data[$this->priceNameResolver->resolveMinPriceName()] ||
-            !$maxPrice = $data[$this->priceNameResolver->resolveMinPriceName()]) {
+        $minPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
+        $maxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
+
+        if (!$minPrice || !$maxPrice) {
             return null;
         }
 
-        $propertyName = $this->channelPricingNameResolver->resolvePropertyName($this->localeContext->getLocaleCode());
-        $rangeQuery = new Range($propertyName, ['min' => $minPrice, 'max' => $maxPrice]);
+        $channelCode = $this->channelContext->getChannel()->getCode();
+        $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
+        $rangeQuery = new Range();
+
+        $rangeQuery->setParam($propertyName, [
+            'gte' => $this->getPriceFromString($minPrice),
+            'lt' => $this->getPriceFromString($maxPrice),
+        ]);
 
         return $rangeQuery;
+    }
+
+    private function getPriceFromString(string $price): int
+    {
+        return (int) round($price * 100, 2);
     }
 }

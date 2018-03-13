@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
+use Sylius\Component\Core\Calculator\ProductVariantPriceCalculatorInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
@@ -44,14 +45,13 @@ final class ChannelPricingBuilder extends AbstractBuilder
         }
 
         $document = $event->getDocument();
-
         /** @var ProductVariantInterface $productVariant */
-        foreach ($product->getVariants() as $productVariant) {
-            foreach ($productVariant->getChannelPricings() as $channelPricing) {
-                $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelPricing->getChannelCode());
+        $productVariant = $product->getVariants()->first();
 
-                $document->set($propertyName, $channelPricing->getPrice());
-            }
+        foreach ($productVariant->getChannelPricings() as $channelPricing) {
+            $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelPricing->getChannelCode());
+
+            $document->set($propertyName, $channelPricing->getPrice());
         }
     }
 }

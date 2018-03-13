@@ -42,8 +42,8 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasPriceBetweenQueryBuilder
         arguments:
             - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.price"
-            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.name"
-            - "@sylius.context.locale"
+            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing"
+            - "@sylius.context.channel"
 
     bitbag_sylius_elasticsearch_plugin.query_builder.shop_products:
         class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder
@@ -54,6 +54,7 @@ services:
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_product_taxon"
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_options"
            - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_attributes"
+           - "@bitbag_sylius_elasticsearch_plugin.query_builder.has_price_between"
            - "%bitbag_es_shop_option_property_prefix%"
            - "%bitbag_es_shop_attribute_property_prefix%"
 

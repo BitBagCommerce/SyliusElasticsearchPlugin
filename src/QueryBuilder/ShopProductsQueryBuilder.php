@@ -48,6 +48,11 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     private $hasAttributesQueryBuilder;
 
     /**
+     * @var QueryBuilderInterface
+     */
+    private $hasPriceBetweenQueryBuilder;
+
+    /**
      * @var string
      */
     private $optionPropertyPrefix;
@@ -64,6 +69,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
      * @param QueryBuilderInterface $hasTaxonQueryBuilder
      * @param QueryBuilderInterface $hasOptionsQueryBuilder
      * @param QueryBuilderInterface $hasAttributesQueryBuilder
+     * @param QueryBuilderInterface $hasPriceBetweenQueryBuilder
      * @param string $optionPropertyPrefix
      * @param string $attributePropertyPrefix
      */
@@ -74,6 +80,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         QueryBuilderInterface $hasTaxonQueryBuilder,
         QueryBuilderInterface $hasOptionsQueryBuilder,
         QueryBuilderInterface $hasAttributesQueryBuilder,
+        QueryBuilderInterface $hasPriceBetweenQueryBuilder,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
     ) {
@@ -83,6 +90,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
         $this->hasOptionsQueryBuilder = $hasOptionsQueryBuilder;
         $this->hasAttributesQueryBuilder = $hasAttributesQueryBuilder;
+        $this->hasPriceBetweenQueryBuilder = $hasPriceBetweenQueryBuilder;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
         $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
@@ -103,6 +111,10 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
 
         if ($taxonQuery = $this->hasTaxonQueryBuilder->buildQuery($data)) {
             $boolQuery->addMust($taxonQuery);
+        }
+
+        if ($priceQuery = $this->hasPriceBetweenQueryBuilder->buildQuery($data)) {
+            $boolQuery->addMust($priceQuery);
         }
 
         $this->resolveOptionQuery($boolQuery, $data);

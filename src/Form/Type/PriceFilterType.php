@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInterface;
-use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class PriceFilterType extends AbstractFilterType
@@ -25,18 +24,11 @@ final class PriceFilterType extends AbstractFilterType
     private $priceNameResolver;
 
     /**
-     * @var DataTransformerInterface
-     */
-    private $moneyTransformer;
-
-    /**
      * @param PriceNameResolverInterface $priceNameResolver
-     * @param DataTransformerInterface $moneyTransformer
      */
-    public function __construct(PriceNameResolverInterface $priceNameResolver, DataTransformerInterface $moneyTransformer)
+    public function __construct(PriceNameResolverInterface $priceNameResolver)
     {
         $this->priceNameResolver = $priceNameResolver;
-        $this->moneyTransformer = $moneyTransformer;
     }
 
     /**
@@ -45,11 +37,14 @@ final class PriceFilterType extends AbstractFilterType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add($this->priceNameResolver->resolveMinPriceName(), IntegerType::class, ['attr' => ['value' => 100]])
-            ->add($this->priceNameResolver->resolveMaxPriceName(), IntegerType::class, ['attr' => ['value' => 1500]])
+            ->add($this->priceNameResolver->resolveMinPriceName(), MoneyType::class, [
+                'label' => 'bitbag_sylius_elasticsearch_plugin.ui.min_price',
+                'required' => false,
+            ])
+            ->add($this->priceNameResolver->resolveMaxPriceName(), MoneyType::class, [
+                'label' => 'bitbag_sylius_elasticsearch_plugin.ui.min_price',
+                'required' => false,
+            ])
         ;
-
-        $builder->get($this->priceNameResolver->resolveMinPriceName())->addViewTransformer($this->moneyTransformer);
-        $builder->get($this->priceNameResolver->resolveMaxPriceName())->addViewTransformer($this->moneyTransformer);
     }
 }
