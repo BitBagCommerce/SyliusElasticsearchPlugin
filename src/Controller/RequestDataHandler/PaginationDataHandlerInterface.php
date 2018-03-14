@@ -15,4 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 interface PaginationDataHandlerInterface extends DataHandlerInterface
 {
     const PAGE_INDEX = 'page';
+    const LIMIT_INDEX = 'limit';
+    const DEFAULT_LIMIT = 9;
+    const AVAILABLE_LIMITS = [9, 18, 36];
 }

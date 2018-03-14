@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
+use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -49,11 +50,12 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     {
         $boolQuery = $this->shopProductsQueryBuilder->buildQuery($data);
         $query = new Query($boolQuery);
-        $query->addSort($data['sort']);
+        $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
 
         $products = $this->productFinder->findPaginated($query);
 
         $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
+        $products->setMaxPerPage($data[PaginationDataHandlerInterface::LIMIT_INDEX]);
 
         return $products;
     }

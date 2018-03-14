@@ -10,3 +10,4 @@ bitbag_sylius_elasticsearch_plugin:
         oldest: Oldest
         most_expensive: Most expensive
         cheapest: Cheapest
+        per_page: Per page

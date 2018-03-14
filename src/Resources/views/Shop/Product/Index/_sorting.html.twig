@@ -1,8 +1,17 @@
 {% set route = app.request.attributes.get('_route') %}
 {% set slug = app.request.get('slug') %}
+{% set queryParameters = app.request.query.all|unset_elements(['order_by', 'sort']) %}
 
-<a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'sold_units', 'sort': 'desc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.bestsellers'|trans }}</a>
-<a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'desc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.newest'|trans }}</a>
-<a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'asc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.oldest'|trans }}</a>
-<a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'price', 'sort': 'desc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.most_expensive'|trans }}</a>
-<a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'price', 'sort': 'asc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.cheapest'|trans }}</a>
+<div class="ui compact menu">
+    <div class="ui simple dropdown item">
+        {{ 'bitbag_sylius_elasticsearch_plugin.ui.sort'|trans }}
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'sold_units', 'sort': 'desc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.bestsellers'|trans }}</a>
+            <a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'desc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.newest'|trans }}</a>
+            <a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'asc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.oldest'|trans }}</a>
+            <a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'price', 'sort': 'desc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.most_expensive'|trans }}</a>
+            <a class="item" href="{{ path(route, {'slug': slug, 'order_by': 'price', 'sort': 'asc'}|merge(queryParameters)) }}">{{ 'bitbag_sylius_elasticsearch_plugin.ui.cheapest'|trans }}</a>
+        </div>
+    </div>
+</div>

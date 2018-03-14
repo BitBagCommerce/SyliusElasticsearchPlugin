@@ -23,22 +23,13 @@
         <div class="twelve wide column">
             <div class="ui segment">
                 <div class="ui stackable grid">
-                    <div class="three wide column">
-                        <div class="ui compact menu">
-                            <div class="ui simple dropdown item">
-                                {{ 'bitbag_sylius_elasticsearch_plugin.ui.sort'|trans }}
-                                <i class="dropdown icon"></i>
-                                <div class="menu">
-                                    {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_sorting.html.twig' %}
-                                </div>
-                            </div>
-                        </div>
+                    <div class="six wide column">
+                        {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_sorting.html.twig' %}
+                        {% include '@BitBagSyliusElasticSearchPlugin/Shop/Product/Index/_pagination.html.twig' %}
                     </div>
-                    <div class="eight wide column">
-                        {{ form_widget(form.name) }}
-                    </div>
-                    <div class="three wide column">
-                        <div class="ui buttons">
+                    <div class="ten wide column">
+                        <div class="ui action input">
+                            {{ form_widget(form.name) }}
                             <button type="submit" class="ui primary icon labeled button"><i class="search icon"></i> {{ 'sylius.ui.search'|trans }}</button>
                         </div>
                     </div>
@@ -62,33 +53,4 @@
         </div>
     </div>
     {{ form_end(form, {'render_rest': false}) }}
-
-    {#<div class="ui stackable grid">#}
-    {#<div class="four wide column">#}
-    {#{{ form_start(form, {'method': 'GET'}) }}#}
-
-    {#{{ form_end(form, {'render_rest': false}) }}#}
-    {#</div>#}
-    {#<div class="twelve wide column">#}
-    {#<div class="ui clearing hidden divider"></div>#}
-
-    {#{% if products|length > 0 %}#}
-    {#<div class="ui clearing hidden divider"></div>#}
-
-    {#<div class="ui three column stackable grid" id="products">#}
-    {#{% for product in products %}#}
-    {#<div class="column">#}
-    {#{% include '@SyliusShop/Product/_box.html.twig' %}#}
-    {#</div>#}
-    {#{% endfor %}#}
-    {#</div>#}
-    {#<div class="ui hidden divider"></div>#}
-
-    {#{{ pagination.simple(products) }}#}
-
-    {#{% else %}#}
-    {#{{ messages.info('sylius.ui.no_results_to_display') }}#}
-    {#{% endif %}#}
-    {#</div>#}
-    {#</div>#}
 {% endblock %}

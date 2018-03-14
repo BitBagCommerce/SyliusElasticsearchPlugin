@@ -10,3 +10,8 @@ imports:
 services:
     bitbag.sylius_elasticsearch_plugin.property_value_resolver:
         class: BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolver
+
+    bitbag.sylius_elasticsearch_plugin.twig.extension.unset_array_elements:
+        class: BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension
+        tags:
+            - { name: twig.extension }
