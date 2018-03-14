@@ -48,6 +48,7 @@ services:
             - "@sylius.repository.order_item"
             - "%bitbag_es_shop_product_sold_units%"
         tags:
+            - { name: kernel.event_subscriber }
 
     bitbag_sylius_elasticsearch_plugin.property_builder.product_created_at:
         class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductCreatedAtPropertyBuilder

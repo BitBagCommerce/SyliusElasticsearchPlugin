@@ -1,5 +1,8 @@
 {% set route = app.request.attributes.get('_route') %}
-{% set route_parameters = app.request.attributes.get('_route_params') %}
 {% set slug = app.request.get('slug') %}
 
-<a href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'desc'}) }}">Cheapest</a>
+<a href="{{ path(route, {'slug': slug, 'order_by': 'sold_units', 'sort': 'desc'}|merge(queryParameters)) }}">Bestsellers</a>
+<a href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'desc'}|merge(queryParameters)) }}">Newest</a>
+<a href="{{ path(route, {'slug': slug, 'order_by': 'product_created_at', 'sort': 'asc'}|merge(queryParameters)) }}">Oldest</a>
+<a href="{{ path(route, {'slug': slug, 'order_by': 'price', 'sort': 'desc'}|merge(queryParameters)) }}">Most expensive</a>
+<a href="{{ path(route, {'slug': slug, 'order_by': 'price', 'sort': 'asc'}|merge(queryParameters)) }}">Cheapest</a>

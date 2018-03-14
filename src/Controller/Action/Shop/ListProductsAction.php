@@ -89,9 +89,10 @@ final class ListProductsAction
         $form = $this->formFactory->createNamed(null, ShopProductsFilterType::class);
         $form->handleRequest($request);
 
+        $queryParameters = $request->query->all();
         $requestData = array_merge(
             $form->getData(),
-            $request->query->all(),
+            $queryParameters,
             ['slug' => $request->get('slug')]
         );
         $data = array_merge(
@@ -99,12 +100,32 @@ final class ListProductsAction
             $this->shopProductsSortDataHandler->retrieveData($requestData),
             $this->paginationDataHandler->retrieveData($requestData)
         );
-        $products = $this->shopProductsFinder->find($data);
         $template = $request->get('template');
+        $products = $this->shopProductsFinder->find($data);
+        $queryParameters = $this->trimQueryParameters($queryParameters);
 
         return $this->templatingEngine->renderResponse($template, [
             'form' => $form->createView(),
             'products' => $products,
+            'queryParameters' => $queryParameters,
         ]);
+    }
+
+    /**
+     * @param array $queryParameters
+     *
+     * @return array
+     */
+    private function trimQueryParameters(array $queryParameters): array
+    {
+        $indexesToTrim = [SortDataHandlerInterface::ORDER_BY_INDEX, SortDataHandlerInterface::SORT_INDEX];
+
+        foreach ($indexesToTrim as $indexToTrm) {
+            if (isset($queryParameters[$indexToTrm])) {
+                unset($queryParameters[$indexToTrm]);
+            }
+        }
+
+        return $queryParameters;
     }
 }

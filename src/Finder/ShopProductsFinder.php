@@ -50,6 +50,8 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     {
         $boolQuery = $this->shopProductsQueryBuilder->buildQuery($data);
         $query = new Query($boolQuery);
+        $query->addSort($data['sort']);
+
         $products = $this->productFinder->findPaginated($query);
 
         $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
