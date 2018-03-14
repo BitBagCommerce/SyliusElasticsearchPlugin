@@ -1,0 +1,12 @@
+bitbag_sylius_elasticsearch_plugin:
+    ui:
+        min_price: Min price
+        max_price: Max price
+        filter_results: Filter results
+        filter: Filter
+        sort: Sort by
+        bestsellers: Bestsellers
+        newest: Newest
+        oldest: Oldest
+        most_expensive: Most expensive
+        cheapest: Cheapest

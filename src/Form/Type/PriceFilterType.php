@@ -42,7 +42,7 @@ final class PriceFilterType extends AbstractFilterType
                 'required' => false,
             ])
             ->add($this->priceNameResolver->resolveMaxPriceName(), MoneyType::class, [
-                'label' => 'bitbag_sylius_elasticsearch_plugin.ui.min_price',
+                'label' => 'bitbag_sylius_elasticsearch_plugin.ui.max_price',
                 'required' => false,
             ])
         ;

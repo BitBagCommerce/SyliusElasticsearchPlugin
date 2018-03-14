@@ -69,8 +69,7 @@ final class ListProductsAction
         PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
         EngineInterface $templatingEngine
-    )
-    {
+    ) {
         $this->formFactory = $formFactory;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
         $this->shopProductsSortDataHandler = $shopProductsSortDataHandler;
@@ -108,6 +107,7 @@ final class ListProductsAction
             'form' => $form->createView(),
             'products' => $products,
             'queryParameters' => $queryParameters,
+            'taxon' => $data['taxon'],
         ]);
     }
 
