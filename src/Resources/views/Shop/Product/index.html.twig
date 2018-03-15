@@ -30,8 +30,12 @@
                     <div class="eleven wide column">
                         <div class="ui action input">
                             {{ form_widget(form.name, {'attr': {'placeholder': 'sylius.ui.search'}}) }}
-                            <button type="submit" class="ui primary button"><i class="search icon"></i></button>
-                            <a href="{{ path('bitbag_sylius_elasticsearch_plugin_shop_list_products', {'slug': taxon.slug}) }}" class="ui negative button"><i class="cancel icon"></i></a>
+                            <button type="submit" class="ui primary icon button">
+                                <i class="search icon"></i>
+                            </button>
+                            <a href="{{ path('bitbag_sylius_elasticsearch_plugin_shop_list_products', {'slug': taxon.slug}) }}" class="ui negative icon button">
+                                <i class="cancel icon"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
