@@ -1,5 +1,5 @@
 bitbag_sylius_elasticsearch_plugin_shop_list_products:
-    path: /{_locale}/products/taxon/{slug}
+    path: /{_locale}/products-list/{slug}
     defaults:
         _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.list_products
         template: "@BitBagSyliusElasticsearchPlugin/Shop/Product/index.html.twig"
