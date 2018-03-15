@@ -38,6 +38,7 @@ public function registerBundles()
     return array_merge(parent::registerBundles(), [
         ...
         
+        new \FOS\ElasticaBundle\FOSElasticaBundle(),
         new \BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin(),
     ]);
 }
