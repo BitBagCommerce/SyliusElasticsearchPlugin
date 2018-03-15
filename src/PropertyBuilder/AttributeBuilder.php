@@ -27,11 +27,6 @@ final class AttributeBuilder extends AbstractBuilder
     private $attributeNameResolver;
 
     /**
-     * @var AttributeValueResolverInterface
-     */
-    private $attributeValueResolver;
-
-    /**
      * @var StringFormatterInterface
      */
     private $stringFormatter;
