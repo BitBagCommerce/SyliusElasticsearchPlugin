@@ -1,94 +1,95 @@
-<p align="center">
-    <a href="http://sylius.org" target="_blank">
-        <img src="http://demo.sylius.org/assets/shop/img/logo.png" />
+<h1 align="center">
+    <a href="http://bitbag.shop" target="_blank">
+        <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/SyliusElasticsearchPlugin.png" />
     </a>
-</p>
-<h1 align="center">Plugin Skeleton</h1>
-<p align="center">
-    <a href="https://packagist.org/packages/sylius/plugin-skeleton" title="License">
-        <img src="https://img.shields.io/packagist/l/sylius/plugin-skeleton.svg" />
+    <br />
+    <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="License" target="_blank">
+        <img src="https://img.shields.io/packagist/l/bitbag/elasticsearch-plugin.svg" />
     </a>
-    <a href="https://packagist.org/packages/sylius/plugin-skeleton" title="Version">
-        <img src="https://img.shields.io/packagist/v/sylius/plugin-skeleton.svg" />
+    <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="Version" target="_blank">
+        <img src="https://img.shields.io/packagist/v/bitbag/elasticsearch-plugin.svg" />
     </a>
-    <a href="http://travis-ci.org/Sylius/PluginSkeleton" title="Build status">
-        <img src="https://img.shields.io/travis/Sylius/PluginSkeleton/master.svg" />
+    <a href="http://travis-ci.org/BitBagCommerce/SyliusElasticsearchPlugin" title="Build status" target="_blank">
+        <img src="https://img.shields.io/travis/BitBagCommerce/SyliusElasticsearchPlugin/master.svg" />
     </a>
-    <a href="https://scrutinizer-ci.com/g/Sylius/PluginSkeleton/" title="Scrutinizer">
-        <img src="https://img.shields.io/scrutinizer/g/Sylius/PluginSkeleton.svg" />
+    <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusElasticsearchPlugin/" title="Scrutinizer" target="_blank">
+        <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusElasticsearchPlugin.svg" />
     </a>
-</p>
+    <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="Total Downloads" target="_blank">
+        <img src="https://poser.pugx.org/bitbag/elasticsearch-plugin/downloads" />
+    </a>
+</h1>
+
+## Overview
+
+Working Sylius Elasticsearch integration based on FOSElasticaBundle.
 
 ## Installation
-
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
-
-2. From the plugin skeleton root directory, run the following commands:
-
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
+```bash
+$ composer require bitbag/elasticsearch-plugin
+```
     
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
-    ```
+Add plugin dependencies to your AppKernel.php file:
+```php
+public function registerBundles()
+{
+    return array_merge(parent::registerBundles(), [
+        ...
+        
+        new \BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin(),
+    ]);
+}
+```
+
+Import required config in your `app/config/config.yml` file:
+
+```yaml
+# app/config/config.yml
+
+imports:
+    ...
+    
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/config.yml" }
+```
+
+Import routing in your `app/config/routing.yml` file:
+
+```yaml
+
+# app/config/routing.yml
+...
+
+bitbag_sylius_cms_plugin:
+    resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
+```
+
+With a elasticsearch server running on port 9200 run following commands. 
+```
+$ bin/console fos:elastica:populate
+```
+
+*Note: if you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.*
 
 ## Usage
 
-### Running plugin tests
+## Testing
+```bash
+$ composer install
+$ cd tests/Application
+$ yarn install
+$ yarn run gulp
+$ bin/console assets:install web -e test
+$ bin/console doctrine:schema:create -e test
+$ bin/console server:run 127.0.0.1:8080 -d web -e test
+$ open http://localhost:8080
+$ bin/behat
+$ bin/phpspec run
+```
 
-  - PHPUnit
+## Contribution
 
-    ```bash
-    $ bin/phpunit
-    ```
+Learn more about our contribution workflow on http://docs.sylius.org/en/latest/contributing/.
 
-  - PHPSpec
+## Support
 
-    ```bash
-    $ bin/phpspec run
-    ```
-
-  - Behat (non-JS scenarios)
-
-    ```bash
-    $ bin/behat --tags="~@javascript"
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ bin/selenium-server-standalone -Dwebdriver.chrome.driver=chromedriver
-        ```
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ bin/behat --tags="@javascript"
-        ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d web -e test)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d web -e dev)
-    ```
+Want us to help you with this plugin or any Sylius project? Write us an email on mikolaj.krol@bitbag.pl :computer:

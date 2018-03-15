@@ -1,12 +1,12 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "bitbag/elasticsearch-plugin",
     "type": "sylius-plugin",
-    "description": "Acme example plugin for Sylius.",
+    "description": "BitBag Elasticsearch plugin for Sylius.",
     "license": "MIT",
     "require": {
         "php": "^7.1",
 
-        "sylius/sylius": "^1.2@dev",
+        "sylius/sylius": "^1.1",
         "friendsofsymfony/elastica-bundle": "^5.0",
         "sylius-labs/coding-standard": "^1.0"
     },
@@ -37,11 +37,6 @@
     },
     "autoload-dev": {
         "classmap": ["tests/Application/app/AppKernel.php"]
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.1-dev"
-        }
     },
     "config": {
         "bin-dir": "bin"
