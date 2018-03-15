@@ -10,7 +10,6 @@ parameters:
 
 fos_elastica:
     clients:
-        defa
-        ult:
+        default:
             host: "%bitbag_es_host%"
             port: "%bitbag_es_port%"
