@@ -69,22 +69,17 @@ final class AttributeBuilder extends AbstractBuilder
             $attributeCode = $attributeValue->getAttribute()->getCode();
             $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
             $value = $this->attributeValueResolver->resolve($attributeValue);
-
-            if (!$document->has($index)) {
-                $document->set($index, []);
-            }
-
-            $reference = $document->get($index);
+            $attributes = [];
 
             if (is_array($value)) {
                 foreach ($value as $singleElement) {
-                    $reference[] = $singleElement;
+                    $attributes[] = $singleElement;
                 }
             } else {
-                $reference[] = $value;
+                $attributes[] = $value;
             }
 
-            $document->set($index, $reference);
+            $document->set($index, $attributes);
         }
     }
 }
