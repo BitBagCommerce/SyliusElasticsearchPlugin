@@ -22,7 +22,7 @@
 
 ## Overview
 
-Working Sylius Elasticsearch integration based on FOSElasticaBundle. The main goal of this plugin is to support filtering products by 
+Working Sylius Elasticsearch integration based on [FOSElasticaBundle](https://github.com/FriendsOfSymfony/FOSElasticaBundle). The main goal of this plugin is to support filtering products by 
 options, attributes, taxons, channels and name in the front product list page. It totally replaces the default Sylius `sylius_shop_product_index`
 route.
 
