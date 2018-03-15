@@ -22,7 +22,7 @@
 
 ## Overview
 
-Working Sylius Elasticsearch integration based on [FOSElasticaBundle](https://github.com/FriendsOfSymfony/FOSElasticaBundle). The main goal of this plugin is to support filtering products by 
+Working [Sylius](https://sylius.com/) [Elasticsearch](https://www.elastic.co/products/elasticsearch) integration based on [FOSElasticaBundle](https://github.com/FriendsOfSymfony/FOSElasticaBundle). The main goal of this plugin is to support filtering products by 
 options, attributes, taxons, channels and name in the front product list page. It totally replaces the default Sylius `sylius_shop_product_index`
 route.
 
@@ -202,4 +202,4 @@ Learn more about our contribution workflow on http://docs.sylius.org/en/latest/c
 ## Support
 
 We work on amazing eCommerce projects on top of Sylius, Pimcore and Vue JS. Need some help or additional resources for a project?
-Write us an email on mikolaj.krol@bitbag.pl! :computer:
+Write us an email on mikolaj.krol@bitbag.pl or visit [our website](https://bitbag.shop/)! :rocket:
