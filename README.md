@@ -112,41 +112,71 @@ By default all options and attributes are indexed. After you change these parame
 ### Available services you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) and forms you can [extend](http://symfony.com/doc/current/form/create_form_type_extension.html)
 
 ```bash
-bitbag_es_excluded_filter_attributes                                      ["book_isbn","book_pages"]
-bitbag_es_excluded_filter_options                                         []                        
-bitbag_es_host                                                            localhost                 
-bitbag_es_port                                                            9200                      
-bitbag_es_shop_attribute_property_prefix                                  attribute                 
-bitbag_es_shop_attribute_taxons_property                                  attribute_taxons          
-bitbag_es_shop_channels_property                                          channels                  
-bitbag_es_shop_enabled_property                                           enabled                   
-bitbag_es_shop_name_property_prefix                                       name                      
-bitbag_es_shop_option_property_prefix                                     option                    
-bitbag_es_shop_option_taxons_property                                     option_taxons             
-bitbag_es_shop_product_created_at                                         product_created_at        
-bitbag_es_shop_product_price_property_prefix                              price                     
-bitbag_es_shop_product_sold_units                                         sold_units                
-bitbag_es_shop_product_taxons_property                                    product_taxons            
-fos_elastica.default_index                                                bitbag_shop_product
+  bitbag.sylius_elasticsearch_plugin.context.product_attributes                                BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContext
+  bitbag.sylius_elasticsearch_plugin.context.product_options                                   BitBag\SyliusElasticsearchPlugin\Context\ProductOptionsContext
+  bitbag.sylius_elasticsearch_plugin.context.taxon                                             BitBag\SyliusElasticsearchPlugin\Context\TaxonContext
+  bitbag.sylius_elasticsearch_plugin.string_formatter                                          BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatter
+  bitbag.sylius_elasticsearch_plugin.twig.extension.unset_array_elements                       BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension
+  bitbag_sylius_elasticsearch_plugin.controller.action.shop.list_products                      BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop\ListProductsAction
+  bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination                BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandler
+  bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_product_list         BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductListDataHandler
+  bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort        BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductsSortDataHandler
+  bitbag_sylius_elasticsearch_plugin.finder.product_attributes                                 BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinder
+  bitbag_sylius_elasticsearch_plugin.finder.product_options                                    BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinder
+  bitbag_sylius_elasticsearch_plugin.finder.shop_products                                      BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder
+  bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes                BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductAttributesMapper
+  bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_options                   BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductOptionsMapper
+  bitbag_sylius_elasticsearch_plugin.form.type.name_filter                                     BitBag\SyliusElasticsearchPlugin\Form\Type\NameFilterType
+  bitbag_sylius_elasticsearch_plugin.form.type.price_filter                                    BitBag\SyliusElasticsearchPlugin\Form\Type\PriceFilterType
+  bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_filter                       BitBag\SyliusElasticsearchPlugin\Form\Type\ProductAttributesFilterType
+  bitbag_sylius_elasticsearch_plugin.form.type.product_options_filter                          BitBag\SyliusElasticsearchPlugin\Form\Type\ProductOptionsFilterType
+  bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter                            BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType
+  bitbag_sylius_elasticsearch_plugin.property_builder.attribute                                BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.attribute_taxons                         BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.channel_pricing                          BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelPricingBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.channels                                 BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelsBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.option                                   BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.option_taxons                            BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionTaxonsBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.product_created_at                       BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductCreatedAtPropertyBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.product_name                             BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductNameBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.product_taxons                           BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonsBuilder
+  bitbag_sylius_elasticsearch_plugin.property_builder.sold_units                               BitBag\SyliusElasticsearchPlugin\PropertyBuilder\SoldUnitsPropertyBuilder
+  bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute                          BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver
+  bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing                    BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver
+  bitbag_sylius_elasticsearch_plugin.property_name_resolver.name                               BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver
+  bitbag_sylius_elasticsearch_plugin.property_name_resolver.option                             BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver
+  bitbag_sylius_elasticsearch_plugin.property_name_resolver.price                              BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolver
+  bitbag_sylius_elasticsearch_plugin.query_builder.contains_name                               BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon                         BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_attributes                              BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasAttributesQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_channel                                 BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasChannelQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_option_taxon                            BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_options                                 BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasOptionsQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_price_between                           BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasPriceBetweenQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.has_product_taxon                           BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled                                  BitBag\SyliusElasticsearchPlugin\QueryBuilder\IsEnabledQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon                 BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductAttributesByTaxonQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.product_options_by_taxon                    BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductOptionsByTaxonQueryBuilder
+  bitbag_sylius_elasticsearch_plugin.query_builder.shop_products                               BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder
 ```
 
 ### Parameters you can override in your parameters.yml(.dist) file
 
 ```yml
-bitbag_es_excluded_filter_attributes                                      []                                                                                                  
-bitbag_es_excluded_filter_options                                         []                                                                                                                          
-bitbag_es_shop_attribute_property_prefix                                  attribute                                                                                                                   
-bitbag_es_shop_attribute_taxons_property                                  attribute_taxons                                                                                                            
-bitbag_es_shop_channels_property                                          channels                                                                                                                    
-bitbag_es_shop_enabled_property                                           enabled                                                                                                                     
-bitbag_es_shop_name_property_prefix                                       name                                                                                                                        
-bitbag_es_shop_option_property_prefix                                     option                                                                                                                      
-bitbag_es_shop_option_taxons_property                                     option_taxons                                                                                                               
-bitbag_es_shop_product_created_at                                         product_created_at                                                                                                          
-bitbag_es_shop_product_price_property_prefix                              price                                                                                                                       
-bitbag_es_shop_product_sold_units                                         sold_units                                                                                                                  
-bitbag_es_shop_product_taxons_property                                    product_taxons                                                                                                              
-fos_elastica.default_index                                                bitbag_shop_product    
+bitbag_es_excluded_filter_attributes                                      []
+bitbag_es_excluded_filter_options                                         []
+bitbag_es_shop_attribute_property_prefix                                  attribute
+bitbag_es_shop_attribute_taxons_property                                  attribute_taxons
+bitbag_es_shop_channels_property                                          channels
+bitbag_es_shop_enabled_property                                           enabled
+bitbag_es_shop_name_property_prefix                                       name
+bitbag_es_shop_option_property_prefix                                     option
+bitbag_es_shop_option_taxons_property                                     option_taxons
+bitbag_es_shop_product_created_at                                         product_created_at
+bitbag_es_shop_product_price_property_prefix                              price
+bitbag_es_shop_product_sold_units                                         sold_units
+bitbag_es_shop_product_taxons_property                                    product_taxons
+fos_elastica.default_index                                                bitbag_shop_product
 ```
 
 ## Testing
