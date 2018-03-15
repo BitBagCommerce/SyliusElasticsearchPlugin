@@ -55,15 +55,23 @@ imports:
     - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/config.yml" }
 ```
 
-Import routing in your `app/config/routing.yml` file:
+Import routing **on top** of your `app/config/routing.yml` file:
 
 ```yaml
 
 # app/config/routing.yml
-...
 
 bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
+    
+redirect_sylius_shop_product_index:
+    path: /{_locale}/taxons/{slug}
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: bitbag_sylius_elasticsearch_plugin_shop_list_products
+        permanent: true
+    requirements:
+        slug: .+
 ```
 
 With a elasticsearch server running, execute following command:
@@ -71,7 +79,7 @@ With a elasticsearch server running, execute following command:
 $ bin/console fos:elastica:populate
 ```
 
-*Note: if you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.*
+**Note: if you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.**
 
 ## Usage
 
@@ -82,7 +90,6 @@ When you go now to the `/{_locale}/products/taxon/{slug}` page, you should see a
 <div align="center">
     <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/BitBagElasticesearchProductIndex.jpg" />
 </div>
-
 
 You might also want to refer the horizontal menu to a new product list page. Follow below instructions to do so:
 
