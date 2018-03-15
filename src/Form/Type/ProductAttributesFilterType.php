@@ -54,7 +54,8 @@ final class ProductAttributesFilterType extends AbstractFilterType
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         ConcatedNameResolverInterface $attributeNameResolver,
         AttributeValueResolverInterface $attributeValueResolver
-    ) {
+    )
+    {
         $this->productAttributesContext = $productAttributesContext;
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->attributeNameResolver = $attributeNameResolver;
@@ -72,7 +73,15 @@ final class ProductAttributesFilterType extends AbstractFilterType
             $attributeValues = $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]);
             $choices = [];
             array_walk($attributeValues, function (?ProductAttributeValueInterface $productAttributeValue) use (&$choices) {
-                $choices[$productAttributeValue->getValue()] = $this->attributeValueResolver->resolve($productAttributeValue);
+                $value = $this->attributeValueResolver->resolve($productAttributeValue);
+
+                if (is_array($value)) {
+                    foreach ($value as $singleElement) {
+                        $choices[$singleElement] = $singleElement;
+                    }
+                } else {
+                    $choices[$productAttributeValue->getValue()] = $value;
+                }
             });
 
             $builder->add($name, ChoiceType::class, [

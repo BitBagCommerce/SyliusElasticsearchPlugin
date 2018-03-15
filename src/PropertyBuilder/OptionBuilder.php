@@ -68,7 +68,7 @@ final class OptionBuilder extends AbstractBuilder
                 $value = $productOptionValue->getValue();
 
                 if (!in_array($value, $reference)) {
-                    $reference[] = $productOptionValue->getValue();
+                    $reference[] = $value;
 
                     $document->set($index, $reference);
                 }

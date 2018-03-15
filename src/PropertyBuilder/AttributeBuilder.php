@@ -68,13 +68,21 @@ final class AttributeBuilder extends AbstractBuilder
         foreach ($product->getAttributes() as $attributeValue) {
             $attributeCode = $attributeValue->getAttribute()->getCode();
             $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
+            $value = $this->attributeValueResolver->resolve($attributeValue);
 
             if (!$document->has($index)) {
                 $document->set($index, []);
             }
 
             $reference = $document->get($index);
-            $reference[] = $this->attributeValueResolver->resolve($attributeValue);
+
+            if (is_array($value)) {
+                foreach ($value as $singleElement) {
+                    $reference[] = $singleElement;
+                }
+            } else {
+                $reference[] = $value;
+            }
 
             $document->set($index, $reference);
         }
