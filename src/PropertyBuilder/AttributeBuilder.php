@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolverInterface;
 use Elastica\Document;
@@ -31,15 +32,21 @@ final class AttributeBuilder extends AbstractBuilder
     private $attributeValueResolver;
 
     /**
+     * @var StringFormatterInterface
+     */
+    private $stringFormatter;
+
+    /**
      * @param ConcatedNameResolverInterface $attributeNameResolver
-     * @param AttributeValueResolverInterface $attributeValueResolver
+     * @param StringFormatterInterface $stringFormatter
      */
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
-        AttributeValueResolverInterface $attributeValueResolver
-    ) {
+        StringFormatterInterface $stringFormatter
+    )
+    {
         $this->attributeNameResolver = $attributeNameResolver;
-        $this->attributeValueResolver = $attributeValueResolver;
+        $this->stringFormatter = $stringFormatter;
     }
 
     /**
@@ -68,14 +75,15 @@ final class AttributeBuilder extends AbstractBuilder
         foreach ($product->getAttributes() as $attributeValue) {
             $attributeCode = $attributeValue->getAttribute()->getCode();
             $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
-            $value = $this->attributeValueResolver->resolve($attributeValue);
+            $value = $attributeValue->getValue();
             $attributes = [];
 
             if (is_array($value)) {
                 foreach ($value as $singleElement) {
-                    $attributes[] = $singleElement;
+                    $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
                 }
             } else {
+                $value = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
                 $attributes[] = $value;
             }
 

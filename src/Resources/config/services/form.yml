@@ -43,4 +43,4 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductAttributesMapper
         arguments:
             - "@sylius.repository.product_attribute_value"
-            - "@bitbag.sylius_elasticsearch_plugin.property_value_resolver"
+            - "@bitbag.sylius_elasticsearch_plugin.string_formatter"

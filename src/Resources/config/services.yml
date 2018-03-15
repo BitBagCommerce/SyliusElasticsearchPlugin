@@ -8,8 +8,8 @@ imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/context.yml" }
 
 services:
-    bitbag.sylius_elasticsearch_plugin.property_value_resolver:
-        class: BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolver
+    bitbag.sylius_elasticsearch_plugin.string_formatter:
+        class: BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatter
 
     bitbag.sylius_elasticsearch_plugin.twig.extension.unset_array_elements:
         class: BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension

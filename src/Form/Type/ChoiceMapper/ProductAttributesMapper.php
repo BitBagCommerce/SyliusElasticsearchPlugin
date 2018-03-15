@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
-use BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
@@ -25,20 +25,20 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
     private $productAttributeValueRepository;
 
     /**
-     * @var AttributeValueResolverInterface
+     * @var StringFormatterInterface
      */
-    private $attributeValueResolver;
+    private $stringFormatter;
 
     /**
      * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
-     * @param AttributeValueResolverInterface $attributeValueResolver
+     * @param StringFormatterInterface $stringFormatter
      */
     public function __construct(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
-        AttributeValueResolverInterface $attributeValueResolver
+        StringFormatterInterface $stringFormatter
     ) {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
-        $this->attributeValueResolver = $attributeValueResolver;
+        $this->stringFormatter = $stringFormatter;
     }
 
     /**
@@ -49,8 +49,15 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $attributeValues = $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]);
         $choices = [];
         array_walk($attributeValues, function (ProductAttributeValueInterface $productAttributeValue) use (&$choices) {
-            $value = $this->attributeValueResolver->resolve($productAttributeValue);
-            $choices[$productAttributeValue->getValue()] = $value;
+            $value = $productAttributeValue->getValue();
+            if (is_array($value)) {
+                foreach ($value as $singleValue) {
+                    $choices[$singleValue] = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
+                }
+            } else {
+                $value = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
+                $choices[$value] = $value;
+            }
         });
 
         return $choices;
