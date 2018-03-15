@@ -54,7 +54,6 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
      */
     public function buildProperty(TransformEvent $event): void
     {
-        /** @var AttributeInterface $documentAttribute */
         $documentAttribute = $event->getObject();
 
         if (!$documentAttribute instanceof AttributeInterface) {
