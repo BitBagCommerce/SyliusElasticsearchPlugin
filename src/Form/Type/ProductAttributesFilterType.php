@@ -13,11 +13,8 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContextInterface;
+use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductAttributesMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
-use BitBag\SyliusElasticsearchPlugin\PropertyValueResolver\AttributeValueResolverInterface;
-use Sylius\Component\Product\Model\ProductAttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
-use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -29,37 +26,28 @@ final class ProductAttributesFilterType extends AbstractFilterType
     private $productAttributesContext;
 
     /**
-     * @var ProductAttributeValueRepositoryInterface
-     */
-    private $productAttributeValueRepository;
-
-    /**
      * @var ConcatedNameResolverInterface
      */
     private $attributeNameResolver;
 
     /**
-     * @var AttributeValueResolverInterface
+     * @var ProductAttributesMapperInterface
      */
-    private $attributeValueResolver;
+    private $productAttributesMapper;
 
     /**
      * @param ProductAttributesContextInterface $productAttributesContext
-     * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
      * @param ConcatedNameResolverInterface $attributeNameResolver
-     * @param AttributeValueResolverInterface $attributeValueResolver
+     * @param ProductAttributesMapperInterface $productAttributesMapper
      */
     public function __construct(
         ProductAttributesContextInterface $productAttributesContext,
-        ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         ConcatedNameResolverInterface $attributeNameResolver,
-        AttributeValueResolverInterface $attributeValueResolver
-    )
-    {
+        ProductAttributesMapperInterface $productAttributesMapper
+    ) {
         $this->productAttributesContext = $productAttributesContext;
-        $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->attributeNameResolver = $attributeNameResolver;
-        $this->attributeValueResolver = $attributeValueResolver;
+        $this->productAttributesMapper = $productAttributesMapper;
     }
 
     /**
@@ -67,22 +55,9 @@ final class ProductAttributesFilterType extends AbstractFilterType
      */
     public function buildForm(FormBuilderInterface $builder, array $attributes): void
     {
-        /** @var ProductAttributeInterface $productAttribute */
         foreach ($this->productAttributesContext->getAttributes() as $productAttribute) {
             $name = $this->attributeNameResolver->resolvePropertyName($productAttribute->getCode());
-            $attributeValues = $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]);
-            $choices = [];
-            array_walk($attributeValues, function (?ProductAttributeValueInterface $productAttributeValue) use (&$choices) {
-                $value = $this->attributeValueResolver->resolve($productAttributeValue);
-
-                if (is_array($value)) {
-                    foreach ($value as $singleElement) {
-                        $choices[$singleElement] = $singleElement;
-                    }
-                } else {
-                    $choices[$productAttributeValue->getValue()] = $value;
-                }
-            });
+            $choices = $this->productAttributesMapper->mapToChoices($productAttribute);
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productAttribute->getName(),

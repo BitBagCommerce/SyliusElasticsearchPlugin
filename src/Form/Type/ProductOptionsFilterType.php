@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Context\ProductOptionsContextInterface;
+use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductOptionsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
-use Sylius\Component\Product\Model\ProductOptionInterface;
-use Sylius\Component\Product\Model\ProductOptionValueInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -32,15 +31,23 @@ final class ProductOptionsFilterType extends AbstractFilterType
     private $optionNameResolver;
 
     /**
+     * @var ProductOptionsMapperInterface
+     */
+    private $productOptionsMapper;
+
+    /**
      * @param ProductOptionsContextInterface $productOptionsContext
      * @param ConcatedNameResolverInterface $optionNameResolver
+     * @param ProductOptionsMapperInterface $productOptionsMapper
      */
     public function __construct(
         ProductOptionsContextInterface $productOptionsContext,
-        ConcatedNameResolverInterface $optionNameResolver
+        ConcatedNameResolverInterface $optionNameResolver,
+        ProductOptionsMapperInterface $productOptionsMapper
     ) {
         $this->productOptionsContext = $productOptionsContext;
         $this->optionNameResolver = $optionNameResolver;
+        $this->productOptionsMapper = $productOptionsMapper;
     }
 
     /**
@@ -48,19 +55,16 @@ final class ProductOptionsFilterType extends AbstractFilterType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var ProductOptionInterface $productOption */
         foreach ($this->productOptionsContext->getOptions() as $productOption) {
             $name = $this->optionNameResolver->resolvePropertyName($productOption->getCode());
-            $optionValues = array_map(function (ProductOptionValueInterface $productOptionValue): ?string {
-                return $productOptionValue->getValue();
-            }, $productOption->getValues()->toArray());
+            $choices = $this->productOptionsMapper->mapToChoices($productOption);
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productOption->getName(),
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
-                'choices' => array_combine($optionValues, $optionValues),
+                'choices' => $choices,
             ]);
         }
     }
