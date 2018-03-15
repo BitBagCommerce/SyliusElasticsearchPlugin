@@ -61,7 +61,7 @@ Import routing in your `app/config/routing.yml` file:
 # app/config/routing.yml
 ...
 
-bitbag_sylius_cms_plugin:
+bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
 ```
 
