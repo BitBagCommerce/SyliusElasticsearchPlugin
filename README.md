@@ -9,9 +9,6 @@
     <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="Version" target="_blank">
         <img src="https://img.shields.io/packagist/v/bitbag/elasticsearch-plugin.svg" />
     </a>
-    <a href="http://travis-ci.org/BitBagCommerce/SyliusElasticsearchPlugin" title="Build status" target="_blank">
-        <img src="https://img.shields.io/travis/BitBagCommerce/SyliusElasticsearchPlugin/master.svg" />
-    </a>
     <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusElasticsearchPlugin/" title="Scrutinizer" target="_blank">
         <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusElasticsearchPlugin.svg" />
     </a>
