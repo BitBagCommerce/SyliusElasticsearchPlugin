@@ -12,4 +12,4 @@ fos_elastica:
     clients:
         default:
             host: "%bitbag_es_host%"
-            port: "%bitbag_es_host%"
+            port: "%bitbag_es_port%"
