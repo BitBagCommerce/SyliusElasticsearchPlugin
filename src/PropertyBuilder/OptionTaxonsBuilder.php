@@ -54,7 +54,6 @@ final class OptionTaxonsBuilder extends AbstractBuilder
      */
     public function buildProperty(TransformEvent $event): void
     {
-        /** @var ProductOptionInterface $documentProductOption */
         $documentProductOption = $event->getObject();
 
         if (!$documentProductOption instanceof ProductOptionInterface) {
