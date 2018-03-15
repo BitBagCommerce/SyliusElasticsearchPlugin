@@ -9,9 +9,6 @@
     <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="Version" target="_blank">
         <img src="https://img.shields.io/packagist/v/bitbag/elasticsearch-plugin.svg" />
     </a>
-    <a href="http://travis-ci.org/BitBagCommerce/SyliusElasticsearchPlugin" title="Build status" target="_blank">
-        <img src="https://img.shields.io/travis/BitBagCommerce/SyliusElasticsearchPlugin/master.svg" />
-    </a>
     <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusElasticsearchPlugin/" title="Scrutinizer" target="_blank">
         <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusElasticsearchPlugin.svg" />
     </a>
@@ -64,11 +61,11 @@ Import routing in your `app/config/routing.yml` file:
 # app/config/routing.yml
 ...
 
-bitbag_sylius_cms_plugin:
+bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
 ```
 
-With a elasticsearch server running on port 9200 run following commands. 
+With a elasticsearch server running, execute following command:
 ```
 $ bin/console fos:elastica:populate
 ```
