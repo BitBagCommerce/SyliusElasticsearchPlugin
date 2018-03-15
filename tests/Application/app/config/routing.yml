@@ -4,4 +4,4 @@ sylius:
 # Put your own routes here
 
 bitbag_sylius_elasticsearch_plugin:
-    resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/routing.yml"
+    resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"

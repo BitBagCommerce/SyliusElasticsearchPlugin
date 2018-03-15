@@ -20,7 +20,7 @@ final class AppKernel extends Kernel
             new \Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle(),
 
             new \FOS\ElasticaBundle\FOSElasticaBundle(),
-            new \BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticSearchPlugin(),
+            new \BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin(),
         ]);
     }
 

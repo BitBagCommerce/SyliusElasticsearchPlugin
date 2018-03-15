@@ -1,11 +1,11 @@
 imports:
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/property_builder.yml" }
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/property_name_resolver.yml" }
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/query_builder.yml" }
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/controller.yml" }
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/finder.yml" }
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/form.yml" }
-    - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/services/context.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/property_builder.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/property_name_resolver.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/query_builder.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/controller.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/finder.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/form.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/context.yml" }
 
 services:
     bitbag.sylius_elasticsearch_plugin.string_formatter:
