@@ -79,8 +79,14 @@ $ bin/console fos:elastica:populate
 
 ### Rendering the shop products list
 
-When you go now to the `/{_locale}/products/taxon/{slug}` page, you should see a totally new set of filters. You might also want to refer 
-the horizontal menu to a new product list page. Follow below instructions to do so:
+When you go now to the `/{_locale}/products/taxon/{slug}` page, you should see a totally new set of filters. You should see something like this:
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/BitBagElasticesearchProductIndex.jpg" />
+</div>
+
+
+You might also want to refer the horizontal menu to a new product list page. Follow below instructions to do so:
 
 1. If you haven't done it yet, create a `_horizontalMenu.html.twig` file in `app/Resources/SyliusShopBundle/views/Taxon` directory.
 2. Replace `sylius_shop_product_index` with `bitbag_sylius_elasticsearch_plugin_shop_list_products`.
@@ -127,7 +133,6 @@ fos_elastica.default_index                                                bitbag
 ### Parameters you can override in your parameters.yml(.dist) file
 
 ```yml
-parameters:
 bitbag_es_excluded_filter_attributes                                      []                                                                                                  
 bitbag_es_excluded_filter_options                                         []                                                                                                                          
 bitbag_es_shop_attribute_property_prefix                                  attribute                                                                                                                   
@@ -152,6 +157,8 @@ $ yarn install
 $ yarn run gulp
 $ bin/console assets:install web -e test
 $ bin/console doctrine:schema:create -e test
+$ elasticsearch 
+$ bin/console fos:elastica:populate -e test
 $ bin/console server:run 127.0.0.1:8080 -d web -e test
 $ open http://localhost:8080
 $ bin/behat
