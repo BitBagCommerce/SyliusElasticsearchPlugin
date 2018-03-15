@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
-use function Clue\StreamFilter\fun;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;

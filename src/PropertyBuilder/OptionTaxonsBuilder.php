@@ -35,18 +35,26 @@ final class OptionTaxonsBuilder extends AbstractBuilder
     private $taxonsProperty;
 
     /**
+     * @var array
+     */
+    private $excludedOptions;
+
+    /**
      * @param ProductRepositoryInterface $productRepository
      * @param string $optionProperty
      * @param string $taxonsProperty
+     * @param array $excludedOptions
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         string $optionProperty,
-        string $taxonsProperty
+        string $taxonsProperty,
+        array $excludedOptions = []
     ) {
         $this->productRepository = $productRepository;
         $this->optionProperty = $optionProperty;
         $this->taxonsProperty = $taxonsProperty;
+        $this->excludedOptions = $excludedOptions;
     }
 
     /**
@@ -56,7 +64,10 @@ final class OptionTaxonsBuilder extends AbstractBuilder
     {
         $documentProductOption = $event->getObject();
 
-        if (!$documentProductOption instanceof ProductOptionInterface) {
+        if (
+            !$documentProductOption instanceof ProductOptionInterface ||
+            in_array($documentProductOption->getCode(), $this->excludedOptions)
+        ) {
             return;
         }
 

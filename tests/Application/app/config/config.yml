@@ -2,6 +2,9 @@ parameters:
     locale: en_US
     secret: "Heron is the best animal in the world!"
 
+    bitbag_es_excluded_filter_options: []
+    bitbag_es_excluded_filter_attributes: ['book_isbn', 'book_pages']
+
 imports:
     - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }

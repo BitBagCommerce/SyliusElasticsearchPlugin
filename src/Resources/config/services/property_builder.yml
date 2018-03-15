@@ -1,3 +1,7 @@
+parameters:
+    bitbag_es_excluded_filter_options: []
+    bitbag_es_excluded_filter_attributes: []
+
 services:
     bitbag_sylius_elasticsearch_plugin.property_builder.product_name:
         class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductNameBuilder
@@ -63,6 +67,7 @@ services:
             - "@sylius.repository.product"
             - "%bitbag_es_shop_option_property_prefix%"
             - "%bitbag_es_shop_option_taxons_property%"
+            - "%bitbag_es_excluded_filter_options%"
         tags:
             - { name: kernel.event_subscriber }
 
@@ -72,5 +77,6 @@ services:
             - "@sylius.repository.product"
             - "%bitbag_es_shop_attribute_property_prefix%"
             - "%bitbag_es_shop_attribute_taxons_property%"
+            - "%bitbag_es_excluded_filter_attributes%"
         tags:
             - { name: kernel.event_subscriber }

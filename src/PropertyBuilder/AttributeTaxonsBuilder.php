@@ -35,18 +35,26 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     private $taxonsProperty;
 
     /**
+     * @var array
+     */
+    private $excludedAttributes;
+
+    /**
      * @param ProductRepositoryInterface $productRepository
      * @param string $attributeProperty
      * @param string $taxonsProperty
+     * @param array $excludedAttributes
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         string $attributeProperty,
-        string $taxonsProperty
+        string $taxonsProperty,
+        array $excludedAttributes = []
     ) {
         $this->productRepository = $productRepository;
         $this->attributeProperty = $attributeProperty;
         $this->taxonsProperty = $taxonsProperty;
+        $this->excludedAttributes = $excludedAttributes;
     }
 
     /**
@@ -56,7 +64,10 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     {
         $documentAttribute = $event->getObject();
 
-        if (!$documentAttribute instanceof AttributeInterface) {
+        if (
+            !$documentAttribute instanceof AttributeInterface ||
+            in_array($documentAttribute->getCode(), $this->excludedAttributes)
+        ) {
             return;
         }
 

@@ -43,8 +43,7 @@ final class AttributeBuilder extends AbstractBuilder
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
         StringFormatterInterface $stringFormatter
-    )
-    {
+    ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
     }
