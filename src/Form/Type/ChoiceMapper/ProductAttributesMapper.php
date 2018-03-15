@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
+use function Clue\StreamFilter\fun;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
@@ -55,8 +56,8 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
                     $choices[$singleValue] = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
                 }
             } else {
-                $value = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
-                $choices[$value] = $value;
+                $choiceValue = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
+                $choices[$value] = $choiceValue;
             }
         });
 
