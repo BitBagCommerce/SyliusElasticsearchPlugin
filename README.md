@@ -112,21 +112,21 @@ By default all options and attributes are indexed. After you change these parame
 ### Available services you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) and forms you can [extend](http://symfony.com/doc/current/form/create_form_type_extension.html)
 
 ```bash
-bitbag_es_excluded_filter_attributes                                      ["book_isbn","book_pages"]                                                                                                  
-bitbag_es_excluded_filter_options                                         []                                                                                                                          
-bitbag_es_host                                                            localhost                                                                                                                   
-bitbag_es_port                                                            9200                                                                                                                        
-bitbag_es_shop_attribute_property_prefix                                  attribute                                                                                                                   
-bitbag_es_shop_attribute_taxons_property                                  attribute_taxons                                                                                                            
-bitbag_es_shop_channels_property                                          channels                                                                                                                    
-bitbag_es_shop_enabled_property                                           enabled                                                                                                                     
-bitbag_es_shop_name_property_prefix                                       name                                                                                                                        
-bitbag_es_shop_option_property_prefix                                     option                                                                                                                      
-bitbag_es_shop_option_taxons_property                                     option_taxons                                                                                                               
-bitbag_es_shop_product_created_at                                         product_created_at                                                                                                          
-bitbag_es_shop_product_price_property_prefix                              price                                                                                                                       
-bitbag_es_shop_product_sold_units                                         sold_units                                                                                                                  
-bitbag_es_shop_product_taxons_property                                    product_taxons                                                                                                              
+bitbag_es_excluded_filter_attributes                                      ["book_isbn","book_pages"]
+bitbag_es_excluded_filter_options                                         []                        
+bitbag_es_host                                                            localhost                 
+bitbag_es_port                                                            9200                      
+bitbag_es_shop_attribute_property_prefix                                  attribute                 
+bitbag_es_shop_attribute_taxons_property                                  attribute_taxons          
+bitbag_es_shop_channels_property                                          channels                  
+bitbag_es_shop_enabled_property                                           enabled                   
+bitbag_es_shop_name_property_prefix                                       name                      
+bitbag_es_shop_option_property_prefix                                     option                    
+bitbag_es_shop_option_taxons_property                                     option_taxons             
+bitbag_es_shop_product_created_at                                         product_created_at        
+bitbag_es_shop_product_price_property_prefix                              price                     
+bitbag_es_shop_product_sold_units                                         sold_units                
+bitbag_es_shop_product_taxons_property                                    product_taxons            
 fos_elastica.default_index                                                bitbag_shop_product
 ```
 
