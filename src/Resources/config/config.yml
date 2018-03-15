@@ -5,11 +5,11 @@ imports:
     - { resource: "@BitBagSyliusElasticSearchPlugin/Resources/config/indexes/bitbag_attribute_taxons.yml" }
 
 parameters:
-    elasticsearch_host: localhost
-    elasticsearch_port: 9200
+    bitbag_es_host: localhost
+    bitbag_es_port: 9200
 
 fos_elastica:
     clients:
         default:
-            host: "%elasticsearch_host%"
-            port: "%elasticsearch_port%"
+            host: "%bitbag_es_host%"
+            port: "%bitbag_es_host%"
