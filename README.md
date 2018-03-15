@@ -65,7 +65,7 @@ bitbag_sylius_cms_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
 ```
 
-With a elasticsearch server running on port 9200 run following commands. 
+With a elasticsearch server running, execute following command:
 ```
 $ bin/console fos:elastica:populate
 ```
