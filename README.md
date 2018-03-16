@@ -9,6 +9,9 @@
     <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="Version" target="_blank">
         <img src="https://img.shields.io/packagist/v/bitbag/elasticsearch-plugin.svg" />
     </a>
+    <a href="http://travis-ci.org/BitBagCommerce/SyliusElasticsearchPlugin" title="Build status" target="_blank">
+            <img src="https://img.shields.io/travis/BitBagCommerce/SyliusElasticsearchPlugin/master.svg" />
+        </a>
     <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusElasticsearchPlugin/" title="Scrutinizer" target="_blank">
         <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusElasticsearchPlugin.svg" />
     </a>
@@ -25,6 +28,11 @@ route.
 
 What is more, the plugin has a nice Sylius-oriented architecture that allows mapping resources to the Elastic document easier. It is flexible as well,
 so that you can customize the existing features for your specific business needs.   
+
+## Demo
+
+We created a demo app with some useful use-cases of the plugin! Visit [demo.bitbag.shop](https://demo.bitbag.shop/en_US/products-list/t-shirts) to take a look at it. 
+The admin can be accessed under [demo.bitbag.shop/admin](https://demo.bitbag.shop/admin) link and `sylius: sylius` credentials.
 
 ## Installation
 ```bash
