@@ -68,7 +68,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
         $rangeQuery->setParam($propertyName, [
             'gte' => $minPrice,
-            'lt' => $maxPrice,
+            'lte' => $maxPrice,
         ]);
 
         return $rangeQuery;
