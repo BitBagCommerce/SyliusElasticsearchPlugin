@@ -44,7 +44,8 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext
-    ) {
+    )
+    {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
         $this->priceNameResolver = $priceNameResolver;
         $this->channelContext = $channelContext;
@@ -55,20 +56,19 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $minPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
-        $maxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
+        $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
+        $dataMaxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
 
-        if (!$minPrice || !$maxPrice) {
-            return null;
-        }
+        $minPrice = $dataMinPrice ?  $this->getPriceFromString($dataMinPrice) : 0;
+        $maxPrice = $dataMaxPrice ? $this->getPriceFromString($dataMaxPrice) : PHP_INT_MAX;
 
         $channelCode = $this->channelContext->getChannel()->getCode();
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         $rangeQuery = new Range();
 
         $rangeQuery->setParam($propertyName, [
-            'gte' => $this->getPriceFromString($minPrice),
-            'lt' => $this->getPriceFromString($maxPrice),
+            'gte' => $minPrice,
+            'lt' => $maxPrice,
         ]);
 
         return $rangeQuery;

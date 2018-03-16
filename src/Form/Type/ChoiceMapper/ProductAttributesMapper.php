@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
@@ -25,19 +26,28 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
     private $productAttributeValueRepository;
 
     /**
+     * @var LocaleContextInterface
+     */
+    private $localeContext;
+
+    /**
      * @var StringFormatterInterface
      */
     private $stringFormatter;
 
     /**
      * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
+     * @param LocaleContextInterface $localeContext
      * @param StringFormatterInterface $stringFormatter
      */
     public function __construct(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
+        LocaleContextInterface $localeContext,
         StringFormatterInterface $stringFormatter
-    ) {
+    )
+    {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
+        $this->localeContext = $localeContext;
         $this->stringFormatter = $stringFormatter;
     }
 
@@ -50,13 +60,18 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $choices = [];
         array_walk($attributeValues, function (ProductAttributeValueInterface $productAttributeValue) use (&$choices) {
             $value = $productAttributeValue->getValue();
-            if (is_array($value)) {
+            $configuration = $productAttributeValue->getAttribute()->getConfiguration();
+            if (is_array($value)
+                && isset($configuration['choices'])
+                && is_array($configuration['choices'])) {
                 foreach ($value as $singleValue) {
-                    $choices[$singleValue] = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
+                    $choice = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
+                    $label = $configuration['choices'][$singleValue][$this->localeContext->getLocaleCode()];
+                    $choices[$label] = $choice;
                 }
             } else {
-                $choiceValue = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
-                $choices[$value] = $choiceValue;
+                $choice = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
+                $choices[$value] = $choice;
             }
         });
 
