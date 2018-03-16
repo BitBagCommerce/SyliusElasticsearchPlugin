@@ -79,7 +79,7 @@ With a elasticsearch server running, execute following command:
 $ bin/console fos:elastica:populate
 ```
 
-**Note:** if you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.
+**Note:** If you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.
 
 ## Usage
 
