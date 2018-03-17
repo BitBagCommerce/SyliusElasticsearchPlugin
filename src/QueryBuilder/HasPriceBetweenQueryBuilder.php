@@ -44,8 +44,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext
-    )
-    {
+    ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
         $this->priceNameResolver = $priceNameResolver;
         $this->channelContext = $channelContext;
@@ -59,7 +58,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
         $dataMaxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
 
-        $minPrice = $dataMinPrice ?  $this->getPriceFromString($dataMinPrice) : 0;
+        $minPrice = $dataMinPrice ? $this->getPriceFromString($dataMinPrice) : 0;
         $maxPrice = $dataMaxPrice ? $this->getPriceFromString($dataMaxPrice) : PHP_INT_MAX;
 
         $channelCode = $this->channelContext->getChannel()->getCode();

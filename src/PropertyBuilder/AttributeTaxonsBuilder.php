@@ -12,17 +12,24 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Repository\ProductRepositoryInterface;
+use Sylius\Component\Product\Model\ProductAttributeValueInterface;
+use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {
     /**
-     * @var ProductRepositoryInterface
+     * @var ProductAttributeValueRepositoryInterface
      */
-    private $productRepository;
+    private $productAttributeValueRepository;
+
+    /**
+     * @var ProductTaxonsMapperInterface
+     */
+    private $productTaxonsMapper;
 
     /**
      * @var string
@@ -40,18 +47,21 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     private $excludedAttributes;
 
     /**
-     * @param ProductRepositoryInterface $productRepository
+     * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
+     * @param ProductTaxonsMapperInterface $productTaxonsMapper
      * @param string $attributeProperty
      * @param string $taxonsProperty
      * @param array $excludedAttributes
      */
     public function __construct(
-        ProductRepositoryInterface $productRepository,
+        ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
+        ProductTaxonsMapperInterface $productTaxonsMapper,
         string $attributeProperty,
         string $taxonsProperty,
         array $excludedAttributes = []
     ) {
-        $this->productRepository = $productRepository;
+        $this->productAttributeValueRepository = $productAttributeValueRepository;
+        $this->productTaxonsMapper = $productTaxonsMapper;
         $this->attributeProperty = $attributeProperty;
         $this->taxonsProperty = $taxonsProperty;
         $this->excludedAttributes = $excludedAttributes;
@@ -64,28 +74,22 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     {
         $documentAttribute = $event->getObject();
 
-        if (
-            !$documentAttribute instanceof AttributeInterface ||
-            in_array($documentAttribute->getCode(), $this->excludedAttributes)
+        if (!$documentAttribute instanceof AttributeInterface
+            || in_array($documentAttribute->getCode(), $this->excludedAttributes)
         ) {
             return;
         }
 
         $document = $event->getDocument();
-        $products = $this->productRepository->findAll();
+        $productAttributes = $this->productAttributeValueRepository->findAll();
         $taxons = [];
 
-        /** @var ProductInterface $product */
-        foreach ($products as $product) {
-            foreach ($product->getAttributes() as $attributeValue) {
-                if ($documentAttribute === $attributeValue->getAttribute()) {
-                    foreach ($product->getTaxons() as $taxon) {
-                        $code = $taxon->getCode();
-                        if (!in_array($code, $taxons)) {
-                            $taxons[] = $code;
-                        }
-                    }
-                }
+        /** @var ProductAttributeValueInterface $attributeValue */
+        foreach ($productAttributes as $attributeValue) {
+            if ($documentAttribute === $attributeValue->getAttribute()) {
+                /** @var ProductInterface $product */
+                $product = $attributeValue->getProduct();
+                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
             }
         }
 

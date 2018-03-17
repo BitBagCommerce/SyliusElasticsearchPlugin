@@ -15,3 +15,8 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension
         tags:
             - { name: twig.extension }
+
+    bitbag.sylius_elasticsearch_plugin.entity_repository.product_variant:
+        class: BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductVariantRepository
+        arguments:
+            - "@sylius.repository.product_variant"
