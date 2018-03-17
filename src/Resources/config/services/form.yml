@@ -38,6 +38,8 @@ services:
 
     bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_options:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductOptionsMapper
+        arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.string_formatter"
 
     bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes:
         class: BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductAttributesMapper

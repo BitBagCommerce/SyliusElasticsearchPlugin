@@ -41,6 +41,7 @@ final class ProductVariantRepository implements ProductVariantRepositoryInterfac
             ->where(':optionValue MEMBER OF o.optionValues')
             ->setParameter('optionValue', $productOptionValue)
             ->getQuery()
+            ->setMaxResults(1)
             ->getOneOrNullResult()
         ;
 

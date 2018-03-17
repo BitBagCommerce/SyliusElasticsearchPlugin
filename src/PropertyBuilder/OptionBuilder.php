@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
@@ -25,11 +26,18 @@ final class OptionBuilder extends AbstractBuilder
     private $optionNameResolver;
 
     /**
-     * @param ConcatedNameResolverInterface $optionNameResolver
+     * @var StringFormatterInterface
      */
-    public function __construct(ConcatedNameResolverInterface $optionNameResolver)
+    private $stringFormatter;
+
+    /**
+     * @param ConcatedNameResolverInterface $optionNameResolver
+     * @param StringFormatterInterface $stringFormatter
+     */
+    public function __construct(ConcatedNameResolverInterface $optionNameResolver, StringFormatterInterface $stringFormatter)
     {
         $this->optionNameResolver = $optionNameResolver;
+        $this->stringFormatter = $stringFormatter;
     }
 
     /**
@@ -65,7 +73,7 @@ final class OptionBuilder extends AbstractBuilder
                 }
 
                 $reference = $document->get($index);
-                $value = $productOptionValue->getValue();
+                $value = $this->stringFormatter->formatToLowercaseWithoutSpaces($productOptionValue->getValue());
                 $reference[] = $value;
 
                 $document->set($index, array_unique($reference));

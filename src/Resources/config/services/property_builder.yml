@@ -14,6 +14,7 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionBuilder
         arguments:
            - "@bitbag_sylius_elasticsearch_plugin.property_name_resolver.option"
+           - "@bitbag.sylius_elasticsearch_plugin.string_formatter"
         tags:
             - { name: kernel.event_subscriber }
 
