@@ -83,7 +83,8 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         QueryBuilderInterface $hasPriceBetweenQueryBuilder,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
-    ) {
+    )
+    {
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
         $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
         $this->containsNameQueryBuilder = $containsNameQueryBuilder;
@@ -105,17 +106,14 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         $boolQuery->addMust($this->isEnabledQueryBuilder->buildQuery($data));
         $boolQuery->addMust($this->hasChannelQueryBuilder->buildQuery($data));
 
-        if ($nameQuery = $this->containsNameQueryBuilder->buildQuery($data)) {
-            $boolQuery->addMust($nameQuery);
-        }
+        $nameQuery = $this->containsNameQueryBuilder->buildQuery($data);
+        $this->addMustIfNotNull($nameQuery, $boolQuery);
 
-        if ($taxonQuery = $this->hasTaxonQueryBuilder->buildQuery($data)) {
-            $boolQuery->addMust($taxonQuery);
-        }
+        $taxonQuery = $this->hasTaxonQueryBuilder->buildQuery($data);
+        $this->addMustIfNotNull($taxonQuery, $boolQuery);
 
-        if ($priceQuery = $this->hasPriceBetweenQueryBuilder->buildQuery($data)) {
-            $boolQuery->addMust($priceQuery);
-        }
+        $priceQuery = $this->hasPriceBetweenQueryBuilder->buildQuery($data);
+        $this->addMustIfNotNull($priceQuery, $boolQuery);
 
         $this->resolveOptionQuery($boolQuery, $data);
         $this->resolveAttributeQuery($boolQuery, $data);
@@ -150,6 +148,16 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
 
                 $boolQuery->addMust($optionQuery);
             }
+        }
+    }
+
+    /**
+     * @param AbstractQuery|null $query
+     * @param BoolQuery $boolQuery
+     */
+    private function addMustIfNotNull(?AbstractQuery $query, BoolQuery $boolQuery): void {
+        if (null !== $query) {
+            $boolQuery->addMust($query);
         }
     }
 }
