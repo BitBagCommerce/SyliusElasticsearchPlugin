@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTranslationInterface;
@@ -35,22 +36,17 @@ final class ProductNameBuilder extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        /** @var ProductInterface $product */
-        $product = $event->getObject();
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                /** @var ProductTranslationInterface $productTranslation */
+                foreach ($product->getTranslations() as $productTranslation) {
+                    $propertyName = $this->productNameNameResolver->resolvePropertyName($productTranslation->getLocale());
 
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
-
-        $document = $event->getDocument();
-
-        /** @var ProductTranslationInterface $productTranslation */
-        foreach ($product->getTranslations() as $productTranslation) {
-            $propertyName = $this->productNameNameResolver->resolvePropertyName($productTranslation->getLocale());
-
-            $document->set($propertyName, $productTranslation->getName());
-        }
+                    $document->set($propertyName, $productTranslation->getName());
+                }
+            }
+        );
     }
 }

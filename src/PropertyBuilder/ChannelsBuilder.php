@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
@@ -33,21 +34,18 @@ final class ChannelsBuilder extends AbstractBuilder
     /**
      * @param TransformEvent $event
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        $product = $event->getObject();
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                $channels = [];
 
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
+                foreach ($product->getChannels() as $channel) {
+                    $channels[] = $channel->getCode();
+                }
 
-        $channels = [];
-
-        /** @var ProductInterface $product */
-        foreach ($product->getChannels() as $channel) {
-            $channels[] = $channel->getCode();
-        }
-
-        $event->getDocument()->set($this->channelsProperty, $channels);
+                $document->set($this->channelsProperty, $channels);
+            }
+        );
     }
 }

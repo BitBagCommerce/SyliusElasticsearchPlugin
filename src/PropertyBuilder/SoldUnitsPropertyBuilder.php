@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Order\Repository\OrderItemRepositoryInterface;
@@ -41,21 +42,18 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        /** @var ProductInterface $product */
-        $product = $event->getObject();
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                $soldUnits = 0;
 
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
+                foreach ($product->getVariants() as $productVariant) {
+                    $soldUnits += count($this->orderItemRepository->findBy(['variant' => $productVariant]));
+                }
 
-        $soldUnits = 0;
-
-        foreach ($product->getVariants() as $productVariant) {
-            $soldUnits += count($this->orderItemRepository->findBy(['variant' => $productVariant]));
-        }
-
-        $event->getDocument()->set($this->soldUnitsProperty, $soldUnits);
+                $document->set($this->soldUnitsProperty, $soldUnits);
+            }
+        );
     }
 }

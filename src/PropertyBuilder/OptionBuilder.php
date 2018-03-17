@@ -43,18 +43,12 @@ final class OptionBuilder extends AbstractBuilder
     /**
      * @param TransformEvent $event
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        /** @var ProductInterface $product */
-        $product = $event->getObject();
-
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
-
-        $document = $event->getDocument();
-
-        $this->resolveProductOptions($product, $document);
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                $this->resolveProductOptions($product, $document);
+            });
     }
 
     /**
@@ -67,16 +61,11 @@ final class OptionBuilder extends AbstractBuilder
             foreach ($productVariant->getOptionValues() as $productOptionValue) {
                 $optionCode = $productOptionValue->getOption()->getCode();
                 $index = $this->optionNameResolver->resolvePropertyName($optionCode);
-
-                if (!$document->has($index)) {
-                    $document->set($index, []);
-                }
-
-                $reference = $document->get($index);
+                $options = $document->has($index) ? $document->get($index) : [];
                 $value = $this->stringFormatter->formatToLowercaseWithoutSpaces($productOptionValue->getValue());
-                $reference[] = $value;
+                $options[] = $value;
 
-                $document->set($index, array_unique($reference));
+                $document->set($index, array_unique($options));
             }
         }
     }

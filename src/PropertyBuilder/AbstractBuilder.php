@@ -19,10 +19,26 @@ abstract class AbstractBuilder implements PropertyBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function buildProperty(TransformEvent $event, string $supportedModelClass, callable $callback): void
+    {
+        $model = $event->getObject();
+
+        if (!$model instanceof $supportedModelClass) {
+            return;
+        }
+
+        $document = $event->getDocument();
+
+        $callback($model, $document);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents(): array
     {
         return [
-            TransformEvent::POST_TRANSFORM => 'buildProperty',
+            TransformEvent::POST_TRANSFORM => 'consumeEvent',
         ];
     }
 }

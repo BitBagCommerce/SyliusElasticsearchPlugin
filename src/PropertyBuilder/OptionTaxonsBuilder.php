@@ -79,7 +79,7 @@ final class OptionTaxonsBuilder extends AbstractBuilder
     /**
      * @param TransformEvent $event
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
         $documentProductOption = $event->getObject();
 

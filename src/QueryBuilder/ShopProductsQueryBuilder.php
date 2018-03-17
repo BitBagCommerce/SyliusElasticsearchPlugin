@@ -130,7 +130,6 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         foreach ($data as $key => $value) {
             if (0 === strpos($key, $this->optionPropertyPrefix) && 0 < count($value)) {
                 $optionQuery = $this->hasOptionsQueryBuilder->buildQuery(['option' => $key, 'option_values' => $value]);
-
                 $boolQuery->addMust($optionQuery);
             }
         }
@@ -145,7 +144,6 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         foreach ($data as $key => $value) {
             if (0 === strpos($key, $this->attributePropertyPrefix) && 0 < count($value)) {
                 $optionQuery = $this->hasAttributesQueryBuilder->buildQuery(['attribute' => $key, 'attribute_values' => $value]);
-
                 $boolQuery->addMust($optionQuery);
             }
         }

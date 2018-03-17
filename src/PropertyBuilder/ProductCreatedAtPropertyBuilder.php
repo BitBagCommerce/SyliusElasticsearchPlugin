@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
@@ -33,18 +34,14 @@ final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        /** @var ProductInterface $product */
-        $product = $event->getObject();
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                $createdAt = (int)$product->getCreatedAt()->format('U');
 
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
-
-        $document = $event->getDocument();
-        $createdAt = (int) $product->getCreatedAt()->format('U');
-
-        $document->set($this->createdAtProperty, $createdAt);
+                $document->set($this->createdAtProperty, $createdAt);
+            }
+        );
     }
 }

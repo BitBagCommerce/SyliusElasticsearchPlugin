@@ -20,5 +20,12 @@ interface PropertyBuilderInterface extends EventSubscriberInterface
     /**
      * @param TransformEvent $event
      */
-    public function buildProperty(TransformEvent $event): void;
+    public function consumeEvent(TransformEvent $event): void;
+
+    /**
+     * @param TransformEvent $event
+     * @param string $class
+     * @param callable $callback
+     */
+    public function buildProperty(TransformEvent $event, string $class, callable $callback): void;
 }

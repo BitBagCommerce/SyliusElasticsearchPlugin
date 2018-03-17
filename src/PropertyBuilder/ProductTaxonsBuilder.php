@@ -12,42 +12,44 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonsBuilder extends AbstractBuilder
 {
     /**
+     * @var ProductTaxonsMapperInterface
+     */
+    private $productTaxonsMapper;
+
+    /**
      * @var string
      */
     private $taxonsProperty;
 
     /**
+     * @param ProductTaxonsMapperInterface $productTaxonsMapper
      * @param string $taxonsProperty
      */
-    public function __construct(string $taxonsProperty)
+    public function __construct(ProductTaxonsMapperInterface $productTaxonsMapper, string $taxonsProperty)
     {
+        $this->productTaxonsMapper = $productTaxonsMapper;
         $this->taxonsProperty = $taxonsProperty;
     }
 
     /**
      * @param TransformEvent $event
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        $product = $event->getObject();
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
 
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
-
-        $taxons = [];
-
-        /** @var ProductInterface $product */
-        foreach ($product->getTaxons() as $taxon) {
-            $taxons[] = $taxon->getCode();
-        }
-
-        $event->getDocument()->set($this->taxonsProperty, $taxons);
+                $document->set($this->taxonsProperty, $taxons);
+            }
+        );
     }
 }

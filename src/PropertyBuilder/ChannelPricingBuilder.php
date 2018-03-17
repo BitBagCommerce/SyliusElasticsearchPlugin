@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -35,22 +36,18 @@ final class ChannelPricingBuilder extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function buildProperty(TransformEvent $event): void
+    public function consumeEvent(TransformEvent $event): void
     {
-        $product = $event->getObject();
+        $this->buildProperty($event, ProductInterface::class,
+            function (ProductInterface $product, Document $document): void {
+                /** @var ProductVariantInterface $productVariant */
+                $productVariant = $product->getVariants()->first();
 
-        if (!$product instanceof ProductInterface) {
-            return;
-        }
+                foreach ($productVariant->getChannelPricings() as $channelPricing) {
+                    $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelPricing->getChannelCode());
 
-        $document = $event->getDocument();
-        /** @var ProductVariantInterface $productVariant */
-        $productVariant = $product->getVariants()->first();
-
-        foreach ($productVariant->getChannelPricings() as $channelPricing) {
-            $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelPricing->getChannelCode());
-
-            $document->set($propertyName, $channelPricing->getPrice());
-        }
+                    $document->set($propertyName, $channelPricing->getPrice());
+                }
+            });
     }
 }
