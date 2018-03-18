@@ -65,7 +65,7 @@ final class OptionBuilder extends AbstractBuilder
                 $value = $this->stringFormatter->formatToLowercaseWithoutSpaces($productOptionValue->getValue());
                 $options[] = $value;
 
-                $document->set($index, array_unique($options));
+                $document->set($index, array_values(array_unique($options)));
             }
         }
     }

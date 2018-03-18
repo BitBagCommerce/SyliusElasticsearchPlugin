@@ -27,6 +27,6 @@ final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
             $taxons[] = $taxon->getCode();
         }
 
-        return array_unique($taxons);
+        return array_values(array_unique($taxons));
     }
 }
