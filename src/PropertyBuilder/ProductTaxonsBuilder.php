@@ -46,7 +46,7 @@ final class ProductTaxonsBuilder extends AbstractBuilder
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
-                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
+                $taxons = $this->productTaxonsMapper->mapEnabledToUniqueCodes($product);
 
                 $document->set($this->taxonsProperty, $taxons);
             }

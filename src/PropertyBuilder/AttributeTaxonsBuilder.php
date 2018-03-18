@@ -89,7 +89,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
             if ($documentAttribute === $attributeValue->getAttribute()) {
                 /** @var ProductInterface $product */
                 $product = $attributeValue->getProduct();
-                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
+                $taxons = $this->productTaxonsMapper->mapEnabledToUniqueCodes($product);
             }
         }
 
