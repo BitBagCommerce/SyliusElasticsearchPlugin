@@ -38,7 +38,7 @@ final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
-                $createdAt = (int)$product->getCreatedAt()->format('U');
+                $createdAt = (int) $product->getCreatedAt()->format('U');
 
                 $document->set($this->createdAtProperty, $createdAt);
             }

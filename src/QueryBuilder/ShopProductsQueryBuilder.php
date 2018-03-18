@@ -83,8 +83,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         QueryBuilderInterface $hasPriceBetweenQueryBuilder,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
-    )
-    {
+    ) {
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
         $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
         $this->containsNameQueryBuilder = $containsNameQueryBuilder;
@@ -153,7 +152,8 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
      * @param AbstractQuery|null $query
      * @param BoolQuery $boolQuery
      */
-    private function addMustIfNotNull(?AbstractQuery $query, BoolQuery $boolQuery): void {
+    private function addMustIfNotNull(?AbstractQuery $query, BoolQuery $boolQuery): void
+    {
         if (null !== $query) {
             $boolQuery->addMust($query);
         }

@@ -37,8 +37,7 @@ final class AttributeBuilder extends AbstractBuilder
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
         StringFormatterInterface $stringFormatter
-    )
-    {
+    ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
     }
@@ -68,7 +67,7 @@ final class AttributeBuilder extends AbstractBuilder
 
             if (is_array($value)) {
                 foreach ($value as $singleElement) {
-                    $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string)$singleElement);
+                    $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
                 }
             } else {
                 $value = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;

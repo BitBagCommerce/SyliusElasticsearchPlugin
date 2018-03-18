@@ -15,7 +15,6 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Term;
-use Elastica\Query\Terms;
 
 final class HasOptionsQueryBuilder implements QueryBuilderInterface
 {
