@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use Elastica\Query\AbstractQuery;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Term;
 use Elastica\Query\Terms;
 
 final class HasAttributesQueryBuilder implements QueryBuilderInterface
@@ -22,8 +24,13 @@ final class HasAttributesQueryBuilder implements QueryBuilderInterface
      */
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $attributeQuery = new Terms();
-        $attributeQuery->setTerms($data['attribute'], (array) $data['attribute_values']);
+        $attributeQuery = new BoolQuery();
+
+        foreach ((array) $data['attribute_values'] as $attributeValue) {
+            $termQuery = new Term();
+            $termQuery->setTerm($data['attribute'], $attributeValue);
+            $attributeQuery->addShould($termQuery);
+        }
 
         return $attributeQuery;
     }
