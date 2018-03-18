@@ -121,7 +121,7 @@ By default all options and attributes are indexed. After you change these parame
 
 ### Reindexing
 
-By default, current indexes listen on all Doctrine events. You can override these setting by adding these configs to your `config.yml` file:
+By default, current indexes listen on all Doctrine events. You can override this setting for each index by overriding index definition in your `config.yml` file:
 
 ```yml
 fos_elastica:
