@@ -119,6 +119,24 @@ parameters:
 By default all options and attributes are indexed. After you change these parameters, remember to run `bin/console fo:el:po` command again
 (a shortcut for `fos:elastica:populate`).
 
+### Reindexing
+
+By default, current indexes listen on all Doctrine events. You can override this setting for each index by overriding index definition in your `config.yml` file:
+
+```yml
+fos_elastica:
+    indexes:
+        bitbag_attribute_taxons:
+            types:
+                default:
+                    persistence:
+                        listener:
+                            insert: true
+                            update: false
+                            delete: true
+```
+
+Indexes with `bitbag_shop_product`, `bitbag_attribute_taxons` and `bitbag_option_taxons` keys are available so far.
 
 ## Customization
 
