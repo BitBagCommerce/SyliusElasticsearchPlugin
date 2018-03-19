@@ -59,7 +59,8 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         string $attributeProperty,
         string $taxonsProperty,
         array $excludedAttributes = []
-    ) {
+    )
+    {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->productTaxonsMapper = $productTaxonsMapper;
         $this->attributeProperty = $attributeProperty;
@@ -86,10 +87,11 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
 
         /** @var ProductAttributeValueInterface $attributeValue */
         foreach ($productAttributes as $attributeValue) {
-            if ($documentAttribute === $attributeValue->getAttribute()) {
-                /** @var ProductInterface $product */
-                $product = $attributeValue->getProduct();
-                $taxons = $this->productTaxonsMapper->mapEnabledToUniqueCodes($product);
+            /** @var ProductInterface $product */
+            $product = $attributeValue->getProduct();
+
+            if ($documentAttribute === $attributeValue->getAttribute() && $product->isEnabled()) {
+                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
             }
         }
 

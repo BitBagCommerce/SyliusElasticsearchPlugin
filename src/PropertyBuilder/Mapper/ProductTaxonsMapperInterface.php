@@ -21,5 +21,5 @@ interface ProductTaxonsMapperInterface
      *
      * @return array
      */
-    public function mapEnabledToUniqueCodes(ProductInterface $product): array;
+    public function mapToUniqueCodes(ProductInterface $product): array;
 }

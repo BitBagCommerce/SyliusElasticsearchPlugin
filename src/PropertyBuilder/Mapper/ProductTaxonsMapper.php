@@ -19,14 +19,12 @@ final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function mapEnabledToUniqueCodes(ProductInterface $product): array
+    public function mapToUniqueCodes(ProductInterface $product): array
     {
         $taxons = [];
 
         foreach ($product->getTaxons() as $taxon) {
-            if ($product->isEnabled()) {
-                $taxons[] = $taxon->getCode();
-            }
+            $taxons[] = $taxon->getCode();
         }
 
         return array_values(array_unique($taxons));
