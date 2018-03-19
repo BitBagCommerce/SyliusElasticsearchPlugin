@@ -46,7 +46,7 @@ Feature: Filtering products
         Then I should see 5 products on the page
 
     @ui
-    Scenario: Changing limit to from 9 to 18
+    Scenario: Changing limit from 9 to 18
         Given there are 40 more products in the store
         When I go to the products page
         And I change the limit to 18
@@ -55,7 +55,7 @@ Feature: Filtering products
         And I should see 9 products on the third page
 
     @ui
-    Scenario: Changing limit to from 9 to 36
+    Scenario: Changing limit from 9 to 36
         Given there are 40 more products in the store
         When I go to the products page
         And I change the limit to 36
