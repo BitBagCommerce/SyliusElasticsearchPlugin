@@ -58,9 +58,14 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $attributeValues = $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]);
         $choices = [];
         array_walk($attributeValues, function (ProductAttributeValueInterface $productAttributeValue) use (&$choices): void {
+            $product = $productAttributeValue->getProduct();
+
+            if (!$product->isEnabled()) {
+                return;
+            }
+
             $value = $productAttributeValue->getValue();
             $configuration = $productAttributeValue->getAttribute()->getConfiguration();
-            $product = $productAttributeValue->getProduct();
 
             if (is_array($value)
                 && isset($configuration['choices'])
