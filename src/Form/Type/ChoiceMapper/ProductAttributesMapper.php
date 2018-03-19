@@ -60,9 +60,12 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         array_walk($attributeValues, function (ProductAttributeValueInterface $productAttributeValue) use (&$choices): void {
             $value = $productAttributeValue->getValue();
             $configuration = $productAttributeValue->getAttribute()->getConfiguration();
+            $product = $productAttributeValue->getProduct();
+
             if (is_array($value)
                 && isset($configuration['choices'])
-                && is_array($configuration['choices'])) {
+                && is_array($configuration['choices'])
+            ) {
                 foreach ($value as $singleValue) {
                     $choice = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
                     $label = $configuration['choices'][$singleValue][$this->localeContext->getLocaleCode()];
