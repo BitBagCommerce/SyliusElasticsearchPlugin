@@ -31,9 +31,9 @@ final class ElasticsearchContext implements Context
     }
 
     /**
-     * @Given populate elasticsearch
+     * @Given the data is populated to elasticsearch
      */
-    public function populateElasticsearch()
+    public function populateElasticsearch(): void
     {
         $this->populate->populateIndex();
     }
