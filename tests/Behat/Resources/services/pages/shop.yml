@@ -1,0 +1,2 @@
+imports:
+    - { resource: "shop/product.yml" }

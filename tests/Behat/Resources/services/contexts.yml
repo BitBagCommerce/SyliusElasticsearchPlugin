@@ -1,0 +1,4 @@
+imports:
+    - { resource: "contexts/setup.yml" }
+    - { resource: "contexts/ui.yml" }
+    - { resource: "contexts/hook.yml" }

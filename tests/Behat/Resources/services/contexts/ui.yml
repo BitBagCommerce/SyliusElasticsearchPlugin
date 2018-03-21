@@ -1,0 +1,8 @@
+services:
+    bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.product:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\ProductContext
+        arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.product.index"
+            - "@sylius.behat.shared_storage"
+        tags:
+            - { name: fob.context_service }
