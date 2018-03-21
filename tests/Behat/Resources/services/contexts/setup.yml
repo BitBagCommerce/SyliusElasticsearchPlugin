@@ -33,3 +33,10 @@ services:
             - "@__symfony__.doctrine.orm.entity_manager"
         tags:
             - { name: fob.context_service }
+
+    bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ElasticsearchContext
+        arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.behat.populate"
+        tags:
+            - { name: fob.context_service }

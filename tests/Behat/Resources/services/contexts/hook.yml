@@ -1,7 +1,0 @@
-services:
-    bitbag.sylius_elasticsearch_plugin.behat.context.hook.elasticsearch:
-        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Hook\ElasticsearchContext
-        arguments:
-            - "@bitbag.sylius_elasticsearch_plugin.behat.populate"
-        tags:
-            - { name: fob.context_service }

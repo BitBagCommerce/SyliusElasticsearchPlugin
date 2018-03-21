@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Hook;
+namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Service\Populate;
@@ -31,9 +31,9 @@ final class ElasticsearchContext implements Context
     }
 
     /**
-     * @AfterScenario
+     * @Given populate elasticsearch
      */
-    public function populateIndex(): void
+    public function populateElasticsearch()
     {
         $this->populate->populateIndex();
     }

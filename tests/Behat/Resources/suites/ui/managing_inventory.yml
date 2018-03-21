@@ -4,8 +4,6 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
-                - bitbag.sylius_elasticsearch_plugin.behat.context.hook.elasticsearch
-
                 - sylius.behat.context.transform.channel
                 - sylius.behat.context.transform.lexical
                 - sylius.behat.context.transform.locale
@@ -21,6 +19,7 @@ default:
                 - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product
                 - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_attribute
                 - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_taxon
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch
 
                 - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.product
             filters:
