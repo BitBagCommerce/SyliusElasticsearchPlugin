@@ -39,13 +39,13 @@ interface IndexPageInterface extends BaseIndexPageInterface, PageInterface
     /**
      * @param int $page
      */
-    public function pagination(int $page): void;
+    public function paginate(int $page): void;
 
     /**
      * @param int $min
      * @param int $max
      */
-    public function priceFilter(int $min, int $max): void;
+    public function filterPrice(int $min, int $max): void;
 
     /**
      * @param int $limit

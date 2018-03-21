@@ -74,7 +74,7 @@ final class ProductContext implements Context
     public function iShouldSeeProductsOnTheSecondPage(int $count, int $page = 1): void
     {
         if ($page > 1) {
-            $this->productIndexPage->pagination($page);
+            $this->productIndexPage->paginate($page);
         }
 
         Assert::same($this->productIndexPage->countProductsItems(), $count);
@@ -85,7 +85,7 @@ final class ProductContext implements Context
      */
     public function iFilterProductPriceBetweenAnd(int $min, int $max): void
     {
-        $this->productIndexPage->priceFilter($min, $max);
+        $this->productIndexPage->filterPrice($min, $max);
         $this->productIndexPage->filter();
     }
 

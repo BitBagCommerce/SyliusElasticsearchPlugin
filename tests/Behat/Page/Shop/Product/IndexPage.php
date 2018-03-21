@@ -51,7 +51,7 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
     /**
      * {@inheritdoc}
      */
-    public function pagination(int $page): void
+    public function paginate(int $page): void
     {
         $this->getElement('pagination')->clickLink($page);
     }
@@ -59,7 +59,7 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
     /**
      * {@inheritdoc}
      */
-    public function priceFilter(int $min, int $max): void
+    public function filterPrice(int $min, int $max): void
     {
         $this->getDocument()->fillField('Min price', $min);
         $this->getDocument()->fillField('Max price', $max);
