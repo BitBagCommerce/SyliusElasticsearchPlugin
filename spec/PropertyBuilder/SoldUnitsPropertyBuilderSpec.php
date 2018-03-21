@@ -16,12 +16,13 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\SoldUnitsPropertyBuilder;
 use FOS\ElasticaBundle\Event\TransformEvent;
-use Sylius\Component\Order\Repository\OrderItemRepositoryInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Order\Repository\OrderItemRepositoryInterface;
 
 final class SoldUnitsPropertyBuilderSpec extends ObjectBehavior
 {
-    function let(OrderItemRepositoryInterface $orderItemRepository): void {
+    function let(OrderItemRepositoryInterface $orderItemRepository): void
+    {
         $this->beConstructedWith($orderItemRepository, 'sold_units');
     }
 

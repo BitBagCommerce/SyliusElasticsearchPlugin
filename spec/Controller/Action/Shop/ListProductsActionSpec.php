@@ -19,6 +19,7 @@ use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandl
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Pagerfanta\Pagerfanta;
+use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -27,7 +28,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PhpSpec\ObjectBehavior;
 
 final class ListProductsActionSpec extends ObjectBehavior
 {
@@ -80,9 +80,9 @@ final class ListProductsActionSpec extends ObjectBehavior
         $request->get('template')->willReturn('@Template');
         $request->get('slug')->willReturn(null);
 
-        $shopProductListDataHandler->retrieveData(["slug" => null])->willReturn(['taxon' => null]);
-        $shopProductsSortDataHandler->retrieveData(["slug" => null]);
-        $paginationDataHandler->retrieveData(["slug" => null]);
+        $shopProductListDataHandler->retrieveData(['slug' => null])->willReturn(['taxon' => null]);
+        $shopProductsSortDataHandler->retrieveData(['slug' => null]);
+        $paginationDataHandler->retrieveData(['slug' => null]);
 
         $shopProductsFinder->find(['taxon' => null])->willReturn($pagerfanta);
 

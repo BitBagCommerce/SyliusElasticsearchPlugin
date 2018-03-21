@@ -16,8 +16,8 @@ use BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContext;
 use BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContextInterface;
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinderInterface;
-use Sylius\Component\Core\Model\TaxonInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductAttributesContextSpec extends ObjectBehavior
 {

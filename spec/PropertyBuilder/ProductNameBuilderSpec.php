@@ -21,7 +21,8 @@ use PhpSpec\ObjectBehavior;
 
 final class ProductNameBuilderSpec extends ObjectBehavior
 {
-    function let(ConcatedNameResolverInterface $productNameNameResolver): void {
+    function let(ConcatedNameResolverInterface $productNameNameResolver): void
+    {
         $this->beConstructedWith($productNameNameResolver);
     }
 

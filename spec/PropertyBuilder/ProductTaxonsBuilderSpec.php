@@ -21,7 +21,8 @@ use PhpSpec\ObjectBehavior;
 
 final class ProductTaxonsBuilderSpec extends ObjectBehavior
 {
-    function let(ProductTaxonsMapperInterface $productTaxonsMapper): void {
+    function let(ProductTaxonsMapperInterface $productTaxonsMapper): void
+    {
         $this->beConstructedWith($productTaxonsMapper, 'taxons');
     }
 

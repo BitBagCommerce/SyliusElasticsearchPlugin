@@ -15,8 +15,8 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductsSortDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 
 final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
 {
@@ -48,9 +48,9 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         $this->retrieveData([])->shouldBeEqualTo([
             'sort' => [
                 'sold_units' => [
-                    'order' =>SortDataHandlerInterface::SORT_DESC_INDEX
-                ]
-            ]
+                    'order' => SortDataHandlerInterface::SORT_DESC_INDEX,
+                ],
+            ],
         ]);
     }
 }

@@ -122,7 +122,7 @@ final class ProductContext implements Context
     {
         $products = [];
 
-        for ($i = 0; $i < $quantity; $i++) {
+        for ($i = 0; $i < $quantity; ++$i) {
             $products[] = $product = $this->createProduct('T-shirt ' . uniqid());
 
             $this->saveProduct($product);
@@ -190,7 +190,6 @@ final class ProductContext implements Context
         $this->objectManager->persist($option);
         $this->objectManager->flush();
     }
-
 
     /**
      * @Given :quantity of these products have :optionName option with :value value

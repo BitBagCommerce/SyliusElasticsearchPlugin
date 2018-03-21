@@ -29,10 +29,11 @@ final class HasAttributesQueryBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(): void {
+    function it_builds_query(): void
+    {
         $this->buildQuery([
             'attribute_values' => ['XL', 'L'],
-            'attribute' => 'size'
+            'attribute' => 'size',
         ])->shouldBeAnInstanceOf(BoolQuery::class);
     }
 }

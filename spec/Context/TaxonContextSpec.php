@@ -15,12 +15,12 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\Context;
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContext;
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
+use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use PhpSpec\ObjectBehavior;
 
 final class TaxonContextSpec extends ObjectBehavior
 {
@@ -65,8 +65,7 @@ final class TaxonContextSpec extends ObjectBehavior
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
         Request $request
-    ): void
-    {
+    ): void {
         $request->get('slug')->willReturn('book');
 
         $requestStack->getCurrentRequest()->willReturn($request);

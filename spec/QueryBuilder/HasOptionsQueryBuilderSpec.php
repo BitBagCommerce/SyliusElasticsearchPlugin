@@ -33,7 +33,7 @@ final class HasOptionsQueryBuilderSpec extends ObjectBehavior
     {
         $this->buildQuery([
             'option_values' => ['XL', 'L'],
-            'option' => 'size'
+            'option' => 'size',
         ])->shouldBeAnInstanceOf(BoolQuery::class);
     }
 }

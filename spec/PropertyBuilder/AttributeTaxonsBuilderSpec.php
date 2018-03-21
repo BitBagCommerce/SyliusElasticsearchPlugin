@@ -17,12 +17,11 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
-use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
 
 final class AttributeTaxonsBuilderSpec extends ObjectBehavior
 {
-
     function let(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         ProductTaxonsMapperInterface $productTaxonsMapper

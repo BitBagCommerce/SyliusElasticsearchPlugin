@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusElasticsearchPlugin\Exception;
 
 use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use PhpSpec\ObjectBehavior;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class TaxonNotFoundExceptionSpec extends ObjectBehavior
 {

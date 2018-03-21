@@ -19,7 +19,8 @@ use PhpSpec\ObjectBehavior;
 
 final class HasTaxonQueryBuilderSpec extends ObjectBehavior
 {
-    function let(): void {
+    function let(): void
+    {
         $this->beConstructedWith('taxons_property');
     }
 
@@ -42,6 +43,6 @@ final class HasTaxonQueryBuilderSpec extends ObjectBehavior
 
     function it_builds_returned_null_if_property_is_null(): void
     {
-        $this->buildQuery(['taxons_property' => null,])->shouldBeEqualTo(null);
+        $this->buildQuery(['taxons_property' => null])->shouldBeEqualTo(null);
     }
 }

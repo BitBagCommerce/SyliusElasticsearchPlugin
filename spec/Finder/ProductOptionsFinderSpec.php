@@ -17,8 +17,8 @@ use BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query\AbstractQuery;
 use FOS\ElasticaBundle\Finder\FinderInterface;
-use Sylius\Component\Core\Model\TaxonInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductOptionsFinderSpec extends ObjectBehavior
 {
@@ -51,7 +51,7 @@ final class ProductOptionsFinderSpec extends ObjectBehavior
     ): void {
         $taxon->getCode()->willReturn('book');
 
-        $productOptionsByTaxonQueryBuilder->buildQuery(["taxons" => "book"])->willReturn($query);
+        $productOptionsByTaxonQueryBuilder->buildQuery(['taxons' => 'book'])->willReturn($query);
 
         $optionsFinder->find($query)->willReturn([]);
 

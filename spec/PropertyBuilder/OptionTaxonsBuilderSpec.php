@@ -18,8 +18,8 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperI
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionTaxonsBuilderSpec extends ObjectBehavior
 {

@@ -20,7 +20,8 @@ use PhpSpec\ObjectBehavior;
 
 final class ProductCreatedAtPropertyBuilderSpec extends ObjectBehavior
 {
-    function let(): void {
+    function let(): void
+    {
         $this->beConstructedWith('created_at');
     }
 
