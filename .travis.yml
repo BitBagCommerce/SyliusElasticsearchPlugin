@@ -42,6 +42,7 @@ before_script:
     - (cd tests/Application && bin/console doctrine:database:create --env=test -vvv)
     - (cd tests/Application && bin/console doctrine:schema:create --env=test -vvv)
     - (cd tests/Application && bin/console assets:install web --env=test -vvv)
+    - (cd tests/Application && bin/console fo:el:po --env=test)
     - (cd tests/Application && yarn run gulp)
 
     # Configure display
