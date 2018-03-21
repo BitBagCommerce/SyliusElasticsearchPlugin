@@ -40,9 +40,9 @@ final class ProductContext implements Context
     }
 
     /**
-     * @When /^I go to the shop products page from (taxon "([^"]+)")$/
+     * @When /^I go to the shop products page for ("([^"]+)" taxon)$/
      */
-    public function iGoToTheShopProductsPage(TaxonInterface $taxon): void
+    public function iGoToTheShopProductsPageForTaxon(TaxonInterface $taxon): void
     {
         $this->productIndexPage->open(['slug' => $taxon->getSlug()]);
 

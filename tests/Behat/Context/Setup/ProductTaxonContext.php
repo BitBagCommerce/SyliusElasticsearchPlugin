@@ -53,9 +53,9 @@ final class ProductTaxonContext implements Context
     }
 
     /**
-     * @Given /^this products belongs to ("[^"]+" taxon)$/
+     * @Given /^these products belongs to ("[^"]+" taxon)$/
      */
-    public function thisProductsBelongsTo(TaxonInterface $taxon): void
+    public function theseProductsBelongsToTaxon(TaxonInterface $taxon): void
     {
         /** @var ProductInterface $product */
         foreach ($this->sharedStorage->get('products') as $product) {

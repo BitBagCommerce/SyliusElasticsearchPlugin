@@ -33,7 +33,7 @@ final class ElasticsearchContext implements Context
     /**
      * @Given the data is populated to elasticsearch
      */
-    public function populateElasticsearch(): void
+    public function theDataIsPopulatedToElasticsearch(): void
     {
         $this->populate->populateIndex();
     }
