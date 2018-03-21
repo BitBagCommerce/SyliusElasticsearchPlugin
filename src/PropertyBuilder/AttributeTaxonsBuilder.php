@@ -59,8 +59,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         string $attributeProperty,
         string $taxonsProperty,
         array $excludedAttributes = []
-    )
-    {
+    ) {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->productTaxonsMapper = $productTaxonsMapper;
         $this->attributeProperty = $attributeProperty;

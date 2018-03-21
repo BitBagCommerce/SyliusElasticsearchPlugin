@@ -1,0 +1,2 @@
+imports:
+    - suites/ui/managing_inventory.yml

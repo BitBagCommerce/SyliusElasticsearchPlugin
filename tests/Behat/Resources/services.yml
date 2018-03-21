@@ -1,0 +1,13 @@
+imports:
+    - { resource: "services/contexts.yml" }
+    - { resource: "services/pages.yml" }
+
+services:
+    bitbag.sylius_elasticsearch_plugin.behat.populate:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Service\Populate
+        arguments:
+            - "@__symfony__.event_dispatcher"
+            - "@__symfony__.fos_elastica.index_manager"
+            - "@__symfony__.fos_elastica.pager_provider_registry"
+            - "@__symfony__.fos_elastica.pager_persister_registry"
+            - "@__symfony__.fos_elastica.resetter"

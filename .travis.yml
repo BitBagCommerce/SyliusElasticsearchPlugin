@@ -8,6 +8,16 @@ php:
     - 7.1
     - 7.2
 
+addons:
+    apt:
+        sources:
+            - elasticsearch-5.x
+        packages:
+            - elasticsearch
+
+services:
+    - elasticsearch
+
 cache:
     yarn: true
     directories:
@@ -32,6 +42,7 @@ before_script:
     - (cd tests/Application && bin/console doctrine:database:create --env=test -vvv)
     - (cd tests/Application && bin/console doctrine:schema:create --env=test -vvv)
     - (cd tests/Application && bin/console assets:install web --env=test -vvv)
+    - (cd tests/Application && bin/console fos:elastica:populate --env=test)
     - (cd tests/Application && yarn run gulp)
 
     # Configure display

@@ -1,0 +1,5 @@
+services:
+    bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.product.index:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\Product\IndexPage
+        parent: sylius.behat.page.shop.product.index
+        public: false

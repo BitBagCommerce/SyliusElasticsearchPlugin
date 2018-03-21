@@ -1,0 +1,42 @@
+services:
+    bitbag.sylius_elasticsearch_plugin.behat.context.setup.product:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductContext
+        arguments:
+            - "@sylius.behat.shared_storage"
+            - "@__symfony__.sylius.repository.product"
+            - "@__symfony__.sylius.factory.product"
+            - "@__symfony__.sylius.factory.channel_pricing"
+            - "@__symfony__.sylius.factory.product_option"
+            - "@__symfony__.sylius.factory.product_option_value"
+            - "@__symfony__.doctrine.orm.entity_manager"
+            - "@__symfony__.sylius.product_variant_resolver.default"
+            - "@__symfony__.sylius.generator.slug"
+        tags:
+            - { name: fob.context_service }
+
+    bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_attribute:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductAttributeContext
+        arguments:
+            - "@sylius.behat.shared_storage"
+            - "@__symfony__.sylius.repository.product_attribute"
+            - "@__symfony__.sylius.factory.product_attribute"
+            - "@__symfony__.sylius.factory.product_attribute_value"
+            - "@__symfony__.doctrine.orm.entity_manager"
+        tags:
+            - { name: fob.context_service }
+
+    bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_taxon:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductTaxonContext
+        arguments:
+            - "@sylius.behat.shared_storage"
+            - "@__symfony__.sylius.factory.product_taxon"
+            - "@__symfony__.doctrine.orm.entity_manager"
+        tags:
+            - { name: fob.context_service }
+
+    bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch:
+        class: Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ElasticsearchContext
+        arguments:
+            - "@bitbag.sylius_elasticsearch_plugin.behat.populate"
+        tags:
+            - { name: fob.context_service }
