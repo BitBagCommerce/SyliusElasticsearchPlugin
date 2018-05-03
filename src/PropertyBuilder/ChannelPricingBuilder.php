@@ -40,6 +40,10 @@ final class ChannelPricingBuilder extends AbstractBuilder
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
+                if (0 === $product->getVariants()->count()) {
+                    return;
+                }
+
                 /** @var ProductVariantInterface $productVariant */
                 $productVariant = $product->getVariants()->first();
 
