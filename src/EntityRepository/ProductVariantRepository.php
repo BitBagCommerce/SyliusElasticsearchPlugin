@@ -35,20 +35,14 @@ final class ProductVariantRepository implements ProductVariantRepositoryInterfac
     /**
      * {@inheritdoc}
      */
-    public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ProductVariantInterface
+    public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ?ProductVariantInterface
     {
-        $productVariant = $this->baseProductVariantRepository->createQueryBuilder('o')
+        return $this->baseProductVariantRepository->createQueryBuilder('o')
             ->where(':optionValue MEMBER OF o.optionValues')
             ->setParameter('optionValue', $productOptionValue)
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult()
         ;
-
-        if (null === $productVariant) {
-            throw new \UnexpectedValueException('Product variant was not found!');
-        }
-
-        return $productVariant;
     }
 }

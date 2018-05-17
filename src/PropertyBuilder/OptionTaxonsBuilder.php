@@ -97,7 +97,13 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         foreach ($optionValues as $optionValue) {
             $option = $optionValue->getOption();
             /** @var ProductInterface $product */
-            $product = $this->productVariantRepository->findOneByOptionValue($optionValue)->getProduct();
+            $productVariant = $this->productVariantRepository->findOneByOptionValue($optionValue);
+
+            if (null === $productVariant) {
+                continue;
+            }
+
+            $product = $productVariant->getProduct();
 
             if ($documentProductOption === $option && $product->isEnabled()) {
                 $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);

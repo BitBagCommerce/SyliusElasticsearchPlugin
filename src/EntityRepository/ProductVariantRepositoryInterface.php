@@ -20,7 +20,7 @@ interface ProductVariantRepositoryInterface
     /**
      * @param ProductOptionValueInterface $productOptionValue
      *
-     * @return ProductVariantInterface
+     * @return null|ProductVariantInterface
      */
-    public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ProductVariantInterface;
+    public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ?ProductVariantInterface;
 }
