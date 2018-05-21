@@ -25,8 +25,7 @@
         "phpspec/phpspec": "^3.2",
         "phpstan/phpstan-shim": "^0.9.2",
         "phpunit/phpunit": "^5.6",
-        "se/selenium-server-standalone": "^2.52",
-        "symplify/easy-coding-standard": "^2.4"
+        "se/selenium-server-standalone": "^2.52"
     },
     "prefer-stable": true,
     "autoload": {
