@@ -19,6 +19,6 @@ final class StringFormatter implements StringFormatterInterface
      */
     public function formatToLowercaseWithoutSpaces(string $input): string
     {
-        return strtolower(str_replace([' ', '-'], '_', $input));
+        return mb_strtolower(str_replace([' ', '-'], '_', $input));
     }
 }
