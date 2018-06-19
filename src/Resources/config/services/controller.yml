@@ -1,6 +1,7 @@
 services:
     bitbag_sylius_elasticsearch_plugin.controller.action.shop.list_products:
         class: BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop\ListProductsAction
+        tags: ['controller.service_arguments']
         arguments:
             - "@form.factory"
             - "@bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_product_list"
