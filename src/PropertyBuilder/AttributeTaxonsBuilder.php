@@ -81,7 +81,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         }
 
         $document = $event->getDocument();
-        $productAttributes = $this->productAttributeValueRepository->findAll();
+        $productAttributes = $this->productAttributeValueRepository->find(['attribute' => $documentAttribute]);
         $taxons = [];
 
         /** @var ProductAttributeValueInterface $attributeValue */
