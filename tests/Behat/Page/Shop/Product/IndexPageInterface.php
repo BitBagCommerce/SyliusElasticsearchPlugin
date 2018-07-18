@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\Product;
 
-use Sylius\Behat\Page\PageInterface;
 use Sylius\Behat\Page\Shop\Product\IndexPageInterface as BaseIndexPageInterface;
 
-interface IndexPageInterface extends BaseIndexPageInterface, PageInterface
+interface IndexPageInterface extends BaseIndexPageInterface
 {
     /**
      * @param string $name
