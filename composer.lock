@@ -10580,7 +10580,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "7.1"
+        "php": "^7.1"
     },
     "platform-dev": []
 }
