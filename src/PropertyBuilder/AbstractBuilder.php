@@ -24,10 +24,7 @@ abstract class AbstractBuilder implements PropertyBuilderInterface
     {
         $model = $event->getObject();
 
-        if (
-            (!$model instanceof $supportedModelClass) ||
-            ($model instanceof ToggleableInterface && !$model->isEnabled())
-        ) {
+        if (!$model instanceof $supportedModelClass || ($model instanceof ToggleableInterface && !$model->isEnabled())) {
             return;
         }
 
