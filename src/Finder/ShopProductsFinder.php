@@ -53,7 +53,6 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
 
         $products = $this->productFinder->findPaginated($query);
-
         $products->setMaxPerPage($data[PaginationDataHandlerInterface::LIMIT_INDEX]);
         $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
 
