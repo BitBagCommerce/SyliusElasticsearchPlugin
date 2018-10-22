@@ -1,9 +1,18 @@
-/node_modules/
-
 /var/*
-!/var/.gitkeep
+!/var/.gitignore
 
-/web/*
-!/web/app.php
-!/web/app_dev.php
-!/web/app_test.php
+/public/assets
+/public/bundles
+/public/css
+/public/js
+/public/media
+!/public/media/image/.gitignore
+
+/vendor
+/node_modules
+
+/.env
+/.env.prod
+/.env.staging
+/.env.test
+/.env.test_cached

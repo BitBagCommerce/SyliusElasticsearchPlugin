@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/config.yml" }
