@@ -106,7 +106,11 @@ final class OptionTaxonsBuilder extends AbstractBuilder
             $product = $productVariant->getProduct();
 
             if ($documentProductOption === $option && $product->isEnabled()) {
-                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
+                foreach ($this->productTaxonsMapper->mapToUniqueCodes($product) as $taxon) {
+                    if (!in_array($taxon, $taxons)) {
+                        $taxons[] = $taxon;
+                    }
+                }
             }
         }
 
