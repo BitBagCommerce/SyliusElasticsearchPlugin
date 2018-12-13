@@ -86,6 +86,7 @@ redirect_sylius_shop_product_index:
         route: bitbag_sylius_elasticsearch_plugin_shop_list_products
         permanent: true
     requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
         slug: .+
 ```
 
