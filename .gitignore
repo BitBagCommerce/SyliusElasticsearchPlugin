@@ -6,3 +6,4 @@
 !/etc/build/.gitignore
 
 /tests/Application/yarn.lock
+/behat.yml

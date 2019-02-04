@@ -28,7 +28,8 @@
         "symfony/intl": "^3.4|^4.1",
         "symfony/web-profiler-bundle": "^3.4|^4.1",
         "symfony/web-server-bundle": "^3.4|^4.1",
-        "sensiolabs/security-checker": "^4.1"
+        "sensiolabs/security-checker": "^4.1",
+        "friends-of-behat/page-object-extension": "^0.3.0"
     },
     "prefer-stable": true,
     "autoload": {
