@@ -131,7 +131,6 @@ By default all options and attributes are indexed. After you change these parame
 ### Reindexing
 
 By default, current indexes listen on all Doctrine events. You can override this setting for each index by overriding index definition in your `config.yml` file:
-
 ```yml
 fos_elastica:
     indexes:
@@ -165,14 +164,13 @@ $ composer install
 $ cd tests/Application
 $ yarn install
 $ yarn run gulp
-$ bin/console assets:install web -e test
+$ bin/console assets:install public -e test
 $ bin/console doctrine:schema:create -e test
-$ elasticsearch 
-$ bin/console fos:elastica:populate -e test
-$ bin/console server:run 127.0.0.1:8080 -d web -e test
+$ bin/console server:run 127.0.0.1:8080 -d public -e test
+$ elasticsearch
 $ open http://localhost:8080
-$ bin/behat
-$ bin/phpspec run
+$ vendor/bin/behat
+$ vendor/bin/phpspec run
 ```
 
 ## Contribution
