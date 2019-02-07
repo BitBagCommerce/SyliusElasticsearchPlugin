@@ -55,6 +55,7 @@ return [
     \FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
     \BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin => ['all' => true],
 ];
+```
 
 Import required config in your `config/packages/_sylius.yaml` file:
 ```yaml
