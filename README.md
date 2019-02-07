@@ -1,6 +1,6 @@
 <h1 align="center">
     <a href="http://bitbag.shop" target="_blank">
-        <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/SyliusElasticsearchPlugin.png" />
+        <img src="doc/logo.png" />
     </a>
     <br />
     <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="License" target="_blank">
@@ -59,10 +59,9 @@ public function registerBundles()
 }
 ```
 
-Import required config in your `app/config/config.yml` file:
-
+Import required config in your `config/packages/_sylius.yaml` file:
 ```yaml
-# app/config/config.yml
+# config/packages/_sylius.yaml
 
 imports:
     ...
@@ -70,15 +69,20 @@ imports:
     - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/config.yml" }
 ```
 
-Import routing **on top** of your `app/config/routing.yml` file:
-
+Import routing **on top** of your `config/routes.yaml` file:
 ```yaml
 
-# app/config/routing.yml
+# config/routes.yaml
 
 bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
-    
+```
+
+...and set up the redirection from the default Sylius shop products index page on top of your `config/routes/sylius_shop.yaml`
+file.
+```
+# config/routes/sylius_shop.yaml
+
 redirect_sylius_shop_product_index:
     path: /{_locale}/taxons/{slug}
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
@@ -117,7 +121,6 @@ You might also want to refer the horizontal menu to a new product list page. Fol
 ### Excluding options and attributes in the filter menu
 
 You might not want to show some specific options or attributes in the menu. You can set specific parameters for that:
-
 ```yml
 parameters:
     bitbag_es_excluded_filter_options: []
