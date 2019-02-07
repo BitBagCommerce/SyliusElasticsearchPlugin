@@ -1,6 +1,6 @@
 <h1 align="center">
     <a href="http://bitbag.shop" target="_blank">
-        <img src="doc/logo.png" width="35%" />
+        <img src="doc/logo.png" width="65%" />
     </a>
     <br />
     <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="License" target="_blank">
