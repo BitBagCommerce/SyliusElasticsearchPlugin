@@ -151,7 +151,7 @@ Indexes with `bitbag_shop_product`, `bitbag_attribute_taxons` and `bitbag_option
 
 ### Available services you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) and forms you can [extend](http://symfony.com/doc/current/form/create_form_type_extension.html)
 ```bash
-$ bin/console debug:container | grep bitbag_sylius_cms_plugin
+$ bin/console debug:container | grep bitbag_sylius_elasticsearch_plugin
 ```
 
 ### Parameters you can override in your parameters.yml(.dist) file
