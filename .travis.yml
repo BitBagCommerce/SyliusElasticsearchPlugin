@@ -24,7 +24,7 @@ before_install:
     - phpenv config-rm xdebug.ini
     - echo "memory_limit=4096M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - mkdir -p "${SYLIUS_CACHE_DIR}"
-    - mkdir -p tests/Application/web/media/image
+    - mkdir -p tests/Application/public/media/image
 
 install:
     - composer install --no-interaction --prefer-dist
