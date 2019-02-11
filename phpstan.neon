@@ -7,7 +7,7 @@ parameters:
     reportUnmatchedIgnoredErrors: false
 
     symfony:
-        container_xml_path: tests/ApplicationTests_BitBag_SyliusElasticsearchPlugin_Application_KernelTestDebugContainer.xml
+        container_xml_path: tests/Application/var/cache/dev/ApplicationTests_BitBag_SyliusElasticsearchPlugin_Application_KernelDevDebugContainer.xml
 
     excludes_analyse:
         # Makes PHPStan crash
