@@ -78,7 +78,6 @@ before_script:
 
 script:
     - composer validate --strict
-    - vendor/bin/phpstan analyse -c phpstan.neon -l max src/
 
     - vendor/bin/phpspec run
     - vendor/bin/behat --strict -vvv --no-interaction || vendor/bin/behat --strict -vvv --no-interaction --rerun
