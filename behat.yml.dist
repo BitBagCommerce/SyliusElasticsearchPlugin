@@ -38,10 +38,16 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
-                class: Tests\Acme\SyliusExamplePlugin\Application\Kernel
+                class: Tests\BitBag\SyliusElasticsearchPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
 
         FriendsOfBehat\SuiteSettingsExtension:
             paths:
                 - "features"
+
+    formatters:
+        pretty:
+            verbose: true
+            paths: false
+            snippets: false
