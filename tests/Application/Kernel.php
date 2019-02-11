@@ -58,6 +58,25 @@ final class Kernel extends BaseKernel
         }
     }
 
+    public function shutdown(): void
+    {
+        if (!$this->isTestEnvironment()) {
+            parent::shutdown();
+
+            return;
+        }
+
+        if (false === $this->booted) {
+            return;
+        }
+
+        $container = $this->getContainer();
+
+        parent::shutdown();
+
+        $this->cleanupContainer($container);
+    }
+
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir() . '/config/bundles.php'));
