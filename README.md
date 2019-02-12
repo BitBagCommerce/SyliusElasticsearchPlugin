@@ -52,8 +52,8 @@ Add plugin dependencies to your `config/bundles.php` file:
 return [
     ...
 
-    \FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
-    \BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin => ['all' => true],
+    FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
+    BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin => ['all' => true],
 ];
 ```
 
