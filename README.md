@@ -18,6 +18,9 @@
     <a href="https://packagist.org/packages/bitbag/elasticsearch-plugin" title="Total Downloads" target="_blank">
         <img src="https://poser.pugx.org/bitbag/elasticsearch-plugin/downloads" />
     </a>
+    <p>
+        <img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="85">
+    </p>
 </h1>
 
 ## BitBag SyliusElasticsearchPlugin
