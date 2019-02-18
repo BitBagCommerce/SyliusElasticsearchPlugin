@@ -34,11 +34,11 @@ so that you can customize the existing features for your specific business needs
 
 ## Support
 
-You can order our support on [this page](https://bitbag.shop/products/sylius-elasticsearch).
+You can order our support on [this page](https://bitbag.shop/products/sylius-mailchimp).
 
-We work on amazing eCommerce projects on top of Sylius and Pimcore. Need some help or additional resources for a project?
-Write us an email on mikolaj.krol@bitbag.pl or visit [our website](https://bitbag.shop/)! :rocket:
-
+We work on amazing eCommerce projects on top of Sylius and other great Symfony based solutions, like eZ Platform, Akeneo or Pimcore.
+Need some help or additional resources for a project? Write us an email on mikolaj.krol@bitbag.pl or visit
+[our website](https://bitbag.shop/)! :rocket:
 ## Demo
 
 We created a demo app with some useful use-cases of the plugin! Visit [demo.bitbag.shop](https://demo.bitbag.shop/en_US/products-list/t-shirts) to take a look at it. 
@@ -56,7 +56,7 @@ return [
     ...
 
     FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
-    BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin => ['all' => true],
+    BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin::class => ['all' => true],
 ];
 ```
 
