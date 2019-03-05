@@ -20,3 +20,11 @@ services:
         class: BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductVariantRepository
         arguments:
             - "@sylius.repository.product_variant"
+
+    bitbag.sylius_elasticsearch_plugin.entity_repository.taxon_repository:
+        class: BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepository
+        arguments:
+            - "@sylius.repository.taxon"
+            - "@sylius.repository.product"
+            - "%sylius.model.product_taxon.class%"
+            - "%sylius.model.product_attribute_value.class%"
