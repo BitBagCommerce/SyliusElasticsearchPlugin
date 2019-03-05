@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepository;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface;
 
 final class AttributeTaxonsBuilderSpec extends ObjectBehavior
 {
     function let(
-        ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
+        TaxonRepository $bitbagTaxonRepository,
         ProductTaxonsMapperInterface $productTaxonsMapper
     ): void {
         $this->beConstructedWith(
-            $productAttributeValueRepository,
-            $productTaxonsMapper,
-            'attribute',
+            $bitbagTaxonRepository,
             'taxons'
         );
     }
