@@ -15,17 +15,14 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepository;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder;
-use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
 
 final class AttributeTaxonsBuilderSpec extends ObjectBehavior
 {
-    function let(
-        TaxonRepository $bitbagTaxonRepository,
-        ProductTaxonsMapperInterface $productTaxonsMapper
-    ): void {
+    function let(TaxonRepository $bitbagTaxonRepository): void
+    {
         $this->beConstructedWith(
             $bitbagTaxonRepository,
             'taxons'

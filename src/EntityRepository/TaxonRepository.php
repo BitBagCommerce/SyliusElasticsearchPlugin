@@ -1,67 +1,57 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
 
 use Doctrine\ORM\Query\Expr\Join;
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
-use Sylius\Bundle\TaxonomyBundle\Doctrine\ORM\TaxonRepository as BaseTaxonRepository;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
-class TaxonRepository implements TaxonRepositoryInterface
+final class TaxonRepository implements TaxonRepositoryInterface
 {
     /**
-     * @var BaseTaxonRepository
+     * @var BaseTaxonRepositoryInterface
      */
-    protected $taxonRepository;
+    private $baseTaxonRepository;
 
     /**
-     * @var ProductRepository
+     * @var ProductRepositoryInterface
      */
-    protected $productRepository;
-
-    /**
-     * @var string
-     */
-    protected $productTaxonEntityClass;
+    private $productRepository;
 
     /**
      * @var string
      */
-    protected $productAttributeEntityClass;
+    private $productTaxonEntityClass;
 
     /**
-     * TaxonRepository constructor.
-     *
-     * @param BaseTaxonRepositoryInterface $taxonRepository
-     * @param ProductRepositoryInterface   $productRepository
-     * @param string                       $productTaxonEntityClass
-     * @param string                       $productAttributeEntityClass
+     * @var string
      */
+    private $productAttributeEntityClass;
+
     public function __construct(
-        BaseTaxonRepositoryInterface $taxonRepository,
+        BaseTaxonRepositoryInterface $baseTaxonRepository,
         ProductRepositoryInterface $productRepository,
         string $productTaxonEntityClass,
         string $productAttributeEntityClass
     ) {
-        $this->taxonRepository             = $taxonRepository;
-        $this->productRepository           = $productRepository;
-        $this->productTaxonEntityClass     = $productTaxonEntityClass;
+        $this->baseTaxonRepository = $baseTaxonRepository;
+        $this->productRepository = $productRepository;
+        $this->productTaxonEntityClass = $productTaxonEntityClass;
         $this->productAttributeEntityClass = $productAttributeEntityClass;
     }
 
     /**
      * @param AttributeInterface $attribute
      *
-     * @return array|TaxonInterface[]
+     * @return TaxonInterface[]
      */
     public function getTaxonsByAttributeViaProduct(AttributeInterface $attribute): array
     {
-        return $this->taxonRepository
+        return $this->baseTaxonRepository
             ->createQueryBuilder('t')
             ->distinct(true)
             ->select('t')
@@ -78,7 +68,7 @@ class TaxonRepository implements TaxonRepositoryInterface
             )
             ->setParameter(':attribute', $attribute)
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
-
 }

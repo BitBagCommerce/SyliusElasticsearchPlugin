@@ -8,20 +8,20 @@
  * an email on mikolaj.krol@bitbag.pl.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
-use BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepository as BitbagTaxonRepository;
+use BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepositoryInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {
     /**
-     * @var BitbagTaxonRepository
+     * @var TaxonRepositoryInterface
      */
-    protected $bitbagTaxonRepository;
+    protected $taxonRepository;
 
     /**
      * @var string
@@ -34,18 +34,18 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     private $excludedAttributes;
 
     /**
-     * @param BitbagTaxonRepository $bitbagTaxonRepository
-     * @param string                $taxonsProperty
-     * @param array                 $excludedAttributes
+     * @param TaxonRepositoryInterface $taxonRepository
+     * @param string $taxonsProperty
+     * @param array $excludedAttributes
      */
     public function __construct(
-        BitbagTaxonRepository $bitbagTaxonRepository,
+        TaxonRepositoryInterface $taxonRepository,
         string $taxonsProperty,
         array $excludedAttributes = []
     ) {
-        $this->bitbagTaxonRepository = $bitbagTaxonRepository;
-        $this->taxonsProperty        = $taxonsProperty;
-        $this->excludedAttributes    = $excludedAttributes;
+        $this->taxonRepository = $taxonRepository;
+        $this->taxonsProperty = $taxonsProperty;
+        $this->excludedAttributes = $excludedAttributes;
     }
 
     /**
@@ -61,9 +61,9 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
             return;
         }
 
-        $taxons = $this->bitbagTaxonRepository->getTaxonsByAttributeViaProduct($documentAttribute);
-
+        $taxons = $this->taxonRepository->getTaxonsByAttributeViaProduct($documentAttribute);
         $taxonCodes = [];
+
         foreach ($taxons as $taxon) {
             $taxonCodes[] = $taxon->getCode();
         }

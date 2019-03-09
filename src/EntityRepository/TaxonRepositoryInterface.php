@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
 
@@ -9,7 +9,6 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 interface TaxonRepositoryInterface
 {
-
     /**
      * @param AttributeInterface $attribute
      *
