@@ -45,6 +45,9 @@ We created a demo app with some useful use-cases of the plugin! Visit [demo.bitb
 The admin can be accessed under [demo.bitbag.shop/admin](https://demo.bitbag.shop/admin) link and `sylius: sylius` credentials.
 
 ## Installation
+
+If you use Sylius 1.4, you might get a compatibility issue for Pagerfanta. Please read [this issue](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/issues/23) in order to proceed with a workaround. 
+
 ```bash
 $ composer require bitbag/elasticsearch-plugin
 ```
