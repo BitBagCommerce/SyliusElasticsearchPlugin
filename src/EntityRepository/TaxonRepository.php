@@ -4,32 +4,24 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
 
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Sylius\Component\Attribute\Model\AttributeInterface;
-use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
 final class TaxonRepository implements TaxonRepositoryInterface
 {
-    /**
-     * @var BaseTaxonRepositoryInterface
-     */
+    /** @var BaseTaxonRepositoryInterface|EntityRepository */
     private $baseTaxonRepository;
 
-    /**
-     * @var ProductRepositoryInterface
-     */
+    /** @var ProductRepositoryInterface|EntityRepository */
     private $productRepository;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $productTaxonEntityClass;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $productAttributeEntityClass;
 
     public function __construct(
@@ -44,11 +36,6 @@ final class TaxonRepository implements TaxonRepositoryInterface
         $this->productAttributeEntityClass = $productAttributeEntityClass;
     }
 
-    /**
-     * @param AttributeInterface $attribute
-     *
-     * @return TaxonInterface[]
-     */
     public function getTaxonsByAttributeViaProduct(AttributeInterface $attribute): array
     {
         return $this->baseTaxonRepository

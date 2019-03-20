@@ -16,10 +16,5 @@ use Elastica\Query\AbstractQuery;
 
 interface QueryBuilderInterface
 {
-    /**
-     * @param array $data
-     *
-     * @return AbstractQuery|null
-     */
     public function buildQuery(array $data): ?AbstractQuery;
 }

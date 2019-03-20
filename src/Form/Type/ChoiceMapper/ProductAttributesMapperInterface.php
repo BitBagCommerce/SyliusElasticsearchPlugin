@@ -16,10 +16,5 @@ use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 interface ProductAttributesMapperInterface
 {
-    /**
-     * @param ProductAttributeInterface $productAttribute
-     *
-     * @return array
-     */
     public function mapToChoices(ProductAttributeInterface $productAttribute): array;
 }

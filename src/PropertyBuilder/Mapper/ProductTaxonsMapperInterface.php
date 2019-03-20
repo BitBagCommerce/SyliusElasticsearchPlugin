@@ -16,10 +16,5 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 interface ProductTaxonsMapperInterface
 {
-    /**
-     * @param ProductInterface $product
-     *
-     * @return array
-     */
     public function mapToUniqueCodes(ProductInterface $product): array;
 }

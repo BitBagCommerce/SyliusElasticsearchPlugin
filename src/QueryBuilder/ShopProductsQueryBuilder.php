@@ -17,62 +17,33 @@ use Elastica\Query\BoolQuery;
 
 final class ShopProductsQueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $isEnabledQueryBuilder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $hasChannelQueryBuilder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $containsNameQueryBuilder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $hasTaxonQueryBuilder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $hasOptionsQueryBuilder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $hasAttributesQueryBuilder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $hasPriceBetweenQueryBuilder;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $optionPropertyPrefix;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $attributePropertyPrefix;
 
-    /**
-     * @param QueryBuilderInterface $isEnabledQueryBuilder
-     * @param QueryBuilderInterface $hasChannelQueryBuilder
-     * @param QueryBuilderInterface $containsNameQueryBuilder
-     * @param QueryBuilderInterface $hasTaxonQueryBuilder
-     * @param QueryBuilderInterface $hasOptionsQueryBuilder
-     * @param QueryBuilderInterface $hasAttributesQueryBuilder
-     * @param QueryBuilderInterface $hasPriceBetweenQueryBuilder
-     * @param string $optionPropertyPrefix
-     * @param string $attributePropertyPrefix
-     */
     public function __construct(
         QueryBuilderInterface $isEnabledQueryBuilder,
         QueryBuilderInterface $hasChannelQueryBuilder,
@@ -95,9 +66,6 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(array $data): AbstractQuery
     {
         $boolQuery = new BoolQuery();
@@ -120,10 +88,6 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         return $boolQuery;
     }
 
-    /**
-     * @param BoolQuery $boolQuery
-     * @param array $data
-     */
     private function resolveOptionQuery(BoolQuery $boolQuery, array $data): void
     {
         foreach ($data as $key => $value) {
@@ -134,10 +98,6 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         }
     }
 
-    /**
-     * @param BoolQuery $boolQuery
-     * @param array $data
-     */
     private function resolveAttributeQuery(BoolQuery $boolQuery, array $data): void
     {
         foreach ($data as $key => $value) {
@@ -148,10 +108,6 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         }
     }
 
-    /**
-     * @param AbstractQuery|null $query
-     * @param BoolQuery $boolQuery
-     */
     private function addMustIfNotNull(?AbstractQuery $query, BoolQuery $boolQuery): void
     {
         if (null !== $query) {

@@ -12,12 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Context;
 
-use Sylius\Component\Product\Model\ProductOptionInterface;
-
 interface ProductOptionsContextInterface
 {
-    /**
-     * @return array|ProductOptionInterface[]|null
-     */
     public function getOptions(): ?array;
 }

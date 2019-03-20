@@ -20,22 +20,14 @@ use Sylius\Component\Core\Model\ProductTranslationInterface;
 
 final class ProductNameBuilder extends AbstractBuilder
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $productNameNameResolver;
 
-    /**
-     * @param ConcatedNameResolverInterface $productNameNameResolver
-     */
     public function __construct(ConcatedNameResolverInterface $productNameNameResolver)
     {
         $this->productNameNameResolver = $productNameNameResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,

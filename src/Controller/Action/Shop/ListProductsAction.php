@@ -24,44 +24,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ListProductsAction
 {
-    /**
-     * @var FormFactoryInterface
-     */
+    /** @var FormFactoryInterface */
     private $formFactory;
 
-    /**
-     * @var DataHandlerInterface
-     */
+    /** @var DataHandlerInterface */
     private $shopProductListDataHandler;
 
-    /**
-     * @var SortDataHandlerInterface
-     */
+    /** @var SortDataHandlerInterface */
     private $shopProductsSortDataHandler;
 
-    /**
-     * @var PaginationDataHandlerInterface
-     */
+    /** @var PaginationDataHandlerInterface */
     private $paginationDataHandler;
 
-    /**
-     * @var ShopProductsFinderInterface
-     */
+    /** @var ShopProductsFinderInterface */
     private $shopProductsFinder;
 
-    /**
-     * @var EngineInterface
-     */
+    /** @var EngineInterface */
     private $templatingEngine;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param DataHandlerInterface $shopProductListDataHandler
-     * @param SortDataHandlerInterface $shopProductsSortDataHandler
-     * @param PaginationDataHandlerInterface $paginationDataHandler
-     * @param ShopProductsFinderInterface $shopProductsFinder
-     * @param EngineInterface $templatingEngine
-     */
     public function __construct(
         FormFactoryInterface $formFactory,
         DataHandlerInterface $shopProductListDataHandler,
@@ -78,11 +58,6 @@ final class ListProductsAction
         $this->templatingEngine = $templatingEngine;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function __invoke(Request $request): Response
     {
         $form = $this->formFactory->createNamed(null, ShopProductsFilterType::class);

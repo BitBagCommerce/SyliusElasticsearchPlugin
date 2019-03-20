@@ -18,22 +18,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class PriceFilterType extends AbstractFilterType
 {
-    /**
-     * @var PriceNameResolverInterface
-     */
+    /** @var PriceNameResolverInterface */
     private $priceNameResolver;
 
-    /**
-     * @param PriceNameResolverInterface $priceNameResolver
-     */
     public function __construct(PriceNameResolverInterface $priceNameResolver)
     {
         $this->priceNameResolver = $priceNameResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

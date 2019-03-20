@@ -16,22 +16,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ShopProductsFilterType extends AbstractFilterType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $namePropertyPrefix;
 
-    /**
-     * @param string $namePropertyPrefix
-     */
     public function __construct(string $namePropertyPrefix)
     {
         $this->namePropertyPrefix = $namePropertyPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

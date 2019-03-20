@@ -17,38 +17,21 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 
 final class ShopProductsSortDataHandler implements SortDataHandlerInterface
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $channelPricingNameResolver;
 
-    /**
-     * @var ChannelContextInterface
-     */
+    /** @var ChannelContextInterface */
     private $channelContext;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $soldUnitsProperty;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $createdAtProperty;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $pricePropertyPrefix;
 
-    /**
-     * @param ConcatedNameResolverInterface $channelPricingNameResolver
-     * @param ChannelContextInterface $channelContext
-     * @param string $soldUnitsProperty
-     * @param string $createdAtProperty
-     * @param string $pricePropertyPrefix
-     */
     public function __construct(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
@@ -63,9 +46,6 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $this->pricePropertyPrefix = $pricePropertyPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function retrieveData(array $requestData): array
     {
         $data = [];

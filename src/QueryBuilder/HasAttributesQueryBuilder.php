@@ -18,9 +18,6 @@ use Elastica\Query\Term;
 
 final class HasAttributesQueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(array $data): ?AbstractQuery
     {
         $attributeQuery = new BoolQuery();

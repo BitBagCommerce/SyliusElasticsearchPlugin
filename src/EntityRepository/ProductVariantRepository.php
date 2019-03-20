@@ -19,22 +19,14 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
 final class ProductVariantRepository implements ProductVariantRepositoryInterface
 {
-    /**
-     * @var BaseProductVariantRepositoryInterface|EntityRepository
-     */
+    /** @var BaseProductVariantRepositoryInterface|EntityRepository */
     private $baseProductVariantRepository;
 
-    /**
-     * @param BaseProductVariantRepositoryInterface|EntityRepository $baseProductVariantRepository
-     */
     public function __construct(BaseProductVariantRepositoryInterface $baseProductVariantRepository)
     {
         $this->baseProductVariantRepository = $baseProductVariantRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ?ProductVariantInterface
     {
         return $this->baseProductVariantRepository->createQueryBuilder('o')

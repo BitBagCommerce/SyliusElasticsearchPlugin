@@ -17,22 +17,14 @@ use Elastica\Query\BoolQuery;
 
 final class ProductAttributesByTaxonQueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $hasTaxonQueryBuilder;
 
-    /**
-     * @param QueryBuilderInterface $hasTaxonQueryBuilder
-     */
     public function __construct(QueryBuilderInterface $hasTaxonQueryBuilder)
     {
         $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(array $data): ?AbstractQuery
     {
         $boolQuery = new BoolQuery();

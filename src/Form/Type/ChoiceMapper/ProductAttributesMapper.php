@@ -20,26 +20,15 @@ use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface
 
 final class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
-    /**
-     * @var ProductAttributeValueRepositoryInterface
-     */
+    /** @var ProductAttributeValueRepositoryInterface */
     private $productAttributeValueRepository;
 
-    /**
-     * @var LocaleContextInterface
-     */
+    /** @var LocaleContextInterface */
     private $localeContext;
 
-    /**
-     * @var StringFormatterInterface
-     */
+    /** @var StringFormatterInterface */
     private $stringFormatter;
 
-    /**
-     * @param ProductAttributeValueRepositoryInterface $productAttributeValueRepository
-     * @param LocaleContextInterface $localeContext
-     * @param StringFormatterInterface $stringFormatter
-     */
     public function __construct(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         LocaleContextInterface $localeContext,
@@ -50,9 +39,6 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $this->stringFormatter = $stringFormatter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function mapToChoices(ProductAttributeInterface $productAttribute): array
     {
         $attributeValues = $this->productAttributeValueRepository->findBy(['attribute' => $productAttribute]);

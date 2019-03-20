@@ -16,10 +16,5 @@ use Pagerfanta\Pagerfanta;
 
 interface ShopProductsFinderInterface
 {
-    /**
-     * @param array $data
-     *
-     * @return Pagerfanta
-     */
     public function find(array $data): Pagerfanta;
 }

@@ -17,9 +17,6 @@ use Sylius\Component\Resource\Model\ToggleableInterface;
 
 abstract class AbstractBuilder implements PropertyBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildProperty(TransformEvent $event, string $supportedModelClass, callable $callback): void
     {
         $model = $event->getObject();
@@ -33,9 +30,6 @@ abstract class AbstractBuilder implements PropertyBuilderInterface
         $callback($model, $document);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

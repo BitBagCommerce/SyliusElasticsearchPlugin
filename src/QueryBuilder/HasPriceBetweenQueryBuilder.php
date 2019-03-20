@@ -20,26 +20,15 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 
 final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $channelPricingNameResolver;
 
-    /**
-     * @var PriceNameResolverInterface
-     */
+    /** @var PriceNameResolverInterface */
     private $priceNameResolver;
 
-    /**
-     * @var ChannelContextInterface
-     */
+    /** @var ChannelContextInterface */
     private $channelContext;
 
-    /**
-     * @param PriceNameResolverInterface $priceNameResolver
-     * @param ConcatedNameResolverInterface $channelPricingNameResolver
-     * @param ChannelContextInterface $channelContext
-     */
     public function __construct(
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
@@ -50,9 +39,6 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $this->channelContext = $channelContext;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(array $data): ?AbstractQuery
     {
         $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];

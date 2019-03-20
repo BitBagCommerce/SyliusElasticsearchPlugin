@@ -18,22 +18,14 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $createdAtProperty;
 
-    /**
-     * @param string $createdAtProperty
-     */
     public function __construct(string $createdAtProperty)
     {
         $this->createdAtProperty = $createdAtProperty;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,

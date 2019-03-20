@@ -21,20 +21,12 @@ use Pagerfanta\Pagerfanta;
 
 final class ShopProductsFinder implements ShopProductsFinderInterface
 {
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $shopProductsQueryBuilder;
 
-    /**
-     * @var PaginatedFinderInterface
-     */
+    /** @var PaginatedFinderInterface */
     private $productFinder;
 
-    /**
-     * @param QueryBuilderInterface $shopProductsQueryBuilder
-     * @param PaginatedFinderInterface $productFinder
-     */
     public function __construct(
         QueryBuilderInterface $shopProductsQueryBuilder,
         PaginatedFinderInterface $productFinder
@@ -43,9 +35,6 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
         $this->productFinder = $productFinder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function find(array $data): Pagerfanta
     {
         $boolQuery = $this->shopProductsQueryBuilder->buildQuery($data);

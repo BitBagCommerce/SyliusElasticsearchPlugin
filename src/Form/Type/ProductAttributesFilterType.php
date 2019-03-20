@@ -20,26 +20,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ProductAttributesFilterType extends AbstractFilterType
 {
-    /**
-     * @var ProductAttributesContextInterface
-     */
+    /** @var ProductAttributesContextInterface */
     private $productAttributesContext;
 
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $attributeNameResolver;
 
-    /**
-     * @var ProductAttributesMapperInterface
-     */
+    /** @var ProductAttributesMapperInterface */
     private $productAttributesMapper;
 
-    /**
-     * @param ProductAttributesContextInterface $productAttributesContext
-     * @param ConcatedNameResolverInterface $attributeNameResolver
-     * @param ProductAttributesMapperInterface $productAttributesMapper
-     */
     public function __construct(
         ProductAttributesContextInterface $productAttributesContext,
         ConcatedNameResolverInterface $attributeNameResolver,
@@ -50,9 +39,6 @@ final class ProductAttributesFilterType extends AbstractFilterType
         $this->productAttributesMapper = $productAttributesMapper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $attributes): void
     {
         foreach ($this->productAttributesContext->getAttributes() as $productAttribute) {

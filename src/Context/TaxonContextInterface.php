@@ -16,8 +16,5 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 interface TaxonContextInterface
 {
-    /**
-     * @return TaxonInterface
-     */
     public function getTaxon(): TaxonInterface;
 }

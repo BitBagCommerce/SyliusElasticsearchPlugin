@@ -14,22 +14,14 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyNameResolver;
 
 final class ConcatedNameResolver implements ConcatedNameResolverInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $propertyPrefix;
 
-    /**
-     * @param string $propertyPrefix
-     */
     public function __construct(string $propertyPrefix)
     {
         $this->propertyPrefix = $propertyPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resolvePropertyName(string $suffix): string
     {
         return strtolower($this->propertyPrefix . '_' . $suffix);

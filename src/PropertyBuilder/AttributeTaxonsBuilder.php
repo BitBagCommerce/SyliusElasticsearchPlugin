@@ -18,26 +18,15 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {
-    /**
-     * @var TaxonRepositoryInterface
-     */
+    /** @var TaxonRepositoryInterface */
     protected $taxonRepository;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxonsProperty;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $excludedAttributes;
 
-    /**
-     * @param TaxonRepositoryInterface $taxonRepository
-     * @param string $taxonsProperty
-     * @param array $excludedAttributes
-     */
     public function __construct(
         TaxonRepositoryInterface $taxonRepository,
         string $taxonsProperty,
@@ -48,9 +37,6 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         $this->excludedAttributes = $excludedAttributes;
     }
 
-    /**
-     * @param TransformEvent $event
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $documentAttribute = $event->getObject();

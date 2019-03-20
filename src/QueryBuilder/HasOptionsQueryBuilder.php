@@ -18,9 +18,6 @@ use Elastica\Query\Term;
 
 final class HasOptionsQueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildQuery(array $data): ?AbstractQuery
     {
         $optionQuery = new BoolQuery();

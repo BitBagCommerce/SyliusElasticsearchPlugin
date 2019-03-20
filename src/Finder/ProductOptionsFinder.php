@@ -18,26 +18,15 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductOptionsFinder implements ProductOptionsFinderInterface
 {
-    /**
-     * @var FinderInterface
-     */
+    /** @var FinderInterface */
     private $optionsFinder;
 
-    /**
-     * @var QueryBuilderInterface
-     */
+    /** @var QueryBuilderInterface */
     private $productOptionsByTaxonQueryBuilder;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxonsProperty;
 
-    /**
-     * @param FinderInterface $optionsFinder
-     * @param QueryBuilderInterface $productOptionsByTaxonQueryBuilder
-     * @param string $taxonsProperty
-     */
     public function __construct(
         FinderInterface $optionsFinder,
         QueryBuilderInterface $productOptionsByTaxonQueryBuilder,
@@ -48,9 +37,6 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
         $this->taxonsProperty = $taxonsProperty;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findByTaxon(TaxonInterface $taxon): ?array
     {
         $data = [];

@@ -14,10 +14,5 @@ namespace BitBag\SyliusElasticsearchPlugin\Formatter;
 
 interface StringFormatterInterface
 {
-    /**
-     * @param string $input
-     *
-     * @return string
-     */
     public function formatToLowercaseWithoutSpaces(string $input): string;
 }
