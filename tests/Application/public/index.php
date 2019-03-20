@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Tests\BitBag\SyliusElasticsearchPlugin\Application\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
