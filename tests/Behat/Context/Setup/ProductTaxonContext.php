@@ -22,26 +22,15 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class ProductTaxonContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $productTaxonFactory;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param FactoryInterface $productTaxonFactory
-     * @param ObjectManager $objectManager
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         FactoryInterface $productTaxonFactory,
@@ -68,15 +57,11 @@ final class ProductTaxonContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @param TaxonInterface $taxon
-     * @param ProductInterface $product
-     * @param int|null $position
-     *
-     * @return ProductTaxonInterface
-     */
-    private function createProductTaxon(TaxonInterface $taxon, ProductInterface $product, int $position = null): ProductTaxonInterface
-    {
+    private function createProductTaxon(
+        TaxonInterface $taxon,
+        ProductInterface $product,
+        int $position = null
+    ): ProductTaxonInterface {
         /** @var ProductTaxonInterface $productTaxon */
         $productTaxon = $this->productTaxonFactory->createNew();
         $productTaxon->setProduct($product);

@@ -16,9 +16,6 @@ use Sylius\Behat\Page\Shop\Product\IndexPageInterface as BaseIndexPageInterface;
 
 interface IndexPageInterface extends BaseIndexPageInterface
 {
-    /**
-     * @param string $name
-     */
     public function searchByPhase(string $name): void;
 
     public function filter(): void;
@@ -35,9 +32,6 @@ interface IndexPageInterface extends BaseIndexPageInterface
      */
     public function checkOption(string $optionName, string $optionValueName): void;
 
-    /**
-     * @param int $page
-     */
     public function paginate(int $page): void;
 
     /**
@@ -46,8 +40,5 @@ interface IndexPageInterface extends BaseIndexPageInterface
      */
     public function filterPrice(int $min, int $max): void;
 
-    /**
-     * @param int $limit
-     */
     public function changeLimit(int $limit): void;
 }

@@ -30,67 +30,36 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class ProductContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var ProductRepositoryInterface
-     */
+    /** @var ProductRepositoryInterface */
     private $productRepository;
 
-    /**
-     * @var ProductFactoryInterface
-     */
+    /** @var ProductFactoryInterface */
     private $productFactory;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $channelPricingFactory;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $productOptionFactory;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $productOptionValueFactory;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * @var ProductVariantResolverInterface
-     */
+    /** @var ProductVariantResolverInterface */
     private $defaultVariantResolver;
 
-    /**
-     * @var SlugGeneratorInterface
-     */
+    /** @var SlugGeneratorInterface */
     private $slugGenerator;
 
-    /**
-     * @var \Faker\Generator
-     */
+    /** @var \Faker\Generator */
     private $faker;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param ProductRepositoryInterface $productRepository
-     * @param ProductFactoryInterface $productFactory
-     * @param FactoryInterface $channelPricingFactory
-     * @param FactoryInterface $productOptionFactory
-     * @param FactoryInterface $productOptionValueFactory
-     * @param ObjectManager $objectManager
-     * @param ProductVariantResolverInterface $defaultVariantResolver
-     * @param SlugGeneratorInterface $slugGenerator
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         ProductRepositoryInterface $productRepository,
@@ -221,13 +190,6 @@ final class ProductContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @param string $productName
-     * @param int $price
-     * @param ChannelInterface|null $channel
-     *
-     * @return ProductInterface
-     */
     private function createProduct(string $productName, int $price = 100, ChannelInterface $channel = null): ProductInterface
     {
         if (null === $channel && $this->sharedStorage->has('channel')) {
@@ -266,13 +228,6 @@ final class ProductContext implements Context
         return $product;
     }
 
-    /**
-     * @param ProductOptionInterface $option
-     * @param string $value
-     * @param string $code
-     *
-     * @return ProductOptionValueInterface
-     */
     private function addProductOption(ProductOptionInterface $option, string $value, string $code): ProductOptionValueInterface
     {
         /** @var ProductOptionValueInterface $optionValue */
@@ -287,21 +242,12 @@ final class ProductContext implements Context
         return $optionValue;
     }
 
-    /**
-     * @param ProductInterface $product
-     */
     private function saveProduct(ProductInterface $product): void
     {
         $this->productRepository->add($product);
         $this->sharedStorage->set('product', $product);
     }
 
-    /**
-     * @param int $price
-     * @param ChannelInterface|null $channel
-     *
-     * @return ChannelPricingInterface
-     */
     private function createChannelPricingForChannel(int $price, ChannelInterface $channel = null): ChannelPricingInterface
     {
         /** @var ChannelPricingInterface $channelPricing */

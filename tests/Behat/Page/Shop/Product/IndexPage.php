@@ -16,74 +16,47 @@ use Sylius\Behat\Page\Shop\Product\IndexPage as BaseIndexPage;
 
 class IndexPage extends BaseIndexPage implements IndexPageInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getRouteName(): string
     {
         return 'bitbag_sylius_elasticsearch_plugin_shop_list_products';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function searchByPhase(string $name): void
     {
         $this->getDocument()->fillField('name', $name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filter(): void
     {
         $this->getElement('submit_filter')->press();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function checkAttribute(string $attributeName, string $attributeValueName): void
     {
         $this->getElement('attributes_filter', ['%attributeName%' => $attributeName])->checkField($attributeValueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function paginate(int $page): void
     {
         $this->getElement('pagination')->clickLink($page);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filterPrice(int $min, int $max): void
     {
         $this->getDocument()->fillField('Min price', $min);
         $this->getDocument()->fillField('Max price', $max);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function changeLimit(int $limit): void
     {
         $this->getElement('limit')->clickLink($limit);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function checkOption(string $optionName, string $optionValueName): void
     {
         $this->getElement('options_filter', ['%optionName%' => $optionName])->checkField($optionValueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [

@@ -17,14 +17,9 @@ use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Service\Populate;
 
 final class ElasticsearchContext implements Context
 {
-    /**
-     * @var Populate
-     */
+    /** @var Populate */
     private $populate;
 
-    /**
-     * @param Populate $populate
-     */
     public function __construct(Populate $populate)
     {
         $this->populate = $populate;

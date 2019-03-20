@@ -23,34 +23,22 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class Populate
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /**
-     * @var IndexManager
-     */
+    /** @var IndexManager */
     private $indexManager;
 
-    /**
-     * @var PagerProviderRegistry
-     */
+    /** @var PagerProviderRegistry */
     private $pagerProviderRegistry;
 
-    /**
-     * @var PagerPersisterRegistry
-     */
+    /** @var PagerPersisterRegistry */
     private $pagerPersisterRegistry;
 
-    /**
-     * @var PagerPersisterInterface
-     */
+    /** @var PagerPersisterInterface */
     private $pagerPersister;
 
-    /**
-     * @var Resetter
-     */
+    /** @var Resetter */
     private $resetter;
 
     /**
@@ -133,9 +121,6 @@ final class Populate
         $this->refreshIndex($index);
     }
 
-    /**
-     * @param string $index
-     */
     private function refreshIndex(string $index): void
     {
         $this->indexManager->getIndex($index)->refresh();
