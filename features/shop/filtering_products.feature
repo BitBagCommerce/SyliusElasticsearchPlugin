@@ -1,4 +1,4 @@
-@managing_inventory
+@filtering_products
 Feature: Filtering products
     In order to find a product I am into
     As a Customer
