@@ -17,6 +17,9 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInter
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Range;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Currency\Context\CurrencyContextInterface;
+use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
 
 final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 {
@@ -29,14 +32,24 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
     /** @var ChannelContextInterface */
     private $channelContext;
 
+    /** @var CurrencyContextInterface */
+    private $currencyContext;
+
+    /** @var CurrencyConverterInterface */
+    private $currencyConverter;
+
     public function __construct(
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelContextInterface $channelContext
+        ChannelContextInterface $channelContext,
+        CurrencyContextInterface $currencyContext,
+        CurrencyConverterInterface $currencyConverter
     ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
         $this->priceNameResolver = $priceNameResolver;
         $this->channelContext = $channelContext;
+        $this->currencyContext = $currencyContext;
+        $this->currencyConverter = $currencyConverter;
     }
 
     public function buildQuery(array $data): ?AbstractQuery
@@ -44,8 +57,8 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
         $dataMaxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
 
-        $minPrice = $dataMinPrice ? $this->getPriceFromString($dataMinPrice) : 0;
-        $maxPrice = $dataMaxPrice ? $this->getPriceFromString($dataMaxPrice) : PHP_INT_MAX;
+        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : 0;
+        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : PHP_INT_MAX;
 
         $channelCode = $this->channelContext->getChannel()->getCode();
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
@@ -59,7 +72,22 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         return $rangeQuery;
     }
 
-    private function getPriceFromString(string $price): int
+    private function resolveBasePrice(string $price): int
+    {
+        $price = $this->convertFromString($price);
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelContext->getChannel();
+        $currentCurrencyCode = $this->currencyContext->getCurrencyCode();
+        $channelBaseCurrencyCode = $channel->getBaseCurrency()->getCode();
+
+        if ($currentCurrencyCode !== $channelBaseCurrencyCode) {
+            $price = $this->currencyConverter->convert($price, $currentCurrencyCode, $channelBaseCurrencyCode);
+        }
+
+        return $price;
+    }
+
+    private function convertFromString(string $price): int
     {
         return (int) round($price * 100, 2);
     }

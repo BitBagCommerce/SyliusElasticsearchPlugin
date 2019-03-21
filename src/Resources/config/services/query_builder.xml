@@ -37,6 +37,8 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.price" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing" />
             <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="sylius.context.currency.channel_aware" />
+            <argument type="service" id="sylius.currency_converter" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.shop_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder">
@@ -50,7 +52,7 @@
             <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_attribute_property_prefix%</argument>
         </service>
-        
+
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_options_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductOptionsByTaxonQueryBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_option_taxon" />
         </service>

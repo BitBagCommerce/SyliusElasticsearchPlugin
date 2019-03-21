@@ -6,8 +6,6 @@
     </imports>
 
     <services>
-        <defaults public="true" />
-
         <service id="bitbag.sylius_elasticsearch_plugin.string_formatter" class="BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatter" />
 
         <service id="bitbag.sylius_elasticsearch_plugin.twig.extension.unset_array_elements" class="BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension">
