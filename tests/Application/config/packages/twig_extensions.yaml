@@ -1,8 +1,8 @@
 services:
     _defaults:
-        public: false
-        autowire: true
-        autoconfigure: true
+        public: true
+        autowire: false
+        autoconfigure: false
 
     # Uncomment any lines below to activate that Twig extension
     #Twig\Extensions\ArrayExtension: ~

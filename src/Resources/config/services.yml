@@ -1,11 +1,11 @@
 imports:
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/property_builder.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/property_name_resolver.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/query_builder.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/controller.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/finder.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/form.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services/context.yml" }
+    - { resource: "services/property_builder.yml" }
+    - { resource: "services/property_name_resolver.yml" }
+    - { resource: "services/query_builder.yml" }
+    - { resource: "services/controller.yml" }
+    - { resource: "services/finder.yml" }
+    - { resource: "services/form.yml" }
+    - { resource: "services/context.yml" }
 
 services:
     bitbag.sylius_elasticsearch_plugin.string_formatter:
@@ -13,8 +13,8 @@ services:
 
     bitbag.sylius_elasticsearch_plugin.twig.extension.unset_array_elements:
         class: BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension
-        tags:
-            - { name: twig.extension }
+#        tags:
+#            - { name: twig.extension }
 
     bitbag.sylius_elasticsearch_plugin.entity_repository.product_variant:
         class: BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductVariantRepository
