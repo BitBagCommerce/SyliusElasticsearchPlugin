@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInterface;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
+use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class PriceFilterType extends AbstractFilterType
@@ -21,9 +22,13 @@ final class PriceFilterType extends AbstractFilterType
     /** @var PriceNameResolverInterface */
     private $priceNameResolver;
 
-    public function __construct(PriceNameResolverInterface $priceNameResolver)
+    /** @var CurrencyContextInterface */
+    private $currencyContext;
+
+    public function __construct(PriceNameResolverInterface $priceNameResolver, CurrencyContextInterface $currencyContext)
     {
         $this->priceNameResolver = $priceNameResolver;
+        $this->currencyContext = $currencyContext;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -32,10 +37,12 @@ final class PriceFilterType extends AbstractFilterType
             ->add($this->priceNameResolver->resolveMinPriceName(), MoneyType::class, [
                 'label' => 'bitbag_sylius_elasticsearch_plugin.ui.min_price',
                 'required' => false,
+                'currency' => $this->currencyContext->getCurrencyCode(),
             ])
             ->add($this->priceNameResolver->resolveMaxPriceName(), MoneyType::class, [
                 'label' => 'bitbag_sylius_elasticsearch_plugin.ui.max_price',
                 'required' => false,
+                'currency' => $this->currencyContext->getCurrencyCode(),
             ])
         ;
     }

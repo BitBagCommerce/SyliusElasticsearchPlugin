@@ -20,18 +20,25 @@ use Elastica\Query\Range;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Currency\Context\CurrencyContextInterface;
+use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
+use Sylius\Component\Currency\Model\CurrencyInterface;
 
 final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
 {
     function let(
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelContextInterface $channelContext
+        ChannelContextInterface $channelContext,
+        CurrencyContextInterface $currencyContext,
+        CurrencyConverterInterface $currencyConverter
     ): void {
         $this->beConstructedWith(
             $priceNameResolver,
             $channelPricingNameResolver,
-            $channelContext
+            $channelContext,
+            $currencyContext,
+            $currencyConverter
         );
     }
 
@@ -49,14 +56,17 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
         PriceNameResolverInterface $priceNameResolver,
         ChannelContextInterface $channelContext,
         ChannelInterface $channel,
+        CurrencyContextInterface $currencyContext,
+        CurrencyInterface $currency,
         ConcatedNameResolverInterface $channelPricingNameResolver
     ): void {
         $channel->getCode()->willReturn('web');
-
         $channelContext->getChannel()->willReturn($channel);
-
         $priceNameResolver->resolveMinPriceName()->willReturn('min_price');
         $priceNameResolver->resolveMaxPriceName()->willReturn('max_price');
+        $channel->getBaseCurrency()->willReturn($currency);
+        $currency->getCode()->willReturn('USD');
+        $currencyContext->getCurrencyCode()->willReturn('USD');
 
         $channelPricingNameResolver->resolvePropertyName('web')->willReturn('web');
 
