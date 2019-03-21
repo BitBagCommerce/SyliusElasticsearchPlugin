@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.name_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\NameFilterType">
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.product_options_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ProductOptionsFilterType">
+            <tag name="form.type" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.product_options" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.option" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_options" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ProductAttributesFilterType">
+            <tag name="form.type" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.product_attributes" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.price_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\PriceFilterType">
+            <tag name="form.type" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.price" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType">
+            <tag name="form.type" />
+            <argument>%bitbag_es_shop_name_property_prefix%</argument>
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_options" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductOptionsMapper">
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductAttributesMapper">
+            <argument type="service" id="sylius.repository.product_attribute_value" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
+        </service>
+    </services>
+</container>

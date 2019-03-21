@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.context.setup.product" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="sylius.factory.product" />
+            <argument type="service" id="sylius.factory.channel_pricing" />
+            <argument type="service" id="sylius.factory.product_option" />
+            <argument type="service" id="sylius.factory.product_option_value" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sylius.product_variant_resolver.default" />
+            <argument type="service" id="sylius.generator.slug" />
+        </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_attribute" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductAttributeContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="sylius.repository.product_attribute" />
+            <argument type="service" id="sylius.factory.product_attribute" />
+            <argument type="service" id="sylius.factory.product_attribute_value" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_taxon" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductTaxonContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="sylius.factory.product_taxon" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ElasticsearchContext">
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.behat.populate" />
+        </service>
+    </services>
+</container>

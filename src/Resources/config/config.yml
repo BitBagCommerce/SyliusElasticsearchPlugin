@@ -1,8 +1,7 @@
 imports:
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/services.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/indexes/bitbag_shop_products.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/indexes/bitbag_option_taxons.yml" }
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/indexes/bitbag_attribute_taxons.yml" }
+    - { resource: "indexes/bitbag_shop_products.yml" }
+    - { resource: "indexes/bitbag_option_taxons.yml" }
+    - { resource: "indexes/bitbag_attribute_taxons.yml" }
 
 parameters:
     bitbag_es_host: localhost

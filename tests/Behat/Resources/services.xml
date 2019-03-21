@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/**/**/*.xml"/>
+    </imports>
+
+    <services>
+        <defaults public="true" />
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.populate" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Service\Populate">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="fos_elastica.index_manager"/>
+            <argument type="service" id="fos_elastica.pager_provider_registry"/>
+            <argument type="service" id="fos_elastica.pager_persister_registry"/>
+            <argument type="service" id="fos_elastica.resetter"/>
+        </service>
+    </services>
+</container>
