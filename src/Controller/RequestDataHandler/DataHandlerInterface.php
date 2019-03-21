@@ -14,10 +14,5 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 interface DataHandlerInterface
 {
-    /**
-     * @param array $requestData
-     *
-     * @return array
-     */
     public function retrieveData(array $requestData): array;
 }

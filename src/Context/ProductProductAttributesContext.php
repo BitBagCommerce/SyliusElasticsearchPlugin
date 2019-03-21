@@ -16,20 +16,12 @@ use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinderInterface;
 
 final class ProductProductAttributesContext implements ProductAttributesContextInterface
 {
-    /**
-     * @var TaxonContextInterface
-     */
+    /** @var TaxonContextInterface */
     private $taxonContext;
 
-    /**
-     * @var ProductAttributesFinderInterface
-     */
+    /** @var ProductAttributesFinderInterface */
     private $attributesFinder;
 
-    /**
-     * @param TaxonContextInterface $taxonContext
-     * @param ProductAttributesFinderInterface $attributesFinder
-     */
     public function __construct(
         TaxonContextInterface $taxonContext,
         ProductAttributesFinderInterface $attributesFinder
@@ -38,9 +30,6 @@ final class ProductProductAttributesContext implements ProductAttributesContextI
         $this->attributesFinder = $attributesFinder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAttributes(): ?array
     {
         $taxon = $this->taxonContext->getTaxon();

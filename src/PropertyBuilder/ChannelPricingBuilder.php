@@ -20,22 +20,14 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class ChannelPricingBuilder extends AbstractBuilder
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $channelPricingNameResolver;
 
-    /**
-     * @param ConcatedNameResolverInterface $channelPricingNameResolver
-     */
     public function __construct(ConcatedNameResolverInterface $channelPricingNameResolver)
     {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,

@@ -45,9 +45,3 @@ default:
         FriendsOfBehat\SuiteSettingsExtension:
             paths:
                 - "features"
-
-    formatters:
-        pretty:
-            verbose: true
-            paths: false
-            snippets: false

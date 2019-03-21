@@ -18,44 +18,24 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
-    /**
-     * @var TaxonRepositoryInterface
-     */
+    /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
-    /**
-     * @var LocaleContextInterface
-     */
+    /** @var LocaleContextInterface */
     private $localeContext;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $namePropertyPrefix;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxonsProperty;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $optionPropertyPrefix;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $attributePropertyPrefix;
 
-    /**
-     * @param TaxonRepositoryInterface $taxonRepository
-     * @param LocaleContextInterface $localeContext
-     * @param string $namePropertyPrefix
-     * @param string $taxonsProperty
-     * @param string $optionPropertyPrefix
-     * @param string $attributePropertyPrefix
-     */
     public function __construct(
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
@@ -72,9 +52,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function retrieveData(array $requestData): array
     {
         $slug = $requestData['slug'];
@@ -95,12 +72,6 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         return $data;
     }
 
-    /**
-     * @param array $requestData
-     * @param array $data
-     * @param string $formName
-     * @param string $propertyPrefix
-     */
     private function handlePrefixedProperty(
         array $requestData,
         array &$data,

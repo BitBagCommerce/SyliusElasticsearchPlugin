@@ -15,11 +15,8 @@ namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AbstractFilterType extends AbstractType
+abstract class AbstractFilterType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -28,9 +25,6 @@ class AbstractFilterType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): ?string
     {
         return null;

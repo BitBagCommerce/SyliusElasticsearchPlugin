@@ -14,9 +14,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Formatter;
 
 final class StringFormatter implements StringFormatterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function formatToLowercaseWithoutSpaces(string $input): string
     {
         return mb_strtolower(str_replace([' ', '-'], '_', $input));

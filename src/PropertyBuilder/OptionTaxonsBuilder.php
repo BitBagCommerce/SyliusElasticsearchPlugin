@@ -22,44 +22,24 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionTaxonsBuilder extends AbstractBuilder
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $productOptionValueRepository;
 
-    /**
-     * @var ProductVariantRepositoryInterface
-     */
+    /** @var ProductVariantRepositoryInterface */
     private $productVariantRepository;
 
-    /**
-     * @var ProductTaxonsMapperInterface
-     */
+    /** @var ProductTaxonsMapperInterface */
     private $productTaxonsMapper;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $optionProperty;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxonsProperty;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $excludedOptions;
 
-    /**
-     * @param RepositoryInterface $productOptionValueRepository
-     * @param ProductVariantRepositoryInterface $productVariantRepository
-     * @param ProductTaxonsMapperInterface $productTaxonsMapper
-     * @param string $optionProperty
-     * @param string $taxonsProperty
-     * @param array $excludedOptions
-     */
     public function __construct(
         RepositoryInterface $productOptionValueRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
@@ -76,9 +56,6 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         $this->excludedOptions = $excludedOptions;
     }
 
-    /**
-     * @param TransformEvent $event
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $documentProductOption = $event->getObject();

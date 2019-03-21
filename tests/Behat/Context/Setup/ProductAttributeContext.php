@@ -25,43 +25,24 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class ProductAttributeContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $productAttributeRepository;
 
-    /**
-     * @var AttributeFactoryInterface
-     */
+    /** @var AttributeFactoryInterface */
     private $productAttributeFactory;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $productAttributeValueFactory;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * @var \Faker\Generator
-     */
+    /** @var \Faker\Generator */
     private $faker;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param RepositoryInterface $productAttributeRepository
-     * @param AttributeFactoryInterface $productAttributeFactory
-     * @param FactoryInterface $productAttributeValueFactory
-     * @param ObjectManager $objectManager
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         RepositoryInterface $productAttributeRepository,
@@ -122,13 +103,7 @@ final class ProductAttributeContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @param string|null $code
-     *
-     * @return ProductAttributeInterface
-     */
+
     private function createProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
     {
         $productAttribute = $this->productAttributeFactory->createTyped($type);
@@ -141,13 +116,6 @@ final class ProductAttributeContext implements Context
         return $productAttribute;
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @param string|null $code
-     *
-     * @return ProductAttributeInterface
-     */
     private function provideProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
     {
         $code = $code ?: StringInflector::nameToCode($name);
@@ -164,13 +132,6 @@ final class ProductAttributeContext implements Context
         return $productAttribute;
     }
 
-    /**
-     * @param mixed $value
-     * @param ProductAttributeInterface $attribute
-     * @param string $localeCode
-     *
-     * @return ProductAttributeValueInterface
-     */
     private function createProductAttributeValue(
         $value,
         ProductAttributeInterface $attribute,
@@ -187,9 +148,6 @@ final class ProductAttributeContext implements Context
         return $attributeValue;
     }
 
-    /**
-     * @param ProductAttributeInterface $productAttribute
-     */
     private function saveProductAttribute(ProductAttributeInterface $productAttribute): void
     {
         $this->productAttributeRepository->add($productAttribute);

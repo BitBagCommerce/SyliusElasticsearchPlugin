@@ -14,13 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyNameResolver;
 
 interface PriceNameResolverInterface
 {
-    /**
-     * @return string
-     */
     public function resolveMinPriceName(): string;
 
-    /**
-     * @return string
-     */
     public function resolveMaxPriceName(): string;
 }

@@ -19,29 +19,18 @@ use Sylius\Component\Order\Repository\OrderItemRepositoryInterface;
 
 final class SoldUnitsPropertyBuilder extends AbstractBuilder
 {
-    /**
-     * @var OrderItemRepositoryInterface
-     */
+    /** @var OrderItemRepositoryInterface */
     private $orderItemRepository;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $soldUnitsProperty;
 
-    /**
-     * @param OrderItemRepositoryInterface $orderItemRepository
-     * @param string $soldUnitsProperty
-     */
     public function __construct(OrderItemRepositoryInterface $orderItemRepository, string $soldUnitsProperty)
     {
         $this->orderItemRepository = $orderItemRepository;
         $this->soldUnitsProperty = $soldUnitsProperty;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,

@@ -16,9 +16,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class TaxonNotFoundException extends NotFoundHttpException
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         parent::__construct('Taxon has not been found!');

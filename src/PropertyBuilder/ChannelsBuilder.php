@@ -18,22 +18,14 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ChannelsBuilder extends AbstractBuilder
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $channelsProperty;
 
-    /**
-     * @param string $channelsProperty
-     */
     public function __construct(string $channelsProperty)
     {
         $this->channelsProperty = $channelsProperty;
     }
 
-    /**
-     * @param TransformEvent $event
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,

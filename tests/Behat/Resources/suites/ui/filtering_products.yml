@@ -1,6 +1,6 @@
 default:
     suites:
-        ui_managing_inventory:
+        ui_filtering_products:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
@@ -23,4 +23,4 @@ default:
 
                 - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.product
             filters:
-                tags: "@managing_inventory && @ui"
+                tags: "@filtering_products && @ui"

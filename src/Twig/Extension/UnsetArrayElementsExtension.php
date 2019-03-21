@@ -33,9 +33,6 @@ final class UnsetArrayElementsExtension extends \Twig_Extension
         return $elements;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [

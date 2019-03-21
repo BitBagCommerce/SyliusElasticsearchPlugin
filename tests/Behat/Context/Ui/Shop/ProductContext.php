@@ -20,19 +20,12 @@ use Webmozart\Assert\Assert;
 
 final class ProductContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var IndexPageInterface
-     */
+    /** @var IndexPageInterface */
     private $productIndexPage;
 
-    /**
-     * @param IndexPageInterface $productIndexPage
-     */
     public function __construct(IndexPageInterface $productIndexPage, SharedStorageInterface $sharedStorage)
     {
         $this->productIndexPage = $productIndexPage;

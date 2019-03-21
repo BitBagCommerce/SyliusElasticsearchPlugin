@@ -20,26 +20,15 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class TaxonContext implements TaxonContextInterface
 {
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
-    /**
-     * @var TaxonRepositoryInterface
-     */
+    /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
-    /**
-     * @var LocaleContextInterface
-     */
+    /** @var LocaleContextInterface */
     private $localeContext;
 
-    /**
-     * @param RequestStack $requestStack
-     * @param TaxonRepositoryInterface $taxonRepository
-     * @param LocaleContextInterface $localeContext
-     */
     public function __construct(
         RequestStack $requestStack,
         TaxonRepositoryInterface $taxonRepository,
@@ -50,13 +39,11 @@ final class TaxonContext implements TaxonContextInterface
         $this->localeContext = $localeContext;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTaxon(): TaxonInterface
     {
         $slug = $this->requestStack->getCurrentRequest()->get('slug');
         $localeCode = $this->localeContext->getLocaleCode();
+        /** @var TaxonInterface $taxon */
         $taxon = $this->taxonRepository->findOneBySlug($slug, $localeCode);
 
         if (null === $slug || null === $taxon) {

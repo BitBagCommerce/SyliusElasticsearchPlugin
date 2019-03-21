@@ -14,9 +14,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 final class PaginationDataHandler implements PaginationDataHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function retrieveData(array $requestData): array
     {
         $data = [];
@@ -27,10 +24,6 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
         return $data;
     }
 
-    /**
-     * @param array $requestData
-     * @param array $data
-     */
     private function resolvePage(array $requestData, array &$data): void
     {
         $page = 1;
@@ -42,10 +35,6 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
         $data[self::PAGE_INDEX] = $page;
     }
 
-    /**
-     * @param array $requestData
-     * @param array $data
-     */
     private function resolveLimit(array $requestData, array &$data): void
     {
         $limit = self::DEFAULT_LIMIT;

@@ -14,10 +14,5 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyNameResolver;
 
 interface ConcatedNameResolverInterface
 {
-    /**
-     * @param string $suffix
-     *
-     * @return string
-     */
     public function resolvePropertyName(string $suffix): string;
 }

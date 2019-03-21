@@ -16,9 +16,6 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function mapToUniqueCodes(ProductInterface $product): array
     {
         $taxons = [];

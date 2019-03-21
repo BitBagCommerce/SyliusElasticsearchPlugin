@@ -20,26 +20,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ProductOptionsFilterType extends AbstractFilterType
 {
-    /**
-     * @var ProductOptionsContextInterface
-     */
+    /** @var ProductOptionsContextInterface */
     private $productOptionsContext;
 
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $optionNameResolver;
 
-    /**
-     * @var ProductOptionsMapperInterface
-     */
+    /** @var ProductOptionsMapperInterface */
     private $productOptionsMapper;
 
-    /**
-     * @param ProductOptionsContextInterface $productOptionsContext
-     * @param ConcatedNameResolverInterface $optionNameResolver
-     * @param ProductOptionsMapperInterface $productOptionsMapper
-     */
     public function __construct(
         ProductOptionsContextInterface $productOptionsContext,
         ConcatedNameResolverInterface $optionNameResolver,
@@ -50,9 +39,6 @@ final class ProductOptionsFilterType extends AbstractFilterType
         $this->productOptionsMapper = $productOptionsMapper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         foreach ($this->productOptionsContext->getOptions() as $productOption) {

@@ -16,10 +16,5 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 interface ProductOptionsFinderInterface
 {
-    /**
-     * @param TaxonInterface $taxon
-     *
-     * @return array|null
-     */
     public function findByTaxon(TaxonInterface $taxon): ?array;
 }

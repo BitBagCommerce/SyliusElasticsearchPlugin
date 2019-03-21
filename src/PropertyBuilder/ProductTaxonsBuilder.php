@@ -19,29 +19,18 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonsBuilder extends AbstractBuilder
 {
-    /**
-     * @var ProductTaxonsMapperInterface
-     */
+    /** @var ProductTaxonsMapperInterface */
     private $productTaxonsMapper;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxonsProperty;
 
-    /**
-     * @param ProductTaxonsMapperInterface $productTaxonsMapper
-     * @param string $taxonsProperty
-     */
     public function __construct(ProductTaxonsMapperInterface $productTaxonsMapper, string $taxonsProperty)
     {
         $this->productTaxonsMapper = $productTaxonsMapper;
         $this->taxonsProperty = $taxonsProperty;
     }
 
-    /**
-     * @param TransformEvent $event
-     */
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,

@@ -1,4 +1,4 @@
-@managing_inventory
+@filtering_products
 Feature: Filtering products
     In order to find a product I am into
     As a Customer
@@ -19,7 +19,7 @@ Feature: Filtering products
         And 3 of these products have text attribute "color" with "Red" value
         And 5 of these products have text attribute "color" with "Green" value
         And 7 of these products have text attribute "color" with "Blue" value
-        And the data is populated to elasticsearch
+        And the data is populated to Elasticsearch
 
     @ui
     Scenario: Filtering products by name

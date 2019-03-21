@@ -12,7 +12,7 @@ interface TaxonRepositoryInterface
     /**
      * @param AttributeInterface $attribute
      *
-     * @return array|TaxonInterface[]
+     * @return TaxonInterface[]
      */
     public function getTaxonsByAttributeViaProduct(AttributeInterface $attribute): array;
 }
