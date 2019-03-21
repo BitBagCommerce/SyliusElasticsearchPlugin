@@ -106,9 +106,7 @@ final class ProductContext implements Context
     public function ofTheseProductsArePricedBetweenAnd(int $quantity, int $min, int $max): void
     {
         $channel = $this->sharedStorage->get('channel');
-
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
-
         $products = $this->sharedStorage->get('products');
 
         if (count($products) <= $sumQuantity) {
@@ -121,7 +119,6 @@ final class ProductContext implements Context
         foreach ($products as $product) {
             /** @var ProductVariantInterface $productVariant */
             $productVariant = $product->getVariants()->first();
-
             $channelPricing = $productVariant->getChannelPricingForChannel($channel);
 
             $channelPricing->setPrice($this->faker->numberBetween($min, $max));
@@ -166,7 +163,6 @@ final class ProductContext implements Context
     public function ofTheseProductsHaveOptionWithValue(int $quantity, string $optionName, string $value): void
     {
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
-
         $products = $this->sharedStorage->get('products');
 
         if (count($products) <= $sumQuantity) {
@@ -174,7 +170,6 @@ final class ProductContext implements Context
         }
 
         $products = array_slice($products, $sumQuantity, $quantity);
-
         $optionValue = $this->sharedStorage->get(sprintf('%s_option_%s_value', $value, strtolower($optionName)));
 
         /** @var ProductInterface $product */
@@ -186,7 +181,6 @@ final class ProductContext implements Context
         }
 
         $this->sharedStorage->set('sum_quantity', $sumQuantity + $quantity);
-
         $this->objectManager->flush();
     }
 

@@ -26,7 +26,7 @@ final class ElasticsearchContext implements Context
     }
 
     /**
-     * @Given the data is populated to elasticsearch
+     * @Given the data is populated to Elasticsearch
      */
     public function theDataIsPopulatedToElasticsearch(): void
     {

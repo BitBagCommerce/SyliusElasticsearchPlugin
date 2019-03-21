@@ -43,13 +43,6 @@ final class ProductAttributeContext implements Context
     /** @var \Faker\Generator */
     private $faker;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param RepositoryInterface $productAttributeRepository
-     * @param AttributeFactoryInterface $productAttributeFactory
-     * @param FactoryInterface $productAttributeValueFactory
-     * @param ObjectManager $objectManager
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         RepositoryInterface $productAttributeRepository,
@@ -110,13 +103,7 @@ final class ProductAttributeContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @param string|null $code
-     *
-     * @return ProductAttributeInterface
-     */
+
     private function createProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
     {
         $productAttribute = $this->productAttributeFactory->createTyped($type);
@@ -129,13 +116,6 @@ final class ProductAttributeContext implements Context
         return $productAttribute;
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @param string|null $code
-     *
-     * @return ProductAttributeInterface
-     */
     private function provideProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
     {
         $code = $code ?: StringInflector::nameToCode($name);
@@ -152,13 +132,6 @@ final class ProductAttributeContext implements Context
         return $productAttribute;
     }
 
-    /**
-     * @param mixed $value
-     * @param ProductAttributeInterface $attribute
-     * @param string $localeCode
-     *
-     * @return ProductAttributeValueInterface
-     */
     private function createProductAttributeValue(
         $value,
         ProductAttributeInterface $attribute,
