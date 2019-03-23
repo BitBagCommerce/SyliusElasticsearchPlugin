@@ -103,7 +103,6 @@ final class ProductAttributeContext implements Context
         $this->objectManager->flush();
     }
 
-
     private function createProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
     {
         $productAttribute = $this->productAttributeFactory->createTyped($type);
