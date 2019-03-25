@@ -29,6 +29,8 @@ Working [Sylius](https://sylius.com/) [Elasticsearch](https://www.elastic.co/pro
 options, attributes, taxons, channels and name in the front product list page. It totally replaces the default Sylius `sylius_shop_product_index`
 route.
 
+If you are curious about the details of this plugin, read [this Medium blog post](https://medium.com/@BitBag/using-sylius-and-elasticsearch-for-a-products-filter-6dc9f0ce929) for more details.
+
 What is more, the plugin has a nice Sylius-oriented architecture that allows mapping resources to the Elastic document easier. It is flexible as well,
 so that you can customize the existing features for your specific business needs.   
 
@@ -39,6 +41,7 @@ You can order our support on [this page](https://bitbag.shop/products/sylius-mai
 We work on amazing eCommerce projects on top of Sylius and other great Symfony based solutions, like eZ Platform, Akeneo or Pimcore.
 Need some help or additional resources for a project? Write us an email on mikolaj.krol@bitbag.pl or visit
 [our website](https://bitbag.shop/)! :rocket:
+
 ## Demo
 
 We created a demo app with some useful use-cases of the plugin! Visit [demo.bitbag.shop](https://demo.bitbag.shop/en_US/products-list/t-shirts) to take a look at it. 
