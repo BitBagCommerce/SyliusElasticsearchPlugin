@@ -40,7 +40,7 @@ final class ProductAttributesFinderSpec extends ObjectBehavior
 
     function it_implements_product_attributes_finder_interface(): void
     {
-        $this->shouldHaveType(ProductAttributesFinderInterface::class);
+        $this->shouldImplement(ProductAttributesFinderInterface::class);
     }
 
     function it_finds_by_taxon(

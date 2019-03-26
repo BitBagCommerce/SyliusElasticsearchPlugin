@@ -45,10 +45,14 @@
     "autoload": {
         "psr-4": {
             "BitBag\\SyliusElasticsearchPlugin\\": "src/",
-            "Tests\\BitBag\\SyliusElasticsearchPlugin\\": "tests/"
+            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Application\\": "tests/Application"
         }
     },
     "autoload-dev": {
+        "psr-4": {
+            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Behat\\": "tests/Behat",
+            "spec\\BitBag\\SyliusElasticsearchPlugin\\": "spec/"
+        },
         "classmap": ["tests/Application/Kernel.php"]
     }
 }

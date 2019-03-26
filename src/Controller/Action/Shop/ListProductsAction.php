@@ -73,7 +73,9 @@ final class ListProductsAction
             $this->shopProductsSortDataHandler->retrieveData($requestData),
             $this->paginationDataHandler->retrieveData($requestData)
         );
+
         $template = $request->get('template');
+
         $products = $this->shopProductsFinder->find($data);
 
         return $this->templatingEngine->renderResponse($template, [

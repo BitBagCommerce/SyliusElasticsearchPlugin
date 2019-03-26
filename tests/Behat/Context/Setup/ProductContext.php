@@ -101,6 +101,16 @@ final class ProductContext implements Context
     }
 
     /**
+     * @Given there is a product named :productName in the store
+     */
+    public function thereIsProductNamedInTheStore(string $productName): void
+    {
+        $product = $this->createProduct($productName);
+
+        $this->saveProduct($product);
+    }
+
+    /**
      * @Given /^(\d+) of these products are priced between ("[^"]+") and ("[^"]+")$/
      */
     public function ofTheseProductsArePricedBetweenAnd(int $quantity, int $min, int $max): void

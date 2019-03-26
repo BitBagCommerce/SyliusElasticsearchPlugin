@@ -38,6 +38,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     public function find(array $data): Pagerfanta
     {
         $boolQuery = $this->shopProductsQueryBuilder->buildQuery($data);
+
         $query = new Query($boolQuery);
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
 

@@ -41,6 +41,18 @@
             <argument type="service" id="sylius.currency_converter" />
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductAttributesByTaxonQueryBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_options_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductOptionsByTaxonQueryBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_option_taxon" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.products_by_partial_name" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductsByPartialNameQueryBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" />
+        </service>
+
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.shop_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_channel" />
@@ -51,14 +63,6 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_price_between" />
             <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_attribute_property_prefix%</argument>
-        </service>
-
-        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_options_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductOptionsByTaxonQueryBuilder">
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_option_taxon" />
-        </service>
-
-        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductAttributesByTaxonQueryBuilder">
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon" />
         </service>
     </services>
 </container>

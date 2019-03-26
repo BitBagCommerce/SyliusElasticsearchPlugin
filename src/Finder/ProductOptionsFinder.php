@@ -43,8 +43,7 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
         $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);
-        $options = $this->optionsFinder->find($query);
 
-        return $options;
+        return $this->optionsFinder->find($query);
     }
 }
