@@ -124,6 +124,8 @@ You might also want to refer the horizontal menu to a new product list page. Fol
 3. Clean your cache with `bin/console cache:clear` command.
 4. :tada:
 
+**Be aware! Elasticsearch does not handle dashes well. This plugin depends on the code field in Sylius resources. Plese use underscores instead of dashes in your code fields.**
+
 ### Excluding options and attributes in the filter menu
 
 You might not want to show some specific options or attributes in the menu. You can set specific parameters for that:
