@@ -18,6 +18,7 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.product_attributes" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes" />
+            <argument>%bitbag_es_excluded_filter_attributes%</argument>
 
             <tag name="form.type" />
         </service>
@@ -40,7 +41,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\ProductAttributesMapper">
-            <argument type="service" id="sylius.repository.product_attribute_value" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.entity_repository.product_attribute_value_repository" />
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
         </service>

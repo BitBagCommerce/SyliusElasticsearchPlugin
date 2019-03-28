@@ -22,5 +22,9 @@
             <argument>%sylius.model.product_taxon.class%</argument>
             <argument>%sylius.model.product_attribute_value.class%</argument>
         </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.entity_repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductAttributeRepository">
+            <argument type="service" id="sylius.repository.product_attribute_value" />
+        </service>
     </services>
 </container>
