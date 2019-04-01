@@ -75,7 +75,6 @@ final class ListProductsAction
         );
 
         $template = $request->get('template');
-
         $products = $this->shopProductsFinder->find($data);
 
         return $this->templatingEngine->renderResponse($template, [

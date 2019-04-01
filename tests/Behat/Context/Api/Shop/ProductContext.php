@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.shop and write us
+ * an email on mikolaj.krol@bitbag.pl.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Api\Shop;
@@ -45,7 +53,6 @@ final class ProductContext implements Context
     {
         /** @var Response $response */
         $response = $this->client->getResponse();
-
         $content = \json_decode($response->getContent());
 
         Assert::count($content->items, $productsCount);
