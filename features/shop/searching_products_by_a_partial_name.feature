@@ -11,9 +11,10 @@ Feature: Filtering products
         And there is a product named "Volvo XC90" in the store
         And there is a product named "Polonez Caro" in the store
         And there is a product named "Porsche Carrera GT" in the store
+        And these products belongs primarily to "Cars" taxon
         And the data is populated to Elasticsearch
 
     @api
     Scenario: Filtering products by name
-        When I search the products by "vol" phase
+        When I search the products by "vol" phrase
         Then I should see 2 products

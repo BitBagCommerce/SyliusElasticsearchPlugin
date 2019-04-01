@@ -27,10 +27,10 @@ final class Item
     public function __construct(
         string $taxonName,
         string $name,
-        string $description,
+        ?string $description,
         string $slug,
         string $price,
-        string $image
+        ?string $image
     ) {
         $this->taxonName = $taxonName;
         $this->name = $name;
@@ -50,7 +50,7 @@ final class Item
         return $this->name;
     }
 
-    public function description(): string
+    public function description(): ?string
     {
         return $this->description;
     }
@@ -65,7 +65,7 @@ final class Item
         return $this->price;
     }
 
-    public function image(): string
+    public function image(): ?string
     {
         return $this->image;
     }
@@ -75,10 +75,10 @@ final class Item
         return [
             'taxon_name' => $this->taxonName(),
             'name' => $this->name(),
-            'description' => $this->description(),
+            'description' => $this->description() ?: '',
             'slug' => $this->slug(),
             'price' => $this->price(),
-            'image' => $this->image(),
+            'image' => $this->image() ?: '',
         ];
     }
 }

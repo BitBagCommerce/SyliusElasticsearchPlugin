@@ -14,5 +14,9 @@
             <argument type="service" id="fos_elastica.pager_persister_registry"/>
             <argument type="service" id="fos_elastica.resetter"/>
         </service>
+
+        <service id="bitbag.test.client" alias="test.client" />
+        <service id="bitbag.test.client.history" alias="test.client.history" />
+        <service id="bitbag.test.client.cookiejar" alias="test.client.cookiejar" />
     </services>
 </container>

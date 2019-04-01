@@ -108,6 +108,12 @@ final class ProductContext implements Context
         $product = $this->createProduct($productName);
 
         $this->saveProduct($product);
+
+        $products = $this->sharedStorage->has('products') ? $this->sharedStorage->get('products') : [];
+
+        \array_push($products, $product);
+
+        $this->sharedStorage->set('products', $products);
     }
 
     /**

@@ -5,7 +5,7 @@
         <defaults public="true" />
 
         <service id="bitbag.sylius_elasticsearch_plugin.behat.context.api.shop.product" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Api\Shop\ProductContext">
-            <argument type="service" id="test.client" />
+            <argument type="service" id="bitbag.test.client" />
             <argument type="service" id="router.default" />
         </service>
     </services>

@@ -7,31 +7,32 @@ namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Api\Shop;
 use Behat\Behat\Context\Context;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Webmozart\Assert\Assert;
 
 final class ProductContext implements Context
 {
     /** @var Client */
     private $client;
 
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    /** @var RouterInterface */
+    private $router;
 
-    public function __construct(Client $client, UrlGeneratorInterface $urlGenerator)
+    public function __construct(Client $client, RouterInterface $router)
     {
         $this->client = $client;
-        $this->urlGenerator = $urlGenerator;
+        $this->router = $router;
     }
 
     /**
      * @When I search the products by :phrase phrase
      */
-    public function iSearchTheProductsByPhase(string $phrase): void
+    public function iSearchTheProductsByPhrase(string $phrase): void
     {
         $this->client->request(
             'GET',
-            $this->urlGenerator->generate('bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name'),
-            ['phrase' => $phrase],
+            $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name', ['_locale' => 'en_US', 'query' => $phrase]),
+            [],
             [],
             ['ACCEPT' => 'application/json']
         );
@@ -45,6 +46,8 @@ final class ProductContext implements Context
         /** @var Response $response */
         $response = $this->client->getResponse();
 
-        dump($response);
+        $content = \json_decode($response->getContent());
+
+        Assert::count($content->items, $productsCount);
     }
 }
