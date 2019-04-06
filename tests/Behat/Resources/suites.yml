@@ -1,2 +1,3 @@
 imports:
-    - suites/ui/filtering_products.yml
+    - suites/api/searching_products.yaml
+    - suites/ui/filtering_products.yaml

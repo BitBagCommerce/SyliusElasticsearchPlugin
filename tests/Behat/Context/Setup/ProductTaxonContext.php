@@ -49,7 +49,25 @@ final class ProductTaxonContext implements Context
         /** @var ProductInterface $product */
         foreach ($this->sharedStorage->get('products') as $product) {
             $productTaxon = $this->createProductTaxon($taxon, $product);
+
             $product->addProductTaxon($productTaxon);
+
+            $this->objectManager->persist($product);
+        }
+
+        $this->objectManager->flush();
+    }
+
+    /**
+     * @Given /^these products belongs primarily to ("[^"]+" taxon)$/
+     */
+    public function theseProductsBelongsPrimarilyToTaxon(TaxonInterface $taxon): void
+    {
+        /** @var ProductInterface $product */
+        foreach ($this->sharedStorage->get('products') as $product) {
+            $productTaxon = $this->createProductTaxon($taxon, $product);
+
+            $product->setMainTaxon($productTaxon->getTaxon());
 
             $this->objectManager->persist($product);
         }

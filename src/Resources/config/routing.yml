@@ -5,3 +5,10 @@ bitbag_sylius_elasticsearch_plugin_shop_list_products:
         template: "@BitBagSyliusElasticsearchPlugin/Shop/Product/index.html.twig"
     requirements:
         slug: .+
+
+bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name:
+    path: /{_locale}/auto-complete/product
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.auto_complete_product_name
+    requirements:
+        slug: .+

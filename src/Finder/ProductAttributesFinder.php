@@ -43,8 +43,7 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
         $query = $this->attributesByTaxonQueryBuilder->buildQuery($data);
-        $attributes = $this->attributesFinder->find($query);
 
-        return $attributes;
+        return $this->attributesFinder->find($query);
     }
 }

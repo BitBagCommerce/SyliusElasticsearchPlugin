@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "sylius/sylius": "~1.4.0",
+        "ext-json": "*",
+        "sylius/sylius": "^1.4.0",
         "friendsofsymfony/elastica-bundle": "^5.0"
     },
     "require-dev": {
@@ -45,10 +46,14 @@
     "autoload": {
         "psr-4": {
             "BitBag\\SyliusElasticsearchPlugin\\": "src/",
-            "Tests\\BitBag\\SyliusElasticsearchPlugin\\": "tests/"
+            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Application\\": "tests/Application"
         }
     },
     "autoload-dev": {
+        "psr-4": {
+            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Behat\\": "tests/Behat",
+            "spec\\BitBag\\SyliusElasticsearchPlugin\\": "spec/"
+        },
         "classmap": ["tests/Application/Kernel.php"]
     }
 }
