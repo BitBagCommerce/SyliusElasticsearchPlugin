@@ -15,50 +15,36 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Api;
 use BitBag\SyliusElasticsearchPlugin\Controller\Response\DTO\Item;
 use BitBag\SyliusElasticsearchPlugin\Controller\Response\ItemsResponse;
 use BitBag\SyliusElasticsearchPlugin\Finder\NamedProductsFinderInterface;
-use Liip\ImagineBundle\Service\FilterService;
-use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ImageInterface;
+use BitBag\SyliusElasticsearchPlugin\Transformer\Product\TransformerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ListProductsByPartialNameAction
 {
-    private const SYLIUS_THUMBNAIL_TYPE = 'thumbnail';
-    private const SYLIUS_THUMBNAIL_FILTER = 'sylius_shop_product_thumbnail';
-
     /** @var NamedProductsFinderInterface */
     private $namedProductsFinder;
 
-    /** @var ProductVariantResolverInterface */
-    private $productVariantResolver;
+    /** @var TransformerInterface */
+    private $productSlugTransformer;
 
-    /** @var ChannelContextInterface */
-    private $channelContext;
+    /** @var TransformerInterface */
+    private $productChannelPriceTransformer;
 
-    /** @var MoneyFormatterInterface */
-    private $moneyFormatter;
-
-    /** @var FilterService */
-    private $imagineFilter;
+    /** @var TransformerInterface */
+    private $productImageTransformer;
 
     public function __construct(
         NamedProductsFinderInterface $namedProductsFinder,
-        ProductVariantResolverInterface $productVariantResolver,
-        ChannelContextInterface $channelContext,
-        MoneyFormatterInterface $moneyFormatter,
-        FilterService $imagineFilter
+        TransformerInterface $productSlugResolver,
+        TransformerInterface $productChannelPriceResolver,
+        TransformerInterface $productImageResolver
     ) {
         $this->namedProductsFinder = $namedProductsFinder;
-        $this->productVariantResolver = $productVariantResolver;
-        $this->channelContext = $channelContext;
-        $this->moneyFormatter = $moneyFormatter;
-        $this->imagineFilter = $imagineFilter;
+        $this->productSlugTransformer = $productSlugResolver;
+        $this->productChannelPriceTransformer = $productChannelPriceResolver;
+        $this->productImageTransformer = $productImageResolver;
     }
 
     public function __invoke(Request $request): Response
@@ -68,9 +54,6 @@ final class ListProductsByPartialNameAction
         if (null === $request->query->get('query')) {
             return JsonResponse::create($itemsResponse->toArray());
         }
-
-        /** @var ChannelInterface $channel */
-        $channel = $this->channelContext->getChannel();
 
         $products = $this->namedProductsFinder->findByNamePart($request->query->get('query'));
 
@@ -84,44 +67,12 @@ final class ListProductsByPartialNameAction
                 $productMainTaxon->getName(),
                 $product->getName(),
                 $product->getShortDescription(),
-                $product->getSlug(),
-                $this->resolveChannelProductPrice($channel, $product),
-                $this->resolveProductImage($product)
+                $this->productSlugTransformer->transform($product),
+                $this->productChannelPriceTransformer->transform($product),
+                $this->productImageTransformer->transform($product)
             ));
         }
 
         return JsonResponse::create($itemsResponse->toArray());
-    }
-
-    private function resolveChannelProductPrice(ChannelInterface $channel, ProductInterface $product): ?string
-    {
-        if (null === $channelBaseCurrency = $channel->getBaseCurrency()) {
-            throw new \RuntimeException('No channel currency configured');
-        }
-
-        /** @var ProductVariantInterface $productVariant */
-        $productVariant = $this->productVariantResolver->getVariant($product);
-
-        $productVariantPricing = $productVariant->getChannelPricingForChannel($channel);
-
-        if (null === $productVariantPricing) {
-            return null;
-        }
-
-        return $this->moneyFormatter->format($productVariantPricing->getPrice(), $channelBaseCurrency->getCode());
-    }
-
-    private function resolveProductImage(ProductInterface $product): ?string
-    {
-        $productThumbnails = $product->getImagesByType(self::SYLIUS_THUMBNAIL_TYPE);
-
-        if ($productThumbnails->isEmpty()) {
-            return null;
-        }
-
-        /** @var ImageInterface $productImage */
-        $productImage = $productThumbnails->first();
-
-        return $this->imagineFilter->getUrlOfFilteredImage($productImage->getPath(), self::SYLIUS_THUMBNAIL_FILTER);
     }
 }

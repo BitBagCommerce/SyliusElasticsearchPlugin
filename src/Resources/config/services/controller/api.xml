@@ -4,10 +4,9 @@
     <services>
         <service id="bitbag_sylius_elasticsearch_plugin.controller.action.shop.auto_complete_product_name" class="BitBag\SyliusElasticsearchPlugin\Controller\Action\Api\ListProductsByPartialNameAction">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.named_products" />
-            <argument type="service" id="sylius.product_variant_resolver.default" />
-            <argument type="service" id="sylius.context.channel" />
-            <argument type="service" id="sylius.money_formatter" />
-            <argument type="service" id="liip_imagine.service.filter" />
+            <argument type="service" id="BitBag\SyliusElasticsearchPlugin\Transformer\Product\SlugTransformer" />
+            <argument type="service" id="BitBag\SyliusElasticsearchPlugin\Transformer\Product\ChannelPricingTransformer" />
+            <argument type="service" id="BitBag\SyliusElasticsearchPlugin\Transformer\Product\ImageTransformer" />
             <tag name="controller.service_arguments" />
         </service>
     </services>
