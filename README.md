@@ -119,10 +119,14 @@ When you go now to the `/{_locale}/products/taxon/{slug}` page, you should see a
 
 You might also want to refer the horizontal menu to a new product list page. Follow below instructions to do so:
 
-1. If you haven't done it yet, create a `_horizontalMenu.html.twig` file in `templates/bundles/SyliusShopBundle/Taxon` directory.
-2. Replace `sylius_shop_product_index` with `bitbag_sylius_elasticsearch_plugin_shop_list_products`.
+1. If you haven't done it yet, create two files:
+    * `_horizontalMenu.html.twig` in `templates/bundles/SyliusShopBundle/Taxon` directory
+    * `_breadcrumb.html.twig` in `templates/bundles/SyliusShopBundle/Product/Show` directory
+2. Paste into those files content of respectively `vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/Taxon/_horizontalMenu.html.twig` and `vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/Product/Show/_breadcrumb.html.twig` files, replacing `sylius_shop_product_index` with `bitbag_sylius_elasticsearch_plugin_shop_list_products` in both of them.
 3. Clean your cache with `bin/console cache:clear` command.
 4. :tada:
+
+If you're using vertical menu - follow steps above with `_verticalMenu.html.twig` file instead. It's in the same directory as the `horizontal_menu.html.twig` file.
 
 **Be aware! Elasticsearch does not handle dashes well. This plugin depends on the code field in Sylius resources. Please use underscores instead of dashes in your code fields.**
 
