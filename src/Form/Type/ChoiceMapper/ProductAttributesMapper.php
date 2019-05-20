@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
-use BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductAttributeValueRepositoryInterface;
+use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
@@ -43,18 +43,14 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
     {
         $configuration = $productAttribute->getConfiguration();
 
-        /**
-         * If we have choices configured, no need to query and group by product attribute values -
-         * they are predefined by the choices array
-         */
-        if (isset($configuration['choices']) && is_array($configuration['choices'])
-        ) {
+        if (isset($configuration['choices']) && is_array($configuration['choices'])) {
             $choices = [];
             foreach ($configuration['choices'] as $singleValue => $val) {
                 $choice = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
                 $label = $configuration['choices'][$singleValue][$this->localeContext->getLocaleCode()];
                 $choices[$label] = $choice;
             }
+
             return $choices;
         }
 
@@ -66,6 +62,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
 
             if (!$product->isEnabled()) {
                 unset($product);
+
                 return;
             }
 

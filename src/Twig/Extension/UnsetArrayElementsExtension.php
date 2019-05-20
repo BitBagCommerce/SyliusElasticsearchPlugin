@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Twig\Extension;
 
-final class UnsetArrayElementsExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
+final class UnsetArrayElementsExtension extends AbstractExtension
 {
-    /**
-     * @param array $elements
-     * @param array $keys
-     *
-     * @return array
-     */
     public function unsetElements(array $elements, array $keys): array
     {
         foreach ($keys as $key) {
@@ -36,7 +33,7 @@ final class UnsetArrayElementsExtension extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_Filter('unset_elements', [$this, 'unsetElements']),
+            new TwigFilter('unset_elements', [$this, 'unsetElements']),
         ];
     }
 }

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
+namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;

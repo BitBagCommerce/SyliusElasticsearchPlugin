@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
-use BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepositoryInterface;
+use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;

@@ -12,18 +12,18 @@
             <tag name="twig.extension" />
         </service>
 
-        <service id="bitbag.sylius_elasticsearch_plugin.entity_repository.product_variant" class="BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductVariantRepository">
+        <service id="bitbag.sylius_elasticsearch_plugin.repository.product_variant" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductVariantRepository">
             <argument type="service" id="sylius.repository.product_variant" />
         </service>
 
-        <service id="bitbag.sylius_elasticsearch_plugin.entity_repository.taxon_repository" class="BitBag\SyliusElasticsearchPlugin\EntityRepository\TaxonRepository">
+        <service id="bitbag.sylius_elasticsearch_plugin.repository.taxon_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepository">
             <argument type="service" id="sylius.repository.taxon" />
             <argument type="service" id="sylius.repository.product" />
             <argument>%sylius.model.product_taxon.class%</argument>
             <argument>%sylius.model.product_attribute_value.class%</argument>
         </service>
 
-        <service id="bitbag.sylius_elasticsearch_plugin.entity_repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductAttributeRepository">
+        <service id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository">
             <argument type="service" id="sylius.repository.product_attribute_value" />
         </service>
     </services>
