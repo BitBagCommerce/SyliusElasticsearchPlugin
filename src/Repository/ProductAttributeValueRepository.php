@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
+namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
-use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
+use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 
 final class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
@@ -27,7 +27,7 @@ final class ProductAttributeValueRepository implements ProductAttributeValueRepo
 
     public function getUniqueAttributeValues(AttributeInterface $productAttribute): array
     {
-        $queryBuilder = $this->repository->createQueryBuilder('o');
+        $queryBuilder = $this->baseAttributeValueRepository->createQueryBuilder('o');
 
         return $queryBuilder
             ->where('o.attribute = :attribute')

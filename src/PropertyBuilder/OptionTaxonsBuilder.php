@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
-use BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductVariantRepositoryInterface;
+use BitBag\SyliusElasticsearchPlugin\Repository\ProductVariantRepositoryInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;

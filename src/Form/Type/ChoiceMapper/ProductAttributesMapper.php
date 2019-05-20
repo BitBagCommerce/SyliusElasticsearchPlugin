@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
-use BitBag\SyliusElasticsearchPlugin\EntityRepository\ProductAttributeValueRepositoryInterface;
+use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
