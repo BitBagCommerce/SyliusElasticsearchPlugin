@@ -1,43 +1,40 @@
 <?php
 
-declare(strict_types = 1);
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.shop and write us
+ * an email on mikolaj.krol@bitbag.pl.
+ */
+
+declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
 
-use Doctrine\ORM\QueryBuilder;
-use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductAttributeValueRepository as BaseRepository;
+use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\Model\AttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
-class ProductAttributeRepository implements ProductAttributeValueRepositoryInterface
+final class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
+    /** @var BaseAttributeValueRepositoryInterface */
+    private $baseAttributeValueRepository;
 
-    /**
-     * @var BaseRepository
-     */
-    protected $repository;
-
-    public function __construct(BaseRepository $repository)
+    public function __construct(BaseAttributeValueRepositoryInterface $baseAttributeValueRepository)
     {
-        $this->repository = $repository;
+        $this->baseAttributeValueRepository = $baseAttributeValueRepository;
     }
 
-    /**
-     * @param AttributeInterface $productAttribute
-     *
-     * @return array|ProductAttributeValueInterface[]
-     */
     public function getUniqueAttributeValues(AttributeInterface $productAttribute): array
     {
-        /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->repository->createQueryBuilder('o');
 
         return $queryBuilder
             ->where('o.attribute = :attribute')
-            ->groupBy('o.'.$productAttribute->getStorageType())
+            ->groupBy('o.' . $productAttribute->getStorageType())
             ->setParameter(':attribute', $productAttribute)
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
-
 }

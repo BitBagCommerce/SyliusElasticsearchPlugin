@@ -1,19 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.shop and write us
+ * an email on mikolaj.krol@bitbag.pl.
+ */
+
+declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EntityRepository;
 
 use Sylius\Component\Attribute\Model\AttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
 interface ProductAttributeValueRepositoryInterface
 {
-
-    /**
-     * @param AttributeInterface $productAttribute
-     *
-     * @return array|ProductAttributeValueInterface[]
-     */
     public function getUniqueAttributeValues(AttributeInterface $productAttribute): array;
 }
