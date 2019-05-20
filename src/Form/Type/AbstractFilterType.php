@@ -22,6 +22,7 @@ abstract class AbstractFilterType extends AbstractType
         $resolver->setDefaults([
             'data_class', null,
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
     }
 
