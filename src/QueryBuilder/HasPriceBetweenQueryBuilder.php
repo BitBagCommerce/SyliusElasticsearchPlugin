@@ -89,6 +89,6 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     private function convertFromString(string $price): int
     {
-        return (int) round($price * 100, 2);
+        return (int) round((int) $price * 100, 2);
     }
 }
