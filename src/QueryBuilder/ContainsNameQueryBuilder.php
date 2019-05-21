@@ -46,9 +46,12 @@ final class ContainsNameQueryBuilder implements QueryBuilderInterface
         if (!$name = $data[$this->namePropertyPrefix]) {
             return null;
         }
-
+        
         $nameQuery = new Match();
+        
         $nameQuery->setFieldQuery($propertyName, $name);
+        $nameQuery->setFieldFuzziness($propertyName, 2);
+        $nameQuery->setFieldMinimumShouldMatch($propertyName, 2); 
 
         return $nameQuery;
     }
