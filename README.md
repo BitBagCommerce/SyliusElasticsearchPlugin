@@ -99,8 +99,27 @@ redirect_sylius_shop_product_index:
         _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
         slug: .+
 ```
+...and update installed assets with the following command:
+```
+$ bin/console assets:install
+```
+...and remove the default ElasticSearch index (`app`) defined by `FOSElasticaBundle` in `config/packages/fos_elastica.yaml`:
+```
 
-With a elasticsearch server running, execute following command:
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app: ~
+```
+should become:
+```
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+```
+In the end, with an elasticsearch server running, execute following command:
 ```
 $ bin/console fos:elastica:populate
 ```
