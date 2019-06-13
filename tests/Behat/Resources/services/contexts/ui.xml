@@ -8,5 +8,9 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.product.index" />
             <argument type="service" id="sylius.behat.shared_storage" />
         </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\SearchContext">
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.search" />
+        </service>
     </services>
 </container>

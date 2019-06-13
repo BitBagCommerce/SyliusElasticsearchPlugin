@@ -1,0 +1,19 @@
+default:
+    suites:
+        ui_site_wide_searching_products:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.taxon
+
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.taxonomy
+
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_taxon
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch
+
+                - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search
+            filters:
+                tags: "@site_wide_searching_products && @ui"
