@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception\ExpectationException;
+use Sylius\Component\Core\Model\ProductInterface;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\SearchPageInterface;
-use Webmozart\Assert\Assert;
 
 final class SearchContext implements Context
 {
@@ -31,14 +31,10 @@ final class SearchContext implements Context
     }
 
     /**
-     * @Then /^I should see the following products in the search results page:$/
+     * @Then /^I should see the (product "([^"]*)") in the search results$/
      */
-    public function iShouldSeeTheFollowingProductsInTheSearchResultsPage(TableNode $table)
+    public function iShouldSeeTheProductNamedInTheSearchResults(ProductInterface $product)
     {
-        $results = $this->searchPage->getSearchResults();
-        foreach ($table as $i => $item) {
-            Assert::contains($results[$i]['name'],$item['name']);
-            Assert::contains($results[$i]['taxons'],$item['taxon']);
-        }
+        $this->searchPage->assertProductInSearchResults($product);
     }
 }

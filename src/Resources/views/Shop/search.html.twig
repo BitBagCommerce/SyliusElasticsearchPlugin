@@ -1,0 +1,34 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% form_theme search_form '@SyliusUi/Form/theme.html.twig' %}
+
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+{% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include 'SyliusUiBundle::_stylesheets.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/css/bitbag-autocomplete-search.css'} %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="ui monster section dividing header">
+        {{ 'bitbag_sylius_elasticsearch_plugin.ui.search_header'|trans }}
+    </h1>
+    {{ form(search_form) }}
+
+    <ul id="search_results">
+        {% for result in results %}
+            {# @var result \Sylius\Component\Core\Model\ProductInterface #}
+            <li class="result">
+                <a href="{{ path('sylius_shop_product_show', {'slug': result.slug}) }}">
+                    <strong class="product-name">{{ result.name }}</strong>
+                    {% if (result.mainTaxon) %}
+                        -
+                        <em class="product-taxon">{{ result.mainTaxon.name }}</em>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

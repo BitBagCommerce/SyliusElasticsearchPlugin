@@ -12,3 +12,9 @@ bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name:
         _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.auto_complete_product_name
     requirements:
         slug: .+
+
+bitbag_sylius_elasticsearch_plugin_shop_search:
+    path: /{_locale}/search
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.search
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/search.html.twig"

@@ -9,23 +9,25 @@ Feature: Site-wide products search
     And the store classifies its products as "Cars"
     And the store classifies its products as "Motorbikes"
     And there is a product named "BMW Z4" in the store
+    And this product belongs to "Cars"
     And there is a product named "Volvo XC90" in the store
+    And this product belongs to "Cars"
     And there is a product named "BMW 5 Series" in the store
+    And this product belongs to "Cars"
     And there is a product named "Lamborghini Aventador" in the store
-    And these products belongs primarily to "Cars" taxon
+    And this product belongs to "Cars"
     And there is a product named "BMW GS" in the store
+    And this product belongs to "Motorbikes"
     And there is a product named "Ducati Monster" in the store
+    And this product belongs to "Motorbikes"
     And there is a product named "Honda Africa Twin" in the store
-    And these products belongs primarily to "Motorbikes" taxon
+    And this product belongs to "Motorbikes"
     And the data is populated to Elasticsearch
 
   @ui
   Scenario: Searching products site wide
     When I search the products by "BMW" phrase in the site-wide search box
-    Then I should see the following products in the search results page:
-      | name          | taxon       |
-      | BMW Z4        | Cars        |
-      | BMW 5 Series  | Cars        |
-      | BMW GS        | Motorbikes  |
-
+    Then I should see the product "BMW Z4" in the search results
+    And I should see the product "BMW GS" in the search results
+    And I should see the product "BMW 5 Series" in the search results
 

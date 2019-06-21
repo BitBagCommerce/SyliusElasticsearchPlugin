@@ -11,3 +11,4 @@ bitbag_sylius_elasticsearch_plugin:
         most_expensive: Most expensive
         cheapest: Cheapest
         per_page: Per page
+        search_header: Search
