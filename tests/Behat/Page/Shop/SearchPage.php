@@ -47,6 +47,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
                 return;
             }
         }
-        throw new ExpectationException('Cannot find a product named "%s" in the search results', $this->getSession());
+        throw new ExpectationException(
+            sprintf('Cannot find a product named "%s" in the search results', $product->getName()), $this->getSession()
+        );
     }
 }

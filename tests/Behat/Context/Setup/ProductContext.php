@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\PyStringNode;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
@@ -266,5 +267,23 @@ final class ProductContext implements Context
         $channelPricing->setChannelCode($channel->getCode());
 
         return $channelPricing;
+    }
+
+    /**
+     * @Given /^(this product)'s description is:$/
+     */
+    public function thisProductSDescriptionIs(ProductInterface $product, PyStringNode $description)
+    {
+        $product->setDescription($description->getRaw());
+        $this->objectManager->flush();
+    }
+
+    /**
+     * @Given /^(this product)'s short description is:$/
+     */
+    public function thisProductSShortDescriptionIs(ProductInterface $product, PyStringNode $shortDescription)
+    {
+        $product->setShortDescription($shortDescription->getRaw());
+        $this->objectManager->flush();
     }
 }

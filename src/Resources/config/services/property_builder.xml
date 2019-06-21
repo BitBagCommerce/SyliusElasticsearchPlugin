@@ -69,5 +69,15 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.mapper.product_taxons" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapper" />
+
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.product_description" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductDescriptionBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.description" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.product_short_description" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductShortDescriptionBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.short_description" />
+            <tag name="kernel.event_subscriber" />
+        </service>
     </services>
 </container>
