@@ -1,7 +1,5 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
-{% form_theme search_form '@SyliusUi/Form/theme.html.twig' %}
-
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 {% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
 
@@ -15,7 +13,6 @@
     <h1 class="ui monster section dividing header">
         {{ 'bitbag_sylius_elasticsearch_plugin.ui.search_header'|trans }}
     </h1>
-    {{ form(search_form) }}
 
     <ul id="search_results">
         {% for result in results %}

@@ -12,5 +12,9 @@
         <service id="bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\SearchContext">
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.search" />
         </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.home_page" class="Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\HomepageContext">
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.home_page" />
+        </service>
     </services>
 </container>

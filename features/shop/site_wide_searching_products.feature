@@ -34,10 +34,16 @@ Feature: Site-wide products search
 
   @ui
   Scenario: Searching products by name, description and short description in all taxons
-    When I search the products by "BMW" phrase in the site-wide search box
+    When I browse the search page
+    And I search the products by "BMW" phrase in the site-wide search box
     Then I should see the product "BMW Z4" in the search results
     And I should see the product "BMW GS" in the search results
     And I should see the product "BMW 5 Series" in the search results
     And I should see the product "Honda Africa Twin" in the search results
     And I should see the product "Ducati Monster" in the search results
 
+  @ui
+  Scenario: Searching products from the home page
+    When I open the home page
+    And I search the products by "Lamborghini" phrase in the site-wide search box
+    Then I should see the product "Lamborghini Aventador" in the search results

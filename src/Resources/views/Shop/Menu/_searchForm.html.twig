@@ -1,0 +1,5 @@
+{% form_theme settings.form '@SyliusShop/Form/theme.html.twig' %}
+
+{{ form_start(settings.form, {'attr': {'class': 'ui loadable form'}}) }}
+{{ form(settings.form) }}
+{{ form_end(settings.form) }}

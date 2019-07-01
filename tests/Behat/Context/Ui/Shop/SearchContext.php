@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
-use Behat\Mink\Exception\ExpectationException;
 use Sylius\Component\Core\Model\ProductInterface;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\SearchPageInterface;
 
@@ -22,11 +21,18 @@ final class SearchContext implements Context
     }
 
     /**
+     * @When /^I browse the search page$/
+     */
+    public function iBrowseTheSearchPage()
+    {
+        $this->searchPage->open();
+    }
+
+    /**
      * @When /^I search the products by "([^"]*)" phrase in the site\-wide search box$/
      */
     public function iSearchTheProductsByPhraseInTheSiteWideSearchBox(string $phrase)
     {
-        $this->searchPage->open();
         $this->searchPage->searchPhrase($phrase);
     }
 

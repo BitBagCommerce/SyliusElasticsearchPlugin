@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag.sylius_elasticsearch_plugin.block_event_listener.search_form" class="BitBag\SyliusElasticsearchPlugin\Block\SearchFormEventListener">
+            <argument type="string">@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchForm.html.twig</argument>
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="router" />
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.layout.header" method="onBlockEvent" />
+        </service>
+    </services>
+</container>

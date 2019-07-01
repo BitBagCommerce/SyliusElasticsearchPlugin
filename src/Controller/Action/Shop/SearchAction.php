@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
-use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchBoxType;
+use BitBag\SyliusElasticsearchPlugin\Block\SearchFormEventListener;
 use Elastica\Query\MultiMatch;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,27 +18,28 @@ final class SearchAction
      */
     private $templatingEngine;
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-    /**
      * @var FinderInterface
      */
     private $finder;
+    /**
+     * @var SearchFormEventListener
+     */
+    private $searchFormEventListener;
 
-    public function __construct(EngineInterface $templatingEngine, FormFactoryInterface $formFactory, FinderInterface $finder)
-    {
+    public function __construct(
+        EngineInterface $templatingEngine,
+        FinderInterface $finder,
+        SearchFormEventListener $searchFormEventListener
+    ) {
         $this->templatingEngine = $templatingEngine;
-        $this->formFactory = $formFactory;
         $this->finder = $finder;
+        $this->searchFormEventListener = $searchFormEventListener;
     }
 
     public function __invoke(Request $request): Response
     {
         $template = $request->get('template');
-        $defaultData = ['query' => ''];
-        $form = $this->formFactory->createBuilder(SearchBoxType::class, $defaultData)->getForm();
-
+        $form = $this->searchFormEventListener->getForm();
         $form->handleRequest($request);
 
         $results = [];
@@ -53,9 +53,6 @@ final class SearchAction
 
             $results = $this->finder->find($query);
         }
-        return $this->templatingEngine->renderResponse(
-            $template,
-            ['search_form' => $form->createView(), 'results' => $results]
-        );
+        return $this->templatingEngine->renderResponse($template, ['results' => $results]);
     }
 }
