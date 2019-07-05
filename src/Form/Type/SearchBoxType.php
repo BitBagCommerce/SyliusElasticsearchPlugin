@@ -15,7 +15,6 @@ class SearchBoxType extends AbstractType
     {
         $builder
             ->add('query', TextType::class)
-            ->add('search', SubmitType::class)
         ;
     }
 }

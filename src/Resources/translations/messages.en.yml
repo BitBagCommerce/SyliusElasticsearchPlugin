@@ -12,3 +12,9 @@ bitbag_sylius_elasticsearch_plugin:
         cheapest: Cheapest
         per_page: Per page
         search_header: Search
+
+        search_box:
+            query:
+                placeholder: Search for products...
+            search_button:
+                label: Search
