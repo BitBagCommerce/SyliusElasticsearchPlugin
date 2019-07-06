@@ -27,16 +27,6 @@
             </div>
         </div>
         <div class="twelve wide column">
-            <div class="ui segment">
-                <div class="ui stackable grid">
-                    <div class="sixteen wide column">
-                        TODO sorting here
-                        TODO pagination here
-{#                        {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_sorting.html.twig' %}#}
-{#                        {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_pagination.html.twig' %}#}
-                    </div>
-                </div>
-            </div>
             {% if results|length > 0 %}
                 <div class="ui three column stackable grid" id="search_results">
                     {% for product in results %}
@@ -47,8 +37,7 @@
                 </div>
                 <div class="ui hidden divider"></div>
 
-                TODO pagination here
-{#                {{ pagination.simple(results) }}#}
+                {{ pagination.simple(results) }}
             {% else %}
                 {{ messages.info('sylius.ui.no_results_to_display') }}
             {% endif %}

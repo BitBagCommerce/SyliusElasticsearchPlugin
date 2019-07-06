@@ -6,7 +6,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Block\SearchFormEventListener;
 use Elastica\Query\MultiMatch;
-use FOS\ElasticaBundle\Finder\FinderInterface;
+use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ final class SearchAction
      */
     private $templatingEngine;
     /**
-     * @var FinderInterface
+     * @var PaginatedFinderInterface
      */
     private $finder;
     /**
@@ -28,7 +28,7 @@ final class SearchAction
 
     public function __construct(
         EngineInterface $templatingEngine,
-        FinderInterface $finder,
+        PaginatedFinderInterface $finder,
         SearchFormEventListener $searchFormEventListener
     ) {
         $this->templatingEngine = $templatingEngine;
@@ -51,7 +51,7 @@ final class SearchAction
             // TODO set search fields here (pay attention to locale-contex field, like name): $query->setFields([]);
             $query->setFuzziness('AUTO');
 
-            $results = $this->finder->find($query);
+            $results = $this->finder->findPaginated($query);
         }
         return $this->templatingEngine->renderResponse($template, ['results' => $results]);
     }
