@@ -1,5 +1,7 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
+{#{% form_theme form '@SyliusUi/Form/theme.html.twig' %}#}
+
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 {% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
 
@@ -13,19 +15,44 @@
     <h1 class="ui monster section dividing header">
         {{ 'bitbag_sylius_elasticsearch_plugin.ui.search_header'|trans }}
     </h1>
+{#    {{ form_start(form, {'method': 'GET', 'attr': {'class': 'ui loadable form'}}) }}#}
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            <div id="filters-vertical" class="ui fluid vertical menu">
+                <div class="header item">
+                    {{ 'bitbag_sylius_elasticsearch_plugin.ui.filter_results'|trans }}
+                </div>
+                TODO filters here
+{#                {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_filterForm.html.twig' %}#}
+            </div>
+        </div>
+        <div class="twelve wide column">
+            <div class="ui segment">
+                <div class="ui stackable grid">
+                    <div class="sixteen wide column">
+                        TODO sorting here
+                        TODO pagination here
+{#                        {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_sorting.html.twig' %}#}
+{#                        {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_pagination.html.twig' %}#}
+                    </div>
+                </div>
+            </div>
+            {% if results|length > 0 %}
+                <div class="ui three column stackable grid" id="search_results">
+                    {% for product in results %}
+                        <div class="column result">
+                            {% include '@SyliusShop/Product/_box.html.twig' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ui hidden divider"></div>
 
-    <ul id="search_results">
-        {% for result in results %}
-            {# @var result \Sylius\Component\Core\Model\ProductInterface #}
-            <li class="result">
-                <a href="{{ path('sylius_shop_product_show', {'slug': result.slug}) }}">
-                    <strong class="product-name">{{ result.name }}</strong>
-                    {% if (result.mainTaxon) %}
-                        -
-                        <em class="product-taxon">{{ result.mainTaxon.name }}</em>
-                    {% endif %}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+                TODO pagination here
+{#                {{ pagination.simple(results) }}#}
+            {% else %}
+                {{ messages.info('sylius.ui.no_results_to_display') }}
+            {% endif %}
+        </div>
+    </div>
+{#    {{ form_end(form, {'render_rest': false}) }}#}
 {% endblock %}
