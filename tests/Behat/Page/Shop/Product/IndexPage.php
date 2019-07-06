@@ -63,7 +63,7 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
             'attributes_filter' => '#attributes label:contains("%attributeName%") ~ .dropdown',
             'options_filter' => '#options label:contains("%optionName%") ~ .dropdown',
             'limit' => '.ui.dropdown span:contains("Per page") ~ .menu',
-            'submit_filter' => 'button[type="submit"]',
+            'submit_filter' => '#filters-vertical button[type="submit"]',
             'pagination' => '.pagination',
         ]);
     }
