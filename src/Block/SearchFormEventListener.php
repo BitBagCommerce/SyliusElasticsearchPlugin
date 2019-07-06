@@ -23,6 +23,10 @@ final class SearchFormEventListener
      * @var RouterInterface
      */
     private $router;
+    /**
+     * @var FormInterface
+     */
+    private $form;
 
     public function __construct(string $template, FormFactoryInterface $formFactory, RouterInterface $router)
     {
@@ -54,9 +58,12 @@ final class SearchFormEventListener
      */
     public function getForm(): FormInterface
     {
-        return $this->formFactory
-            ->createBuilder(SearchBoxType::class, ['query' => ''])
-            ->setAction($this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search'))
-            ->getForm();
+        if (!$this->form) {
+            $this->form = $this->formFactory
+                ->createBuilder(SearchBoxType::class, ['query' => ''])
+                ->setAction($this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search'))
+                ->getForm();
+        }
+        return $this->form;
     }
 }

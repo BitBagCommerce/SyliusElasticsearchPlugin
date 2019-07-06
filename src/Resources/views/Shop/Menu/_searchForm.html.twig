@@ -1,5 +1,5 @@
 {% form_theme settings.form 'BitBagSyliusElasticsearchPlugin:Shop/Menu:_searchFormTheme.html.twig' %}
 
-{{ form_start(settings.form, {'attr': {'class': 'ui loadable form'}}) }}
+{{ form_start(settings.form, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
 {{ form(settings.form) }}
 {{ form_end(settings.form) }}
