@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop;
 
+use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ExpectationException;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 use Sylius\Component\Core\Model\ProductInterface;
+use Webmozart\Assert\Assert;
 
 class SearchPage extends SymfonyPage implements SearchPageInterface
 {
@@ -33,9 +35,12 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
     protected function getDefinedElements(): array
     {
         return [
-            'search_box_query' => '#search_box_query',
-            'search_box_submit' => '#search_box_search',
-            'search_results' => '#search_results'
+            'search_box_query' => '#bitbag_elasticsearch_search_box_query',
+            'search_box_submit' => '#bitbag_elasticsearch_search_box_search',
+            'search_results' => '#search_results',
+            'search_facets_price' => '#bitbag_elasticsearch_search_facets_price',
+            'search_facets_taxon' => '#bitbag_elasticsearch_search_facets_taxon',
+            'search_facets_filter_button' => '#filters-vertical form button[type="submit"]'
         ];
     }
 
@@ -50,5 +55,60 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         throw new ExpectationException(
             sprintf('Cannot find a product named "%s" in the search results', $product->getName()), $this->getSession()
         );
+    }
+
+    public function assertPriceIntervals(array $expectedIntervals)
+    {
+        $priceIntervals = array_map(
+            function (NodeElement $element) {
+                return trim($element->getText());
+            },
+            $this->getElement('search_facets_price')->findAll('css', '.field')
+        );
+        Assert::eq(
+            $priceIntervals,
+            $expectedIntervals,
+            sprintf(
+                "Expected intervals are:\n%s\nGot:\n%s",
+                print_r($expectedIntervals, true),
+                print_r($priceIntervals, true)
+            )
+        );
+    }
+
+    public function assertProductsCountInSearchResults(int $expectedCount)
+    {
+        Assert::count($this->getSearchResults(), $expectedCount);
+    }
+
+    public function assertTaxonFacetOptions(array $expectedOptions)
+    {
+        $options = array_map(
+            function (NodeElement $element) {
+                return trim($element->getText());
+            },
+            $this->getElement('search_facets_taxon')->findAll('css', '.field')
+        );
+        Assert::eq(
+            $options,
+            $expectedOptions,
+            sprintf(
+                "Expected taxon facet options are:\n%s\nGot:\n%s",
+                print_r($expectedOptions, true),
+                print_r($options, true)
+            )
+        );
+    }
+
+    public function filterByPriceInterval(string $intervalLabel)
+    {
+        $this->getElement('search_facets_price')->findField($intervalLabel)->check();
+        $this->getElement('search_facets_filter_button')->click();
+    }
+
+    public function filterByTaxon(string $taxon)
+    {
+        $this->getElement('search_facets_taxon')->findField($taxon)->check();
+        $this->getElement('search_facets_filter_button')->click();
     }
 }

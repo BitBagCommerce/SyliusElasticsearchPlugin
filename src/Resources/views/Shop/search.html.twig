@@ -1,6 +1,6 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
-{#{% form_theme form '@SyliusUi/Form/theme.html.twig' %}#}
+{% form_theme searchForm '@SyliusUi/Form/theme.html.twig' %}
 
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 {% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
@@ -15,15 +15,26 @@
     <h1 class="ui monster section dividing header">
         {{ 'bitbag_sylius_elasticsearch_plugin.ui.search_header'|trans }}
     </h1>
-{#    {{ form_start(form, {'method': 'GET', 'attr': {'class': 'ui loadable form'}}) }}#}
     <div class="ui stackable grid">
         <div class="four wide column">
             <div id="filters-vertical" class="ui fluid vertical menu">
                 <div class="header item">
                     {{ 'bitbag_sylius_elasticsearch_plugin.ui.filter_results'|trans }}
                 </div>
-                TODO filters here
-{#                {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_filterForm.html.twig' %}#}
+                {{ form_start(searchForm, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+                    <div style="display: none;">
+                        {{ form_row(searchForm.box) }}
+                    </div>
+                    <div class="item">
+                        {{ form_rest(searchForm) }}
+                    </div>
+                    <div class="item">
+                        <button type="submit" class="ui primary icon labeled button" style="width: 100%;">
+                            <i class="search icon"></i>
+                            {{ 'bitbag_sylius_elasticsearch_plugin.ui.filter'|trans }}
+                        </button>
+                    </div>
+                {{ form_end(searchForm) }}
             </div>
         </div>
         <div class="twelve wide column">

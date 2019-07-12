@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Block;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchBoxType;
+use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
+use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use Sonata\BlockBundle\Event\BlockEvent;
 use Sonata\BlockBundle\Model\Block;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -54,15 +56,17 @@ final class SearchFormEventListener
     }
 
     /**
+     * @param Search|null $search
      * @return FormInterface
      */
-    public function getForm(): FormInterface
+    public function getForm(Search $search = null): FormInterface
     {
         if (!$this->form) {
+            if (!$search) {
+                $search = new Search();
+            }
             $this->form = $this->formFactory
-                ->createBuilder(SearchBoxType::class, ['query' => ''])
-                ->setAction($this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search'))
-                ->getForm();
+                ->create(SearchType::class, $search, ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]);
         }
         return $this->form;
     }

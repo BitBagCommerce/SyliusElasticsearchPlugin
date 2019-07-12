@@ -14,4 +14,14 @@ interface SearchPageInterface extends PageInterface
     public function getSearchResults(): array;
 
     public function assertProductInSearchResults(ProductInterface $product);
+
+    public function assertPriceIntervals(array $expectedIntervals);
+
+    public function assertProductsCountInSearchResults(int $expectedCount);
+
+    public function assertTaxonFacetOptions(array $expectedOptions);
+
+    public function filterByPriceInterval(string $intervalLabel);
+
+    public function filterByTaxon(string $taxon);
 }
