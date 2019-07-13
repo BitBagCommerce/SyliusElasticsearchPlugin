@@ -10,10 +10,7 @@ use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Range;
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Currency\Context\CurrencyContextInterface;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Sylius\Component\Core\Context\ShopperContextInterface;
 
 final class PriceFacet implements FacetInterface
 {
@@ -24,46 +21,34 @@ final class PriceFacet implements FacetInterface
      */
     private $channelPricingNameResolver;
     /**
-     * @var ChannelContextInterface
-     */
-    private $channelContext;
-    /**
-     * @var int
-     */
-    private $interval;
-    /**
      * @var MoneyFormatterInterface
      */
     private $moneyFormatter;
     /**
-     * @var CurrencyContextInterface
+     * @var ShopperContextInterface
      */
-    private $currencyContext;
+    private $shopperContext;
     /**
-     * @var LocaleContextInterface
+     * @var int
      */
-    private $localeContext;
+    private $interval;
 
     public function __construct(
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelContextInterface $channelContext,
         MoneyFormatterInterface $moneyFormatter,
-        CurrencyContextInterface $currencyContext,
-        LocaleContextInterface $localeContext,
+        ShopperContextInterface $shopperContext,
         int $interval
     ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
-        $this->channelContext = $channelContext;
         $this->moneyFormatter = $moneyFormatter;
-        $this->currencyContext = $currencyContext;
-        $this->localeContext = $localeContext;
         $this->interval = $interval;
+        $this->shopperContext = $shopperContext;
     }
 
     public function getAggregation(): AbstractAggregation
     {
         $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
-            $this->channelContext->getChannel()->getCode()
+            $this->shopperContext->getChannel()->getCode()
         );
         $histogram = new Histogram(self::FACET_ID, $priceFieldName, $this->interval);
         $histogram->setMinimumDocumentCount(1);
@@ -73,7 +58,7 @@ final class PriceFacet implements FacetInterface
     public function getQuery(array $selectedBuckets): AbstractQuery
     {
         $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
-            $this->channelContext->getChannel()->getCode()
+            $this->shopperContext->getChannel()->getCode()
         );
         $query = new BoolQuery();
         foreach ($selectedBuckets as $selectedBucket) {
@@ -88,13 +73,13 @@ final class PriceFacet implements FacetInterface
     {
         $from = $this->moneyFormatter->format(
             (int)$bucket['key'],
-            $this->currencyContext->getCurrencyCode(),
-            $this->localeContext->getLocaleCode()
+            $this->shopperContext->getCurrencyCode(),
+            $this->shopperContext->getLocaleCode()
         );
         $to = $this->moneyFormatter->format(
             (int)($bucket['key'] + $this->interval),
-            $this->currencyContext->getCurrencyCode(),
-            $this->localeContext->getLocaleCode()
+            $this->shopperContext->getCurrencyCode(),
+            $this->shopperContext->getLocaleCode()
         );
         return sprintf('%s - %s (%s)', $from, $to, $bucket['doc_count']);
     }

@@ -10,10 +10,8 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\Range;
 use PhpSpec\ObjectBehavior;
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Context\ShopperContextInterface;
 use Sylius\Component\Core\Model\Channel;
-use Sylius\Component\Currency\Context\CurrencyContextInterface;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 class PriceFacetSpec extends ObjectBehavior
 {
@@ -21,20 +19,16 @@ class PriceFacetSpec extends ObjectBehavior
 
     function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelContextInterface $channelContext,
         MoneyFormatterInterface $moneyFormatter,
-        CurrencyContextInterface $currencyContext,
-        LocaleContextInterface $localeContext
+        ShopperContextInterface $shopperContext
     ) {
         $channel = new Channel();
         $channel->setCode('web_us');
-        $channelContext->getChannel()->willReturn($channel);
+        $shopperContext->getChannel()->willReturn($channel);
         $this->beConstructedWith(
             $channelPricingNameResolver,
-            $channelContext,
             $moneyFormatter,
-            $currencyContext,
-            $localeContext,
+            $shopperContext,
             $this->interval
         );
     }
@@ -71,11 +65,10 @@ class PriceFacetSpec extends ObjectBehavior
 
     function it_returns_money_formatted_bucket_label(
         MoneyFormatterInterface $moneyFormatter,
-        CurrencyContextInterface $currencyContext,
-        LocaleContextInterface $localeContext
+        ShopperContextInterface $shopperContext
     ) {
-        $currencyContext->getCurrencyCode()->willReturn('USD');
-        $localeContext->getLocaleCode()->willReturn('en_US');
+        $shopperContext->getCurrencyCode()->willReturn('USD');
+        $shopperContext->getLocaleCode()->willReturn('en_US');
         $moneyFormatter->format(1000000, 'USD', 'en_US')->shouldBeCalled()->willReturn('$10,000.00');
         $moneyFormatter->format(2000000, 'USD', 'en_US')->shouldBeCalled()->willReturn('$20,000.00');
 
