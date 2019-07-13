@@ -18,3 +18,9 @@ bitbag_sylius_elasticsearch_plugin:
                 placeholder: Rechercher des produits...
             search_button:
                 label: Rechercher
+
+        facet:
+            price:
+                label: Prix
+            taxon:
+                label: Catégorie

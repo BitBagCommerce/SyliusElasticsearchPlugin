@@ -18,3 +18,9 @@ bitbag_sylius_elasticsearch_plugin:
                 placeholder: Zoeken naar producten...
             search_button:
                 label: Zoeken
+
+        facet:
+            price:
+                label: Prijs
+            taxon:
+                label: Categorie

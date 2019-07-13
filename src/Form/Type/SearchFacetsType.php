@@ -34,7 +34,7 @@ class SearchFacetsType extends AbstractType
                     $facetId,
                     ChoiceType::class,
                     [
-                        'label' => $facetId, // TODO introduce getLabel method to FacetInterface
+                        'label' => $facet->getLabel(),
                         'choices' => $choices,
                         'expanded' => true,
                         'multiple' => true,

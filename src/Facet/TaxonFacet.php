@@ -59,4 +59,9 @@ final class TaxonFacet implements FacetInterface
     {
         return $this->taxonsPropertyName . '.keyword';
     }
+
+    public function getLabel(): string
+    {
+        return 'bitbag_sylius_elasticsearch_plugin.ui.facet.taxon.label';
+    }
 }

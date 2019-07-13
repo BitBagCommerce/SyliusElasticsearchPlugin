@@ -98,4 +98,9 @@ final class PriceFacet implements FacetInterface
         );
         return sprintf('%s - %s (%s)', $from, $to, $bucket['doc_count']);
     }
+
+    public function getLabel(): string
+    {
+        return 'bitbag_sylius_elasticsearch_plugin.ui.facet.price.label';
+    }
 }
