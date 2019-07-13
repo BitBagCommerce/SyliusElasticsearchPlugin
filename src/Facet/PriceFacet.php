@@ -10,6 +10,7 @@ use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Range;
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
@@ -23,9 +24,9 @@ final class PriceFacet implements FacetInterface
      */
     private $channelPricingNameResolver;
     /**
-     * @var ChannelInterface
+     * @var ChannelContextInterface
      */
-    private $channel;
+    private $channelContext;
     /**
      * @var int
      */
@@ -45,14 +46,14 @@ final class PriceFacet implements FacetInterface
 
     public function __construct(
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelInterface $channel,
+        ChannelContextInterface $channelContext,
         MoneyFormatterInterface $moneyFormatter,
         CurrencyContextInterface $currencyContext,
         LocaleContextInterface $localeContext,
         int $interval
     ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
-        $this->channel = $channel;
+        $this->channelContext = $channelContext;
         $this->moneyFormatter = $moneyFormatter;
         $this->currencyContext = $currencyContext;
         $this->localeContext = $localeContext;
@@ -61,13 +62,19 @@ final class PriceFacet implements FacetInterface
 
     public function getAggregation(): AbstractAggregation
     {
-        $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName($this->channel->getCode());
-        return new Histogram(self::FACET_ID, $priceFieldName, $this->interval);
+        $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
+            $this->channelContext->getChannel()->getCode()
+        );
+        $histogram = new Histogram(self::FACET_ID, $priceFieldName, $this->interval);
+        $histogram->setMinimumDocumentCount(1);
+        return $histogram;
     }
 
     public function getQuery(array $selectedBuckets): AbstractQuery
     {
-        $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName($this->channel->getCode());
+        $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
+            $this->channelContext->getChannel()->getCode()
+        );
         $query = new BoolQuery();
         foreach ($selectedBuckets as $selectedBucket) {
             $query->addShould(
@@ -80,12 +87,12 @@ final class PriceFacet implements FacetInterface
     public function getBucketLabel(array $bucket): string
     {
         $from = $this->moneyFormatter->format(
-            $bucket['key'],
+            (int)$bucket['key'],
             $this->currencyContext->getCurrencyCode(),
             $this->localeContext->getLocaleCode()
         );
         $to = $this->moneyFormatter->format(
-            $bucket['key'] + $this->interval,
+            (int)($bucket['key'] + $this->interval),
             $this->currencyContext->getCurrencyCode(),
             $this->localeContext->getLocaleCode()
         );

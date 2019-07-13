@@ -9,9 +9,9 @@ use Elastica\Aggregation\Histogram;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Range;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
@@ -21,15 +21,17 @@ class PriceFacetSpec extends ObjectBehavior
 
     function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelInterface $channel,
+        ChannelContextInterface $channelContext,
         MoneyFormatterInterface $moneyFormatter,
         CurrencyContextInterface $currencyContext,
         LocaleContextInterface $localeContext
     ) {
-        $channel->getCode()->willReturn('web_us');
+        $channel = new Channel();
+        $channel->setCode('web_us');
+        $channelContext->getChannel()->willReturn($channel);
         $this->beConstructedWith(
             $channelPricingNameResolver,
-            $channel,
+            $channelContext,
             $moneyFormatter,
             $currencyContext,
             $localeContext,
@@ -50,8 +52,10 @@ class PriceFacetSpec extends ObjectBehavior
     function it_returns_histogram_aggregation_for_price_field(ConcatedNameResolverInterface $channelPricingNameResolver)
     {
         $channelPricingNameResolver->resolvePropertyName('web_us')->shouldBeCalled()->willReturn('price_web_us');
+        $expectedHistogram = new Histogram('price', 'price_web_us', $this->interval);
+        $expectedHistogram->setMinimumDocumentCount(1);
 
-        $this->getAggregation()->shouldBeLike(new Histogram('price', 'price_web_us', $this->interval));
+        $this->getAggregation()->shouldBeLike($expectedHistogram);
     }
 
     function it_returns_bool_query_made_of_ranges_based_on_selected_histograms(ConcatedNameResolverInterface $channelPricingNameResolver)
