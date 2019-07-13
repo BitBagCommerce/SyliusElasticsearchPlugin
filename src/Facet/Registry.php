@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
 
-class Registry implements RegistryInterface
+final class Registry implements RegistryInterface
 {
     /**
      * @var FacetInterface[]
