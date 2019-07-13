@@ -44,13 +44,12 @@
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product.default" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <tag name="form.type" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search.facets" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchFacetsType">
-            <argument type="service" id="sylius.money_formatter" />
-            <argument type="service" id="sylius.context.currency" />
-            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <tag name="form.type" />
         </service>
     </services>

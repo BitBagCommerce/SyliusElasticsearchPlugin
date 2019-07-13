@@ -2,3 +2,4 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en_US
+    bitbag_es_shop_price_facet_interval: 1000000

@@ -3,18 +3,15 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
+use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Model\Box;
-use BitBag\SyliusElasticsearchPlugin\Model\FacetsConfig;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
-use Elastica\Aggregation\Histogram;
-use Elastica\Aggregation\Terms;
 use Elastica\Query;
 use Elastica\Query\MultiMatch;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
 use Pagerfanta\Adapter\AdapterInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -27,10 +24,15 @@ class SearchType extends AbstractType
      * @var PaginatedFinderInterface
      */
     private $finder;
+    /**
+     * @var RegistryInterface
+     */
+    private $facetRegistry;
 
-    public function __construct(PaginatedFinderInterface $finder)
+    public function __construct(PaginatedFinderInterface $finder, RegistryInterface $facetRegistry)
     {
         $this->finder = $finder;
+        $this->facetRegistry = $facetRegistry;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -65,25 +67,8 @@ class SearchType extends AbstractType
                     $multiMatch->setFuzziness('AUTO');
                     $query = new Query($multiMatch);
 
-                    foreach (FacetsConfig::get() as $key => $facet) {
-                        $facetType = $facet['type'];
-                        if ($facetType === 'histogram') {
-                            $histogramAggregation = new Histogram(
-                                $key,
-                                $facet['options']['field'],
-                                $facet['options']['interval']
-                            );
-                            if (isset($facet['options']['min_doc_count'])) {
-                                $histogramAggregation->setMinimumDocumentCount($facet['options']['min_doc_count']);
-                            }
-                            $query->addAggregation($histogramAggregation);
-                        } elseif ($facetType === 'terms') {
-                            $termsAggregation = new Terms($key);
-                            $termsAggregation->setField($facet['options']['field']);
-                            $query->addAggregation($termsAggregation);
-                        } else {
-                            throw new \RuntimeException("Unknown facet type '{$facetType}'.");
-                        }
+                    foreach ($this->facetRegistry->getFacets() as $facetId => $facet) {
+                        $query->addAggregation($facet->getAggregation()->setName($facetId));
                     }
                     $query->setSize(0);
 

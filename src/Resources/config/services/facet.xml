@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.price" class="BitBag\SyliusElasticsearchPlugin\Facet\PriceFacet">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing" />
+            <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="sylius.money_formatter" />
+            <argument type="service" id="sylius.context.currency" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="string">%bitbag_es_shop_price_facet_interval%</argument>
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.taxon" class="BitBag\SyliusElasticsearchPlugin\Facet\TaxonFacet">
+            <argument type="service" id="sylius.repository.taxon" />
+            <argument type="string">%bitbag_es_shop_product_taxons_property%</argument>
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry">
+            <call method="addFacet">
+                <argument type="string">price</argument>
+                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.price" />
+            </call>
+            <call method="addFacet">
+                <argument type="string">taxon</argument>
+                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.taxon" />
+            </call>
+        </service>
+        <service id="BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface" alias="bitbag_sylius_elasticsearch_plugin.facet.registry" />
+    </services>
+</container>

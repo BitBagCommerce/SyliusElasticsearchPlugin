@@ -5,17 +5,12 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Block\SearchFormEventListener;
-use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchFacetsType;
-use BitBag\SyliusElasticsearchPlugin\Model\FacetsConfig;
+use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
-use Elastica\Aggregation\Histogram;
-use Elastica\Aggregation\Range;
-use Elastica\Aggregation\Terms;
 use Elastica\Query;
 use Elastica\Query\MultiMatch;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,15 +28,21 @@ final class SearchAction
      * @var SearchFormEventListener
      */
     private $searchFormEventListener;
+    /**
+     * @var RegistryInterface
+     */
+    private $facetRegistry;
 
     public function __construct(
         EngineInterface $templatingEngine,
         PaginatedFinderInterface $finder,
-        SearchFormEventListener $searchFormEventListener
+        SearchFormEventListener $searchFormEventListener,
+        RegistryInterface $facetRegistry
     ) {
         $this->templatingEngine = $templatingEngine;
         $this->finder = $finder;
         $this->searchFormEventListener = $searchFormEventListener;
+        $this->facetRegistry = $facetRegistry;
     }
 
     public function __invoke(Request $request): Response
@@ -65,35 +66,12 @@ final class SearchAction
             $boolQuery->addMust($multiMatch);
 
             if ($search->getFacets()) {
-                foreach ($search->getFacets() as $key => $selectedOptions) {
-                    if (!$selectedOptions) {
+                foreach ($search->getFacets() as $facetId => $selectedBuckets) {
+                    if (!$selectedBuckets) {
                         continue;
                     }
-                    $facetsConfig = FacetsConfig::get();
-                    if (!array_key_exists($key, $facetsConfig)) {
-                        throw new \RuntimeException("Unkown configuration for facet with key '$key'.");
-                    }
-                    $facetConfig = $facetsConfig[$key];
-                    $facetType = $facetConfig['type'];
-                    if ($facetType === 'histogram') {
-                        $rangeBoolQuery = new Query\BoolQuery();
-                        foreach ($selectedOptions as $selectedHistogram) {
-                            $rangeQuery = new Query\Range();
-                            $rangeQuery->addField(
-                                $facetConfig['options']['field'],
-                                [
-                                    'gte' => $selectedHistogram,
-                                    'lte' => $selectedHistogram + $facetConfig['options']['interval']
-                                ]
-                            );
-                            $rangeBoolQuery->addShould($rangeQuery);
-                        }
-                        $boolQuery->addFilter($rangeBoolQuery);
-                    } elseif ($facetType === 'terms') {
-                        $boolQuery->addFilter(new Query\Terms($facetConfig['options']['field'], $selectedOptions));
-                    } else {
-                        throw new \RuntimeException("Unknown facet type '{$facetType}'.");
-                    }
+                    $facet = $this->facetRegistry->getFacetById($facetId);
+                    $boolQuery->addFilter($facet->getQuery($selectedBuckets));
                 }
             }
 

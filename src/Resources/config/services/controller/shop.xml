@@ -16,6 +16,7 @@
             <argument type="service" id="templating" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product.default" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.block_event_listener.search_form" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <tag name="controller.service_arguments" />
         </service>
     </services>
