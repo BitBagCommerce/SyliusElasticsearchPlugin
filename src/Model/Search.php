@@ -8,7 +8,7 @@ use Pagerfanta\Pagerfanta;
 class Search
 {
     /**
-     * @var Box|null
+     * @var SearchBox|null
      */
     private $box;
 
@@ -19,21 +19,21 @@ class Search
 
     public function __construct()
     {
-        $this->box = new Box();
+        $this->box = new SearchBox();
     }
 
     /**
-     * @return Box|null
+     * @return SearchBox|null
      */
-    public function getBox(): ?Box
+    public function getBox(): ?SearchBox
     {
         return $this->box;
     }
 
     /**
-     * @param Box|null $box
+     * @param SearchBox|null $box
      */
-    public function setBox(?Box $box): void
+    public function setBox(?SearchBox $box): void
     {
         $this->box = $box;
     }

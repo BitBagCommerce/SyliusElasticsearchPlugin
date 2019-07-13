@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
-use BitBag\SyliusElasticsearchPlugin\Model\Box;
+use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use Elastica\Query;
 use Elastica\Query\MultiMatch;
@@ -54,7 +54,7 @@ class SearchType extends AbstractType
             ->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event) use ($formModifier) {
-                    /** @var Box $data */
+                    /** @var SearchBox $data */
                     $data = $event->getForm()->getData();
 
                     if (!$data->getQuery()) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
-use BitBag\SyliusElasticsearchPlugin\Model\Box;
+use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType as SymfonySearchType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,7 +31,7 @@ class SearchBoxType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Box::class,
+            'data_class' => SearchBox::class,
         ]);
     }
 }
