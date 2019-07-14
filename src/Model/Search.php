@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Model;
 
-use Pagerfanta\Pagerfanta;
-
 class Search
 {
     /**
@@ -13,13 +11,14 @@ class Search
     private $box;
 
     /**
-     * @var array|null
+     * @var SearchFacets|null
      */
     private $facets;
 
     public function __construct()
     {
         $this->box = new SearchBox();
+        $this->facets = new SearchFacets();
     }
 
     /**
@@ -39,17 +38,17 @@ class Search
     }
 
     /**
-     * @return array|null
+     * @return SearchFacets|null
      */
-    public function getFacets(): ?array
+    public function getFacets(): ?SearchFacets
     {
         return $this->facets;
     }
 
     /**
-     * @param array|null $facets
+     * @param SearchFacets|null $facets
      */
-    public function setFacets(?array $facets): void
+    public function setFacets(?SearchFacets $facets): void
     {
         $this->facets = $facets;
     }

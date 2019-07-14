@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
+use BitBag\SyliusElasticsearchPlugin\Model\SearchFacets;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,5 +48,6 @@ class SearchFacetsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('facets');
+        $resolver->setDefault('data_class', SearchFacets::class);
     }
 }
