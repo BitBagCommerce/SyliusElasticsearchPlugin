@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
-use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
+use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
+use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
-use Elastica\Query\MultiMatch;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
 use Pagerfanta\Adapter\AdapterInterface;
@@ -28,11 +28,19 @@ class SearchType extends AbstractType
      * @var RegistryInterface
      */
     private $facetRegistry;
+    /**
+     * @var QueryBuilderInterface
+     */
+    private $searchProductsQueryBuilder;
 
-    public function __construct(PaginatedFinderInterface $finder, RegistryInterface $facetRegistry)
-    {
+    public function __construct(
+        PaginatedFinderInterface $finder,
+        RegistryInterface $facetRegistry,
+        QueryBuilderInterface $searchProductsQueryBuilder
+    ) {
         $this->finder = $finder;
         $this->facetRegistry = $facetRegistry;
+        $this->searchProductsQueryBuilder = $searchProductsQueryBuilder;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -61,11 +69,7 @@ class SearchType extends AbstractType
                         return;
                     }
 
-                    $multiMatch = new MultiMatch();
-                    $multiMatch->setQuery($data->getQuery());
-                    // TODO set search fields here (pay attention to locale-contex field, like name): $query->setFields([]);
-                    $multiMatch->setFuzziness('AUTO');
-                    $query = new Query($multiMatch);
+                    $query = new Query($this->searchProductsQueryBuilder->buildQuery(['query' => $data->getQuery()]));
 
                     foreach ($this->facetRegistry->getFacets() as $facetId => $facet) {
                         $query->addAggregation($facet->getAggregation()->setName($facetId));

@@ -7,8 +7,8 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 use BitBag\SyliusElasticsearchPlugin\Block\SearchFormEventListener;
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
+use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
-use Elastica\Query\MultiMatch;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,17 +32,23 @@ final class SearchAction
      * @var RegistryInterface
      */
     private $facetRegistry;
+    /**
+     * @var QueryBuilderInterface
+     */
+    private $searchProductsQueryBuilder;
 
     public function __construct(
         EngineInterface $templatingEngine,
         PaginatedFinderInterface $finder,
         SearchFormEventListener $searchFormEventListener,
-        RegistryInterface $facetRegistry
+        RegistryInterface $facetRegistry,
+        QueryBuilderInterface $searchProductsQueryBuilder
     ) {
         $this->templatingEngine = $templatingEngine;
         $this->finder = $finder;
         $this->searchFormEventListener = $searchFormEventListener;
         $this->facetRegistry = $facetRegistry;
+        $this->searchProductsQueryBuilder = $searchProductsQueryBuilder;
     }
 
     public function __invoke(Request $request): Response
@@ -56,14 +62,10 @@ final class SearchAction
             /** @var Search $search */
             $search = $form->getData();
 
-            // TODO this is duplicated from src/Form/Type/SearchType.php:61
-            $multiMatch = new MultiMatch();
-            $multiMatch->setQuery($search->getBox()->getQuery());
-            // TODO set search fields here (pay attention to locale-contex field, like name): $query->setFields([]);
-            $multiMatch->setFuzziness('AUTO');
-
             $boolQuery = new Query\BoolQuery();
-            $boolQuery->addMust($multiMatch);
+            $boolQuery->addMust(
+                $this->searchProductsQueryBuilder->buildQuery(['query' => $search->getBox()->getQuery()])
+            );
 
             if ($search->getFacets()) {
                 foreach ($search->getFacets() as $facetId => $selectedBuckets) {

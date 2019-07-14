@@ -64,5 +64,7 @@
             <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_attribute_property_prefix%</argument>
         </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\SearchProductsQueryBuilder" />
     </services>
 </container>
