@@ -3,13 +3,25 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\SearchProductsQueryBuilder;
 use Elastica\Query\MultiMatch;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 class SearchProductsQueryBuilderSpec extends ObjectBehavior
 {
+    function let(
+        SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
+        LocaleContextInterface $localeContext
+    ) {
+        $localeContext->getLocaleCode()->willReturn('en_US');
+        $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn([]);
+        $this->beConstructedWith($searchPropertyNameResolverRegistry, $localeContext);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType(SearchProductsQueryBuilder::class);
@@ -35,6 +47,26 @@ class SearchProductsQueryBuilderSpec extends ObjectBehavior
         $expectedQuery = new MultiMatch();
         $expectedQuery->setQuery('bmw');
         $expectedQuery->setFuzziness('AUTO');
+        $expectedQuery->setFields([]);
+
+        $this->buildQuery(['query' => 'bmw'])->shouldBeLike($expectedQuery);
+    }
+
+    function it_builds_multi_match_query_with_provided_query_string_and_fields_from_registry(
+        SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
+        ConcatedNameResolverInterface $firstPropertyNameResolver,
+        ConcatedNameResolverInterface $secondPropertyNameResolver
+    ) {
+        $firstPropertyNameResolver->resolvePropertyName('en_US')->shouldBeCalled()->willReturn('property_1_en_us');
+        $secondPropertyNameResolver->resolvePropertyName('en_US')->shouldBeCalled()->willReturn('property_2_en_us');
+        $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn(
+            [$firstPropertyNameResolver, $secondPropertyNameResolver]
+        );
+        $expectedQuery = new MultiMatch();
+        $expectedQuery->setQuery('bmw');
+        $expectedQuery->setFuzziness('AUTO');
+        $expectedQuery->setFields(['property_1_en_us', 'property_2_en_us']);
+
         $this->buildQuery(['query' => 'bmw'])->shouldBeLike($expectedQuery);
     }
 }

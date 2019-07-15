@@ -3,12 +3,31 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\MultiMatch;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class SearchProductsQueryBuilder implements QueryBuilderInterface
 {
     public const QUERY_KEY = 'query';
+
+    /**
+     * @var SearchPropertyNameResolverRegistryInterface
+     */
+    private $searchProperyNameResolverRegistry;
+    /**
+     * @var LocaleContextInterface
+     */
+    private $localeContext;
+
+    public function __construct(
+        SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
+        LocaleContextInterface $localeContext
+    ) {
+        $this->searchProperyNameResolverRegistry = $searchProperyNameResolverRegistry;
+        $this->localeContext = $localeContext;
+    }
 
     public function buildQuery(array $data): ?AbstractQuery
     {
@@ -34,7 +53,11 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
         $multiMatch = new MultiMatch();
         $multiMatch->setQuery($data['query']);
         $multiMatch->setFuzziness('AUTO');
-        // TODO set search fields here (pay attention to locale-contex field, like name): $query->setFields([]);
+        $fields = [];
+        foreach ($this->searchProperyNameResolverRegistry->getPropertyNameResolvers() as $propertyNameResolver) {
+            $fields[] = $propertyNameResolver->resolvePropertyName($this->localeContext->getLocaleCode());
+        }
+        $multiMatch->setFields($fields);
         return $multiMatch;
     }
 }
