@@ -20,23 +20,23 @@ final class AttributeFacetSpec extends ObjectBehavior
         ConcatedNameResolverInterface $attributeNameResolver,
         RepositoryInterface $attributeRepository,
         LocaleContextInterface $localeContext
-    ) {
+    ): void {
         $attributeNameResolver->resolvePropertyName('attribute_code')->willReturn('attribute_attribute_code');
         $localeContext->getLocaleCode()->willReturn('en_US');
         $this->beConstructedWith($attributeNameResolver, $attributeRepository, $localeContext, 'attribute_code');
     }
 
-    function it_is_initializable()
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(AttributeFacet::class);
     }
 
-    function it_implements_facet_interface()
+    function it_implements_facet_interface(): void
     {
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    function it_returns_terms_aggregation()
+    function it_returns_terms_aggregation(): void
     {
         $expectedAggregation = new Terms('');
         $expectedAggregation->setField('attribute_attribute_code.keyword');
@@ -44,7 +44,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getAggregation()->shouldBeLike($expectedAggregation);
     }
 
-    function it_returns_terms_query()
+    function it_returns_terms_query(): void
     {
         $selectedBuckets = ['selected_value'];
         $expectedQuery = new \Elastica\Query\Terms('attribute_attribute_code.keyword', $selectedBuckets);
@@ -52,7 +52,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getQuery($selectedBuckets)->shouldBeLike($expectedQuery);
     }
 
-    function it_returns_bucket_label_from_config_for_select_attribute(RepositoryInterface $attributeRepository)
+    function it_returns_bucket_label_from_config_for_select_attribute(RepositoryInterface $attributeRepository): void
     {
         $attribute = new Attribute();
         $attribute->setType('select');
@@ -62,7 +62,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getBucketLabel(['key' => 'value_id', 'doc_count' => 3])->shouldReturn('Value Label (3)');
     }
 
-    function it_returns_human_readable_bucket_label_for_text_attribute(RepositoryInterface $attributeRepository)
+    function it_returns_human_readable_bucket_label_for_text_attribute(RepositoryInterface $attributeRepository): void
     {
         $attribute = new Attribute();
         $attribute->setType('text');

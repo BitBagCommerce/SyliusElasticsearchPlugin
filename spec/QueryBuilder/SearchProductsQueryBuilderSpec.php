@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
@@ -16,33 +17,33 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
     function let(
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         LocaleContextInterface $localeContext
-    ) {
+    ): void {
         $localeContext->getLocaleCode()->willReturn('en_US');
         $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn([]);
         $this->beConstructedWith($searchPropertyNameResolverRegistry, $localeContext);
     }
 
-    function it_is_initializable()
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(SearchProductsQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface()
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_throws_an_exception_if_query_is_not_present_in_data()
+    function it_throws_an_exception_if_query_is_not_present_in_data(): void
     {
         $this->shouldThrow(\RuntimeException::class)->during('buildQuery', [['not_relevant_key' => 'value']]);
     }
 
-    function it_throws_an_exception_if_query_is_not_a_string()
+    function it_throws_an_exception_if_query_is_not_a_string(): void
     {
         $this->shouldThrow(\RuntimeException::class)->during('buildQuery', [['query' => new \stdClass()]]);
     }
 
-    function it_builds_multi_match_query_with_provided_query_string()
+    function it_builds_multi_match_query_with_provided_query_string(): void
     {
         $expectedQuery = new MultiMatch();
         $expectedQuery->setQuery('bmw');
@@ -56,7 +57,7 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         ConcatedNameResolverInterface $firstPropertyNameResolver,
         ConcatedNameResolverInterface $secondPropertyNameResolver
-    ) {
+    ): void {
         $firstPropertyNameResolver->resolvePropertyName('en_US')->shouldBeCalled()->willReturn('property_1_en_us');
         $secondPropertyNameResolver->resolvePropertyName('en_US')->shouldBeCalled()->willReturn('property_2_en_us');
         $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn(

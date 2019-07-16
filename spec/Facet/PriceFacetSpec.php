@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\BitBag\SyliusElasticsearchPlugin\Facet;
 
 use BitBag\SyliusElasticsearchPlugin\Facet\FacetInterface;
@@ -21,7 +23,7 @@ final class PriceFacetSpec extends ObjectBehavior
         ConcatedNameResolverInterface $channelPricingNameResolver,
         MoneyFormatterInterface $moneyFormatter,
         ShopperContextInterface $shopperContext
-    ) {
+    ): void {
         $channel = new Channel();
         $channel->setCode('web_us');
         $shopperContext->getChannel()->willReturn($channel);
@@ -33,18 +35,19 @@ final class PriceFacetSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable()
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(PriceFacet::class);
     }
 
-    function it_implements_facet_interface()
+    function it_implements_facet_interface(): void
     {
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    function it_returns_histogram_aggregation_for_price_field(ConcatedNameResolverInterface $channelPricingNameResolver)
-    {
+    function it_returns_histogram_aggregation_for_price_field(
+        ConcatedNameResolverInterface $channelPricingNameResolver
+    ): void {
         $channelPricingNameResolver->resolvePropertyName('web_us')->shouldBeCalled()->willReturn('price_web_us');
         $expectedHistogram = new Histogram('price', 'price_web_us', $this->interval);
         $expectedHistogram->setMinimumDocumentCount(1);
@@ -52,8 +55,9 @@ final class PriceFacetSpec extends ObjectBehavior
         $this->getAggregation()->shouldBeLike($expectedHistogram);
     }
 
-    function it_returns_bool_query_made_of_ranges_based_on_selected_histograms(ConcatedNameResolverInterface $channelPricingNameResolver)
-    {
+    function it_returns_bool_query_made_of_ranges_based_on_selected_histograms(
+        ConcatedNameResolverInterface $channelPricingNameResolver
+    ): void {
         $channelPricingNameResolver->resolvePropertyName('web_us')->shouldBeCalled()->willReturn('price_web_us');
 
         $selectedHistograms = [1000000, 4000000];
@@ -66,7 +70,7 @@ final class PriceFacetSpec extends ObjectBehavior
     function it_returns_money_formatted_bucket_label(
         MoneyFormatterInterface $moneyFormatter,
         ShopperContextInterface $shopperContext
-    ) {
+    ): void {
         $shopperContext->getCurrencyCode()->willReturn('USD');
         $shopperContext->getLocaleCode()->willReturn('en_US');
         $moneyFormatter->format(1000000, 'USD', 'en_US')->shouldBeCalled()->willReturn('$10,000.00');

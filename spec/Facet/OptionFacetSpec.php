@@ -14,7 +14,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionFacetSpec extends ObjectBehavior
 {
-    function let(ConcatedNameResolverInterface $optionNameResolver, RepositoryInterface $productOptionRepository)
+    function let(ConcatedNameResolverInterface $optionNameResolver, RepositoryInterface $productOptionRepository): void
     {
         $optionCode = 'SUPPLY';
         $optionNameResolver->resolvePropertyName('SUPPLY')->willReturn('option_SUPPLY');
@@ -25,17 +25,17 @@ final class OptionFacetSpec extends ObjectBehavior
         $this->beConstructedWith($optionNameResolver, $productOptionRepository, $optionCode);
     }
 
-    function it_is_initializable()
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(OptionFacet::class);
     }
 
-    function it_implements_facet_interface()
+    function it_implements_facet_interface(): void
     {
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    function it_returns_terms_aggregation()
+    function it_returns_terms_aggregation(): void
     {
         $expectedAggregation = new Terms('');
         $expectedAggregation->setField('option_SUPPLY.keyword');
@@ -43,19 +43,19 @@ final class OptionFacetSpec extends ObjectBehavior
         $this->getAggregation()->shouldBeLike($expectedAggregation);
     }
 
-    function it_returns_terms_query()
+    function it_returns_terms_query(): void
     {
         $expectedQuery = new \Elastica\Query\Terms('option_SUPPLY.keyword', ['selected', 'values']);
 
         $this->getQuery(['selected', 'values'])->shouldBeLike($expectedQuery);
     }
 
-    function it_returns_bucket_label()
+    function it_returns_bucket_label(): void
     {
         $this->getBucketLabel(['key' => 'option_value', 'doc_count' => 3])->shouldReturn('Option Value (3)');
     }
 
-    function it_returns_option_name_as_facet_label()
+    function it_returns_option_name_as_facet_label(): void
     {
         $this->getLabel()->shouldReturn('Supply');
     }
