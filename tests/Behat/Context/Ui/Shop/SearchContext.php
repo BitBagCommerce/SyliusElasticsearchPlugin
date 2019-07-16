@@ -94,4 +94,12 @@ final class SearchContext implements Context
     ) {
         $this->searchPage->assertAttributeFacetOptions($attributeFilterLabel, $options->getStrings());
     }
+
+    /**
+     * @Then /^I should see the following options in the "([^"]*)" option filter:$/
+     */
+    public function iShouldSeeTheFollowingOptionsInTheOptionFilter($optionFilterLabel, PyStringNode $options)
+    {
+        $this->searchPage->assertOptionFacetOptions($optionFilterLabel, $options->getStrings());
+    }
 }

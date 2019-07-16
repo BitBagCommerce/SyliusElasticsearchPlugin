@@ -44,6 +44,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             'search_facets_attribute_car_type' => '#bitbag_elasticsearch_search_facets_attribute_car_type',
             'search_facets_attribute_motorbike_type' => '#bitbag_elasticsearch_search_facets_attribute_motorbike_type',
             'search_facets_attribute_color' => '#bitbag_elasticsearch_search_facets_attribute_color',
+            'search_facets_option_supply' => '#bitbag_elasticsearch_search_facets_option_supply'
         ];
     }
 
@@ -130,6 +131,27 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             sprintf(
                 "Expected \"%s\" attribute facet options are:\n%s\nGot:\n%s",
                 $attributeFilterLabel,
+                print_r($expectedOptions, true),
+                print_r($options, true)
+            )
+        );
+    }
+
+    public function assertOptionFacetOptions($optionFilterLabel, array $expectedOptions)
+    {
+        $element = 'search_facets_option_' . strtolower(str_replace(' ', '_', $optionFilterLabel));
+        $options = array_map(
+            function (NodeElement $element) {
+                return $element->getText();
+            },
+            $this->getElement($element)->findAll('css', '.field')
+        );
+        Assert::eq(
+            $options,
+            $expectedOptions,
+            sprintf(
+                "Expected \"%s\" option facet options are:\n%s\nGot:\n%s",
+                $optionFilterLabel,
                 print_r($expectedOptions, true),
                 print_r($options, true)
             )

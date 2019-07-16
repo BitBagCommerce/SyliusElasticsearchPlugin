@@ -26,4 +26,6 @@ interface SearchPageInterface extends PageInterface
     public function filterByTaxon(string $taxon);
 
     public function assertAttributeFacetOptions(string $attributeFilterLabel, array $expectedOptions);
+
+    public function assertOptionFacetOptions($optionFilterLabel, array $expectedOptions);
 }

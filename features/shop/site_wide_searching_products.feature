@@ -14,6 +14,9 @@ Feature: Site-wide products search
     And this product's price is "$42670"
     And this product has select attribute "Car Type" with value "Cabrio"
     And this product has text attribute "Color" with value "Red"
+    And this product has option "Supply" with values "Gasoline" and "Diesel"
+    And this product is available in "Gasoline" supply priced at "$42670"
+    And this product is available in "Diesel" supply priced at "$45670"
     And this product belongs to "Cars"
     And there is a product named "Volvo XC90" in the store
     And this product's price is "$64505.80"
@@ -137,8 +140,18 @@ Feature: Site-wide products search
       """
     And I should see 6 products in search results
 
-
+  @ui
+  Scenario: Searching products and viewing supply option aggregations
+    When I browse the search page
+    And I search the products by "BMW or Volvo" phrase in the site-wide search box
+    Then I should see the following options in the "Supply" option filter:
+      """
+      Diesel (1)
+      Gasoline (1)
+      """
+    And I should see 6 products in search results
 
 # Test if it searches only in current channel
+# Test if it searches only enabled products
 # Test with multi language values for taxons and attributes
 # Test pagination

@@ -44,6 +44,13 @@ services:
             - '@sylius.context.locale'
             - Color
 
+    bitbag_sylius_elasticsearch_plugin.facet.option.supply:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\OptionFacet
+        arguments:
+            - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.option'
+            - '@sylius.repository.product_option'
+            - SUPPLY
+
     bitbag_sylius_elasticsearch_plugin.facet.registry:
         class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
         calls:
@@ -67,3 +74,7 @@ services:
               arguments:
                   - attribute_color
                   - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.color'
+            - method: addFacet
+              arguments:
+                  - option_supply
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.option.supply'
