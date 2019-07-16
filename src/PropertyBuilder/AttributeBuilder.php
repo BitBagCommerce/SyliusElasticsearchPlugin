@@ -45,17 +45,9 @@ final class AttributeBuilder extends AbstractBuilder
     private function resolveProductAttributes(ProductInterface $product, Document $document): void
     {
         foreach ($product->getAttributes() as $attributeValue) {
-            $attribute = $attributeValue->getAttribute();
-            if (!$attribute) {
-                continue;
-            }
-            $attributeCode = $attribute->getCode();
+            $attributeCode = $attributeValue->getAttribute()->getCode();
             $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
             $value = $attributeValue->getValue();
-            if ($attribute->getType() === 'select') {
-                $document->set($index, $value);
-                continue;
-            }
             $attributes = [];
 
             if (is_array($value)) {
