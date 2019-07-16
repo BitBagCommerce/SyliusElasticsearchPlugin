@@ -68,6 +68,8 @@
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\SearchProductsQueryBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" />
             <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_channel" />
         </service>
     </services>
 </container>

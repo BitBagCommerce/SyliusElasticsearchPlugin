@@ -151,7 +151,5 @@ Feature: Site-wide products search
       """
     And I should see 6 products in search results
 
-# Test if it searches only in current channel
-# Test if it searches only enabled products
 # Test with multi language values for taxons and attributes
 # Test pagination

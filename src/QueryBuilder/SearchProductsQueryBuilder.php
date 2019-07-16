@@ -5,6 +5,7 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use Elastica\Query\AbstractQuery;
+use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
@@ -20,13 +21,25 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
      * @var LocaleContextInterface
      */
     private $localeContext;
+    /**
+     * @var QueryBuilderInterface
+     */
+    private $isEnabledQueryBuilder;
+    /**
+     * @var QueryBuilderInterface
+     */
+    private $hasChannelQueryBuilder;
 
     public function __construct(
         SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
-        LocaleContextInterface $localeContext
+        LocaleContextInterface $localeContext,
+        QueryBuilderInterface $isEnabledQueryBuilder,
+        QueryBuilderInterface $hasChannelQueryBuilder
     ) {
         $this->searchProperyNameResolverRegistry = $searchProperyNameResolverRegistry;
         $this->localeContext = $localeContext;
+        $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
+        $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
     }
 
     public function buildQuery(array $data): ?AbstractQuery
@@ -40,24 +53,29 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
                 )
             );
         }
-        if (!is_string($data[self::QUERY_KEY])) {
+        $query = $data[self::QUERY_KEY];
+        if (!is_string($query)) {
             throw new \RuntimeException(
                 sprintf(
                     'Could not build search products query because the provided "query" is expected to be a string ' .
                     'but "%s" is given.',
-                    is_object($data[self::QUERY_KEY]) ? get_class($data[self::QUERY_KEY]) : gettype($data[self::QUERY_KEY])
+                    is_object($query) ? get_class($query) : gettype($query)
                 )
             );
         }
 
         $multiMatch = new MultiMatch();
-        $multiMatch->setQuery($data['query']);
+        $multiMatch->setQuery($query);
         $multiMatch->setFuzziness('AUTO');
         $fields = [];
         foreach ($this->searchProperyNameResolverRegistry->getPropertyNameResolvers() as $propertyNameResolver) {
             $fields[] = $propertyNameResolver->resolvePropertyName($this->localeContext->getLocaleCode());
         }
         $multiMatch->setFields($fields);
-        return $multiMatch;
+        $bool = new BoolQuery();
+        $bool->addMust($multiMatch);
+        $bool->addFilter($this->isEnabledQueryBuilder->buildQuery([]));
+        $bool->addFilter($this->hasChannelQueryBuilder->buildQuery([]));
+        return $bool;
     }
 }

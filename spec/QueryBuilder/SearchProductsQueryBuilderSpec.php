@@ -8,19 +8,38 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\SearchProductsQueryBuilder;
+use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
+use Elastica\Query\Term;
+use Elastica\Query\Terms;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 {
+    private $isEnabeldQuery;
+    private $hasChannelQuery;
+
     function let(
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
-        LocaleContextInterface $localeContext
+        LocaleContextInterface $localeContext,
+        QueryBuilderInterface $isEnabledQueryBuilder,
+        QueryBuilderInterface $hasChannelQueryBuilder
     ): void {
         $localeContext->getLocaleCode()->willReturn('en_US');
         $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn([]);
-        $this->beConstructedWith($searchPropertyNameResolverRegistry, $localeContext);
+        $this->isEnabeldQuery = new Term();
+        $this->isEnabeldQuery->setTerm('enabled', true);
+        $isEnabledQueryBuilder->buildQuery([])->willReturn($this->isEnabeldQuery);
+        $this->hasChannelQuery = new Terms();
+        $this->hasChannelQuery->setTerms('channels', ['web_us']);
+        $hasChannelQueryBuilder->buildQuery([])->willReturn($this->hasChannelQuery);
+        $this->beConstructedWith(
+            $searchPropertyNameResolverRegistry,
+            $localeContext,
+            $isEnabledQueryBuilder,
+            $hasChannelQueryBuilder
+        );
     }
 
     function it_is_initializable(): void
@@ -45,10 +64,14 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 
     function it_builds_multi_match_query_with_provided_query_string(): void
     {
-        $expectedQuery = new MultiMatch();
-        $expectedQuery->setQuery('bmw');
-        $expectedQuery->setFuzziness('AUTO');
-        $expectedQuery->setFields([]);
+        $expectedMultiMatch = new MultiMatch();
+        $expectedMultiMatch->setQuery('bmw');
+        $expectedMultiMatch->setFuzziness('AUTO');
+        $expectedMultiMatch->setFields([]);
+        $expectedQuery = new BoolQuery();
+        $expectedQuery->addMust($expectedMultiMatch);
+        $expectedQuery->addFilter($this->isEnabeldQuery);
+        $expectedQuery->addFilter($this->hasChannelQuery);
 
         $this->buildQuery(['query' => 'bmw'])->shouldBeLike($expectedQuery);
     }
@@ -63,10 +86,14 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn(
             [$firstPropertyNameResolver, $secondPropertyNameResolver]
         );
-        $expectedQuery = new MultiMatch();
-        $expectedQuery->setQuery('bmw');
-        $expectedQuery->setFuzziness('AUTO');
-        $expectedQuery->setFields(['property_1_en_us', 'property_2_en_us']);
+        $expectedMultiMatch = new MultiMatch();
+        $expectedMultiMatch->setQuery('bmw');
+        $expectedMultiMatch->setFuzziness('AUTO');
+        $expectedMultiMatch->setFields(['property_1_en_us', 'property_2_en_us']);
+        $expectedQuery = new BoolQuery();
+        $expectedQuery->addMust($expectedMultiMatch);
+        $expectedQuery->addFilter($this->isEnabeldQuery);
+        $expectedQuery->addFilter($this->hasChannelQuery);
 
         $this->buildQuery(['query' => 'bmw'])->shouldBeLike($expectedQuery);
     }
