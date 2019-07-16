@@ -18,12 +18,10 @@ final class AttributeFacetSpec extends ObjectBehavior
 {
     function let(
         ConcatedNameResolverInterface $attributeNameResolver,
-        RepositoryInterface $attributeRepository,
-        LocaleContextInterface $localeContext
+        RepositoryInterface $attributeRepository
     ): void {
         $attributeNameResolver->resolvePropertyName('attribute_code')->willReturn('attribute_attribute_code');
-        $localeContext->getLocaleCode()->willReturn('en_US');
-        $this->beConstructedWith($attributeNameResolver, $attributeRepository, $localeContext, 'attribute_code');
+        $this->beConstructedWith($attributeNameResolver, $attributeRepository, 'attribute_code');
     }
 
     function it_is_initializable(): void
@@ -52,22 +50,8 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getQuery($selectedBuckets)->shouldBeLike($expectedQuery);
     }
 
-    function it_returns_bucket_label_from_config_for_select_attribute(RepositoryInterface $attributeRepository): void
+    function it_returns_bucket_label_(): void
     {
-        $attribute = new Attribute();
-        $attribute->setType('select');
-        $attribute->setConfiguration(['choices' => ['value_id' => ['en_US' => 'Value Label']]]);
-        $attributeRepository->findOneBy(['code' => 'attribute_code'])->willReturn($attribute);
-
-        $this->getBucketLabel(['key' => 'value_id', 'doc_count' => 3])->shouldReturn('Value Label (3)');
-    }
-
-    function it_returns_human_readable_bucket_label_for_text_attribute(RepositoryInterface $attributeRepository): void
-    {
-        $attribute = new Attribute();
-        $attribute->setType('text');
-        $attributeRepository->findOneBy(['code' => 'attribute_code'])->willReturn($attribute);
-
-        $this->getBucketLabel(['key' => 'green_&_white', 'doc_count' => 3])->shouldReturn('Green & White (3)');
+        $this->getBucketLabel(['key' => 'value_label', 'doc_count' => 3])->shouldReturn('Value Label (3)');
     }
 }

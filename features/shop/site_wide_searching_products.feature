@@ -118,7 +118,7 @@ Feature: Site-wide products search
     Then I should see the following options in the "Car Type" attribute filter:
       """
       Cabrio (2)
-      SUV (1)
+      Suv (1)
       """
     And I should see the following options in the "Motorbike Type" attribute filter:
       """

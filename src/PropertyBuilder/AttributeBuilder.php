@@ -17,6 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class AttributeBuilder extends AbstractBuilder
 {
@@ -25,13 +26,19 @@ final class AttributeBuilder extends AbstractBuilder
 
     /** @var StringFormatterInterface */
     private $stringFormatter;
+    /**
+     * @var LocaleContextInterface
+     */
+    private $localeContext;
 
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
-        StringFormatterInterface $stringFormatter
+        StringFormatterInterface $stringFormatter,
+        LocaleContextInterface $localeContext
     ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
+        $this->localeContext = $localeContext;
     }
 
     public function consumeEvent(TransformEvent $event): void
@@ -45,9 +52,24 @@ final class AttributeBuilder extends AbstractBuilder
     private function resolveProductAttributes(ProductInterface $product, Document $document): void
     {
         foreach ($product->getAttributes() as $attributeValue) {
-            $attributeCode = $attributeValue->getAttribute()->getCode();
+            $attribute = $attributeValue->getAttribute();
+            if (!$attribute) {
+                continue;
+            }
+            $attributeCode = $attribute->getCode();
             $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
             $value = $attributeValue->getValue();
+            if ($attribute->getType() === 'select') {
+                $choices = $attribute->getConfiguration()['choices'];
+                if (is_array($value)) {
+                    foreach ($value as $i => $item) {
+                        $value[$i] = $choices[$item][$this->localeContext->getLocaleCode()] ?? $item;
+                    }
+                } else {
+                    $value = $choices[$value][$this->localeContext->getLocaleCode()] ?? $value;
+                }
+
+            }
             $attributes = [];
 
             if (is_array($value)) {

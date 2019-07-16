@@ -9,7 +9,6 @@ use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
 use Sylius\Component\Attribute\Model\AttributeInterface;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class AttributeFacet implements FacetInterface
@@ -23,10 +22,6 @@ final class AttributeFacet implements FacetInterface
      */
     private $productAttributeRepository;
     /**
-     * @var LocaleContextInterface
-     */
-    private $localeContext;
-    /**
      * @var string
      */
     private $attributeCode;
@@ -34,12 +29,10 @@ final class AttributeFacet implements FacetInterface
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
         RepositoryInterface $productAttributeRepository,
-        LocaleContextInterface $localeContext,
         string $attributeCode
     ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->productAttributeRepository = $productAttributeRepository;
-        $this->localeContext = $localeContext;
         $this->attributeCode = $attributeCode;
     }
 
@@ -57,16 +50,7 @@ final class AttributeFacet implements FacetInterface
 
     public function getBucketLabel(array $bucket): string
     {
-        $attribute = $this->getProductAttribute();
-        $label = $value = $bucket['key'];
-        if ($attribute->getType() === 'select') {
-            $configuration = $attribute->getConfiguration();
-            if (isset($configuration['choices'][$value][$this->localeContext->getLocaleCode()])) {
-                $label = $configuration['choices'][$value][$this->localeContext->getLocaleCode()];
-            }
-        } else {
-            $label = ucwords(str_replace('_', ' ', $label));
-        }
+        $label = ucwords(str_replace('_', ' ', $bucket['key']));
         return sprintf('%s (%s)', $label, $bucket['doc_count']);
     }
 

@@ -21,6 +21,7 @@
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.attribute" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
+            <argument type="service" id="sylius.context.locale" />
             <tag name="kernel.event_subscriber" />
         </service>
 

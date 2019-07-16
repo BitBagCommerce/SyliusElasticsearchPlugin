@@ -25,7 +25,6 @@ services:
         arguments:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
-            - '@sylius.context.locale'
             - Car_Type
 
     bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type:
@@ -33,7 +32,6 @@ services:
         arguments:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
-            - '@sylius.context.locale'
             - Motorbike_Type
 
     bitbag_sylius_elasticsearch_plugin.facet.attribute.color:
@@ -41,7 +39,6 @@ services:
         arguments:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
-            - '@sylius.context.locale'
             - Color
 
     bitbag_sylius_elasticsearch_plugin.facet.option.supply:
