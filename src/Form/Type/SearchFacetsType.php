@@ -30,18 +30,20 @@ final class SearchFacetsType extends AbstractType
             foreach ($facetData['buckets'] as $bucket) {
                 $choices[$facet->getBucketLabel($bucket)] = $bucket['key'];
             }
-            $builder
-                ->add(
-                    $facetId,
-                    ChoiceType::class,
-                    [
-                        'label' => $facet->getLabel(),
-                        'choices' => $choices,
-                        'expanded' => true,
-                        'multiple' => true,
-                    ]
-                )
-            ;
+            if (!empty($choices)) {
+                $builder
+                    ->add(
+                        $facetId,
+                        ChoiceType::class,
+                        [
+                            'label' => $facet->getLabel(),
+                            'choices' => $choices,
+                            'expanded' => true,
+                            'multiple' => true,
+                        ]
+                    )
+                ;
+            }
         }
     }
 
