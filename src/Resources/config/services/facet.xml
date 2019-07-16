@@ -14,16 +14,7 @@
             <argument type="string">%bitbag_es_shop_product_taxons_property%</argument>
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.facet.registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry">
-            <call method="addFacet">
-                <argument type="string">price</argument>
-                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.price" />
-            </call>
-            <call method="addFacet">
-                <argument type="string">taxon</argument>
-                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.taxon" />
-            </call>
-        </service>
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry" />
         <service id="BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface" alias="bitbag_sylius_elasticsearch_plugin.facet.registry" />
     </services>
 </container>

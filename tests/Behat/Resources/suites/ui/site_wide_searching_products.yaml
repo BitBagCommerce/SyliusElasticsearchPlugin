@@ -13,6 +13,7 @@ default:
                 - sylius.behat.context.setup.taxonomy
                 - sylius.behat.context.setup.product_taxon
                 - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.product_attribute
                 - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product
                 - bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch
 

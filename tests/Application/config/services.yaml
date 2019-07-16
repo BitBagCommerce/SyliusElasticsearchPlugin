@@ -3,3 +3,55 @@
 parameters:
     locale: en_US
     bitbag_es_shop_price_facet_interval: 1000000
+
+#    <service id="bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type" class="BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet">
+#    <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
+#    <argument type="service" id="sylius.repository.product_attribute" />
+#    <argument type="service" id="sylius.context.locale" />
+#    <argument type="string">Car_Type</argument>
+#    </service>
+#
+#    <service id="bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type" class="BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet">
+#    <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
+#    <argument type="service" id="sylius.repository.product_attribute" />
+#    <argument type="service" id="sylius.context.locale" />
+#    <argument type="string">Motorbike_Type</argument>
+#    </service>
+
+services:
+
+    bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
+        arguments:
+            - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
+            - '@sylius.repository.product_attribute'
+            - '@sylius.context.locale'
+            - Car_Type
+
+    bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
+        arguments:
+            - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
+            - '@sylius.repository.product_attribute'
+            - '@sylius.context.locale'
+            - Motorbike_Type
+
+    bitbag_sylius_elasticsearch_plugin.facet.registry:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
+        calls:
+            - method: addFacet
+              arguments:
+                  - price
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.price'
+            - method: addFacet
+              arguments:
+                  - taxon
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.taxon'
+            - method: addFacet
+              arguments:
+                  - attribute_car_type
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type'
+            - method: addFacet
+              arguments:
+                  - attribute_motorbike_type
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type'

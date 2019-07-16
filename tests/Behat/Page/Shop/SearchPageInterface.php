@@ -24,4 +24,6 @@ interface SearchPageInterface extends PageInterface
     public function filterByPriceInterval(string $intervalLabel);
 
     public function filterByTaxon(string $taxon);
+
+    public function assertAttributeFacetOptions(string $attributeFilterLabel, array $expectedOptions);
 }

@@ -8,29 +8,37 @@ Feature: Site-wide products search
     Given the store operates on a channel named "Web-US" in "USD" currency
     And the store classifies its products as "Cars"
     And the store classifies its products as "Motorbikes"
+    And the store has a select product attribute "Car Type" with values "Cabrio" and "SUV"
+    And the store has a select product attribute "Motorbike Type" with values "Enduro" and "Naked"
     And there is a product named "BMW Z4" in the store
     And this product's price is "$42670"
+    And this product has select attribute "Car Type" with value "Cabrio"
     And this product belongs to "Cars"
     And there is a product named "Volvo XC90" in the store
     And this product's price is "$64505.80"
+    And this product has select attribute "Car Type" with value "SUV"
     And this product belongs to "Cars"
     And there is a product named "BMW 5 Series" in the store
     And this product's price is "$52070"
+    And this product has select attribute "Car Type" with value "Cabrio"
     And this product belongs to "Cars"
     And there is a product named "Lamborghini Aventador" in the store
     And this product's price is "$450000"
     And this product belongs to "Cars"
     And there is a product named "BMW GS" in the store
     And this product's price is "$18070"
+    And this product has select attribute "Motorbike Type" with value "Enduro"
     And this product belongs to "Motorbikes"
     And there is a product named "Ducati Monster" in the store
     And this product's price is "$14995"
+    And this product has select attribute "Motorbike Type" with value "Naked"
     And this product's short description is:
       """
       This is the Ducati Monster which is much better than any other BMW motorbike.
       """
     And this product belongs to "Motorbikes"
     And there is a product named "Honda Africa Twin" in the store
+    And this product has select attribute "Motorbike Type" with value "Enduro"
     And this product's price is "$13490"
     And this product's description is:
       """
@@ -92,3 +100,25 @@ Feature: Site-wide products search
     And I search the products by "BMW" phrase in the site-wide search box
     And I filter by taxon "Motorbikes"
     Then I should see 3 products in search results
+
+  @ui
+  Scenario: Searching products and viewing car type and motorbike type attributes aggregations
+    When I browse the search page
+    And I search the products by "BMW or Volvo" phrase in the site-wide search box
+    Then I should see the following options in the "Car Type" attribute filter:
+      """
+      Cabrio (2)
+      SUV (1)
+      """
+    And I should see the following options in the "Motorbike Type" attribute filter:
+      """
+      Enduro (2)
+      Naked (1)
+      """
+    And I should see 6 products in search results
+
+
+
+# Test if it searches only in current channel
+# Test with multi language values for taxons and attributes
+# Test pagination

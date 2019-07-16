@@ -84,4 +84,14 @@ final class SearchContext implements Context
     {
         $this->searchPage->filterByTaxon($taxon);
     }
+
+    /**
+     * @Then /^I should see the following options in the "([^"]*)" attribute filter:$/
+     */
+    public function iShouldSeeTheFollowingOptionsInTheAttributeFilter(
+        string $attributeFilterLabel,
+        PyStringNode $options
+    ) {
+        $this->searchPage->assertAttributeFacetOptions($attributeFilterLabel, $options->getStrings());
+    }
 }
