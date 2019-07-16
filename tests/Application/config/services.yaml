@@ -36,6 +36,14 @@ services:
             - '@sylius.context.locale'
             - Motorbike_Type
 
+    bitbag_sylius_elasticsearch_plugin.facet.attribute.color:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
+        arguments:
+            - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
+            - '@sylius.repository.product_attribute'
+            - '@sylius.context.locale'
+            - Color
+
     bitbag_sylius_elasticsearch_plugin.facet.registry:
         class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
         calls:
@@ -55,3 +63,7 @@ services:
               arguments:
                   - attribute_motorbike_type
                   - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type'
+            - method: addFacet
+              arguments:
+                  - attribute_color
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.color'

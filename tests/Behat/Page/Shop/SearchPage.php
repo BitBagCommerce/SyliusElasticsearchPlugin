@@ -42,7 +42,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             'search_facets_taxon' => '#bitbag_elasticsearch_search_facets_taxon',
             'search_facets_filter_button' => '#filters-vertical form button[type="submit"]',
             'search_facets_attribute_car_type' => '#bitbag_elasticsearch_search_facets_attribute_car_type',
-            'search_facets_attribute_motorbike_type' => '#bitbag_elasticsearch_search_facets_attribute_motorbike_type'
+            'search_facets_attribute_motorbike_type' => '#bitbag_elasticsearch_search_facets_attribute_motorbike_type',
+            'search_facets_attribute_color' => '#bitbag_elasticsearch_search_facets_attribute_color',
         ];
     }
 

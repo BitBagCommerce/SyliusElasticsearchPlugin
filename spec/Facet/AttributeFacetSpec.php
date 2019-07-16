@@ -61,4 +61,13 @@ class AttributeFacetSpec extends ObjectBehavior
 
         $this->getBucketLabel(['key' => 'value_id', 'doc_count' => 3])->shouldReturn('Value Label (3)');
     }
+
+    function it_returns_human_readable_bucket_label_for_text_attribute(RepositoryInterface $attributeRepository)
+    {
+        $attribute = new Attribute();
+        $attribute->setType('text');
+        $attributeRepository->findOneBy(['code' => 'attribute_code'])->willReturn($attribute);
+
+        $this->getBucketLabel(['key' => 'green_&_white', 'doc_count' => 3])->shouldReturn('Green & White (3)');
+    }
 }

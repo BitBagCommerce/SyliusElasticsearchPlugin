@@ -64,6 +64,8 @@ class AttributeFacet implements FacetInterface
             if (isset($configuration['choices'][$value][$this->localeContext->getLocaleCode()])) {
                 $label = $configuration['choices'][$value][$this->localeContext->getLocaleCode()];
             }
+        } else {
+            $label = ucwords(str_replace('_', ' ', $label));
         }
         return sprintf('%s (%s)', $label, $bucket['doc_count']);
     }

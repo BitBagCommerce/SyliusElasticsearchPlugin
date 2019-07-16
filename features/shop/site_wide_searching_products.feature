@@ -13,25 +13,31 @@ Feature: Site-wide products search
     And there is a product named "BMW Z4" in the store
     And this product's price is "$42670"
     And this product has select attribute "Car Type" with value "Cabrio"
+    And this product has text attribute "Color" with value "Red"
     And this product belongs to "Cars"
     And there is a product named "Volvo XC90" in the store
     And this product's price is "$64505.80"
     And this product has select attribute "Car Type" with value "SUV"
+    And this product has text attribute "Color" with value "Black"
     And this product belongs to "Cars"
     And there is a product named "BMW 5 Series" in the store
     And this product's price is "$52070"
     And this product has select attribute "Car Type" with value "Cabrio"
+    And this product has text attribute "Color" with value "Red"
     And this product belongs to "Cars"
     And there is a product named "Lamborghini Aventador" in the store
     And this product's price is "$450000"
+    And this product has text attribute "Color" with value "Yellow"
     And this product belongs to "Cars"
     And there is a product named "BMW GS" in the store
     And this product's price is "$18070"
     And this product has select attribute "Motorbike Type" with value "Enduro"
+    And this product has text attribute "Color" with value "Grey"
     And this product belongs to "Motorbikes"
     And there is a product named "Ducati Monster" in the store
     And this product's price is "$14995"
     And this product has select attribute "Motorbike Type" with value "Naked"
+    And this product has text attribute "Color" with value "Black"
     And this product's short description is:
       """
       This is the Ducati Monster which is much better than any other BMW motorbike.
@@ -39,6 +45,7 @@ Feature: Site-wide products search
     And this product belongs to "Motorbikes"
     And there is a product named "Honda Africa Twin" in the store
     And this product has select attribute "Motorbike Type" with value "Enduro"
+    And this product has text attribute "Color" with value "Green & White"
     And this product's price is "$13490"
     And this product's description is:
       """
@@ -102,7 +109,7 @@ Feature: Site-wide products search
     Then I should see 3 products in search results
 
   @ui
-  Scenario: Searching products and viewing car type and motorbike type attributes aggregations
+  Scenario: Searching products and viewing car type and motorbike type select attributes aggregations
     When I browse the search page
     And I search the products by "BMW or Volvo" phrase in the site-wide search box
     Then I should see the following options in the "Car Type" attribute filter:
@@ -114,6 +121,19 @@ Feature: Site-wide products search
       """
       Enduro (2)
       Naked (1)
+      """
+    And I should see 6 products in search results
+
+  @ui
+  Scenario: Searching products and viewing color text attribute aggregations
+    When I browse the search page
+    And I search the products by "BMW or Volvo" phrase in the site-wide search box
+    Then I should see the following options in the "Color" attribute filter:
+      """
+      Black (2)
+      Red (2)
+      Green & White (1)
+      Grey (1)
       """
     And I should see 6 products in search results
 
