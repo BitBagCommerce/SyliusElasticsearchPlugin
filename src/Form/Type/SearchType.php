@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SearchType extends AbstractType
+final class SearchType extends AbstractType
 {
     /**
      * @var PaginatedFinderInterface

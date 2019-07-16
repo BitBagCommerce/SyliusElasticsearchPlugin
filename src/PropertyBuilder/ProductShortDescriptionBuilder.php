@@ -10,7 +10,7 @@ use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTranslationInterface;
 
-class ProductShortDescriptionBuilder extends AbstractBuilder
+final class ProductShortDescriptionBuilder extends AbstractBuilder
 {
     /**
      * @var ConcatedNameResolverInterface

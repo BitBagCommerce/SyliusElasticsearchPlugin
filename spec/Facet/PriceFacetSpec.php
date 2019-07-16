@@ -13,7 +13,7 @@ use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
 use Sylius\Component\Core\Context\ShopperContextInterface;
 use Sylius\Component\Core\Model\Channel;
 
-class PriceFacetSpec extends ObjectBehavior
+final class PriceFacetSpec extends ObjectBehavior
 {
     private $interval = 1000000;
 

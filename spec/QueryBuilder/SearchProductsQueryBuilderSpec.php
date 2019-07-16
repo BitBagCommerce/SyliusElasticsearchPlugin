@@ -11,7 +11,7 @@ use Elastica\Query\MultiMatch;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
-class SearchProductsQueryBuilderSpec extends ObjectBehavior
+final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 {
     function let(
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,

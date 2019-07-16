@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SearchFacetsType extends AbstractType
+final class SearchFacetsType extends AbstractType
 {
     /**
      * @var RegistryInterface

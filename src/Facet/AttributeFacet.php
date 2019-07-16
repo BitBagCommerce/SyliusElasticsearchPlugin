@@ -12,7 +12,7 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-class AttributeFacet implements FacetInterface
+final class AttributeFacet implements FacetInterface
 {
     /**
      * @var ConcatedNameResolverInterface

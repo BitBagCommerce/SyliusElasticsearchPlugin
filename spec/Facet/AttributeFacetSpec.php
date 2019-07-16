@@ -14,7 +14,7 @@ use Sylius\Component\Attribute\Model\Attribute;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-class AttributeFacetSpec extends ObjectBehavior
+final class AttributeFacetSpec extends ObjectBehavior
 {
     function let(
         ConcatedNameResolverInterface $attributeNameResolver,

@@ -10,7 +10,7 @@ use Prophecy\Argument;
 use Sylius\Component\Core\Model\Taxon;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
-class TaxonFacetSpec extends ObjectBehavior
+final class TaxonFacetSpec extends ObjectBehavior
 {
     private $taxonsProperty = 'product_taxons';
 
