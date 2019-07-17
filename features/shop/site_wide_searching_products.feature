@@ -150,6 +150,3 @@ Feature: Site-wide products search
       Gasoline (1)
       """
     And I should see 6 products in search results
-
-# Test with multi language values for taxons and attributes
-# Test pagination

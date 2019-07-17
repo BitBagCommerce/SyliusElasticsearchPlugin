@@ -47,6 +47,7 @@ final class SearchType extends AbstractType
     {
         $builder
             ->add('box', SearchBoxType::class, ['label' => false])
+            ->setMethod('GET')
         ;
 
         $formModifier = function (FormInterface $form, AdapterInterface $adapter) {

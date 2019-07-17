@@ -18,6 +18,7 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.block_event_listener.search_form" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
             <tag name="controller.service_arguments" />
         </service>
     </services>
