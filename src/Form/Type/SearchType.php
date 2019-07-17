@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
@@ -20,17 +21,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SearchType extends AbstractType
 {
-    /**
-     * @var PaginatedFinderInterface
-     */
+    /** @var PaginatedFinderInterface */
     private $finder;
-    /**
-     * @var RegistryInterface
-     */
+
+    /** @var RegistryInterface */
     private $facetRegistry;
-    /**
-     * @var QueryBuilderInterface
-     */
+
+    /** @var QueryBuilderInterface */
     private $searchProductsQueryBuilder;
 
     public function __construct(
@@ -43,7 +40,7 @@ final class SearchType extends AbstractType
         $this->searchProductsQueryBuilder = $searchProductsQueryBuilder;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('box', SearchBoxType::class, ['label' => false])
@@ -87,7 +84,7 @@ final class SearchType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Search::class,
@@ -95,7 +92,7 @@ final class SearchType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'bitbag_elasticsearch_search';
     }

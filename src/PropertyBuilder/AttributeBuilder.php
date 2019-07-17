@@ -26,9 +26,8 @@ final class AttributeBuilder extends AbstractBuilder
 
     /** @var StringFormatterInterface */
     private $stringFormatter;
-    /**
-     * @var LocaleContextInterface
-     */
+
+    /** @var LocaleContextInterface */
     private $localeContext;
 
     public function __construct(

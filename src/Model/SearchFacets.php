@@ -1,13 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Model;
 
 class SearchFacets implements \Iterator
 {
-    /**
-     * @var array[]
-     */
+    /** @var array[] */
     private $selectedBuckets = [];
 
     public function __get(string $facetId)

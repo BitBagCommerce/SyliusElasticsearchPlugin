@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
@@ -13,17 +14,13 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class AttributeFacet implements FacetInterface
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $attributeNameResolver;
-    /**
-     * @var RepositoryInterface
-     */
+
+    /** @var RepositoryInterface */
     private $productAttributeRepository;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $attributeCode;
 
     public function __construct(
@@ -59,17 +56,11 @@ final class AttributeFacet implements FacetInterface
         return $this->getProductAttribute()->getName();
     }
 
-    /**
-     * @return string
-     */
     private function getFieldName(): string
     {
         return $this->attributeNameResolver->resolvePropertyName($this->attributeCode) . '.keyword';
     }
 
-    /**
-     * @return AttributeInterface
-     */
     private function getProductAttribute(): AttributeInterface
     {
         $attribute = $this->productAttributeRepository->findOneBy(['code' => $this->attributeCode]);

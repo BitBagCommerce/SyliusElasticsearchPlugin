@@ -4,20 +4,6 @@ parameters:
     locale: en_US
     bitbag_es_shop_price_facet_interval: 1000000
 
-#    <service id="bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type" class="BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet">
-#    <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
-#    <argument type="service" id="sylius.repository.product_attribute" />
-#    <argument type="service" id="sylius.context.locale" />
-#    <argument type="string">Car_Type</argument>
-#    </service>
-#
-#    <service id="bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type" class="BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet">
-#    <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
-#    <argument type="service" id="sylius.repository.product_attribute" />
-#    <argument type="service" id="sylius.context.locale" />
-#    <argument type="string">Motorbike_Type</argument>
-#    </service>
-
 services:
 
     bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type:

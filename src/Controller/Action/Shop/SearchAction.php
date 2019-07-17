@@ -17,29 +17,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class SearchAction
 {
-    /**
-     * @var EngineInterface
-     */
+    /** @var EngineInterface */
     private $templatingEngine;
-    /**
-     * @var PaginatedFinderInterface
-     */
+
+    /** @var PaginatedFinderInterface */
     private $finder;
-    /**
-     * @var SearchFormEventListener
-     */
+
+    /** @var SearchFormEventListener */
     private $searchFormEventListener;
-    /**
-     * @var RegistryInterface
-     */
+
+    /** @var RegistryInterface */
     private $facetRegistry;
-    /**
-     * @var QueryBuilderInterface
-     */
+
+    /** @var QueryBuilderInterface */
     private $searchProductsQueryBuilder;
-    /**
-     * @var PaginationDataHandlerInterface
-     */
+
+    /** @var PaginationDataHandlerInterface */
     private $paginationDataHandler;
 
     public function __construct(
@@ -91,6 +84,7 @@ final class SearchAction
             $results->setCurrentPage($paginationData[PaginationDataHandlerInterface::PAGE_INDEX]);
             $results->setMaxPerPage($paginationData[PaginationDataHandlerInterface::LIMIT_INDEX]);
         }
+
         return $this->templatingEngine->renderResponse(
             $template,
             ['results' => $results, 'searchForm' => $form->createView()]

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
@@ -13,21 +14,16 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
 {
     public const QUERY_KEY = 'query';
 
-    /**
-     * @var SearchPropertyNameResolverRegistryInterface
-     */
+    /** @var SearchPropertyNameResolverRegistryInterface */
     private $searchProperyNameResolverRegistry;
-    /**
-     * @var LocaleContextInterface
-     */
+
+    /** @var LocaleContextInterface */
     private $localeContext;
-    /**
-     * @var QueryBuilderInterface
-     */
+
+    /** @var QueryBuilderInterface */
     private $isEnabledQueryBuilder;
-    /**
-     * @var QueryBuilderInterface
-     */
+
+    /** @var QueryBuilderInterface */
     private $hasChannelQueryBuilder;
 
     public function __construct(

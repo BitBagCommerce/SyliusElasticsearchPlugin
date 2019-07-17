@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
@@ -16,21 +17,16 @@ final class PriceFacet implements FacetInterface
 {
     public const FACET_ID = 'price';
 
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $channelPricingNameResolver;
-    /**
-     * @var MoneyFormatterInterface
-     */
+
+    /** @var MoneyFormatterInterface */
     private $moneyFormatter;
-    /**
-     * @var ShopperContextInterface
-     */
+
+    /** @var ShopperContextInterface */
     private $shopperContext;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $interval;
 
     public function __construct(

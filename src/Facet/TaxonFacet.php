@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
@@ -14,13 +15,10 @@ final class TaxonFacet implements FacetInterface
 {
     public const FACET_ID = 'taxon';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $taxonsPropertyName;
-    /**
-     * @var TaxonRepositoryInterface
-     */
+
+    /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
     public function __construct(TaxonRepositoryInterface $taxonRepository, string $taxonsPropertyName)
@@ -52,9 +50,6 @@ final class TaxonFacet implements FacetInterface
         return sprintf('%s (%s)', $label, $bucket['doc_count']);
     }
 
-    /**
-     * @return string
-     */
     private function getField(): string
     {
         return $this->taxonsPropertyName . '.keyword';

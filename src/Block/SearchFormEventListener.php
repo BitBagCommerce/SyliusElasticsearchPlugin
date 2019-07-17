@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Block;
 
-use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchBoxType;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use Sonata\BlockBundle\Event\BlockEvent;
@@ -17,17 +16,14 @@ final class SearchFormEventListener
 {
     /** @var string */
     private $template;
-    /**
-     * @var FormFactoryInterface
-     */
+
+    /** @var FormFactoryInterface */
     private $formFactory;
-    /**
-     * @var RouterInterface
-     */
+
+    /** @var RouterInterface */
     private $router;
-    /**
-     * @var FormInterface
-     */
+
+    /** @var FormInterface */
     private $form;
 
     public function __construct(string $template, FormFactoryInterface $formFactory, RouterInterface $router)
@@ -55,10 +51,6 @@ final class SearchFormEventListener
         $event->addBlock($block);
     }
 
-    /**
-     * @param Search|null $search
-     * @return FormInterface
-     */
     public function getForm(Search $search = null): FormInterface
     {
         if (!$this->form) {

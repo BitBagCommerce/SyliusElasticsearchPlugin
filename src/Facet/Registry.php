@@ -1,13 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
 
 final class Registry implements RegistryInterface
 {
-    /**
-     * @var FacetInterface[]
-     */
+    /** @var FacetInterface[] */
     private $facets = [];
 
     public function addFacet(string $facetId, FacetInterface $facet): void
@@ -23,10 +22,6 @@ final class Registry implements RegistryInterface
         return $this->facets;
     }
 
-    /**
-     * @param string $facetId
-     * @return FacetInterface
-     */
     public function getFacetById(string $facetId): FacetInterface
     {
         if (!array_key_exists($facetId, $this->facets)) {

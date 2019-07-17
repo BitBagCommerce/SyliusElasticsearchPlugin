@@ -14,17 +14,13 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionFacet implements FacetInterface
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $optionNameResolver;
-    /**
-     * @var RepositoryInterface
-     */
+
+    /** @var RepositoryInterface */
     private $productOptionRepository;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $productOptionCode;
 
     public function __construct(

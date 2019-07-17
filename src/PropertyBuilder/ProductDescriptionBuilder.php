@@ -12,9 +12,7 @@ use Sylius\Component\Core\Model\ProductTranslationInterface;
 
 final class ProductDescriptionBuilder extends AbstractBuilder
 {
-    /**
-     * @var ConcatedNameResolverInterface
-     */
+    /** @var ConcatedNameResolverInterface */
     private $productDescriptionNameResolver;
 
     public function __construct(ConcatedNameResolverInterface $productDescriptionNameResolver)
