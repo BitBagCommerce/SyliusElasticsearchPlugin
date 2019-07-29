@@ -1,0 +1,13 @@
+bitbag_sylius_elasticsearch_plugin:
+    ui:
+        min_price: أدنى سعر
+        max_price: أعلى سعر
+        filter_results: فلترة النتائج
+        filter: فلترة
+        sort: ترتيب حسب
+        bestsellers: الأفضل مبيعا
+        newest: الأحدث
+        oldest: الأقدم
+        most_expensive: الأعلى سعرا
+        cheapest: الأرخص
+        per_page: على الصفحة
