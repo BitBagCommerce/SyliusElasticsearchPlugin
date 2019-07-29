@@ -1,0 +1,13 @@
+bitbag_sylius_elasticsearch_plugin:
+    ui:
+        min_price: Cena od
+        max_price: Cena do
+        filter_results: Filtrace
+        filter: Filtrovat
+        sort: Řazení
+        bestsellers: Nejprodávanější
+        newest: Nejnovější
+        oldest: Nejstarší
+        most_expensive: Nejdražší
+        cheapest: Nejlevnější
+        per_page: Na stránku
