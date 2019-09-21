@@ -7,7 +7,7 @@ use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
-final class ProductMainTaxonPositionPropertyBuilder extends AbstractBuilder
+final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
 {
     /** @var ConcatedNameResolverInterface */
     private $taxonPositionNameResolver;
@@ -21,16 +21,12 @@ final class ProductMainTaxonPositionPropertyBuilder extends AbstractBuilder
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
-                $mainTaxon = $product->getMainTaxon();
-
-                if (null === $mainTaxon) {
-                    return;
+                foreach ($product->getTaxons() as $taxon) {
+                    $document->set(
+                        $this->taxonPositionNameResolver->resolvePropertyName($taxon->getCode()),
+                        $taxon->getPosition()
+                    );
                 }
-
-                $document->set(
-                    $this->taxonPositionNameResolver->resolvePropertyName($mainTaxon->getCode()),
-                    $mainTaxon->getPosition()
-                );
             }
         );
     }

@@ -68,7 +68,7 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.main_taxon_position" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductMainTaxonPositionPropertyBuilder">
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.main_taxon_position" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonPositionPropertyBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.taxon_position" />
             <tag name="kernel.event_subscriber" />
         </service>

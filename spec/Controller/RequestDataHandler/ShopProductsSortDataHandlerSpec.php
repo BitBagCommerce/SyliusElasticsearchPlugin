@@ -57,11 +57,11 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
     {
         $taxonContext->getTaxon()->willReturn($taxon);
         $taxon->getCode()->willReturn('t_shirt');
-        $taxonPositionNameResolver->resolvePropertyName('t_shirt')->willReturn('t_shirt_position');
+        $taxonPositionNameResolver->resolvePropertyName('t_shirt')->willReturn('taxon_position_t_shirts');
 
         $this->retrieveData([])->shouldBeEqualTo([
             'sort' => [
-                't_shirt_position' => [
+                'taxon_position_t_shirts' => [
                     'order' => SortDataHandlerInterface::SORT_DESC_INDEX,
                 ],
             ],
