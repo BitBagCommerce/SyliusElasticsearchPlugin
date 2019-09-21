@@ -21,5 +21,9 @@
         <service id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.price" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolver">
             <argument>%bitbag_es_shop_product_price_property_prefix%</argument>
         </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.taxon_position" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver">
+            <argument>%bitbag_es_shop_taxon_position_property_prefix%</argument>
+        </service>
     </services>
 </container>

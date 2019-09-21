@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
+use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 
@@ -22,6 +23,12 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
 
     /** @var ChannelContextInterface */
     private $channelContext;
+
+    /** @var TaxonContextInterface */
+    private $taxonContext;
+
+    /** @var ConcatedNameResolverInterface */
+    private $taxonPositionNameResolver;
 
     /** @var string */
     private $soldUnitsProperty;
@@ -35,12 +42,16 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
     public function __construct(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
+        TaxonContextInterface $taxonContext,
+        ConcatedNameResolverInterface $taxonPositionNameResolver,
         string $soldUnitsProperty,
         string $createdAtProperty,
         string $pricePropertyPrefix
     ) {
         $this->channelPricingNameResolver = $channelPricingNameResolver;
         $this->channelContext = $channelContext;
+        $this->taxonContext = $taxonContext;
+        $this->taxonPositionNameResolver = $taxonPositionNameResolver;
         $this->soldUnitsProperty = $soldUnitsProperty;
         $this->createdAtProperty = $createdAtProperty;
         $this->pricePropertyPrefix = $pricePropertyPrefix;
@@ -49,11 +60,12 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
     public function retrieveData(array $requestData): array
     {
         $data = [];
+        $positionSortingProperty = $this->getPositionSortingProperty();
 
-        $orderBy = isset($requestData[self::ORDER_BY_INDEX]) ? $requestData[self::ORDER_BY_INDEX] : $this->soldUnitsProperty;
+        $orderBy = isset($requestData[self::ORDER_BY_INDEX]) ? $requestData[self::ORDER_BY_INDEX] : $positionSortingProperty;
         $sort = isset($requestData[self::SORT_INDEX]) ? $requestData[self::SORT_INDEX] : self::SORT_DESC_INDEX;
 
-        $availableSorters = [$this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
+        $availableSorters = [$positionSortingProperty, $this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
         $availableSorting = [self::SORT_ASC_INDEX, self::SORT_DESC_INDEX];
 
         if (!in_array($orderBy, $availableSorters) || !in_array($sort, $availableSorting)) {
@@ -68,5 +80,12 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $data['sort'] = [$orderBy => ['order' => strtolower($sort)]];
 
         return $data;
+    }
+
+    private function getPositionSortingProperty(): string
+    {
+        $taxonCode = $this->taxonContext->getTaxon()->getCode();
+
+        return $this->taxonPositionNameResolver->resolvePropertyName($taxonCode);
     }
 }
