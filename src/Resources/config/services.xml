@@ -26,5 +26,9 @@
         <service id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository">
             <argument type="service" id="sylius.repository.product_attribute_value" />
         </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.refresher.resource" class="BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresher">
+            <argument type="service" id="service_container" />
+        </service>
     </services>
 </container>
