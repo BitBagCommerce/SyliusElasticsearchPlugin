@@ -77,7 +77,7 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
             $orderBy = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         }
 
-        $data['sort'] = [$orderBy => ['order' => strtolower($sort)]];
+        $data['sort'] = [$orderBy => ['order' => strtolower($sort), 'unmapped_type' => 'keyword']];
 
         return $data;
     }
