@@ -21,9 +21,9 @@ final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
-                foreach ($product->getTaxons() as $taxon) {
+                foreach ($product->getProductTaxons() as $taxon) {
                     $document->set(
-                        $this->taxonPositionNameResolver->resolvePropertyName($taxon->getCode()),
+                        $this->taxonPositionNameResolver->resolvePropertyName($taxon->getTaxon()->getCode()),
                         $taxon->getPosition()
                     );
                 }
