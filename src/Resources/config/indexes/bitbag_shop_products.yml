@@ -10,6 +10,7 @@ parameters:
     bitbag_es_shop_attribute_property_prefix: attribute
     bitbag_es_shop_description_property_prefix: description
     bitbag_es_shop_short_description_property_prefix: short_description
+    bitbag_es_shop_taxon_position_property_prefix: taxon_position
 
 fos_elastica:
     indexes:

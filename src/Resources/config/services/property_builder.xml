@@ -69,6 +69,11 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.main_taxon_position" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonPositionPropertyBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.taxon_position" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.mapper.product_taxons" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapper" />
 
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.product_description" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductDescriptionBuilder">

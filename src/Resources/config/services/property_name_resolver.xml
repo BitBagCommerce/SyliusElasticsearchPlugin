@@ -41,6 +41,11 @@
                 <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.description" />
             </call>
         </service>
+      
         <service id="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface" alias="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" />
+
+        <service id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.taxon_position" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver">
+            <argument>%bitbag_es_shop_taxon_position_property_prefix%</argument>
+        </service>
     </services>
 </container>

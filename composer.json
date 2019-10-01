@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "sylius/sylius": "^1.4.0",
+        "sylius/sylius": "^1.4",
         "friendsofsymfony/elastica-bundle": "^5.0"
     },
     "require-dev": {
