@@ -38,7 +38,7 @@ final class ResourceIndexListener
         Assert::isInstanceOf($resource, ResourceInterface::class);
 
         foreach ($this->persistersMap as $objectPersisterId => $modelClass) {
-            if ($modelClass === get_class($resource)) {
+            if ($resource instanceof $modelClass) {
                 $this->resourceRefresher->refresh($resource, $objectPersisterId);
             }
         }
