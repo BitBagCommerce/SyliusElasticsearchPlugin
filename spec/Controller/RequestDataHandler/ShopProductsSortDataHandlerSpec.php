@@ -62,7 +62,8 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         $this->retrieveData([])->shouldBeEqualTo([
             'sort' => [
                 'taxon_position_t_shirts' => [
-                    'order' => SortDataHandlerInterface::SORT_DESC_INDEX,
+                    'order' => SortDataHandlerInterface::SORT_ASC_INDEX,
+                    'unmapped_type' => 'keyword',
                 ],
             ],
         ]);
