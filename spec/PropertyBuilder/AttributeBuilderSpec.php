@@ -19,16 +19,19 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class AttributeBuilderSpec extends ObjectBehavior
 {
     function let(
         ConcatedNameResolverInterface $attributeNameResolver,
-        StringFormatterInterface $stringFormatter
+        StringFormatterInterface $stringFormatter,
+        LocaleContextInterface $localeContext
     ): void {
         $this->beConstructedWith(
             $attributeNameResolver,
-            $stringFormatter
+            $stringFormatter,
+            $localeContext
         );
     }
 

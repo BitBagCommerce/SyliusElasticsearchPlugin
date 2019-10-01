@@ -22,6 +22,28 @@
             <argument>%bitbag_es_shop_product_price_property_prefix%</argument>
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.description" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver">
+            <argument>%bitbag_es_shop_description_property_prefix%</argument>
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.short_description" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver">
+            <argument>%bitbag_es_shop_short_description_property_prefix%</argument>
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistry">
+            <call method="addPropertyNameResolver">
+                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.name" />
+            </call>
+            <call method="addPropertyNameResolver">
+                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.short_description" />
+            </call>
+            <call method="addPropertyNameResolver">
+                <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.description" />
+            </call>
+        </service>
+      
+        <service id="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface" alias="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" />
+
         <service id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.taxon_position" class="BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver">
             <argument>%bitbag_es_shop_taxon_position_property_prefix%</argument>
         </service>

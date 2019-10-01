@@ -11,3 +11,16 @@ bitbag_sylius_elasticsearch_plugin:
         most_expensive: Duurste
         cheapest: Goedkoopste
         per_page: Per pagina
+        search_header: Zoeken
+
+        search_box:
+            query:
+                placeholder: Zoeken naar producten...
+            search_button:
+                label: Zoeken
+
+        facet:
+            price:
+                label: Prijs
+            taxon:
+                label: Categorie

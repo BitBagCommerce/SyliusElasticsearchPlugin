@@ -1,0 +1,57 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% form_theme searchForm '@SyliusUi/Form/theme.html.twig' %}
+
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+{% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include 'SyliusUiBundle::_stylesheets.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/css/bitbag-autocomplete-search.css'} %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="ui monster section dividing header">
+        {{ 'bitbag_sylius_elasticsearch_plugin.ui.search_header'|trans }}
+    </h1>
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            <div id="filters-vertical" class="ui fluid vertical menu">
+                <div class="header item">
+                    {{ 'bitbag_sylius_elasticsearch_plugin.ui.filter_results'|trans }}
+                </div>
+                {{ form_start(searchForm, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+                    <div style="display: none;">
+                        {{ form_row(searchForm.box) }}
+                    </div>
+                    <div class="item">
+                        {{ form_rest(searchForm) }}
+                    </div>
+                    <div class="item">
+                        <button type="submit" class="ui primary icon labeled button" style="width: 100%;">
+                            <i class="search icon"></i>
+                            {{ 'bitbag_sylius_elasticsearch_plugin.ui.filter'|trans }}
+                        </button>
+                    </div>
+                {{ form_end(searchForm) }}
+            </div>
+        </div>
+        <div class="twelve wide column">
+            {% if results|length > 0 %}
+                <div class="ui three column stackable grid" id="search_results">
+                    {% for product in results %}
+                        <div class="column result">
+                            {% include '@SyliusShop/Product/_box.html.twig' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ui hidden divider"></div>
+
+                {{ pagination.simple(results) }}
+            {% else %}
+                {{ messages.info('sylius.ui.no_results_to_display') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

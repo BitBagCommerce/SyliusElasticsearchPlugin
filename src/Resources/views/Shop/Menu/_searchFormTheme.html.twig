@@ -1,0 +1,8 @@
+{% extends '@SyliusShop/Form/theme.html.twig' %}
+
+{% block _bitbag_elasticsearch_search_box_query_widget %}
+    <div class="ui action input big">
+        {{- form_widget(form) -}}
+        <button type="submit" id="bitbag_elasticsearch_search_box_search" class="ui button">{{ 'bitbag_sylius_elasticsearch_plugin.ui.search_box.search_button.label'|trans }}</button>
+    </div>
+{% endblock %}
