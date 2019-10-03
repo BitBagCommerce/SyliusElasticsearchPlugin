@@ -179,6 +179,19 @@ fos_elastica:
 
 Indexes with `bitbag_shop_product`, `bitbag_attribute_taxons` and `bitbag_option_taxons` keys are available so far.
 
+### Site-wide search
+
+This plugin offers a site-wide search feature as well. You have a search box field where you query all products indexed on ElasticSearch. When you enter a query in the search box the results will appear in the search results page.
+
+You can also add search facets (a.k.a. filters) to your search results page. To do so you have to add facets to the `bitbag_sylius_elasticsearch_plugin.facet.registry` service (see an example of this service definition [here](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/tests/Application/config/services.yaml)). A facet is a service which implements the `BitBag\SyliusElasticsearchPlugin\Facet\FacetInterface`. You can implement your own facets from scratch or you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) one of the basic facet implementation included in this plugin, which are:
+
+* [`TaxonFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/TaxonFacet.php) which allows to filter your search results by taxons using the ElasticSearch [`Terms`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html) aggregation.
+* [`AttributeFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/AttributeFacet.php) which allows to filter your search results by product attributes values using the ElasticSearch [`Terms`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html) aggregation.
+* [`OptionFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/OptionFacet.php) which is the same as `AttributeFacet` but for product options.
+* [`PriceFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/PriceFacet.php) which allows to filter search results by price range the ElasticSearch [`Histogram`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html) aggregation.
+
+You can see an example of the definition of all of these facets [here](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/tests/Application/config/services.yaml).
+
 ## Customization
 
 ### Available services you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) and forms you can [extend](http://symfony.com/doc/current/form/create_form_type_extension.html)
