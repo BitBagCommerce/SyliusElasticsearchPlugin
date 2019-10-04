@@ -46,8 +46,9 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         if (isset($configuration['choices']) && is_array($configuration['choices'])) {
             $choices = [];
             foreach ($configuration['choices'] as $singleValue => $val) {
-                $choice = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
                 $label = $configuration['choices'][$singleValue][$this->localeContext->getLocaleCode()];
+                $singleValue = SelectAttributeType::TYPE === $productAttribute->getType() ? $label : $singleValue;
+                $choice = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
                 $choices[$label] = $choice;
             }
 
