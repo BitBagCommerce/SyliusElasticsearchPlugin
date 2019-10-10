@@ -17,4 +17,6 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface ResourceRefresherInterface
 {
     public function refresh(ResourceInterface $resource, string $objectPersisterId): void;
+
+    public function remove(ResourceInterface $resource, string $objectPersisterId): void;
 }
