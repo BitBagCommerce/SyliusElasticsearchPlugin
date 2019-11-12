@@ -53,7 +53,7 @@ final class ProductOptionsFinderSpec extends ObjectBehavior
 
         $productOptionsByTaxonQueryBuilder->buildQuery(['taxons' => 'book'])->willReturn($query);
 
-        $optionsFinder->find($query)->willReturn([]);
+        $optionsFinder->find($query, PHP_INT_MAX)->willReturn([]);
 
         $this->findByTaxon($taxon)->shouldBeEqualTo([]);
     }
