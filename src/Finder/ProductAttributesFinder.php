@@ -44,6 +44,6 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
 
         $query = $this->attributesByTaxonQueryBuilder->buildQuery($data);
 
-        return $this->attributesFinder->find($query);
+        return $this->attributesFinder->find($query, PHP_INT_MAX);
     }
 }
