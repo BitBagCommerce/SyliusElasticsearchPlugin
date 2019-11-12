@@ -44,6 +44,6 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
 
         $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);
 
-        return $this->optionsFinder->find($query);
+        return $this->optionsFinder->find($query, PHP_INT_MAX);
     }
 }
