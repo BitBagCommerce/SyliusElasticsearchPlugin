@@ -49,8 +49,12 @@ final class ChannelPricingTransformer implements TransformerInterface
             throw new \RuntimeException('No channel currency configured');
         }
 
-        /** @var ProductVariantInterface $productVariant */
+        /** @var ProductVariantInterface|null $productVariant */
         $productVariant = $this->productVariantResolver->getVariant($product);
+
+        if (null === $productVariant) {
+            return null;
+        }
 
         $productVariantPricing = $productVariant->getChannelPricingForChannel($channel);
 
