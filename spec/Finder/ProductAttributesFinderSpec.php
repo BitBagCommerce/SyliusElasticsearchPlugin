@@ -53,7 +53,7 @@ final class ProductAttributesFinderSpec extends ObjectBehavior
 
         $attributesByTaxonQueryBuilder->buildQuery(['taxons' => 'book'])->willReturn($query);
 
-        $attributesFinder->find($query, 9999)->willReturn([]);
+        $attributesFinder->find($query, 20)->willReturn([]);
 
         $this->findByTaxon($taxon)->shouldBeEqualTo([]);
     }
