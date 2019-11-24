@@ -59,4 +59,22 @@ final class ChannelPricingTransformerSpec extends ObjectBehavior
 
         $this->transform($product);
     }
+
+    function it_returns_null_when_product_doeas_not_have_any_variant(
+        ChannelContextInterface $channelContext,
+        ProductVariantResolverInterface $productVariantResolver,
+        MoneyFormatterInterface $moneyFormatter,
+        CurrencyInterface $currency,
+        ChannelInterface $channel,
+        ProductVariantInterface $productVariant,
+        ProductInterface $product,
+        ChannelPricingInterface $channelPricing
+    ): void {
+        $currency->getCode()->willReturn('USD');
+        $channel->getBaseCurrency()->willReturn($currency);
+        $channelContext->getChannel()->willReturn($channel);
+        $productVariantResolver->getVariant($product)->willReturn(null);
+
+        $this->transform($product)->shouldBeNull();
+    }
 }
