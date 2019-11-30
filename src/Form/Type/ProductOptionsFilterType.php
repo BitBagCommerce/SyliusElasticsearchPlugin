@@ -44,6 +44,7 @@ final class ProductOptionsFilterType extends AbstractFilterType
         foreach ($this->productOptionsContext->getOptions() as $productOption) {
             $name = $this->optionNameResolver->resolvePropertyName($productOption->getCode());
             $choices = $this->productOptionsMapper->mapToChoices($productOption);
+            $choices = array_unique($choices);
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productOption->getName(),
