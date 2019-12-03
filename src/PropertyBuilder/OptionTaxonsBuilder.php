@@ -83,10 +83,10 @@ final class OptionTaxonsBuilder extends AbstractBuilder
             $product = $productVariant->getProduct();
 
             if ($documentProductOption === $option && $product->isEnabled()) {
-                $taxons = array_unique(array_merge($taxons, $this->productTaxonsMapper->mapToUniqueCodes($product)));
+                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
             }
         }
 
-        $document->set($this->taxonsProperty, $taxons);
+        $document->set($this->taxonsProperty, array_unique($taxons));
     }
 }
