@@ -53,6 +53,7 @@ final class ProductAttributesFilterType extends AbstractFilterType
 
             $name = $this->attributeNameResolver->resolvePropertyName($productAttribute->getCode());
             $choices = $this->productAttributesMapper->mapToChoices($productAttribute);
+            $choices = array_unique($choices);
 
             $builder->add($name, ChoiceType::class, [
                 'label' => $productAttribute->getName(),

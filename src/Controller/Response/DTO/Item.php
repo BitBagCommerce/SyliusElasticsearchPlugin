@@ -37,7 +37,7 @@ final class Item
         string $name,
         ?string $description,
         string $slug,
-        string $price,
+        ?string $price,
         ?string $image
     ) {
         $this->taxonName = $taxonName;
@@ -68,7 +68,7 @@ final class Item
         return $this->slug;
     }
 
-    public function price(): string
+    public function price(): ?string
     {
         return $this->price;
     }
