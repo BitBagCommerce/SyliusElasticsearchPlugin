@@ -21,16 +21,18 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 
 final class ChannelPricingTransformerSpec extends ObjectBehavior
 {
     function let(
         ChannelContextInterface $channelContext,
+        LocaleContextInterface $localeContext,
         ProductVariantResolverInterface $productVariantResolver,
         MoneyFormatterInterface $moneyFormatter
     ): void {
-        $this->beConstructedWith($channelContext, $productVariantResolver, $moneyFormatter);
+        $this->beConstructedWith($channelContext, $localeContext, $productVariantResolver, $moneyFormatter);
     }
 
     function it_is_a_transformer(): void
@@ -40,6 +42,7 @@ final class ChannelPricingTransformerSpec extends ObjectBehavior
 
     function it_transforms_product_channel_prices_into_formatted_price(
         ChannelContextInterface $channelContext,
+        LocaleContextInterface $localeContext,
         ProductVariantResolverInterface $productVariantResolver,
         MoneyFormatterInterface $moneyFormatter,
         CurrencyInterface $currency,
@@ -51,11 +54,12 @@ final class ChannelPricingTransformerSpec extends ObjectBehavior
         $currency->getCode()->willReturn('USD');
         $channel->getBaseCurrency()->willReturn($currency);
         $channelContext->getChannel()->willReturn($channel);
+        $localeContext->getLocaleCode()->willReturn('en_US');
         $productVariantResolver->getVariant($product)->willReturn($productVariant);
         $channelPricing->getPrice()->willReturn(10);
         $productVariant->getChannelPricingForChannel($channel)->willReturn($channelPricing);
 
-        $moneyFormatter->format(10, 'USD');
+        $moneyFormatter->format(10, 'USD', 'en_US');
 
         $this->transform($product);
     }
