@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Transformer\Product;
 
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -24,6 +25,9 @@ final class ChannelPricingTransformer implements TransformerInterface
     /** @var ChannelContextInterface */
     private $channelContext;
 
+    /** @var LocaleContextInterface */
+    private $localeContext;
+
     /** @var ProductVariantResolverInterface */
     private $productVariantResolver;
 
@@ -32,10 +36,12 @@ final class ChannelPricingTransformer implements TransformerInterface
 
     public function __construct(
         ChannelContextInterface $channelContext,
+        LocaleContextInterface $localeContext,
         ProductVariantResolverInterface $productVariantResolver,
         MoneyFormatterInterface $moneyFormatter
     ) {
         $this->channelContext = $channelContext;
+        $this->localeContext = $localeContext;
         $this->productVariantResolver = $productVariantResolver;
         $this->moneyFormatter = $moneyFormatter;
     }
@@ -62,6 +68,6 @@ final class ChannelPricingTransformer implements TransformerInterface
             return null;
         }
 
-        return $this->moneyFormatter->format($productVariantPricing->getPrice(), $channelBaseCurrency->getCode());
+        return $this->moneyFormatter->format($productVariantPricing->getPrice(), $channelBaseCurrency->getCode(), $this->localeContext->getLocaleCode());
     }
 }
