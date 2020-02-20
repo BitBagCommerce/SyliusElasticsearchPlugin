@@ -51,6 +51,8 @@ The admin can be accessed under [demo.bitbag.shop/admin](https://demo.bitbag.sho
 
 If you use Sylius 1.4, you might get a compatibility issue for Pagerfanta. Please read [this issue](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/issues/23) in order to proceed with a workaround. 
 
+*Note*: This Plugin currently supports ElasticSearch 5.3.x up to 6.8.x.  ElasticSearch ^7.x is not currently supported.
+
 ```bash
 $ composer require bitbag/elasticsearch-plugin
 ```
