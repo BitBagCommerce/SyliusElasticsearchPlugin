@@ -23,6 +23,10 @@
     </p>
 </h1>
 
+## About us
+
+At BitBag we do believe in open source. However, we are able to do it just beacuse of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us working together, feel free to reach us out. You will find out more about our professional services, technologies and contact details at https://bitbag.io/.
+
 ## BitBag SyliusElasticsearchPlugin
 
 Working [Sylius](https://sylius.com/) [Elasticsearch](https://www.elastic.co/products/elasticsearch) integration based on [FOSElasticaBundle](https://github.com/FriendsOfSymfony/FOSElasticaBundle). The main goal of this plugin is to support filtering products by 
@@ -33,14 +37,6 @@ If you are curious about the details of this plugin, read [this Medium blog post
 
 What is more, the plugin has a nice Sylius-oriented architecture that allows mapping resources to the Elastic document easier. It is flexible as well,
 so that you can customize the existing features for your specific business needs.   
-
-## Support
-
-You can order our support on [this page](https://bitbag.io/contact).
-
-We work on amazing eCommerce projects on top of Sylius and other great Symfony based solutions, like eZ Platform, Akeneo or Pimcore.
-Need some help or additional resources for a project? Write us an email on mikolaj.krol@bitbag.pl or visit
-[our website](https://bitbag.shop/)! :rocket:
 
 ## Demo
 
