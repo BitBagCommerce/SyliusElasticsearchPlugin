@@ -63,7 +63,8 @@ before_install:
     - mkdir -p tests/Application/public/media/image
 
 install:
-    - composer install --no-interaction --prefer-dist
+    - composer require ${DEPENDENCY_VERSIONS} --no-update
+    - composer update --no-interaction --prefer-dist
     - (cd tests/Application && yarn install)
 
 before_script:
