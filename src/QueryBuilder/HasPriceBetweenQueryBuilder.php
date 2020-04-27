@@ -54,11 +54,11 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $minPriceName = $this->priceNameResolver->resolveMinPriceName();
-        $maxPriceName = $this->priceNameResolver->resolveMaxPriceName();
+        $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
+        $dataMaxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
 
-        $minPrice = isset($data[$minPriceName]) ? $this->resolveBasePrice($data[$minPriceName]) : 0;
-        $maxPrice = isset($data[$maxPriceName]) ? $this->resolveBasePrice($data[$maxPriceName]) : PHP_INT_MAX;
+        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : 0;
+        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : PHP_INT_MAX;
 
         $channelCode = $this->channelContext->getChannel()->getCode();
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
