@@ -7,9 +7,9 @@ bitbag_sylius_elasticsearch_plugin:
         sort: Trier par
         bestsellers: Meilleures ventes
         newest: Plus récent en premier
-        oldest: Plus ancien en primier
+        oldest: Plus ancien en premier
         most_expensive: Plus cher en premier
-        cheapest: Moins cher en primier
+        cheapest: Moins cher en premier
         per_page: Nombre de résultats
         search_header: Recherche
 
