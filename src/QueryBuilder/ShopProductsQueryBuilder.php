@@ -44,6 +44,9 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     /** @var string */
     private $attributePropertyPrefix;
 
+    /** @var QueryBuilderInterface|null */
+    private $hasTranslationQueryBuilder;
+
     public function __construct(
         QueryBuilderInterface $isEnabledQueryBuilder,
         QueryBuilderInterface $hasChannelQueryBuilder,
@@ -53,7 +56,8 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         QueryBuilderInterface $hasAttributesQueryBuilder,
         QueryBuilderInterface $hasPriceBetweenQueryBuilder,
         string $optionPropertyPrefix,
-        string $attributePropertyPrefix
+        string $attributePropertyPrefix,
+        ?QueryBuilderInterface $hasTranslationQueryBuilder = null
     ) {
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
         $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
@@ -64,6 +68,19 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
         $this->hasPriceBetweenQueryBuilder = $hasPriceBetweenQueryBuilder;
         $this->optionPropertyPrefix = $optionPropertyPrefix;
         $this->attributePropertyPrefix = $attributePropertyPrefix;
+
+        if (null === $hasTranslationQueryBuilder) {
+            @trigger_error(
+                sprintf(
+                    'The "%s" constructor will require the parameter $hasTranslationQueryBuilder of type "%s" starting with bitbag/elasticsearch-plugin 2.0',
+                    self::class,
+                    QueryBuilderInterface::class
+                ),
+                \E_USER_DEPRECATED
+            );
+        }
+
+        $this->hasTranslationQueryBuilder = $hasTranslationQueryBuilder;
     }
 
     public function buildQuery(array $data): AbstractQuery
@@ -72,6 +89,10 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
 
         $boolQuery->addMust($this->isEnabledQueryBuilder->buildQuery($data));
         $boolQuery->addMust($this->hasChannelQueryBuilder->buildQuery($data));
+
+        if (null !== $this->hasTranslationQueryBuilder) {
+            $boolQuery->addFilter($this->hasTranslationQueryBuilder->buildQuery($data));
+        }
 
         $nameQuery = $this->containsNameQueryBuilder->buildQuery($data);
         $this->addMustIfNotNull($nameQuery, $boolQuery);

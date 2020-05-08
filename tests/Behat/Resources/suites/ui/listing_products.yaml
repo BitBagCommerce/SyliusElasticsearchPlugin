@@ -1,0 +1,27 @@
+default:
+    suites:
+        ui_listing_products:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.channel
+                - sylius.behat.context.transform.locale
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.taxon
+
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.locale
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.product_taxon
+                - sylius.behat.context.setup.taxonomy
+
+                - sylius.behat.context.ui.shop.locale
+
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_taxon
+                - bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch
+
+                - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.product
+            filters:
+                tags: "@listing_products && @ui"

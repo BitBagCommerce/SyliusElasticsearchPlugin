@@ -53,6 +53,11 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" />
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_translation" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTranslationQueryBuilder">
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.name" />
+        </service>
+
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.shop_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_channel" />
@@ -63,6 +68,7 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_price_between" />
             <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_attribute_property_prefix%</argument>
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_translation" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\SearchProductsQueryBuilder">

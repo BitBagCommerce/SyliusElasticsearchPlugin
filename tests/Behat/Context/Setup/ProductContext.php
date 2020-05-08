@@ -201,6 +201,40 @@ final class ProductContext implements Context
         $this->objectManager->flush();
     }
 
+    /**
+     * @Given /^(this product)'s description is:$/
+     */
+    public function thisProductSDescriptionIs(ProductInterface $product, PyStringNode $description)
+    {
+        $product->setDescription($description->getRaw());
+        $this->objectManager->flush();
+    }
+
+    /**
+     * @Given /^(this product)'s short description is:$/
+     */
+    public function thisProductSShortDescriptionIs(ProductInterface $product, PyStringNode $shortDescription)
+    {
+        $product->setShortDescription($shortDescription->getRaw());
+        $this->objectManager->flush();
+    }
+
+    /**
+     * @Given /^(this product) is not translated (in the "[^"]+" locale)/
+     */
+    public function productHasNoTranslationInLocales(ProductInterface $product, string ...$locales)
+    {
+        foreach ($locales as $locale) {
+            $translation = $product->getTranslation($locale);
+
+            if ($translation->getLocale() === $locale) {
+                $product->removeTranslation($translation);
+            }
+        }
+
+        $this->objectManager->flush();
+    }
+
     private function createProduct(string $productName, int $price = 100, ChannelInterface $channel = null): ProductInterface
     {
         if (null === $channel && $this->sharedStorage->has('channel')) {
@@ -267,23 +301,5 @@ final class ProductContext implements Context
         $channelPricing->setChannelCode($channel->getCode());
 
         return $channelPricing;
-    }
-
-    /**
-     * @Given /^(this product)'s description is:$/
-     */
-    public function thisProductSDescriptionIs(ProductInterface $product, PyStringNode $description)
-    {
-        $product->setDescription($description->getRaw());
-        $this->objectManager->flush();
-    }
-
-    /**
-     * @Given /^(this product)'s short description is:$/
-     */
-    public function thisProductSShortDescriptionIs(ProductInterface $product, PyStringNode $shortDescription)
-    {
-        $product->setShortDescription($shortDescription->getRaw());
-        $this->objectManager->flush();
     }
 }

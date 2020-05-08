@@ -1,4 +1,5 @@
 imports:
     - suites/api/searching_products.yaml
+    - suites/ui/listing_products.yaml
     - suites/ui/filtering_products.yaml
     - suites/ui/site_wide_searching_products.yaml

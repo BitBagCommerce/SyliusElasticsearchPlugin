@@ -43,6 +43,16 @@ final class ProductContext implements Context
     }
 
     /**
+     * @When /^I go to the shop products page for ("[^"]+" taxon) (in the "[^"]+" locale)$/
+     */
+    public function iGoToTheShopProductsPageForTaxonAndLocale(TaxonInterface $taxon, string $locale): void
+    {
+        $this->productIndexPage->open(['slug' => $taxon->getSlug(), '_locale' => $locale]);
+
+        $this->sharedStorage->set('current_taxon_page', $taxon);
+    }
+
+    /**
      * @When I search the products by :name phase
      */
     public function iSearchTheProductsByPhase(string $phase): void
