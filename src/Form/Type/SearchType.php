@@ -88,7 +88,7 @@ final class SearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Search::class,
-            'csrf_protection' => false
+            'csrf_protection' => false,
         ]);
     }
 

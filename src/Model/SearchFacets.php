@@ -14,6 +14,7 @@ class SearchFacets implements \Iterator
         if (!array_key_exists($facetId, $this->selectedBuckets)) {
             return [];
         }
+
         return $this->selectedBuckets[$facetId];
     }
 
@@ -28,7 +29,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -36,7 +37,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -44,7 +45,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -52,16 +53,17 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {
         $key = key($this->selectedBuckets);
-        return ($key !== null && $key !== false);
+
+        return $key !== null && $key !== false;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
