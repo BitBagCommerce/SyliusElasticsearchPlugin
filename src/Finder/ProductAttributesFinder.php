@@ -22,8 +22,9 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
     public function __construct(
         private FinderInterface $attributesFinder,
         private QueryBuilderInterface $attributesByTaxonQueryBuilder,
-        private string $taxonsProperty
-    ) {
+        private string $taxonsProperty,
+        private int $filterMax = 20,
+        ) {
     }
 
     public function findByTaxon(TaxonInterface $taxon): ?array
@@ -34,6 +35,6 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
         /** @var AbstractQuery $query */
         $query = $this->attributesByTaxonQueryBuilder->buildQuery($data);
 
-        return $this->attributesFinder->find($query, 20);
+        return $this->attributesFinder->find($query, $this->filterMax);
     }
 }
