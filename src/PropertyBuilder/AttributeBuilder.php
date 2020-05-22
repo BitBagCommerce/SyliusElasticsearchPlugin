@@ -67,7 +67,6 @@ final class AttributeBuilder extends AbstractBuilder
                 } else {
                     $value = $choices[$value][$this->localeContext->getLocaleCode()] ?? $value;
                 }
-
             }
             $attributes = [];
 

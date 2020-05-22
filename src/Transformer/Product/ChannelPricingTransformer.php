@@ -14,10 +14,10 @@ namespace BitBag\SyliusElasticsearchPlugin\Transformer\Product;
 
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 
 final class ChannelPricingTransformer implements TransformerInterface

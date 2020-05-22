@@ -27,6 +27,7 @@ final class Registry implements RegistryInterface
         if (!array_key_exists($facetId, $this->facets)) {
             throw new FacetNotFoundException(sprintf('Cannot find facet with ID "%s" in registry.', $facetId));
         }
+
         return $this->facets[$facetId];
     }
 }

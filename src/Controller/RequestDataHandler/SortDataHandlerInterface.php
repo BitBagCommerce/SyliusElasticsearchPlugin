@@ -14,8 +14,11 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 interface SortDataHandlerInterface extends DataHandlerInterface
 {
-    const ORDER_BY_INDEX = 'order_by';
-    const SORT_INDEX = 'sort';
-    const SORT_ASC_INDEX = 'asc';
-    const SORT_DESC_INDEX = 'desc';
+    public const ORDER_BY_INDEX = 'order_by';
+
+    public const SORT_INDEX = 'sort';
+
+    public const SORT_ASC_INDEX = 'asc';
+
+    public const SORT_DESC_INDEX = 'desc';
 }
