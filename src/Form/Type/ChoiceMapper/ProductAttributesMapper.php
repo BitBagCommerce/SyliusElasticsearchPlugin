@@ -82,7 +82,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
                 }
             } else {
                 $choice = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
-                $choice = is_bool($value) ? var_export($value, true) : $value;
+                $choice = is_bool($value) ? var_export($value, true) : $choice;
                 $choices[$value] = $choice;
             }
         });
