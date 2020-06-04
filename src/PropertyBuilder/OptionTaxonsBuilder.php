@@ -61,7 +61,7 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         $documentProductOption = $event->getObject();
 
         if (!$documentProductOption instanceof ProductOptionInterface
-            || in_array($documentProductOption->getCode(), $this->excludedOptions)
+            || in_array($documentProductOption->getCode(), $this->excludedOptions, true)
         ) {
             return;
         }
@@ -73,13 +73,13 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         /** @var ProductOptionValueInterface $optionValue */
         foreach ($optionValues as $optionValue) {
             $option = $optionValue->getOption();
-            /** @var ProductInterface $product */
             $productVariant = $this->productVariantRepository->findOneByOptionValue($optionValue);
 
             if (null === $productVariant) {
                 continue;
             }
 
+            /** @var ProductInterface $product */
             $product = $productVariant->getProduct();
 
             if ($documentProductOption === $option && $product->isEnabled()) {

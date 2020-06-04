@@ -48,6 +48,7 @@ final class PriceFacet implements FacetInterface
         );
         $histogram = new Histogram(self::FACET_ID, $priceFieldName, $this->interval);
         $histogram->setMinimumDocumentCount(1);
+
         return $histogram;
     }
 
@@ -62,21 +63,23 @@ final class PriceFacet implements FacetInterface
                 new Range($priceFieldName, ['gte' => $selectedBucket, 'lte' => $selectedBucket + $this->interval])
             );
         }
+
         return $query;
     }
 
     public function getBucketLabel(array $bucket): string
     {
         $from = $this->moneyFormatter->format(
-            (int)$bucket['key'],
+            (int) $bucket['key'],
             $this->shopperContext->getCurrencyCode(),
             $this->shopperContext->getLocaleCode()
         );
         $to = $this->moneyFormatter->format(
-            (int)($bucket['key'] + $this->interval),
+            (int) ($bucket['key'] + $this->interval),
             $this->shopperContext->getCurrencyCode(),
             $this->shopperContext->getLocaleCode()
         );
+
         return sprintf('%s - %s (%s)', $from, $to, $bucket['doc_count']);
     }
 

@@ -37,6 +37,7 @@ final class AttributeFacet implements FacetInterface
     {
         $aggregation = new Terms('');
         $aggregation->setField($this->getFieldName());
+
         return $aggregation;
     }
 
@@ -48,6 +49,7 @@ final class AttributeFacet implements FacetInterface
     public function getBucketLabel(array $bucket): string
     {
         $label = ucwords(str_replace('_', ' ', $bucket['key']));
+
         return sprintf('%s (%s)', $label, $bucket['doc_count']);
     }
 
@@ -67,6 +69,7 @@ final class AttributeFacet implements FacetInterface
         if (!$attribute instanceof AttributeInterface) {
             throw new \RuntimeException(sprintf('Cannot find attribute with code "%s"', $this->attributeCode));
         }
+
         return $attribute;
     }
 }

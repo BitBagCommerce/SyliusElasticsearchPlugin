@@ -72,6 +72,7 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
         $bool->addMust($multiMatch);
         $bool->addFilter($this->isEnabledQueryBuilder->buildQuery([]));
         $bool->addFilter($this->hasChannelQueryBuilder->buildQuery([]));
+
         return $bool;
     }
 }

@@ -31,6 +31,7 @@ final class TaxonFacet implements FacetInterface
     {
         $terms = new Terms(self::FACET_ID);
         $terms->setField($this->getField());
+
         return $terms;
     }
 
