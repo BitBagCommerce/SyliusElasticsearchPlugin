@@ -7,7 +7,7 @@
         "php": "^7.3",
         "ext-json": "*",
         "sylius/sylius": "^1.7",
-        "friendsofsymfony/elastica-bundle": "^5.0"
+        "friendsofsymfony/elastica-bundle": "6.0.0-beta1"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
