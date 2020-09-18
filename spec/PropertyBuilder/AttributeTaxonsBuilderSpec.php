@@ -19,6 +19,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 
 final class AttributeTaxonsBuilderSpec extends ObjectBehavior
@@ -29,6 +30,8 @@ final class AttributeTaxonsBuilderSpec extends ObjectBehavior
             $taxonRepository,
             'taxons'
         );
+
+        $taxonRepository->getTaxonsByAttributeViaProduct(Argument::any())->willReturn([]);
     }
 
     function it_is_initializable(): void
@@ -46,6 +49,8 @@ final class AttributeTaxonsBuilderSpec extends ObjectBehavior
     {
         $event->getObject()->willReturn($attribute);
         $event->getDocument()->willReturn($document);
+
+        $document->set(Argument::any(), Argument::any())->willReturn($document);
 
         $this->consumeEvent($event);
     }
