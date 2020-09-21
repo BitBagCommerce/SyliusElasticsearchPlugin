@@ -31,9 +31,6 @@ final class HasTaxonQueryBuilder implements QueryBuilderInterface
             return null;
         }
 
-        $taxonQuery = new Terms();
-        $taxonQuery->setTerms($this->taxonsProperty, [$taxonCode]);
-
-        return $taxonQuery;
+        return new Terms($this->taxonsProperty, [$taxonCode]);
     }
 }

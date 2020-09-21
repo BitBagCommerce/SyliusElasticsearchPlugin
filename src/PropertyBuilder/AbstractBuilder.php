@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Resource\Model\ToggleableInterface;
 
@@ -33,7 +34,7 @@ abstract class AbstractBuilder implements PropertyBuilderInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            TransformEvent::POST_TRANSFORM => 'consumeEvent',
+            PostTransformEvent::class => 'consumeEvent',
         ];
     }
 }

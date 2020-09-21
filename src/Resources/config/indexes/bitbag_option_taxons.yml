@@ -5,16 +5,15 @@ fos_elastica:
     indexes:
         bitbag_option_taxons:
             index_name: "bitbag_option_taxons_%kernel.environment%"
-            types:
-                default:
-                    properties:
-                        option_code:
-                            property_path: code
-                    persistence:
-                        driver: orm
-                        model: "%sylius.model.product_option.class%"
-                        listener:
-                            defer: true
-                            logger: true
-                        elastica_to_model_transformer:
-                            ignore_missing: true
+            properties:
+                option_code:
+                    property_path: code
+            persistence:
+                driver: orm
+                model: "%sylius.model.product_option.class%"
+                listener:
+                    defer: true
+                    logger: true
+                elastica_to_model_transformer:
+                    ignore_missing: true
+                finder: ~

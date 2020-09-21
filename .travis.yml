@@ -12,13 +12,6 @@ matrix:
             env:
                 - DEPENDENCY_VERSIONS="sylius/sylius:1.7.*"
 
-addons:
-    apt:
-        sources:
-            - elasticsearch-5.x
-        packages:
-            - elasticsearch
-
 services:
     - elasticsearch
 
@@ -35,6 +28,12 @@ env:
         - SYLIUS_BUILD_DIR=etc/build
 
 before_install:
+    # Install elasticsearch
+    - curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.1-amd64.deb -o elasticsearch.deb
+    - sudo dpkg -i --force-confnew elasticsearch.deb
+    - sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
+    - sudo service elasticsearch restart
+
     - phpenv config-rm xdebug.ini
     - echo "memory_limit=4096M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - mkdir -p "${SYLIUS_CACHE_DIR}"
