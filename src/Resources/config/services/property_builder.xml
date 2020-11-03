@@ -56,7 +56,6 @@
             <argument type="service" id="sylius.repository.product_option_value" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_variant" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_builder.mapper.product_taxons" />
-            <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_option_taxons_property%</argument>
             <argument>%bitbag_es_excluded_filter_options%</argument>
             <tag name="kernel.event_subscriber" />
