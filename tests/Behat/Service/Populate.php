@@ -19,7 +19,7 @@ use FOS\ElasticaBundle\Index\Resetter;
 use FOS\ElasticaBundle\Persister\PagerPersisterInterface;
 use FOS\ElasticaBundle\Persister\PagerPersisterRegistry;
 use FOS\ElasticaBundle\Provider\PagerProviderRegistry;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class Populate
 {
@@ -75,7 +75,7 @@ final class Populate
 
         foreach ($indexes as $index) {
             $event = new IndexPopulateEvent($index, true, $options);
-            $this->dispatcher->dispatch(IndexPopulateEvent::PRE_INDEX_POPULATE, $event);
+            $this->dispatcher->dispatch($event);
 
             if ($event->isReset()) {
                 $this->resetter->resetIndex($index, true);
@@ -86,7 +86,7 @@ final class Populate
                 $this->populateIndexType($index, $type, false, $event->getOptions());
             }
 
-            $this->dispatcher->dispatch(IndexPopulateEvent::POST_INDEX_POPULATE, $event);
+            $this->dispatcher->dispatch($event);
 
             $this->refreshIndex($index);
         }
@@ -101,7 +101,7 @@ final class Populate
     private function populateIndexType(string $index, string $type, bool $reset, array $options): void
     {
         $event = new TypePopulateEvent($index, $type, $reset, $options);
-        $this->dispatcher->dispatch(TypePopulateEvent::PRE_TYPE_POPULATE, $event);
+        $this->dispatcher->dispatch($event);
 
         if ($event->isReset()) {
             $this->resetter->resetIndexType($index, $type);
@@ -116,7 +116,7 @@ final class Populate
 
         $this->pagerPersister->insert($pager, $options);
 
-        $this->dispatcher->dispatch(TypePopulateEvent::POST_TYPE_POPULATE, $event);
+        $this->dispatcher->dispatch($event);
 
         $this->refreshIndex($index);
     }
