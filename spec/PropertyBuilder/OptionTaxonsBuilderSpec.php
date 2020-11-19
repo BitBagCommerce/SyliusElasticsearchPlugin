@@ -32,7 +32,6 @@ final class OptionTaxonsBuilderSpec extends ObjectBehavior
             $productOptionValueRepository,
             $productVariantRepository,
             $productTaxonsMapper,
-            'option',
             'taxons'
         );
     }
