@@ -16,6 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInterface;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Range;
+use Sylius\Bundle\MoneyBundle\Form\DataTransformer\SyliusMoneyTransformer;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
@@ -89,6 +90,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     private function convertFromString(string $price): int
     {
-        return (int) round((int) $price * 100, 2);
+        $transformer = new SyliusMoneyTransformer(2, false, SyliusMoneyTransformer::ROUND_HALF_UP, 100);
+        return $transformer->reverseTransform($price);
     }
 }
