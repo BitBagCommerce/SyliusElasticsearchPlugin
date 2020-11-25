@@ -27,12 +27,11 @@ class OrderItemRepository implements OrderItemRepositoryInterface
 
     public function countByVariant(ProductVariantInterface $variant): int
     {
-        $qb = $this->baseOrderItemRepository->createQueryBuilder('i');
-        $qb->select('SUM(i.quantity)')
-            ->where('i.variant = :variant')
+        return (int) ($this->baseOrderItemRepository
+            ->createQueryBuilder('orderItem')
+            ->select('SUM(orderItem.quantity)')
+            ->where('orderItem.variant = :variant')
             ->setParameter('variant', $variant)
-            ;
-
-        return (int) ($qb->getQuery()->getSingleScalarResult());
+            ->getQuery()->getSingleScalarResult());
     }
 }
