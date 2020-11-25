@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\Repository\OrderItemRepositoryInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Order\Repository\OrderItemRepositoryInterface;
 
 final class SoldUnitsPropertyBuilder extends AbstractBuilder
 {
@@ -38,7 +38,7 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
                 $soldUnits = 0;
 
                 foreach ($product->getVariants() as $productVariant) {
-                    $soldUnits += count($this->orderItemRepository->findBy(['variant' => $productVariant]));
+                    $soldUnits += $this->orderItemRepository->countByVariant($productVariant);
                 }
 
                 $document->set($this->soldUnitsProperty, $soldUnits);

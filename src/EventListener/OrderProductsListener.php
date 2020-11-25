@@ -12,13 +12,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
-
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use Sylius\Component\Core\Model\Order;
 use Sylius\Component\Core\Model\OrderItem;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
-use Webmozart\Assert\Assert;
 
 final class OrderProductsListener
 {
@@ -37,9 +33,8 @@ final class OrderProductsListener
     public function updateOrderProducts(Order $order): void
     {
         /** @var OrderItem $orderItem */
-        foreach($order->getItems() as $orderItem) {
+        foreach ($order->getItems() as $orderItem) {
             $this->resourceRefresher->refresh($orderItem->getProduct(), $this->productPersister);
         }
-
     }
 }
