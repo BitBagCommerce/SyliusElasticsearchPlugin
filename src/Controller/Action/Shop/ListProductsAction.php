@@ -19,8 +19,10 @@ use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 final class ListProductsAction
 {
@@ -62,12 +64,16 @@ final class ListProductsAction
     {
         $form = $this->formFactory->createNamed(null, ShopProductsFilterType::class);
         $form->handleRequest($request);
-
         $requestData = array_merge(
             $form->getData(),
             $request->query->all(),
             ['slug' => $request->get('slug')]
         );
+
+        if (!$form->isValid()) {
+            $requestData = $this->clearInvalidEntries($form, $requestData);
+        }
+
         $data = array_merge(
             $this->shopProductListDataHandler->retrieveData($requestData),
             $this->shopProductsSortDataHandler->retrieveData($requestData),
@@ -82,5 +88,20 @@ final class ListProductsAction
             'products' => $products,
             'taxon' => $data['taxon'],
         ]);
+    }
+
+    private function clearInvalidEntries(FormInterface $form, array $requestData): array
+    {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        foreach ($form->getErrors(true, true) as $error) {
+            $errorOrigin = $error->getOrigin();
+            $propertyAccessor->setValue(
+                $requestData,
+                ($errorOrigin->getParent()->getPropertyPath() ?? '') . $errorOrigin->getPropertyPath(),
+                ''
+            );
+        }
+
+        return $requestData;
     }
 }
