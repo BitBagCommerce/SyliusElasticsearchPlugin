@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
 class OrderItemRepository implements OrderItemRepositoryInterface
@@ -25,13 +26,20 @@ class OrderItemRepository implements OrderItemRepositoryInterface
         $this->baseOrderItemRepository = $baseOrderItemRepository;
     }
 
-    public function countByVariant(ProductVariantInterface $variant): int
+    public function countByVariant(ProductVariantInterface $variant, array $orderStates = []): int
     {
+        if (!$orderStates) {
+            $orderStates = [OrderInterface::STATE_CANCELLED, OrderInterface::STATE_CART];
+        }
+        
         return (int) ($this->baseOrderItemRepository
-            ->createQueryBuilder('o')
-            ->select('SUM(o.quantity)')
-            ->where('o.variant = :variant')
+            ->createQueryBuilder('oi')
+            ->select('SUM(oi.quantity)')
+            ->join('oi.order', 'o')
+            ->where('oi.variant = :variant')
+            ->andWhere('o.state NOT IN (:states)')
             ->setParameter('variant', $variant)
+            ->setParameter('states', $orderStates)
             ->getQuery()
             ->getSingleScalarResult());
     }
