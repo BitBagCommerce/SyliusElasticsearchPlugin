@@ -1,0 +1,8 @@
+winzou_state_machine:
+    sylius_order:
+        callbacks:
+            after:
+                bitbag_sylius_elasticsearch_plugin_index_order_products:
+                    on: ["create"]
+                    do: ["@bitbag_sylius_elasticsearch_plugin.event_listener.order_products", "updateOrderProducts"]
+                    args: ["object"]

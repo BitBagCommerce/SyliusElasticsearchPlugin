@@ -42,7 +42,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.sold_units" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\SoldUnitsPropertyBuilder">
-            <argument type="service" id="sylius.repository.order_item" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.order_item_repository" />
             <argument>%bitbag_es_shop_product_sold_units%</argument>
             <tag name="kernel.event_subscriber" />
         </service>
