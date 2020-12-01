@@ -14,7 +14,9 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use Sylius\Component\Core\Model\Order;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItem;
+use Sylius\Component\Core\Model\OrderItemInterface;
 
 final class OrderProductsListener
 {
@@ -30,9 +32,9 @@ final class OrderProductsListener
         $this->productPersister = $productPersister;
     }
 
-    public function updateOrderProducts(Order $order): void
+    public function updateOrderProducts(OrderInterface $order): void
     {
-        /** @var OrderItem $orderItem */
+        /** @var OrderItemInterface $orderItem */
         foreach ($order->getItems() as $orderItem) {
             $this->resourceRefresher->refresh($orderItem->getProduct(), $this->productPersister);
         }
