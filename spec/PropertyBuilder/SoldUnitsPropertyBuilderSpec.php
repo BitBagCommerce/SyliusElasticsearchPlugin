@@ -15,9 +15,9 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\SoldUnitsPropertyBuilder;
+use BitBag\SyliusElasticsearchPlugin\Repository\OrderItemRepositoryInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Order\Repository\OrderItemRepositoryInterface;
 
 final class SoldUnitsPropertyBuilderSpec extends ObjectBehavior
 {

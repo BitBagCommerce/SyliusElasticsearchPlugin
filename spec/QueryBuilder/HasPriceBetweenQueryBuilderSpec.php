@@ -75,4 +75,35 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
             'max_price' => '1000',
         ])->shouldBeAnInstanceOf(Range::class);
     }
+
+    function it_converts_fractional_currency_properly(
+        PriceNameResolverInterface $priceNameResolver,
+        ChannelContextInterface $channelContext,
+        ChannelInterface $channel,
+        CurrencyContextInterface $currencyContext,
+        CurrencyInterface $currency,
+        ConcatedNameResolverInterface $channelPricingNameResolver
+    ): void {
+        $channel->getCode()->willReturn('web');
+        $channelContext->getChannel()->willReturn($channel);
+        $priceNameResolver->resolveMinPriceName()->willReturn('min_price');
+        $priceNameResolver->resolveMaxPriceName()->willReturn('max_price');
+        $channel->getBaseCurrency()->willReturn($currency);
+        $currency->getCode()->willReturn('USD');
+        $currencyContext->getCurrencyCode()->willReturn('USD');
+
+        $channelPricingNameResolver->resolvePropertyName('web')->willReturn('web');
+
+        $range = $this->buildQuery([
+            'min_price' => '1,23',
+            'max_price' => '1000,51',
+        ]);
+
+        $range->getParam('web')->shouldReturn(
+            [
+                'gte' => 123,
+                'lte' => 100051,
+            ]
+        );
+    }
 }

@@ -24,7 +24,7 @@ final class HasAttributesQueryBuilder implements QueryBuilderInterface
 
         foreach ((array) $data['attribute_values'] as $attributeValue) {
             $termQuery = new Term();
-            $termQuery->setTerm($data['attribute'], $attributeValue);
+            $termQuery->setTerm($data['attribute'] . '.keyword', $attributeValue);
             $attributeQuery->addShould($termQuery);
         }
 
