@@ -3,7 +3,6 @@ imports:
     - { resource: "indexes/bitbag_option_taxons.yml" }
     - { resource: "indexes/bitbag_attribute_taxons.yml" }
     - { resource: "indexes/bitbag_shop_facets.yml" }
-    - { resource: "state_machine/sylius_order.yaml" }
 
 parameters:
     bitbag_es_host: localhost
