@@ -4,7 +4,6 @@ parameters:
     bitbag_es_shop_product_taxons_property: product_taxons
     bitbag_es_shop_product_sold_units: sold_units
     bitbag_es_shop_product_created_at: product_created_at
-    bitbag_es_shop_name_property_prefix: name
     bitbag_es_shop_product_price_property_prefix: price
     bitbag_es_shop_option_property_prefix: option
     bitbag_es_shop_attribute_property_prefix: attribute
