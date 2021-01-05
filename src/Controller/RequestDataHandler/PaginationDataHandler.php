@@ -14,6 +14,14 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 final class PaginationDataHandler implements PaginationDataHandlerInterface
 {
+    /** @var int */
+    private $defaultLimit;
+
+    public function __construct(int $defaultLimit)
+    {
+        $this->defaultLimit = $defaultLimit;
+    }
+
     public function retrieveData(array $requestData): array
     {
         $data = [];
@@ -37,7 +45,7 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
 
     private function resolveLimit(array $requestData, array &$data): void
     {
-        $limit = self::DEFAULT_LIMIT;
+        $limit = $this->defaultLimit;
 
         if (isset($requestData[self::LIMIT_INDEX])) {
             $limit = (int) $requestData[self::LIMIT_INDEX];
