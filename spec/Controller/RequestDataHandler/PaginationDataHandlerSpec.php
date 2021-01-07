@@ -18,6 +18,13 @@ use PhpSpec\ObjectBehavior;
 
 final class PaginationDataHandlerSpec extends ObjectBehavior
 {
+    function let(): void
+    {
+        $this->beConstructedWith(
+            9,
+        );
+    }
+
     function it_is_initializable(): void
     {
         $this->shouldHaveType(PaginationDataHandler::class);
@@ -32,7 +39,7 @@ final class PaginationDataHandlerSpec extends ObjectBehavior
     {
         $this->retrieveData([])->shouldBeEqualTo([
             PaginationDataHandlerInterface::PAGE_INDEX => 1,
-            PaginationDataHandlerInterface::LIMIT_INDEX => PaginationDataHandlerInterface::DEFAULT_LIMIT,
+            PaginationDataHandlerInterface::LIMIT_INDEX => 9,
         ]);
     }
 }

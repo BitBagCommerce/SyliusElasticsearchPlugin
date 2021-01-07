@@ -17,8 +17,4 @@ interface PaginationDataHandlerInterface extends DataHandlerInterface
     public const PAGE_INDEX = 'page';
 
     public const LIMIT_INDEX = 'limit';
-
-    public const DEFAULT_LIMIT = 9;
-
-    public const AVAILABLE_LIMITS = [9, 18, 36];
 }
