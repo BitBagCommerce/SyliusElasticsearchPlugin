@@ -24,7 +24,7 @@ jobs:
         elasticsearch: ["6.x-SNAPSHOT"]
 
         exclude:
-          - # PHP 7.3 does not support "caching_sha2_password" authentication plugin which is a default one in MySQL 8.0
+          -
             php: 7.3
             mysql: 8.0
 
