@@ -30,7 +30,7 @@ jobs:
 
     env:
       APP_ENV: test
-      DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data.db"
+      DATABASE_URL: "mysql://root:root@127.0.0.1/sylius?serverVersion=${{ matrix.mysql }}"
 
     steps:
       -
