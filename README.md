@@ -190,6 +190,16 @@ You can also add search facets (a.k.a. filters) to your search results page. To 
 
 You can see an example of the definition of all of these facets [here](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/tests/Application/config/services.yaml).
 
+### Changing default pagination limits
+
+If you want to change default pagination limits, set this parameters:
+
+```yml
+parameters:
+   bitbag_es_pagination_available_page_limits: [9, 18, 36]
+   bitbag_es_pagination_default_limit: 9
+```
+
 ## Customization
 
 ### Available services you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) and forms you can [extend](http://symfony.com/doc/current/form/create_form_type_extension.html)
