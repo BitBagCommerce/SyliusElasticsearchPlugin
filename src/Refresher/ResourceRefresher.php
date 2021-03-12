@@ -35,4 +35,13 @@ final class ResourceRefresher implements ResourceRefresherInterface
 
         $objectPersister->replaceOne($resource);
     }
+
+    public function remove(ResourceInterface $resource, string $objectPersisterId): void
+    {
+        /** @var ObjectPersisterInterface $objectPersister */
+        $objectPersister = $this->container->get($objectPersisterId);
+        Assert::isInstanceOf($objectPersister, ObjectPersisterInterface::class);
+
+        $objectPersister->deleteOne($resource);
+    }
 }

@@ -39,7 +39,12 @@ final class ResourceIndexListener
 
         foreach ($this->persistersMap as $objectPersisterId => $modelClass) {
             if ($resource instanceof $modelClass) {
-                $this->resourceRefresher->refresh($resource, $objectPersisterId);
+                // Respect an enabled-switch on the resource
+                if (method_exists($resource, 'isEnabled') && !$resource->isEnabled()) {
+                    $this->resourceRefresher->remove($resource, $objectPersisterId);
+                } else {
+                    $this->resourceRefresher->refresh($resource, $objectPersisterId);
+                }
             }
         }
     }
