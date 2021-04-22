@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Attribute\Factory\AttributeFactoryInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
@@ -37,7 +37,7 @@ final class ProductAttributeContext implements Context
     /** @var FactoryInterface */
     private $productAttributeValueFactory;
 
-    /** @var ObjectManager */
+    /** @var EntityManagerInterface */
     private $objectManager;
 
     /** @var \Faker\Generator */
@@ -48,7 +48,7 @@ final class ProductAttributeContext implements Context
         RepositoryInterface $productAttributeRepository,
         AttributeFactoryInterface $productAttributeFactory,
         FactoryInterface $productAttributeValueFactory,
-        ObjectManager $objectManager
+        EntityManagerInterface $objectManager
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->productAttributeRepository = $productAttributeRepository;
