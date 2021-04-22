@@ -17,7 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDat
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,8 +41,8 @@ final class ListProductsAction
     /** @var ShopProductsFinderInterface */
     private $shopProductsFinder;
 
-    /** @var EngineInterface */
-    private $templatingEngine;
+    /** @var Environment */
+    private $twig;
 
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -50,19 +50,20 @@ final class ListProductsAction
         SortDataHandlerInterface $shopProductsSortDataHandler,
         PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
-        EngineInterface $templatingEngine
-    ) {
+        Environment $twig
+    )
+    {
         $this->formFactory = $formFactory;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
         $this->shopProductsSortDataHandler = $shopProductsSortDataHandler;
         $this->paginationDataHandler = $paginationDataHandler;
         $this->shopProductsFinder = $shopProductsFinder;
-        $this->templatingEngine = $templatingEngine;
+        $this->twig = $twig;
     }
 
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->createNamed(null, ShopProductsFilterType::class);
+        $form = $this->formFactory->create(ShopProductsFilterType::class);
         $form->handleRequest($request);
         $requestData = array_merge(
             $form->getData(),
@@ -83,11 +84,11 @@ final class ListProductsAction
         $template = $request->get('template');
         $products = $this->shopProductsFinder->find($data);
 
-        return $this->templatingEngine->renderResponse($template, [
+        return new Response($this->twig->render($template, [
             'form' => $form->createView(),
             'products' => $products,
             'taxon' => $data['taxon'],
-        ]);
+        ]));
     }
 
     private function clearInvalidEntries(FormInterface $form, array $requestData): array

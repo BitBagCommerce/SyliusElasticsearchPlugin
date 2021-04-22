@@ -8,12 +8,12 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.shop_products" />
-            <argument type="service" id="templating" />
+            <argument type="service" id="twig" />
             <tag name="controller.service_arguments" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.controller.action.shop.search" class="BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop\SearchAction">
-            <argument type="service" id="templating" />
+            <argument type="service" id="twig" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product.default" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.block_event_listener.search_form" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
