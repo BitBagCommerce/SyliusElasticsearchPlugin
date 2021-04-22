@@ -75,15 +75,10 @@ jobs:
                     sudo sysctl -w vm.max_map_count=262144
 
             -
-                name: install ElasticSearch
-                uses: getong/elasticsearch-action@v1.2
+                name: Runs Elasticsearch
+                uses: elastic/elastic-github-actions/elasticsearch@master
                 with:
-                  elasticsearch version: '6.8.15'
-                  host port: 9200
-                  container port: 9200
-                  host node port: 9300
-                  node port: 9300
-                  discovery type: 'single-node'
+                    stack-version: 6.8.15
 
             -
                 name: Output PHP version for Symfony CLI
