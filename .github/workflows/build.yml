@@ -23,7 +23,7 @@ jobs:
             matrix:
                 php: [7.4, 7.3]
                 symfony: [^4.4, ^5.2]
-                sylius: [~1.8.0, ~1.9.0]
+                sylius: [~1.9.0]
                 node: [10.x]
                 mysql: [5.7]
 
