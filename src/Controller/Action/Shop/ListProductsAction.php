@@ -51,8 +51,7 @@ final class ListProductsAction
         PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
         Environment $twig
-    )
-    {
+    ) {
         $this->formFactory = $formFactory;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
         $this->shopProductsSortDataHandler = $shopProductsSortDataHandler;
@@ -63,7 +62,7 @@ final class ListProductsAction
 
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->create(ShopProductsFilterType::class);
+        $form = $this->formFactory->create(  ShopProductsFilterType::class);
         $form->handleRequest($request);
         $requestData = array_merge(
             $form->getData(),
