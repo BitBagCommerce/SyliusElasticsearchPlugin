@@ -4,7 +4,7 @@
 
 * sylius < 1.9 compatibility break. Main reason was a change in sylius behat context from "this product has text attribute" to "this product has a text attribute" and notation change 
 
-* symfony <5 compatibility break. Main reason was removed the support for Symfony's Templating component and changes in Form Factory Interface
+* symfony <4.4 compatibility break. Main reason was removed the support for Symfony Templating component and changes in Form Factory Interface
 
 * `Symfony\Component\BrowserKit\Client` was replaced by `Symfony\Component\BrowserKit\AbstractBrowser`
 
