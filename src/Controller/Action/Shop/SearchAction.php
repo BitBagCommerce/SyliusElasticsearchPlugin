@@ -42,8 +42,7 @@ final class SearchAction
         RegistryInterface $facetRegistry,
         QueryBuilderInterface $searchProductsQueryBuilder,
         PaginationDataHandlerInterface $paginationDataHandler
-    )
-    {
+    ) {
         $this->twig = $twig;
         $this->finder = $finder;
         $this->searchFormEventListener = $searchFormEventListener;
@@ -90,6 +89,5 @@ final class SearchAction
             $template,
             ['results' => $results, 'searchForm' => $form->createView()]
         ));
-
     }
 }

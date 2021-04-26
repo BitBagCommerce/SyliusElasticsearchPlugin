@@ -38,8 +38,7 @@ final class ListProductsActionSpec extends ObjectBehavior
         PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
         Environment $twig
-    ): void
-    {
+    ): void {
         $this->beConstructedWith(
             $formFactory,
             $shopProductListDataHandler,
@@ -68,8 +67,7 @@ final class ListProductsActionSpec extends ObjectBehavior
         FormView $formView,
         Environment $twig,
         Response $response
-    ): void
-    {
+    ): void {
         $form->getData()->willReturn([]);
         $form->isValid()->willReturn(true);
         $form->handleRequest($request)->shouldBeCalled();
