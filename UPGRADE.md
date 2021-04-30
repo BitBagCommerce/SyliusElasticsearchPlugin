@@ -1,4 +1,4 @@
-# UPGRADE FROM 1.6 TO 2.0
+# UPGRADE FROM 1.6 TO 1.7
 
 * chrome headless as default behat session 
 
