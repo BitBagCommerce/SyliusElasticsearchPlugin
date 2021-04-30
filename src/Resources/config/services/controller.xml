@@ -8,7 +8,7 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.shop_products" />
-            <argument type="service" id="templating" />
+            <argument type="service" id="twig" />
             <tag name="controller.service_arguments" />
         </service>
 

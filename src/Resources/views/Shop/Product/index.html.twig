@@ -8,7 +8,7 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    {% include 'SyliusUiBundle::_stylesheets.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/css/bitbag-autocomplete-search.css'} %}
+    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/css/bitbag-autocomplete-search.css'} %}
 {% endblock %}
 
 {% block content %}
@@ -66,7 +66,7 @@
 {% block javascripts %}
     {{ parent() }}
 
-    {% include 'SyliusUiBundle::_javascripts.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/js/bitbag-autocomplete-search.js'} %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/js/bitbag-autocomplete-search.js'} %}
 
     <script type="application/javascript">
         $(document).autocompleteSearch('#products-search', '{{ url('bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name') }}?query={query}')
