@@ -17,7 +17,6 @@ use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryI
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
 final class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
@@ -34,7 +33,8 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         LocaleContextInterface $localeContext,
         StringFormatterInterface $stringFormatter
-    ) {
+    )
+    {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->localeContext = $localeContext;
         $this->stringFormatter = $stringFormatter;
@@ -57,6 +57,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         }
 
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute);
+
         $choices = [];
         array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {
             $value = $productAttributeValue['value'];
@@ -72,11 +73,9 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
                     $label = $configuration['choices'][$singleValue][$this->localeContext->getLocaleCode()];
                     $choices[$label] = $choice;
                 }
-            } else {
-                if ($productAttributeValue->getLocaleCode() === $this->localeContext->getLocaleCode()) {
-                    $choice = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
-                    $choices[$value] = $choice;
-                }
+            } else if ($productAttributeValue->getLocaleCode() === $this->localeContext->getLocaleCode()) {
+                $choice = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
+                $choices[$value] = $choice;
             }
         });
         unset($attributeValues);

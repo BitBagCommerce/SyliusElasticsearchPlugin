@@ -12,6 +12,7 @@ services:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
             - Car_Type
+            - '@sylius.context.locale'
 
     bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type:
         class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
@@ -19,6 +20,7 @@ services:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
             - Motorbike_Type
+            - '@sylius.context.locale'
 
     bitbag_sylius_elasticsearch_plugin.facet.attribute.color:
         class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
@@ -26,6 +28,7 @@ services:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
             - Color
+            - '@sylius.context.locale'
 
     bitbag_sylius_elasticsearch_plugin.facet.option.supply:
         class: BitBag\SyliusElasticsearchPlugin\Facet\OptionFacet

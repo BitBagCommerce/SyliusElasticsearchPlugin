@@ -16,9 +16,9 @@ use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
+use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeTranslation;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class AttributeBuilder extends AbstractBuilder
 {
@@ -28,17 +28,12 @@ final class AttributeBuilder extends AbstractBuilder
     /** @var StringFormatterInterface */
     private $stringFormatter;
 
-    /** @var LocaleContextInterface */
-    private $localeContext;
-
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
-        StringFormatterInterface $stringFormatter,
-        LocaleContextInterface $localeContext
+        StringFormatterInterface $stringFormatter
     ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
-        $this->localeContext = $localeContext;
     }
 
     public function consumeEvent(TransformEvent $event): void
@@ -51,35 +46,14 @@ final class AttributeBuilder extends AbstractBuilder
 
     private function resolveProductAttributes(ProductInterface $product, Document $document): void
     {
-        foreach ($product->getAttributes() as $attributeValue) {
-            $attribute = $attributeValue->getAttribute();
+        foreach ($product->getAttributes() as $productAttribute) {
+            $attribute = $productAttribute->getAttribute();
 
             if (!$attribute) {
                 continue;
             }
 
-            $attributeValueCode = $attributeValue->getLocaleCode();
-            $attributeCode = $attribute->getCode();
-
-            $attributeConfiguration = $attribute->getConfiguration();
-            foreach ($attribute->getTranslations() as $attributeTranslation) {
-                if ($attributeValueCode !== $attributeTranslation->getLocale()) {
-                    continue;
-                }
-                $attributeValue = $attributeValue->getValue();
-
-                $propertyName = $this->attributeNameResolver->resolvePropertyName(
-                    \sprintf('%s_%s', $attributeCode, $attributeTranslation->getLocale()
-                    )
-                );
-                $values = $this->resolveProductAttribute(
-                    $attributeConfiguration,
-                    $attributeValue,
-                    $attributeTranslation
-                );
-
-                $document->set($propertyName, $values);
-            }
+            $this->processAttribute($attribute, $productAttribute, $document);
         }
     }
 
@@ -108,4 +82,23 @@ final class AttributeBuilder extends AbstractBuilder
 
         return $attributes;
     }
+
+
+    private function processAttribute(AttributeInterface $attribute, $productAttribute, Document $document): void
+    {
+        $attributeCode = $attribute->getCode();
+        $attributeConfiguration = $attribute->getConfiguration();
+        foreach ($attribute->getTranslations() as $attributeTranslation) {
+            $value = $productAttribute->getValue();
+            $documentKey = $this->attributeNameResolver->resolvePropertyName($attributeCode);
+            $code = \sprintf('%s_%s', $documentKey, $attributeTranslation->getLocale());
+            $values = $this->resolveProductAttribute(
+                $attributeConfiguration,
+                $value,
+                $attributeTranslation
+            );
+            $document->set($code, $values);
+        }
+    }
+
 }
