@@ -10,6 +10,7 @@ use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
 use Sylius\Component\Attribute\Model\AttributeInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class AttributeFacet implements FacetInterface
@@ -23,14 +24,19 @@ final class AttributeFacet implements FacetInterface
     /** @var string */
     private $attributeCode;
 
+    /** @var LocaleContextInterface */
+    protected $localeContext;
+
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
         RepositoryInterface $productAttributeRepository,
-        string $attributeCode
+        string $attributeCode,
+        LocaleContextInterface $localeContext
     ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->productAttributeRepository = $productAttributeRepository;
         $this->attributeCode = $attributeCode;
+        $this->localeContext = $localeContext;
     }
 
     public function getAggregation(): AbstractAggregation
@@ -60,7 +66,9 @@ final class AttributeFacet implements FacetInterface
 
     private function getFieldName(): string
     {
-        return $this->attributeNameResolver->resolvePropertyName($this->attributeCode) . '.keyword';
+        return \sprintf('%s_%s.keyword',
+            $this->attributeNameResolver->resolvePropertyName($this->attributeCode),
+            $this->localeContext->getLocaleCode());
     }
 
     private function getProductAttribute(): AttributeInterface
