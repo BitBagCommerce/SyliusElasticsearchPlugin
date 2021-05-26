@@ -73,7 +73,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
                     $label = $configuration['choices'][$singleValue][$this->localeContext->getLocaleCode()];
                     $choices[$label] = $choice;
                 }
-            } else if ($productAttributeValue->getLocaleCode() === $this->localeContext->getLocaleCode()) {
+            } else {
                 $choice = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
                 $choices[$value] = $choice;
             }

@@ -33,11 +33,7 @@ final class HasAttributesQueryBuilder implements QueryBuilderInterface
         foreach ((array) $data['attribute_values'] as $attributeValue) {
             $termQuery = new Term();
             $attribute = \sprintf('%s_%s', $data['attribute'], $this->localeContext->getLocaleCode());
-            $termQuery->setTerm(
-                strtolower($attribute),
-                $attributeValue
-            );
-
+            $termQuery->setTerm($attribute, $attributeValue);
             $attributeQuery->addShould($termQuery);
         }
 
