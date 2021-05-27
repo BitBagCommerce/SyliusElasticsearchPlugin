@@ -105,7 +105,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private function handleAttributesPrefixedProperty(
         array $requestData,
         array &$data,
-        array $attributesDefinitions
+        ?array $attributesDefinitions = []
     ): void
     {
         if (!isset($requestData['attributes'])) {
