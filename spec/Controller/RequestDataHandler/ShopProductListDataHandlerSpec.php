@@ -15,6 +15,7 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductListDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
+use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinderInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
@@ -24,11 +25,13 @@ final class ShopProductListDataHandlerSpec extends ObjectBehavior
 {
     function let(
         TaxonRepositoryInterface $taxonRepository,
-        LocaleContextInterface $localeContext
+        LocaleContextInterface $localeContext,
+        ProductAttributesFinderInterface $attributesFinder
     ): void {
         $this->beConstructedWith(
             $taxonRepository,
             $localeContext,
+            $attributesFinder,
             'name',
             'taxons',
             'option',

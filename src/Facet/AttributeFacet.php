@@ -25,7 +25,7 @@ final class AttributeFacet implements FacetInterface
     private $attributeCode;
 
     /** @var LocaleContextInterface */
-    protected $localeContext;
+    private $localeContext;
 
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
