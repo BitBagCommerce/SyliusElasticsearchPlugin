@@ -51,8 +51,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         string $taxonsProperty,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
-    )
-    {
+    ) {
         $this->taxonRepository = $taxonRepository;
         $this->localeContext = $localeContext;
         $this->attributesFinder = $attributesFinder;
@@ -87,8 +86,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private function handleOptionsPrefixedProperty(
         array $requestData,
         array &$data
-    ): void
-    {
+    ): void {
         if (!isset($requestData['options'])) {
             return;
         }
@@ -106,8 +104,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         array $requestData,
         array &$data,
         ?array $attributesDefinitions = []
-    ): void
-    {
+    ): void {
         if (!isset($requestData['attributes'])) {
             return;
         }
@@ -127,8 +124,9 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         $data = [];
         /** @var ProductAttribute $attributesDefinition */
         foreach ($attributesDefinitions as $attributesDefinition) {
-            $data["attribute_".$attributesDefinition->getCode()] = $attributesDefinition->getType();
+            $data['attribute_' . $attributesDefinition->getCode()] = $attributesDefinition->getType();
         }
+
         return $data;
     }
 
@@ -136,18 +134,21 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     {
         $reformattedValues = [];
         foreach ($attributeValues as $attributeValue) {
-            switch ($attributesDefinitions[$property]){
+            switch ($attributesDefinitions[$property]) {
                 case CheckboxAttributeType::TYPE:
-                    $value = (bool)($attributeValue);
+                    $value = (bool) ($attributeValue);
+
                     break;
                 case IntegerAttributeType::TYPE:
-                    $value = (float)($attributeValue);
+                    $value = (float) ($attributeValue);
+
                     break;
                 default:
                     $value = strtolower($attributeValue);
             }
             $reformattedValues[] = $value;
         }
+
         return $reformattedValues;
     }
 }

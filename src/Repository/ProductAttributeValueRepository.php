@@ -29,12 +29,12 @@ final class ProductAttributeValueRepository implements ProductAttributeValueRepo
     {
         $queryBuilder = $this->baseAttributeValueRepository->createQueryBuilder('o');
 
-        /** @var null|string $storageType */
+        /** @var string|null $storageType */
         $storageType = $productAttribute->getStorageType();
 
         return $queryBuilder
             ->join('o.subject', 'p', 'WITH', 'p.enabled = 1')
-            ->select('o.localeCode, o.'.$storageType.' as value')
+            ->select('o.localeCode, o.' . $storageType . ' as value')
             ->where('o.attribute = :attribute')
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')

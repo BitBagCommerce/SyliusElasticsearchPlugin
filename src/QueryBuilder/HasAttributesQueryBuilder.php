@@ -19,7 +19,7 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class HasAttributesQueryBuilder implements QueryBuilderInterface
 {
-    protected $localeContext;
+    private $localeContext;
 
     public function __construct(LocaleContextInterface $localeContext)
     {

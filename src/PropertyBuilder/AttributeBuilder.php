@@ -83,7 +83,6 @@ final class AttributeBuilder extends AbstractBuilder
         return $attributes;
     }
 
-
     private function processAttribute(AttributeInterface $attribute, $productAttribute, Document $document): void
     {
         $attributeCode = $attribute->getCode();
@@ -100,5 +99,4 @@ final class AttributeBuilder extends AbstractBuilder
             $document->set($code, $values);
         }
     }
-
 }

@@ -17,12 +17,12 @@ use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDat
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
-use Twig\Environment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Twig\Environment;
 
 final class ListProductsAction
 {
@@ -62,7 +62,7 @@ final class ListProductsAction
 
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->create(  ShopProductsFilterType::class);
+        $form = $this->formFactory->create(ShopProductsFilterType::class);
         $form->handleRequest($request);
         $requestData = array_merge(
             $form->getData(),

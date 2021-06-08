@@ -33,8 +33,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         LocaleContextInterface $localeContext,
         StringFormatterInterface $stringFormatter
-    )
-    {
+    ) {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->localeContext = $localeContext;
         $this->stringFormatter = $stringFormatter;
