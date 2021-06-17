@@ -33,6 +33,7 @@ final class ResourceRefresher implements ResourceRefresherInterface
         $objectPersister = $this->container->get($objectPersisterId);
         Assert::isInstanceOf($objectPersister, ObjectPersisterInterface::class);
 
+        $objectPersister->deleteById($resource->getId());
         $objectPersister->replaceOne($resource);
     }
 }
