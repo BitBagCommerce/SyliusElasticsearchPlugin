@@ -74,6 +74,25 @@ return [
 ];
 ```
 
+Use trait `BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait` in an overridden ProductVariant entity class. [see how to overwrite a sylius model](https://docs.sylius.com/en/1.9/customization/model.html)
+
+also Use `BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface` interface in ProductVariant entity class.
+The final effect should look like the following:
+
+```
+use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface as BitBagElasticsearchPluginVariant;
+use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface as BaseProductVariantInterface;
+
+class ProductVariant extends BaseProductVariant implements BaseProductVariantInterface, BitBagElasticsearchPluginVariant
+{
+    use ProductVariantTrait;
+    
+    ...
+}
+```
+
 Import required config in your `config/packages/_sylius.yaml` file:
 ```yaml
 # config/packages/_sylius.yaml

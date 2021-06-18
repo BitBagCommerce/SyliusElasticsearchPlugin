@@ -5,9 +5,19 @@
         <service id="bitbag_sylius_elasticsearch_plugin.event_listener.resource_index" class="BitBag\SyliusElasticsearchPlugin\EventListener\ResourceIndexListener">
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.refresher.resource" />
             <argument type="collection">
-                <argument key="fos_elastica.object_persister.bitbag_attribute_taxons.default">%sylius.model.product_attribute.class%</argument>
-                <argument key="fos_elastica.object_persister.bitbag_option_taxons.default">%sylius.model.product_option.class%</argument>
-                <argument key="fos_elastica.object_persister.bitbag_shop_product.default">%sylius.model.product.class%</argument>
+                <argument type="collection">
+                    <argument key="model">%sylius.model.product_attribute.class%</argument>
+                    <argument key="serviceId">fos_elastica.object_persister.bitbag_attribute_taxons.default</argument>
+                </argument>
+                <argument type="collection">
+                    <argument key="model">%sylius.model.product_option.class%</argument>
+                    <argument key="serviceId">fos_elastica.object_persister.bitbag_option_taxons.default</argument>
+                </argument>
+                <argument type="collection">
+                    <argument key="getParentMethod">getProduct</argument>
+                    <argument key="model">%sylius.model.product.class%</argument>
+                    <argument key="serviceId">fos_elastica.object_persister.bitbag_shop_product.default</argument>
+                </argument>
             </argument>
             <tag name="kernel.event_listener" event="sylius.product_attribute.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product_attribute.post_update" method="updateIndex" />
@@ -15,6 +25,8 @@
             <tag name="kernel.event_listener" event="sylius.option.post_update" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product.post_update" method="updateIndex" />
+            <tag name="kernel.event_listener" event="sylius.product_variant.post_create" method="updateIndex" />
+            <tag name="kernel.event_listener" event="sylius.product_variant.post_update" method="updateIndex" />
         </service>
         <service id="bitbag_sylius_elasticsearch_plugin.event_listener.order_products" class="BitBag\SyliusElasticsearchPlugin\EventListener\OrderProductsListener" public="true">
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.refresher.resource" />

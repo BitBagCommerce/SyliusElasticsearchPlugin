@@ -17,7 +17,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
-final class ResourceIndexListener
+final class ResourceIndexListener implements ResourceIndexListenerInterface
 {
     /** @var ResourceRefresherInterface */
     private $resourceRefresher;
@@ -36,10 +36,15 @@ final class ResourceIndexListener
         $resource = $event->getSubject();
 
         Assert::isInstanceOf($resource, ResourceInterface::class);
+        foreach ($this->persistersMap as $config) {
+            $method = $config[self::GET_PARENT_METHOD_KEY] ?? null;
 
-        foreach ($this->persistersMap as $objectPersisterId => $modelClass) {
-            if ($resource instanceof $modelClass) {
-                $this->resourceRefresher->refresh($resource, $objectPersisterId);
+            if (null !== $method && method_exists($resource, $method)) {
+                $resource = $resource->$method();
+            }
+
+            if ($resource instanceof $config[self::MODEL_KEY]) {
+                $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
             }
         }
     }
