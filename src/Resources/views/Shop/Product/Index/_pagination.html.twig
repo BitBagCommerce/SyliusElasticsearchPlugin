@@ -1,6 +1,6 @@
 {% set route = app.request.attributes.get('_route') %}
 {% set slug = app.request.get('slug') %}
-{% set queryParameters = app.request.query.all|unset_elements(['limit']) %}
+{% set queryParameters = app.request.query.all|unset_elements(['limit', 'page']) %}
 
 <div class="ui compact menu">
     <div class="ui simple dropdown item">
