@@ -55,20 +55,23 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
-        $dataMaxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
+        $dataMinPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMinPriceName());
+        $dataMaxPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMaxPriceName());
 
-        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : 0;
-        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : \PHP_INT_MAX;
+        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : null;
+        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : null;
 
         $channelCode = $this->channelContext->getChannel()->getCode();
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         $rangeQuery = new Range();
 
-        $rangeQuery->setParam($propertyName, [
-            'gte' => $minPrice,
-            'lte' => $maxPrice,
-        ]);
+        $paramValue = $this->getQueryParamValue($minPrice , $maxPrice);
+
+        if (null === $paramValue) {
+            return null;
+        }
+
+        $rangeQuery->setParam($propertyName, $paramValue);
 
         return $rangeQuery;
     }
@@ -93,5 +96,21 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $transformer = new SyliusMoneyTransformer(2, false, SyliusMoneyTransformer::ROUND_HALF_UP, 100);
 
         return $transformer->reverseTransform($price);
+    }
+
+    private function getDataByKey(array $data, ?string $key = null): ?string
+    {
+        return $data[$key] ?? null;
+    }
+
+    private function getQueryParamValue(?int $min, ?int $max): ?array
+    {
+        foreach (['gte' => $min, 'lte' => $max] as $key => $value) {
+            if (null !== $value) {
+                $paramValue[$key] = $value;
+            }
+        }
+
+        return $paramValue ?? null;
     }
 }

@@ -106,4 +106,85 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
             ]
         );
     }
+
+    function it_build_query_with_max_price(
+        PriceNameResolverInterface $priceNameResolver,
+        ChannelContextInterface $channelContext,
+        ChannelInterface $channel,
+        CurrencyContextInterface $currencyContext,
+        CurrencyInterface $currency,
+        ConcatedNameResolverInterface $channelPricingNameResolver
+    ): void {
+        $channel->getCode()->willReturn('web');
+        $channelContext->getChannel()->willReturn($channel);
+        $priceNameResolver->resolveMinPriceName()->willReturn('min_price');
+        $priceNameResolver->resolveMaxPriceName()->willReturn('max_price');
+        $channel->getBaseCurrency()->willReturn($currency);
+        $currency->getCode()->willReturn('USD');
+        $currencyContext->getCurrencyCode()->willReturn('USD');
+
+        $channelPricingNameResolver->resolvePropertyName('web')->willReturn('web');
+
+        $range = $this->buildQuery([
+            'max_price' => '110,51',
+        ]);
+
+        $range->getParam('web')->shouldReturn(
+            [
+                'lte' => 11051,
+            ]
+        );
+    }
+
+    function it_build_query_with_min_price(
+        PriceNameResolverInterface $priceNameResolver,
+        ChannelContextInterface $channelContext,
+        ChannelInterface $channel,
+        CurrencyContextInterface $currencyContext,
+        CurrencyInterface $currency,
+        ConcatedNameResolverInterface $channelPricingNameResolver
+    ): void {
+        $channel->getCode()->willReturn('web');
+        $channelContext->getChannel()->willReturn($channel);
+        $priceNameResolver->resolveMinPriceName()->willReturn('min_price');
+        $priceNameResolver->resolveMaxPriceName()->willReturn('max_price');
+        $channel->getBaseCurrency()->willReturn($currency);
+        $currency->getCode()->willReturn('USD');
+        $currencyContext->getCurrencyCode()->willReturn('USD');
+
+        $channelPricingNameResolver->resolvePropertyName('web')->willReturn('web');
+
+        $range = $this->buildQuery([
+            'min_price' => '133,22',
+        ]);
+
+        $range->getParam('web')->shouldReturn(
+            [
+                'gte' => 13322,
+            ]
+        );
+    }
+
+    function it_build_query_without_price_param(
+        PriceNameResolverInterface $priceNameResolver,
+        ChannelContextInterface $channelContext,
+        ChannelInterface $channel,
+        CurrencyContextInterface $currencyContext,
+        CurrencyInterface $currency,
+        ConcatedNameResolverInterface $channelPricingNameResolver
+    ): void {
+        $channel->getCode()->willReturn('web');
+        $channelContext->getChannel()->willReturn($channel);
+        $priceNameResolver->resolveMinPriceName()->willReturn('min_price');
+        $priceNameResolver->resolveMaxPriceName()->willReturn('max_price');
+        $channel->getBaseCurrency()->willReturn($currency);
+        $currency->getCode()->willReturn('USD');
+        $currencyContext->getCurrencyCode()->willReturn('USD');
+
+        $channelPricingNameResolver->resolvePropertyName('web')->willReturn('web');
+
+        $range = $this->buildQuery([]);
+
+        $range->shouldBeNull();
+    }
 }
