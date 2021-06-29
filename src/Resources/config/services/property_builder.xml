@@ -12,6 +12,10 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.product_code" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductCodeBuilder">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.option" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.option" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
