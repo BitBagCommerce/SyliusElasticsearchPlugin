@@ -4,7 +4,7 @@
     "description": "BitBag Elasticsearch plugin for Sylius.",
     "license": "MIT",
     "require": {
-        "php": "^7.3 || ^7.4",
+        "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "sylius/sylius": "^1.10",
         "friendsofsymfony/elastica-bundle": "^5.0",
