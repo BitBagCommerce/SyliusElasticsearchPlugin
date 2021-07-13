@@ -21,16 +21,21 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [7.4, 7.3]
-                symfony: [^4.4, ^5.2]
-                sylius: [~1.9.0]
-                node: [10.x]
-                mysql: [5.7]
+                php: ["8.0", "7.4"]
+                symfony: ["^4.4", "^5.2"]
+                sylius: ["~1.9.0", "~1.10.0"]
+                node: ["10.x"]
+                mysql: ["8.0"]
 
                 exclude:
-                    -
-                        sylius: ~1.8.0
-                        symfony: ^5.2
+                    - sylius: ~1.9.0
+                      php: 8.0
+
+                    - sylius: ~1.10.0
+                      symfony: ^4.4
+                    # friendsofsymfony/elastica-bundle - package is locking php 7.x
+                    - sylius: ~1.10.0
+                      php: 8.0
 
         env:
             APP_ENV: test
@@ -124,7 +129,7 @@ jobs:
 
             -
                 name: Install PHP dependencies
-                run: composer install --no-interaction
+                run: composer install --no-interaction --no-scripts
 
             -
                 name: Get Yarn cache directory
@@ -171,14 +176,6 @@ jobs:
             -
                 name: Validate database schema
                 run: (cd tests/Application && bin/console doctrine:schema:validate)
-
-#            -
-#                name: Run PHPStan
-#                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
-
-#            -
-#                name: Run Psalm
-#                run: vendor/bin/psalm
 
             -
                 name: Run PHPSpec
