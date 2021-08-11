@@ -17,7 +17,6 @@ use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryI
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
 final class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
@@ -59,17 +58,10 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute);
 
         $choices = [];
-        array_walk($attributeValues, function (ProductAttributeValueInterface $productAttributeValue) use (&$choices): void {
-            $product = $productAttributeValue->getProduct();
+        array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {
+            $value = $productAttributeValue['value'];
 
-            if (!$product->isEnabled()) {
-                unset($product);
-
-                return;
-            }
-
-            $value = $productAttributeValue->getValue();
-            $configuration = $productAttributeValue->getAttribute()->getConfiguration();
+            $configuration = $productAttribute->getConfiguration();
 
             if (is_array($value)
                 && isset($configuration['choices'])

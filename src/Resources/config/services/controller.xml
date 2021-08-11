@@ -8,20 +8,23 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.shop_products" />
-            <argument type="service" id="templating" />
+            <argument type="service" id="twig" />
             <tag name="controller.service_arguments" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_product_list" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductListDataHandler">
             <argument type="service" id="sylius.repository.taxon" />
             <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.product_attributes" />
             <argument>%bitbag_es_shop_name_property_prefix%</argument>
             <argument>%bitbag_es_shop_product_taxons_property%</argument>
             <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_attribute_property_prefix%</argument>
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandler" />
+        <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandler">
+            <argument>%bitbag_es_pagination_default_limit%</argument>
+        </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductsSortDataHandler">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing" />

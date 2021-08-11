@@ -42,7 +42,7 @@ final class SearchFormEventListener
                 $event->getSettings(),
                 [
                     'template' => $this->template,
-                    'form' => $this->getForm()->createView()
+                    'form' => $this->getForm()->createView(),
                 ]
             )
         );
@@ -60,6 +60,7 @@ final class SearchFormEventListener
             $this->form = $this->formFactory
                 ->create(SearchType::class, $search, ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]);
         }
+
         return $this->form;
     }
 }

@@ -14,7 +14,7 @@ namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -49,7 +49,7 @@ final class ProductContext implements Context
     /** @var FactoryInterface */
     private $productOptionValueFactory;
 
-    /** @var ObjectManager */
+    /** @var EntityManagerInterface */
     private $objectManager;
 
     /** @var ProductVariantResolverInterface */
@@ -68,7 +68,7 @@ final class ProductContext implements Context
         FactoryInterface $channelPricingFactory,
         FactoryInterface $productOptionFactory,
         FactoryInterface $productOptionValueFactory,
-        ObjectManager $objectManager,
+        EntityManagerInterface $objectManager,
         ProductVariantResolverInterface $defaultVariantResolver,
         SlugGeneratorInterface $slugGenerator
     ) {

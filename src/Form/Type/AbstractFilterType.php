@@ -28,6 +28,6 @@ abstract class AbstractFilterType extends AbstractType
 
     public function getBlockPrefix(): ?string
     {
-        return null;
+        return '';
     }
 }

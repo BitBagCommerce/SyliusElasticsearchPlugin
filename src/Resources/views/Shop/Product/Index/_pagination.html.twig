@@ -1,14 +1,13 @@
 {% set route = app.request.attributes.get('_route') %}
 {% set slug = app.request.get('slug') %}
-{% set availableLimits = constant('BitBag\\SyliusElasticsearchPlugin\\Controller\\RequestDataHandler\\PaginationDataHandlerInterface::AVAILABLE_LIMITS') %}
-{% set queryParameters = app.request.query.all|unset_elements(['limit']) %}
+{% set queryParameters = app.request.query.all|unset_elements(['limit', 'page']) %}
 
 <div class="ui compact menu">
     <div class="ui simple dropdown item">
         <span>{{ 'bitbag_sylius_elasticsearch_plugin.ui.per_page'|trans }}</span>
         <i class="dropdown icon"></i>
         <div class="menu">
-            {% for limit in availableLimits %}
+            {% for limit in bitbag_es_pagination_available_page_limits %}
                 <a class="item" href="{{ path(route, {'slug': slug, 'limit': limit}|merge(queryParameters)) }}">{{ limit }}</a>
             {% endfor %}
         </div>

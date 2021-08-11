@@ -32,9 +32,6 @@ final class OptionTaxonsBuilder extends AbstractBuilder
     private $productTaxonsMapper;
 
     /** @var string */
-    private $optionProperty;
-
-    /** @var string */
     private $taxonsProperty;
 
     /** @var array */
@@ -44,14 +41,12 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         RepositoryInterface $productOptionValueRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
         ProductTaxonsMapperInterface $productTaxonsMapper,
-        string $optionProperty,
         string $taxonsProperty,
         array $excludedOptions = []
     ) {
         $this->productOptionValueRepository = $productOptionValueRepository;
         $this->productVariantRepository = $productVariantRepository;
         $this->productTaxonsMapper = $productTaxonsMapper;
-        $this->optionProperty = $optionProperty;
         $this->taxonsProperty = $taxonsProperty;
         $this->excludedOptions = $excludedOptions;
     }

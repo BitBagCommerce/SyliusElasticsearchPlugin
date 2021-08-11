@@ -8,8 +8,15 @@ parameters:
     bitbag_es_host: localhost
     bitbag_es_port: 9200
 
+    bitbag_es_pagination_available_page_limits: [9, 18, 36]
+    bitbag_es_pagination_default_limit: 9
+
 fos_elastica:
     clients:
         default:
             host: "%bitbag_es_host%"
             port: "%bitbag_es_port%"
+
+twig:
+    globals:
+        bitbag_es_pagination_available_page_limits: "%bitbag_es_pagination_available_page_limits%"

@@ -21,7 +21,7 @@ use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Pagerfanta\Pagerfanta;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -37,7 +37,7 @@ final class ListProductsActionSpec extends ObjectBehavior
         SortDataHandlerInterface $shopProductsSortDataHandler,
         PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
-        EngineInterface $templatingEngine
+        Environment $twig
     ): void {
         $this->beConstructedWith(
             $formFactory,
@@ -45,7 +45,7 @@ final class ListProductsActionSpec extends ObjectBehavior
             $shopProductsSortDataHandler,
             $paginationDataHandler,
             $shopProductsFinder,
-            $templatingEngine
+            $twig
         );
     }
 
@@ -65,14 +65,15 @@ final class ListProductsActionSpec extends ObjectBehavior
         ShopProductsFinderInterface $shopProductsFinder,
         Pagerfanta $pagerfanta,
         FormView $formView,
-        EngineInterface $templatingEngine,
+        Environment $twig,
         Response $response
     ): void {
         $form->getData()->willReturn([]);
+        $form->isValid()->willReturn(true);
         $form->handleRequest($request)->shouldBeCalled();
         $form->createView()->willReturn($formView);
 
-        $formFactory->createNamed(null, ShopProductsFilterType::class)->willReturn($form);
+        $formFactory->create(ShopProductsFilterType::class)->willReturn($form);
 
         $request->query = $queryParameters;
         $queryParameters->all()->willReturn([]);
@@ -86,7 +87,7 @@ final class ListProductsActionSpec extends ObjectBehavior
 
         $shopProductsFinder->find(['taxon' => null])->willReturn($pagerfanta);
 
-        $templatingEngine->renderResponse('@Template', Argument::any())->willReturn($response);
+        $twig->render('@Template', Argument::any())->shouldBeCalled();
 
         $this->__invoke($request);
     }

@@ -12,6 +12,10 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.product_code" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductCodeBuilder">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.option" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\OptionBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.option" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
@@ -42,7 +46,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.sold_units" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\SoldUnitsPropertyBuilder">
-            <argument type="service" id="sylius.repository.order_item" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.order_item_repository" />
             <argument>%bitbag_es_shop_product_sold_units%</argument>
             <tag name="kernel.event_subscriber" />
         </service>
@@ -56,7 +60,6 @@
             <argument type="service" id="sylius.repository.product_option_value" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_variant" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_builder.mapper.product_taxons" />
-            <argument>%bitbag_es_shop_option_property_prefix%</argument>
             <argument>%bitbag_es_shop_option_taxons_property%</argument>
             <argument>%bitbag_es_excluded_filter_options%</argument>
             <tag name="kernel.event_subscriber" />

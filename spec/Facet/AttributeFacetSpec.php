@@ -18,10 +18,11 @@ final class AttributeFacetSpec extends ObjectBehavior
 {
     function let(
         ConcatedNameResolverInterface $attributeNameResolver,
-        RepositoryInterface $attributeRepository
+        RepositoryInterface $attributeRepository,
+        LocaleContextInterface $localeContext
     ): void {
         $attributeNameResolver->resolvePropertyName('attribute_code')->willReturn('attribute_attribute_code');
-        $this->beConstructedWith($attributeNameResolver, $attributeRepository, 'attribute_code');
+        $this->beConstructedWith($attributeNameResolver, $attributeRepository, 'attribute_code', $localeContext);
     }
 
     function it_is_initializable(): void
@@ -34,18 +35,21 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    function it_returns_terms_aggregation(): void
+    function it_returns_terms_aggregation(LocaleContextInterface $localeContext): void
     {
+        $localeContext->getLocaleCode()->willReturn('en');
         $expectedAggregation = new Terms('');
-        $expectedAggregation->setField('attribute_attribute_code.keyword');
+        $expectedAggregation->setField('attribute_attribute_code_en.keyword');
 
         $this->getAggregation()->shouldBeLike($expectedAggregation);
     }
 
-    function it_returns_terms_query(): void
+    function it_returns_terms_query(LocaleContextInterface $localeContext): void
     {
+        $localeContext->getLocaleCode()->willReturn('en');
+
         $selectedBuckets = ['selected_value'];
-        $expectedQuery = new \Elastica\Query\Terms('attribute_attribute_code.keyword', $selectedBuckets);
+        $expectedQuery = new \Elastica\Query\Terms('attribute_attribute_code_en.keyword', $selectedBuckets);
 
         $this->getQuery($selectedBuckets)->shouldBeLike($expectedQuery);
     }

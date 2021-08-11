@@ -13,7 +13,7 @@ Feature: Site-wide products search
     And there is a product named "BMW Z4" in the store
     And this product's price is "$42670"
     And this product has select attribute "Car Type" with value "Cabrio"
-    And this product has text attribute "Color" with value "Red"
+    And this product has a text attribute "Color" with value "Red"
     And this product has option "Supply" with values "Gasoline" and "Diesel"
     And this product is available in "Gasoline" supply priced at "$42670"
     And this product is available in "Diesel" supply priced at "$45670"
@@ -21,26 +21,26 @@ Feature: Site-wide products search
     And there is a product named "Volvo XC90" in the store
     And this product's price is "$64505.80"
     And this product has select attribute "Car Type" with value "SUV"
-    And this product has text attribute "Color" with value "Black"
+    And this product has a text attribute "Color" with value "Black"
     And this product belongs to "Cars"
     And there is a product named "BMW 5 Series" in the store
     And this product's price is "$52070"
     And this product has select attribute "Car Type" with value "Cabrio"
-    And this product has text attribute "Color" with value "Red"
+    And this product has a text attribute "Color" with value "Red"
     And this product belongs to "Cars"
     And there is a product named "Lamborghini Aventador" in the store
     And this product's price is "$450000"
-    And this product has text attribute "Color" with value "Yellow"
+    And this product has a text attribute "Color" with value "Yellow"
     And this product belongs to "Cars"
     And there is a product named "BMW GS" in the store
     And this product's price is "$18070"
     And this product has select attribute "Motorbike Type" with value "Enduro"
-    And this product has text attribute "Color" with value "Grey"
+    And this product has a text attribute "Color" with value "Grey"
     And this product belongs to "Motorbikes"
     And there is a product named "Ducati Monster" in the store
     And this product's price is "$14995"
     And this product has select attribute "Motorbike Type" with value "Naked"
-    And this product has text attribute "Color" with value "Black"
+    And this product has a text attribute "Color" with value "Black"
     And this product's short description is:
       """
       This is the Ducati Monster which is much better than any other BMW motorbike.
@@ -48,7 +48,7 @@ Feature: Site-wide products search
     And this product belongs to "Motorbikes"
     And there is a product named "Honda Africa Twin" in the store
     And this product has select attribute "Motorbike Type" with value "Enduro"
-    And this product has text attribute "Color" with value "Green & White"
+    And this product has a text attribute "Color" with value "Green & White"
     And this product's price is "$13490"
     And this product's description is:
       """

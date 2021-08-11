@@ -13,20 +13,20 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Api\Shop;
 
 use Behat\Behat\Context\Context;
-use Symfony\Component\BrowserKit\Client;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Webmozart\Assert\Assert;
 
 final class ProductContext implements Context
 {
-    /** @var Client */
+    /** @var AbstractBrowser */
     private $client;
 
     /** @var RouterInterface */
     private $router;
 
-    public function __construct(Client $client, RouterInterface $router)
+    public function __construct(AbstractBrowser $client, RouterInterface $router)
     {
         $this->client = $client;
         $this->router = $router;
