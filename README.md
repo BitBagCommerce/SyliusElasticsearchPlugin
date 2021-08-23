@@ -21,14 +21,12 @@ Like what we do? Want to join us? Check out our job listings on our [career page
 * [Overview](#overview)
 * [Support](#we-are-here-to-help)
 * [Installation](#installation)
-   * [Requirements](#requirements)
    * [Usage](#usage)
    * [Customization](#customization)
    * [Testing](#testing)
 * [About us](#about-us)
    * [Community](#community)
-* [Demo Sylius shop](#demo-sylius-shop)
-* [Additional Sylius resources for developers](#additional-resources-for-developers)
+* [Demo](#demo-sylius-shop)
 * [License](#license)
 * [Contact](#contact)
 
@@ -39,7 +37,7 @@ Working [Sylius](https://sylius.com/) [Elasticsearch](https://www.elastic.co/pro
 
 If you are curious about the details of this plugin, read [this Medium blog post](https://medium.com/@BitBag/using-sylius-and-elasticsearch-for-a-products-filter-6dc9f0ce929) and watch the video below.
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/DUswiGQePLE/0.jpg)](https://www.youtube.com/watch?v=DUswiGQePLE)
+[![](https://img.youtube.com/vi/DUswiGQePLE/0.jpg)](https://www.youtube.com/watch?v=DUswiGQePLE)
 
 What is more, the plugin has a nice Sylius-oriented architecture that allows mapping resources to the Elastic document easier. It is flexible as well, so that you can customize the existing features for your specific business needs.
 
@@ -54,8 +52,6 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 # Installation
 
 ----
-
-### Requirements
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 If you use Sylius 1.4, you might get a compatibility issue for Pagerfanta. Please read [this issue](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/issues/23) in order to proceed with a workaround.
