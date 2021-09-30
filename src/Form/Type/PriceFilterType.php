@@ -57,7 +57,7 @@ final class PriceFilterType extends AbstractFilterType
                         'message' => 'bitbag_sylius_elasticsearch_plugin.max_price_numeric',
                     ]),
                     new PositiveOrZero([
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
+                        'message' => 'bitbag_sylius_elasticsearch_plugin.max_price_positive_or_zero',
                     ]),
                 ],
             ])
