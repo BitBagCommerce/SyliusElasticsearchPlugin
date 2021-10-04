@@ -71,7 +71,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
                 }
             } else {
                 $choice = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
-                $choices[$value] = $choice;
+                $choices[(string)$value] = $choice;
             }
         });
         unset($attributeValues);
