@@ -10,6 +10,7 @@
         <service id="bitbag_sylius_elasticsearch_plugin.finder.shop_products" class="BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.shop_products" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product.default" />
+            <argument type="service" id="debug.event_dispatcher" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.finder.product_options" class="BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinder">
