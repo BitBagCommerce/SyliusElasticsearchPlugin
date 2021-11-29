@@ -14,20 +14,21 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 
 use Elastica\Query;
+use spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperSpec;
 
 
 final class QueryCreatedListener
 {
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             QueryCreatedEvent::NAME => 'onQueryCreated',
         ];
     }
 
-    public function onQueryCreated(Query\BoolQuery $query)
+    public function onQueryCreated(QueryCreatedEvent $event): void
     {
-
+        dd($event);
     }
 }

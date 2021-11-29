@@ -34,5 +34,9 @@
         <service id="bitbag.sylius_elasticsearch_plugin.refresher.resource" class="BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresher">
             <argument type="service" id="service_container" />
         </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.query_event_factory" class="BitBag\SyliusElasticsearchPlugin\Factory\QueryCreatedEventFactory">
+            <argument type="service" id="service_container" />
+        </service>
     </services>
 </container>
