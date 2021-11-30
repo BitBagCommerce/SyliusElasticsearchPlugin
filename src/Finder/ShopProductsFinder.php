@@ -11,14 +11,11 @@ namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
-use BitBag\SyliusElasticsearchPlugin\EventListener\QueryCreatedEvent;
-use BitBag\SyliusElasticsearchPlugin\Factory\QueryCreatedEventFactoryInterface;
 use BitBag\SyliusElasticsearchPlugin\Notifier\BoolQueryDispatcherInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ShopProductsFinder implements ShopProductsFinderInterface
 {
@@ -28,10 +25,6 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     /** @var PaginatedFinderInterface */
     private $productFinder;
 
-    /**
-     * @var QueryCreatedEventFactoryInterface
-     */
-    private $eventFactory;
     /**
      * @var BoolQueryDispatcherInterface
      */
@@ -55,7 +48,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
         $query = new Query($boolQuery);
 
 
-        $event = $this->boolQueryDispatcher->dispatchNewQuery($boolQuery);
+        $this->boolQueryDispatcher->dispatchNewQuery($boolQuery);
 
 
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
