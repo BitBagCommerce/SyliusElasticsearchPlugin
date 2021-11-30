@@ -16,7 +16,8 @@
         "symfony/http-foundation": "^4.4",
         "symfony/http-kernel": "^4.4",
         "symfony/security-core": "^4.4",
-        "symfony/security-http": "^4.4"
+        "symfony/security-http": "^4.4",
+        "symfony/error-handler": "^4.4"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
