@@ -11,7 +11,7 @@ We are hiring developers from all over the world. Join us and start your new, ex
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use Elastica\Query\AbstractQuery;
-use Psr\EventDispatcher\StoppableEventInterface;
+use ECSPrefix20211002\Psr\EventDispatcher\StoppableEventInterface;
 
 interface QueryCreatedEventInterface extends StoppableEventInterface
 {
