@@ -8,8 +8,7 @@
         "php": "^7.3 || ^7.4",
         "sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0",
         "friendsofsymfony/elastica-bundle": "^5.0",
-        "symfony/property-access": "^4.4 || ^5.2",
-        "symfony/security-bundle": "^5.3"
+        "symfony/property-access": "^4.4 || ^5.2"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
