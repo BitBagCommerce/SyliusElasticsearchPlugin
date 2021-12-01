@@ -47,7 +47,6 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
 
         $query = new Query($boolQuery);
 
-
         $this->boolQueryDispatcher->dispatchNewQuery($boolQuery);
 
 

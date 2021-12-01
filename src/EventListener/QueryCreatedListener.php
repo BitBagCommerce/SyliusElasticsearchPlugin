@@ -29,6 +29,6 @@ final class QueryCreatedListener
 
     public function onQueryCreated(QueryCreatedEvent $event): void
     {
-        dd($event);
+        //TODO change query behavior
     }
 }

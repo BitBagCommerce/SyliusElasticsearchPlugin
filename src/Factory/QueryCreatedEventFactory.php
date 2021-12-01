@@ -18,8 +18,6 @@ use Elastica\Query\AbstractQuery;
 
 final class QueryCreatedEventFactory implements QueryCreatedEventFactoryInterface
 {
-    //przyjmuje boolquery return event
-
     public function createNewEvent(AbstractQuery $boolQuery): QueryCreatedEventInterface
     {
         return new QueryCreatedEvent($boolQuery);
