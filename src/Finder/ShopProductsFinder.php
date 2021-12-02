@@ -11,7 +11,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
-use BitBag\SyliusElasticsearchPlugin\Notifier\BoolQueryDispatcherInterface;
+use BitBag\SyliusElasticsearchPlugin\Notifier\QueryDispatcherInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -26,18 +26,18 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     private $productFinder;
 
     /**
-     * @var BoolQueryDispatcherInterface
+     * @var QueryDispatcherInterface
      */
-    private $boolQueryDispatcher;
+    private $queryDispatcher;
 
     public function __construct(
         QueryBuilderInterface $shopProductsQueryBuilder,
         PaginatedFinderInterface $productFinder,
-        BoolQueryDispatcherInterface $boolQueryDispatcher
+        QueryDispatcherInterface $queryDispatcher
     ) {
         $this->shopProductsQueryBuilder = $shopProductsQueryBuilder;
         $this->productFinder = $productFinder;
-        $this->boolQueryDispatcher = $boolQueryDispatcher;
+        $this->queryDispatcher = $queryDispatcher;
     }
 
     public function find(array $data): Pagerfanta
@@ -47,7 +47,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
 
         $query = new Query($boolQuery);
 
-        $this->boolQueryDispatcher->dispatchNewQuery($boolQuery);
+        $this->queryDispatcher->dispatchNewQuery($boolQuery);
 
 
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);

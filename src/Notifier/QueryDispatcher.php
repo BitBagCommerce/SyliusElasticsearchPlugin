@@ -16,7 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\Factory\QueryCreatedEventFactoryInterface;
 use Elastica\Query\AbstractQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final class BoolQueryDispatcher implements BoolQueryDispatcherInterface
+final class QueryDispatcher implements QueryDispatcherInterface
 {
     /**
      * @var QueryCreatedEventFactoryInterface

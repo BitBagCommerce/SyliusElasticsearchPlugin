@@ -16,7 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\EventListener\QueryCreatedEventInterface;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 
-interface BoolQueryDispatcherInterface
+interface QueryDispatcherInterface
 {
     public function dispatchNewQuery(AbstractQuery $boolQuery): QueryCreatedEventInterface;
 }

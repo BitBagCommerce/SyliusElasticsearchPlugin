@@ -11,11 +11,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
-
-
-use Elastica\Query;
-use spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperSpec;
-
+use Elastica\Query\BoolQuery;
 
 final class QueryCreatedListener
 {
@@ -23,12 +19,16 @@ final class QueryCreatedListener
     public static function getSubscribedEvents(): array
     {
         return [
-            QueryCreatedEvent::NAME => 'onQueryCreated',
+            QueryCreatedEventInterface::NAME => 'onQueryCreated',
         ];
     }
 
     public function onQueryCreated(QueryCreatedEvent $event): void
     {
-        //TODO change query behavior
+        $query = $event->getQuery();
+
+        if (false === $query instanceof BoolQuery) {
+            return;
+        }
     }
 }

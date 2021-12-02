@@ -17,7 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\EventListener\QueryCreatedEventInterface;
 use BitBag\SyliusElasticsearchPlugin\Factory\QueryCreatedEventFactoryInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
-use BitBag\SyliusElasticsearchPlugin\Notifier\BoolQueryDispatcherInterface;
+use BitBag\SyliusElasticsearchPlugin\Notifier\QueryDispatcherInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query\AbstractQuery;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -30,7 +30,7 @@ final class ShopProductsFinderSpec extends ObjectBehavior
     function let(
         QueryBuilderInterface $shopProductsQueryBuilder,
         PaginatedFinderInterface $productFinder,
-        BoolQueryDispatcherInterface $boolQueryDispatcher
+        QueryDispatcherInterface $boolQueryDispatcher
 
     ): void {
         $this->beConstructedWith(
@@ -51,13 +51,13 @@ final class ShopProductsFinderSpec extends ObjectBehavior
     }
 
     function it_finds(
-        QueryBuilderInterface $shopProductsQueryBuilder,
-        PaginatedFinderInterface $productFinder,
-        AbstractQuery $boolQuery,
-        Pagerfanta $pagerfanta,
-        BoolQueryDispatcherInterface $boolQueryDispatcher,
+        QueryBuilderInterface             $shopProductsQueryBuilder,
+        PaginatedFinderInterface          $productFinder,
+        AbstractQuery                     $boolQuery,
+        Pagerfanta                        $pagerfanta,
+        QueryDispatcherInterface          $boolQueryDispatcher,
         QueryCreatedEventFactoryInterface $eventFactory,
-        QueryCreatedEventInterface $queryEvent
+        QueryCreatedEventInterface        $queryEvent
     ): void {
         $data = [
             SortDataHandlerInterface::SORT_INDEX => null,
