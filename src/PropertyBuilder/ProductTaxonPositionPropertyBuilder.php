@@ -11,7 +11,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
@@ -24,7 +24,7 @@ final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
         $this->taxonPositionNameResolver = $taxonPositionNameResolver;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {

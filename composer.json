@@ -5,9 +5,9 @@
     "license": "MIT",
     "require": {
         "ext-json": "*",
-        "php": "^7.3 || ^7.4",
+        "php": "^7.4 || ^8.0",
         "sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0",
-        "friendsofsymfony/elastica-bundle": "^5.0",
+        "friendsofsymfony/elastica-bundle": "^6.0",
         "symfony/property-access": "^4.4 || ^5.2"
     },
     "require-dev": {

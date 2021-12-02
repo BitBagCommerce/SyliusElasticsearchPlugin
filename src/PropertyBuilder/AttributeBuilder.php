@@ -12,7 +12,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeTranslation;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -33,7 +33,7 @@ final class AttributeBuilder extends AbstractBuilder
         $this->stringFormatter = $stringFormatter;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,
             function (ProductInterface $product, Document $document): void {

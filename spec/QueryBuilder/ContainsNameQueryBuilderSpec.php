@@ -13,7 +13,7 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
@@ -48,7 +48,7 @@ final class ContainsNameQueryBuilderSpec extends ObjectBehavior
 
         $productNameNameResolver->resolvePropertyName('en')->willReturn('en');
 
-        $this->buildQuery(['name_property' => 'Book'])->shouldBeAnInstanceOf(Match::class);
+        $this->buildQuery(['name_property' => 'Book'])->shouldBeAnInstanceOf(MatchQuery::class);
     }
 
     function it_builds_returned_null_if_property_is_null(

@@ -43,7 +43,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
-            <argument type="service" id="fos_elastica.finder.bitbag_shop_product.default" />
+            <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" />
             <tag name="form.type" />

@@ -31,8 +31,8 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         $this->isEnabeldQuery = new Term();
         $this->isEnabeldQuery->setTerm('enabled', true);
         $isEnabledQueryBuilder->buildQuery([])->willReturn($this->isEnabeldQuery);
-        $this->hasChannelQuery = new Terms();
-        $this->hasChannelQuery->setTerms('channels', ['web_us']);
+        $this->hasChannelQuery = new Terms('channels');
+        $this->hasChannelQuery->setTerms(['web_us']);
         $hasChannelQueryBuilder->buildQuery([])->willReturn($this->hasChannelQuery);
         $this->beConstructedWith(
             $searchPropertyNameResolverRegistry,

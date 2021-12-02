@@ -14,7 +14,7 @@ use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use PhpSpec\ObjectBehavior;
 
 final class AttributeTaxonsBuilderSpec extends ObjectBehavior
@@ -38,7 +38,7 @@ final class AttributeTaxonsBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event): void
+    function it_consumes_event(PostTransformEvent $event): void
     {
         $this->consumeEvent($event);
     }
