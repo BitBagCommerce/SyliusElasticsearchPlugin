@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<services>
-    <service id="bitbag.sylius_elasticsearch_plugin.query_event_factory" class="BitBag\SyliusElasticsearchPlugin\Factory\QueryCreatedEventFactory">
-    </service>
-</services>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag.sylius_elasticsearch_plugin.query_event_factory" class="BitBag\SyliusElasticsearchPlugin\Factory\QueryCreatedEventFactory">
+        </service>
+    </services>
+</container>
