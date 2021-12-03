@@ -8,8 +8,10 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductShortDescriptionBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use PhpSpec\ObjectBehavior;
+use spec\BitBag\SyliusElasticsearchPlugin\EventMother;
 
 final class ProductShortDescriptionBuilderSpec extends ObjectBehavior
 {
@@ -29,8 +31,8 @@ final class ProductShortDescriptionBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(PostTransformEvent $event): void
+    function it_consumes_event(Document $document): void
     {
-        $this->consumeEvent($event);
+        $this->consumeEvent(EventMother::createPostTransformEvent($document));
     }
 }
