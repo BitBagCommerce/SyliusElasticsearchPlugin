@@ -9,10 +9,24 @@
 declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin;
 
+use BitBag\SyliusElasticsearchPlugin\DependencyInjection\CompilerPass\AuthenticationManagerPolyfillPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 final class BitBagSyliusElasticsearchPlugin extends Bundle
 {
     use SyliusPluginTrait;
+
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(
+            new AuthenticationManagerPolyfillPass(),
+            PassConfig::TYPE_BEFORE_OPTIMIZATION,
+            1
+        );
+    }
+
+
 }
