@@ -21,7 +21,6 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                elastic: ["6.8.15", "7.15.2"]
                 php: ["8.0", "7.4"]
                 symfony: ["^4.4", "^5.2"]
                 sylius: ["~1.9.0", "~1.10.0"]
@@ -84,7 +83,7 @@ jobs:
                 name: Runs Elasticsearch
                 uses: elastic/elastic-github-actions/elasticsearch@master
                 with:
-                    stack-version: "${{ matrix.elastic }}"
+                    stack-version: "7.15.2"
 
             -
                 name: Output PHP version for Symfony CLI
