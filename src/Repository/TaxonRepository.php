@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -15,7 +16,7 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
-final class TaxonRepository implements TaxonRepositoryInterface
+class TaxonRepository implements TaxonRepositoryInterface
 {
     /** @var BaseTaxonRepositoryInterface|EntityRepository */
     private $baseTaxonRepository;

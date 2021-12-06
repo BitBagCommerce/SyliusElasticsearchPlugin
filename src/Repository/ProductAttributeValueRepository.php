@@ -7,12 +7,13 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
 
-final class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
+class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
     /** @var BaseAttributeValueRepositoryInterface */
     private $baseAttributeValueRepository;

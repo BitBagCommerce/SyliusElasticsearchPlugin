@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Context;
 
 use Sylius\Component\Core\Model\TaxonInterface;

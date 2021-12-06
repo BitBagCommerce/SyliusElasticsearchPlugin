@@ -101,7 +101,11 @@ final class ProductAttributeContext implements Context
         $this->objectManager->flush();
     }
 
-    private function createProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
+    private function createProductAttribute(
+        string $type,
+        string $name,
+        ?string $code = null
+    ): ProductAttributeInterface
     {
         $productAttribute = $this->productAttributeFactory->createTyped($type);
 
@@ -113,7 +117,11 @@ final class ProductAttributeContext implements Context
         return $productAttribute;
     }
 
-    private function provideProductAttribute(string $type, string $name, ?string $code = null): ProductAttributeInterface
+    private function provideProductAttribute(
+        string $type,
+        string $name,
+        ?string $code = null
+    ): ProductAttributeInterface
     {
         $code = $code ?: StringInflector::nameToCode($name);
 

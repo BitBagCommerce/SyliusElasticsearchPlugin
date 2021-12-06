@@ -118,7 +118,11 @@ final class ProductContext implements Context
     /**
      * @Given /^(\d+) of these products are priced between ("[^"]+") and ("[^"]+")$/
      */
-    public function ofTheseProductsArePricedBetweenAnd(int $quantity, int $min, int $max): void
+    public function ofTheseProductsArePricedBetweenAnd(
+        int $quantity,
+        int $min,
+        int $max
+    ): void
     {
         $channel = $this->sharedStorage->get('channel');
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
@@ -175,7 +179,11 @@ final class ProductContext implements Context
     /**
      * @Given :quantity of these products have :optionName option with :value value
      */
-    public function ofTheseProductsHaveOptionWithValue(int $quantity, string $optionName, string $value): void
+    public function ofTheseProductsHaveOptionWithValue(
+        int $quantity,
+        string $optionName,
+        string $value
+    ): void
     {
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
         $products = $this->sharedStorage->get('products');
@@ -199,7 +207,11 @@ final class ProductContext implements Context
         $this->objectManager->flush();
     }
 
-    private function createProduct(string $productName, int $price = 100, ChannelInterface $channel = null): ProductInterface
+    private function createProduct(
+        string $productName,
+        int $price = 100,
+        ChannelInterface $channel = null
+    ): ProductInterface
     {
         if (null === $channel && $this->sharedStorage->has('channel')) {
             $channel = $this->sharedStorage->get('channel');
@@ -237,7 +249,11 @@ final class ProductContext implements Context
         return $product;
     }
 
-    private function addProductOption(ProductOptionInterface $option, string $value, string $code): ProductOptionValueInterface
+    private function addProductOption(
+        ProductOptionInterface $option,
+        string $value,
+        string $code
+    ): ProductOptionValueInterface
     {
         /** @var ProductOptionValueInterface $optionValue */
         $optionValue = $this->productOptionValueFactory->createNew();
