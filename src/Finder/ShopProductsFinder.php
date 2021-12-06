@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
@@ -25,9 +26,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     /** @var PaginatedFinderInterface */
     private $productFinder;
 
-    /**
-     * @var QueryDispatcherInterface
-     */
+    /** @var QueryDispatcherInterface */
     private $queryDispatcher;
 
     public function __construct(
@@ -48,7 +47,6 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
         $query = new Query($boolQuery);
 
         $this->queryDispatcher->dispatchNewQuery($boolQuery);
-
 
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
 

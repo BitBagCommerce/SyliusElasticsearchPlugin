@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -14,7 +15,7 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface as BaseProductVariantRepositoryInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
-final class ProductVariantRepository implements ProductVariantRepositoryInterface
+class ProductVariantRepository implements ProductVariantRepositoryInterface
 {
     /** @var BaseProductVariantRepositoryInterface|EntityRepository */
     private $baseProductVariantRepository;

@@ -8,14 +8,10 @@
 
 declare(strict_types=1);
 
-
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
-use Webmozart\Assert\Assert;
 
 final class ProductTaxonIndexListener
 {

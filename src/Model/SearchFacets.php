@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Model;
 
 class SearchFacets implements \Iterator
@@ -34,7 +35,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function current()
     {
@@ -42,7 +43,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function next()
     {
@@ -50,7 +51,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function key()
     {
@@ -58,17 +59,17 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function valid()
     {
         $key = key($this->selectedBuckets);
 
-        return $key !== null && $key !== false;
+        return null !== $key && false !== $key;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rewind()
     {

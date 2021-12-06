@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
 
 This file was created by developers working at BitBag
@@ -12,10 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use Elastica\Query\AbstractQuery;
 
-
 interface QueryCreatedEventInterface
 {
-    public const NAME = 'query.created.event';
-
     public function getQuery(): AbstractQuery;
 }

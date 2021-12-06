@@ -11,10 +11,8 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Notifier;
 
-use BitBag\SyliusElasticsearchPlugin\EventListener\QueryCreatedEvent;
 use BitBag\SyliusElasticsearchPlugin\EventListener\QueryCreatedEventInterface;
 use Elastica\Query\AbstractQuery;
-use Elastica\Query\BoolQuery;
 
 interface QueryDispatcherInterface
 {

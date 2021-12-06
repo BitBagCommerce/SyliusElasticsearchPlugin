@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
@@ -31,10 +32,13 @@ final class OptionBuilder extends AbstractBuilder
 
     public function consumeEvent(TransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 $this->resolveProductOptions($product, $document);
-            });
+            }
+        );
     }
 
     private function resolveProductOptions(ProductInterface $product, Document $document): void

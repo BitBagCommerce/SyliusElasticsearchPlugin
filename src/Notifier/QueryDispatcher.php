@@ -18,20 +18,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class QueryDispatcher implements QueryDispatcherInterface
 {
-    /**
-     * @var QueryCreatedEventFactoryInterface
-     */
+    /** @var QueryCreatedEventFactoryInterface */
     private $factory;
-    /**
-     * @var EventDispatcherInterface
-     */
+
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     public function __construct(
         QueryCreatedEventFactoryInterface $factory,
         EventDispatcherInterface $eventDispatcher
-    )
-    {
+    ) {
         $this->factory = $factory;
         $this->eventDispatcher = $eventDispatcher;
     }

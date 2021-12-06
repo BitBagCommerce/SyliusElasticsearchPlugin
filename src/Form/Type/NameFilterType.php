@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;

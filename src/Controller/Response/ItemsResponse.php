@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Response;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\Response\DTO\Item;

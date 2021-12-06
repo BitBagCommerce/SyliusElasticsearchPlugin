@@ -11,15 +11,12 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
-
 use Elastica\Query\AbstractQuery;
 use Symfony\Contracts\EventDispatcher\Event;
 
-
 final class QueryCreatedEvent extends Event implements QueryCreatedEventInterface
 {
-
-    /** @var AbstractQuery  */
+    /** @var AbstractQuery */
     private $query;
 
     public function __construct(AbstractQuery $query)
@@ -31,6 +28,4 @@ final class QueryCreatedEvent extends Event implements QueryCreatedEventInterfac
     {
         return $this->query;
     }
-
-
 }

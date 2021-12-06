@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
@@ -35,10 +36,13 @@ final class AttributeBuilder extends AbstractBuilder
 
     public function consumeEvent(TransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 $this->resolveProductAttributes($product, $document);
-            });
+            }
+        );
     }
 
     private function resolveProductAttributes(ProductInterface $product, Document $document): void
@@ -54,9 +58,13 @@ final class AttributeBuilder extends AbstractBuilder
         }
     }
 
-    private function resolveProductAttribute(array $attributeConfiguration, $attributeValue, AttributeTranslation $attribute): array
+    private function resolveProductAttribute(
+        array $attributeConfiguration,
+        $attributeValue,
+        AttributeTranslation $attribute
+    ): array
     {
-        if ($attribute->getTranslatable()->getType() === 'select') {
+        if ('select' === $attribute->getTranslatable()->getType()) {
             $choices = $attributeConfiguration['choices'];
             if (is_array($attributeValue)) {
                 foreach ($attributeValue as $i => $item) {
@@ -80,7 +88,11 @@ final class AttributeBuilder extends AbstractBuilder
         return $attributes;
     }
 
-    private function processAttribute(AttributeInterface $attribute, $productAttribute, Document $document): void
+    private function processAttribute(
+        AttributeInterface $attribute,
+        $productAttribute,
+        Document $document
+    ): void
     {
         $attributeCode = $attribute->getCode();
         $attributeConfiguration = $attribute->getConfiguration();

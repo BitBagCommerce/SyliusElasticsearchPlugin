@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
@@ -27,7 +28,9 @@ final class ProductShortDescriptionBuilder extends AbstractBuilder
 
     public function consumeEvent(TransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 /** @var ProductTranslationInterface $productTranslation */
                 foreach ($product->getTranslations() as $productTranslation) {
