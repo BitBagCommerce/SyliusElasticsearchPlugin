@@ -88,8 +88,7 @@ final class Populate
         string $type,
         bool $reset,
         array $options
-    ): void
-    {
+    ): void {
         $event = new TypePopulateEvent($index, $type, $reset, $options);
         $this->dispatcher->dispatch($event, TypePopulateEvent::PRE_TYPE_POPULATE);
 

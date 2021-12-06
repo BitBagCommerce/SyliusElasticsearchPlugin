@@ -105,8 +105,7 @@ final class ProductAttributeContext implements Context
         string $type,
         string $name,
         ?string $code = null
-    ): ProductAttributeInterface
-    {
+    ): ProductAttributeInterface {
         $productAttribute = $this->productAttributeFactory->createTyped($type);
 
         $code = $code ?: StringInflector::nameToCode($name);
@@ -121,8 +120,7 @@ final class ProductAttributeContext implements Context
         string $type,
         string $name,
         ?string $code = null
-    ): ProductAttributeInterface
-    {
+    ): ProductAttributeInterface {
         $code = $code ?: StringInflector::nameToCode($name);
 
         /** @var ProductAttributeInterface $productAttribute */

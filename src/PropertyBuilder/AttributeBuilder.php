@@ -62,8 +62,7 @@ final class AttributeBuilder extends AbstractBuilder
         array $attributeConfiguration,
         $attributeValue,
         AttributeTranslation $attribute
-    ): array
-    {
+    ): array {
         if ('select' === $attribute->getTranslatable()->getType()) {
             $choices = $attributeConfiguration['choices'];
             if (is_array($attributeValue)) {
@@ -92,8 +91,7 @@ final class AttributeBuilder extends AbstractBuilder
         AttributeInterface $attribute,
         $productAttribute,
         Document $document
-    ): void
-    {
+    ): void {
         $attributeCode = $attribute->getCode();
         $attributeConfiguration = $attribute->getConfiguration();
         foreach ($attribute->getTranslations() as $attributeTranslation) {

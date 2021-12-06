@@ -19,8 +19,7 @@ abstract class AbstractBuilder implements PropertyBuilderInterface
         TransformEvent $event,
         string $supportedModelClass,
         callable $callback
-    ): void
-    {
+    ): void {
         $model = $event->getObject();
 
         if (!$model instanceof $supportedModelClass || ($model instanceof ToggleableInterface && !$model->isEnabled())) {
