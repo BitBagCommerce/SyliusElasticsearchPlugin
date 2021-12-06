@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
@@ -30,7 +31,9 @@ final class ProductTaxonsBuilder extends AbstractBuilder
 
     public function consumeEvent(PostTransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
 

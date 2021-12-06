@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
@@ -26,7 +27,9 @@ final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
 
     public function consumeEvent(PostTransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 foreach ($product->getProductTaxons() as $taxon) {
                     $document->set(

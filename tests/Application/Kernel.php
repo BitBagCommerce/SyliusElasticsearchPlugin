@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Application;
 
+use BitBag\SyliusElasticsearchPlugin\CompilerPass\AuthenticationManagerPolyfillPass;
 use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
 use Sylius\Bundle\CoreBundle\Application\Kernel as SyliusKernel;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -121,5 +122,10 @@ final class Kernel extends BaseKernel
         if (is_dir($symfonyConfigDir)) {
             yield $symfonyConfigDir;
         }
+    }
+
+    protected function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new AuthenticationManagerPolyfillPass());
     }
 }

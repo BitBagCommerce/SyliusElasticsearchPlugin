@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
@@ -27,7 +28,9 @@ final class ChannelPricingBuilder extends AbstractBuilder
 
     public function consumeEvent(PostTransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 if (0 === $product->getVariants()->count()) {
                     return;
@@ -41,6 +44,7 @@ final class ChannelPricingBuilder extends AbstractBuilder
 
                     $document->set($propertyName, $channelPricing->getPrice());
                 }
-            });
+            }
+        );
     }
 }

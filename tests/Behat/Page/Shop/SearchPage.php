@@ -29,6 +29,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         foreach ($this->getElement('search_results')->findAll('css', '.result') as $resultElement) {
             $results[] = $resultElement->getText();
         }
+
         return $results;
     }
 
@@ -44,7 +45,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             'search_facets_attribute_car_type' => '#bitbag_elasticsearch_search_facets_attribute_car_type',
             'search_facets_attribute_motorbike_type' => '#bitbag_elasticsearch_search_facets_attribute_motorbike_type',
             'search_facets_attribute_color' => '#bitbag_elasticsearch_search_facets_attribute_color',
-            'search_facets_option_supply' => '#bitbag_elasticsearch_search_facets_option_supply'
+            'search_facets_option_supply' => '#bitbag_elasticsearch_search_facets_option_supply',
         ];
     }
 
@@ -52,12 +53,14 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
     {
         $results = $this->getSearchResults();
         foreach ($results as $result) {
-            if (strpos($result, $product->getName()) !== false) {
+            if (false !== strpos($result, $product->getName())) {
                 return;
             }
         }
+
         throw new ExpectationException(
-            sprintf('Cannot find a product named "%s" in the search results', $product->getName()), $this->getSession()
+            sprintf('Cannot find a product named "%s" in the search results', $product->getName()),
+            $this->getSession()
         );
     }
 

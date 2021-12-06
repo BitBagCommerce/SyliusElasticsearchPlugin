@@ -9,9 +9,7 @@ use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\HomePageInterface;
 
 class HomepageContext implements Context
 {
-    /**
-     * @var HomePageInterface
-     */
+    /** @var HomePageInterface */
     private $homePage;
 
     public function __construct(HomePageInterface $homePage)
