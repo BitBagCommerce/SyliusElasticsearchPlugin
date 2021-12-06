@@ -35,7 +35,7 @@ final class QueryDispatcher implements QueryDispatcherInterface
     public function dispatchNewQuery(AbstractQuery $boolQuery): QueryCreatedEventInterface
     {
         $event = $this->factory->createNewEvent($boolQuery);
-        $this->eventDispatcher->dispatch($event, QueryCreatedEventInterface::NAME);
+        $this->eventDispatcher->dispatch($event);
 
         return $event;
     }
