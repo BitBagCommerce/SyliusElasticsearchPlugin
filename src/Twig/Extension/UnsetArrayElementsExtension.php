@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;

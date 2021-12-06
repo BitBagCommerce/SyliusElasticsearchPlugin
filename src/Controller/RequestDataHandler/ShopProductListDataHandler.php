@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
@@ -127,7 +128,11 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         return $data;
     }
 
-    private function reformatAttributeArrayValues(array $attributeValues, string $property, array $attributesDefinitions): array
+    private function reformatAttributeArrayValues(
+        array $attributeValues,
+        string $property,
+        array $attributesDefinitions
+    ): array
     {
         $reformattedValues = [];
         foreach ($attributeValues as $attributeValue) {

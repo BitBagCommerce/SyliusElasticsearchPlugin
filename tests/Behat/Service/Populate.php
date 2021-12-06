@@ -39,13 +39,6 @@ final class Populate
     /** @var Resetter */
     private $resetter;
 
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param IndexManager $indexManager
-     * @param PagerProviderRegistry $pagerProviderRegistry
-     * @param PagerPersisterRegistry $pagerPersisterRegistry
-     * @param Resetter $resetter
-     */
     public function __construct(
         EventDispatcherInterface $dispatcher,
         IndexManager $indexManager,
@@ -90,13 +83,12 @@ final class Populate
         }
     }
 
-    /**
-     * @param string $index
-     * @param string $type
-     * @param bool $reset
-     * @param array $options
-     */
-    private function populateIndexType(string $index, string $type, bool $reset, array $options): void
+    private function populateIndexType(
+        string $index,
+        string $type,
+        bool $reset,
+        array $options
+    ): void
     {
         $event = new TypePopulateEvent($index, $type, $reset, $options);
         $this->dispatcher->dispatch($event, TypePopulateEvent::PRE_TYPE_POPULATE);

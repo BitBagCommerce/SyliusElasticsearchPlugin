@@ -8,7 +8,6 @@
 
 declare(strict_types=1);
 
-
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use Symfony\Component\EventDispatcher\GenericEvent;

@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Block;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
@@ -31,7 +32,11 @@ final class SearchFormEventListener
     /** @var FormInterface */
     private $form;
 
-    public function __construct(string $template, FormFactoryInterface $formFactory, RouterInterface $router)
+    public function __construct(
+        string $template,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router
+    )
     {
         $this->template = $template;
         $this->formFactory = $formFactory;

@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper;
 
 use Sylius\Component\Core\Model\ProductInterface;
