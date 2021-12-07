@@ -20,6 +20,8 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class AttributeBuilder extends AbstractBuilder
 {
+    private const SELECT_ATTRIBUTE = 'select';
+
     /** @var ConcatedNameResolverInterface */
     private $attributeNameResolver;
 
@@ -63,7 +65,7 @@ final class AttributeBuilder extends AbstractBuilder
         $attributeValue,
         AttributeTranslation $attribute
     ): array {
-        if ('select' === $attribute->getTranslatable()->getType()) {
+        if (self::SELECT_ATTRIBUTE === $attribute->getTranslatable()->getType()) {
             $choices = $attributeConfiguration['choices'];
             if (is_array($attributeValue)) {
                 foreach ($attributeValue as $i => $item) {
