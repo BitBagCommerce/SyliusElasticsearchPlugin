@@ -40,7 +40,8 @@
         "symfony/dotenv": "^4.4 || ^5.2",
         "symfony/intl": "^4.4 || ^5.2",
         "symfony/web-profiler-bundle": "^4.4 || ^5.2",
-        "vimeo/psalm": "4.7.1"
+        "vimeo/psalm": "4.7.1",
+        "symfony/webpack-encore-bundle": "^1.13"
     },
     "conflict": {
         "symfony/form": "4.4.11 || 4.4.12"
