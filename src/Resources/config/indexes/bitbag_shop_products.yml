@@ -1,5 +1,6 @@
 parameters:
     bitbag_es_shop_channels_property: channels
+    bitbag_es_shop_authorized_groups : authorized_customer_groups
     bitbag_es_shop_enabled_property: enabled
     bitbag_es_shop_product_taxons_property: product_taxons
     bitbag_es_shop_product_sold_units: sold_units

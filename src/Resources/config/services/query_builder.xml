@@ -11,6 +11,8 @@
             <argument>%bitbag_es_shop_channels_property%</argument>
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_group" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasAuthorizedGroup"/>
+
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder">
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.name" />

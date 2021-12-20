@@ -40,6 +40,11 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.authorized_groups" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AuthorizedGroupsBuilder">
+            <argument>%bitbag_es_shop_authorized_groups%</argument>
+            <tag name="kernel.event_subscriber" />
+        </service>
+
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.channel_pricing" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelPricingBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing" />
             <tag name="kernel.event_subscriber" />
