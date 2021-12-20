@@ -13,18 +13,18 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
-use Sylius\Component\Core\Model\ProductInterface;
+use App\Entity\Product\ProductInterface;
 
 final class AuthorizedGroupsBuilder extends AbstractBuilder
 {
     /** @var string */
     private $authorizedCustomerGroup;
-    
+
     public function __construct(string $authorizedCustomerGroup)
     {
         $this->authorizedCustomerGroup = $authorizedCustomerGroup;
     }
-    
+
     public function consumeEvent(TransformEvent $event): void
     {
         $this->buildProperty($event, ProductInterface::class,
