@@ -1,0 +1,12 @@
+{
+  "entrypoints": {
+    "bitbag-elasticsearch-admin": {
+      "css": [
+        "/build/bitbag/elasticsearch/admin/bitbag-elasticsearch-admin.css"
+      ],
+      "js": [
+        "/build/bitbag/elasticsearch/admin/bitbag-elasticsearch-admin.js"
+      ]
+    }
+  }
+}
