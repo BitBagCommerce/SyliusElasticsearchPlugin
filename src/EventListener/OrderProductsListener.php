@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
+use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -26,10 +27,10 @@ final class OrderProductsListener
     /** @var ResourceRefresherInterface */
     private $resourceRefresher;
 
-    /** @var string */
+    /** @var ObjectPersisterInterface */
     private $productPersister;
 
-    public function __construct(ResourceRefresherInterface $resourceRefresher, string $productPersister)
+    public function __construct(ResourceRefresherInterface $resourceRefresher, ObjectPersisterInterface $productPersister)
     {
         $this->resourceRefresher = $resourceRefresher;
         $this->productPersister = $productPersister;
