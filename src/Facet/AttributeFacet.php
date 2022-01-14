@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
@@ -71,9 +72,11 @@ final class AttributeFacet implements FacetInterface
 
     private function getFieldName(): string
     {
-        return \sprintf('%s_%s.keyword',
+        return \sprintf(
+            '%s_%s.keyword',
             $this->attributeNameResolver->resolvePropertyName($this->attributeCode),
-            $this->localeContext->getLocaleCode());
+            $this->localeContext->getLocaleCode()
+        );
     }
 
     private function getProductAttribute(): AttributeInterface

@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use FOS\ElasticaBundle\Event\PostTransformEvent;
@@ -14,7 +15,11 @@ use Sylius\Component\Resource\Model\ToggleableInterface;
 
 abstract class AbstractBuilder implements PropertyBuilderInterface
 {
-    public function buildProperty(PostTransformEvent $event, string $supportedModelClass, callable $callback): void
+    public function buildProperty(
+        PostTransformEvent $event,
+        string $supportedModelClass,
+        callable $callback
+    ): void
     {
         $model = $event->getObject();
 

@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;

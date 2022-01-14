@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use FOS\ElasticaBundle\Event\PostTransformEvent;
@@ -16,5 +17,9 @@ interface PropertyBuilderInterface extends EventSubscriberInterface
 {
     public function consumeEvent(PostTransformEvent $event): void;
 
-    public function buildProperty(PostTransformEvent $event, string $class, callable $callback): void;
+    public function buildProperty(
+        PostTransformEvent $event,
+        string $class,
+        callable $callback
+    ): void;
 }

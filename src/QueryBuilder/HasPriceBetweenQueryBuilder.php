@@ -7,6 +7,7 @@
 */
 
 declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
@@ -62,7 +63,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         $rangeQuery = new Range();
 
-        $paramValue = $this->getQueryParamValue($minPrice , $maxPrice);
+        $paramValue = $this->getQueryParamValue($minPrice, $maxPrice);
 
         if (null === $paramValue) {
             return null;

@@ -64,7 +64,7 @@ final class ProductContext implements Context
      */
     public function iShouldSeeProductsOnTheSecondPage(int $count, int $page = 1): void
     {
-        if ($page > 1) {
+        if (1 < $page) {
             $this->productIndexPage->paginate($page);
         }
 

@@ -18,24 +18,12 @@ interface IndexPageInterface extends BaseIndexPageInterface
 
     public function filter(): void;
 
-    /**
-     * @param string $attributeName
-     * @param string $attributeValueName
-     */
     public function checkAttribute(string $attributeName, string $attributeValueName): void;
 
-    /**
-     * @param string $optionName
-     * @param string $optionValueName
-     */
     public function checkOption(string $optionName, string $optionValueName): void;
 
     public function paginate(int $page): void;
 
-    /**
-     * @param int $min
-     * @param int $max
-     */
     public function filterPrice(int $min, int $max): void;
 
     public function changeLimit(int $limit): void;
