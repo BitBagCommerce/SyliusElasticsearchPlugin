@@ -1,3 +1,3 @@
-import ElasticSearchAutocomplete from './elastictSearchAutocomplete';
+import ElasticSearchAutocomplete from './elasticSearchAutocomplete';
 
 new ElasticSearchAutocomplete().init();

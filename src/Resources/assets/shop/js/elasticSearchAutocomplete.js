@@ -1,6 +1,9 @@
 export default class ElasticSearchAutocomplete {
     constructor(
-        config = {
+        config = {},
+    ) {
+        this.config = config;
+        this.defaultConfig = {
             searchFields: '.searchdiv',
             baseAutocompleteVariantUrl: '[data-bb-elastic-url]',
             searchInput: '.app-quick-add-code-input',
@@ -11,19 +14,21 @@ export default class ElasticSearchAutocomplete {
             resultPriceClass: 'result__price',
             resultTitleClass: 'js-title',
             resultDescriptionClass: 'result__description',
+            resultLinkClass: 'result__link',
+            resultCategoryClass: 'result__category',
+            resultImageClass: 'result__image',
+            resultContainerClass: 'result__container',
+        };
+        this.finalConfig = {...this.defaultConfig, ...config};
+        this.searchFieldsSelector = document.querySelector(this.finalConfig.searchFields);
+    }
+
+    init() {
+        if (this.config && typeof this.config !== 'object') {
+            throw new Error('BitBag - CreateConfirmationModal - given config is not valid - expected object');
         }
-    ) {
-        this.searchFieldsSelector = config.searchFields;
-        this.searchFields = document.querySelectorAll(config.searchFields);
-        this.baseAutocompleteVariantUrl = config.baseAutocompleteVariantUrl;
-        this.searchInput = config.searchInput;
-        this.resultsTarget = config.resultsTarget;
-        this.resultContainerClassesArray = config.resultContainerClassesArray;
-        this.resultImageClass = config.resultImageClass;
-        this.resultContentClass = config.resultContentClass;
-        this.resultPriceClass = config.resultPriceClass;
-        this.resultTitleClass = config.resultTitleClass;
-        this.resultDescriptionClass = config.resultDescriptionClass;
+
+        this._debounce();        
     }
 
     _toggleModalVisibility(elements) {
@@ -37,12 +42,32 @@ export default class ElasticSearchAutocomplete {
         });
     }
 
+    _modalTemplate(item, categoryStyle) {
+        const result = document.createElement('a');
+        result.classList.add(...this.finalConfig.resultContainerClassesArray, 'js-result');
+        result.innerHTML = `
+            <h3 class=${this.finalConfig.resultCategoryClass} style=${categoryStyle}>${item.taxon_name}</h3> 
+                <a href=${item.slug} class=${this.finalConfig.resultLinkClass}>
+                    <div class=${this.finalConfig.resultContainerClass}>
+                        <img class=${this.finalConfig.resultImageClass} src=${item.image}>
+                        <div class=${this.finalConfig.resultContentClass}>
+                            <div class=${this.finalConfig.resultTitleClass}>${item.name}</div>
+                            <div class=${this.finalConfig.resultPriceClass}>${item.price}</div>
+                        </div>
+                    </div>
+                </a> 
+        `;
+
+        return result;
+    }
+
     _assignElements(entry, data) {
-        const currentResults = entry.closest(this.searchFieldsSelector).querySelector(this.resultsTarget);
+        const currentResults = this.searchFieldsSelector.querySelector(this.finalConfig.resultsTarget);
+       
         currentResults.innerHTML = ''
         currentResults.style = 'visibility: visible';
 
-        const allResults = document.querySelectorAll(this.resultsTarget);
+        const allResults = document.querySelectorAll(this.finalConfig.resultsTarget);
          
         if (data.items.length === 0) {
             currentResults.innerHTML = '<center class="result">no matching results</center>';
@@ -53,34 +78,17 @@ export default class ElasticSearchAutocomplete {
             if (b.taxon_name > a.taxon_name) return -1;
             return 0;
         });
-            console.log(data.items);
-        let itemTemp;
+            
+        let tempTaxonName;
         data.items.forEach((item) => {
             
-            let category = item.taxon_name;
             let categoryStyle = "visibility: visible"
-            if (itemTemp == item.taxon_name) {
+            if (tempTaxonName == item.taxon_name) {
                 categoryStyle = "visibility: hidden";
             }
 
-            const result = document.createElement('a');
-            result.classList.add(...this.resultContainerClassesArray, 'js-result');
-            result.innerHTML = `
-            <h3 class="result__category" style=${categoryStyle}>${category}</h3> 
-                <a href=${item.slug} class="result__link">
-                    <div class="result__container">
-                        <img class="result__image" src=${item.image}>
-                        <div class=${this.resultContentClass}>
-                            <div class=${this.resultTitleClass}>${item.name}</div>
-                            <div class=${this.resultPriceClass}>${item.price}</div>
-                        </div>
-                        
-                    </div>
-                </a> 
-            `;
-
-            itemTemp = item.taxon_name;
-            currentResults.appendChild(result);
+            tempTaxonName = item.taxon_name;
+            currentResults.appendChild(this._modalTemplate(item, categoryStyle));
         });
 
         currentResults.style.display = 'block';
@@ -91,7 +99,7 @@ export default class ElasticSearchAutocomplete {
     }
 
     async _getProducts(entry) {
-        const variantUrl = document.querySelector(this.baseAutocompleteVariantUrl).dataset.bbElasticUrl;
+        const variantUrl = document.querySelector(this.finalConfig.baseAutocompleteVariantUrl).dataset.bbElasticUrl;
         const url = `${variantUrl}?query=${entry.value}`;
             
         entry.parentNode.classList.add('loading');
@@ -109,8 +117,7 @@ export default class ElasticSearchAutocomplete {
     }
 
     _debounce() {
-        const codeInputs = document.querySelectorAll(this.searchInput);
-        
+        const codeInputs = document.querySelectorAll(this.finalConfig.searchInput);    
         let timeout;
         
         codeInputs.forEach((input) => {
@@ -123,11 +130,4 @@ export default class ElasticSearchAutocomplete {
         });
     }
 
-    init() {
-        if (this.searchFields.length === 0) {
-            return;
-        }
-
-        this._debounce();        
-    }
 }
