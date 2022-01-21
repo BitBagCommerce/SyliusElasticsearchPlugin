@@ -170,7 +170,7 @@ You might also want to refer the horizontal menu to a new product list page. Fol
 3. Clean your cache with `bin/console cache:clear` command.
 4. :tada:
 
-If you're using vertical menu - follow steps above with `_verticalMenu.html.twig` file instead. It's in the same directory as the `horizontal_menu.html.twig` file.
+If you're using vertical menu - follow steps above with `_verticalMenu.html.twig` file instead. It's in the same directory as the `_horizontalMenu.html.twig` file.
 
 **Be aware! Elasticsearch does not handle dashes well. This plugin depends on the code field in Sylius resources. Please use underscores instead of dashes in your code fields.**
 
