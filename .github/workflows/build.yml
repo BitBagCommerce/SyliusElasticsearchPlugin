@@ -83,7 +83,7 @@ jobs:
                 name: Runs Elasticsearch
                 uses: elastic/elastic-github-actions/elasticsearch@master
                 with:
-                    stack-version: 6.8.15
+                    stack-version: 7.16.3
 
             -
                 name: Output PHP version for Symfony CLI

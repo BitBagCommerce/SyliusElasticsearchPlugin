@@ -16,15 +16,13 @@ fos_elastica:
     indexes:
         bitbag_shop_product:
             index_name: "bitbag_shop_products_%kernel.environment%"
-            types:
-                default:
-                    properties:
-                        enabled: ~
-                    persistence:
-                        driver: orm
-                        model: "%sylius.model.product.class%"
-                        listener:
-                            defer: true
-                            logger: true
-                        elastica_to_model_transformer:
-                            ignore_missing: true
+            properties:
+                enabled: ~
+            persistence:
+                driver: orm
+                model: "%sylius.model.product.class%"
+                listener:
+                    defer: true
+                    logger: true
+                elastica_to_model_transformer:
+                    ignore_missing: true
