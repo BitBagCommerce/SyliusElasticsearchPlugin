@@ -12,6 +12,7 @@
 
 /vendor/
 /node_modules/
+package-lock.json
 
 /etc/build/*
 !/etc/build/.gitignore
