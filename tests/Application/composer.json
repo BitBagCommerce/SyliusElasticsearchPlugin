@@ -1,5 +1,8 @@
 {
     "name": "sylius/plugin-elasticsearch-test-application",
     "description": "Sylius application for plugin testing purposes (composer.json needed for project dir resolving)",
-    "license": "MIT"
+    "license": "MIT",
+    "require": {
+        "symfony/webpack-encore-bundle": "^1.13"
+    }
 }
