@@ -34,8 +34,6 @@ jobs:
                     - sylius: ~1.10.0
                       symfony: ^4.4
                     # friendsofsymfony/elastica-bundle - package is locking php 7.x
-                    - sylius: ~1.10.0
-                      php: 8.0
 
         env:
             APP_ENV: test
