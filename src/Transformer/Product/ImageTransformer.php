@@ -16,7 +16,7 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ImageTransformer implements TransformerInterface
 {
-    private const SYLIUS_THUMBNAIL_TYPE = 'thumbnail';
+    private const SYLIUS_THUMBNAIL_TYPE = 'main';
 
     private const SYLIUS_THUMBNAIL_FILTER = 'sylius_shop_product_thumbnail';
 
