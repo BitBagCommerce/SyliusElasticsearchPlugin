@@ -5,5 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dist": "yarn encore production --config-name bitbag-plugin-dist"
+  },
+  "dependencies": {
+    "node-sass": "7.0.1"
   }
 }
