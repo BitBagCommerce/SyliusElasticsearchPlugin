@@ -1,14 +1,12 @@
-{# {% form_theme settings.form '@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchFormTheme.html.twig' %}
-
-{{ form_start(settings.form, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
-{{ form_row(settings.form.box) }}
-{{ form_end(settings.form, {'render_rest': false}) }} #}
-
 <div class="searchdiv" data-bb-elastic-url="{{ url('bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name') }}">
     <div class="ui fluid category search">
         <div class="ui icon input" style="width: 100%;">
-            <input class="prompt app-quick-add-code-input" type="text" placeholder="Search products...">
-            <i class="search icon"></i>
+
+            {% form_theme settings.form '@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchFormTheme.html.twig' %}
+            {{ form_start(settings.form, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+            {{ form_row(settings.form.box) }}
+            {{ form_end(settings.form, {'render_rest': false}) }}
+
         </div>
     </div>
     <div class="results"></div>
