@@ -34,7 +34,7 @@ final class ImageTransformerSpec extends ObjectBehavior
         ImageInterface $productImage,
         FilterService $filterService
     ): void {
-        $product->getImagesByType('thumbnail')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
+        $product->getImagesByType('main')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
         $productImage->getPath()->willReturn('/path-to-image');
 
         $filterService
