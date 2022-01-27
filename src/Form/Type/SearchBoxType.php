@@ -27,7 +27,10 @@ final class SearchBoxType extends AbstractType
                 SymfonySearchType::class,
                 [
                     'label' => false,
-                    'attr' => ['placeholder' => 'bitbag_sylius_elasticsearch_plugin.ui.search_box.query.placeholder'],
+                    'attr' => [
+                        'placeholder' => 'bitbag_sylius_elasticsearch_plugin.ui.search_box.query.placeholder',
+                        'class' => 'prompt app-quick-add-code-input',
+                    ],
                     'constraints' => [new NotBlank()],
                 ]
             )

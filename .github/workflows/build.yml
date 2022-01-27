@@ -24,7 +24,7 @@ jobs:
                 php: ["8.0", "7.4"]
                 symfony: ["^4.4", "^5.2"]
                 sylius: ["~1.9.0", "~1.10.0"]
-                node: ["10.x"]
+                node: ["14.x"]
                 mysql: ["8.0"]
 
                 exclude:
@@ -159,7 +159,7 @@ jobs:
                 name: Prepare test application assets
                 run: |
                     (cd tests/Application && bin/console assets:install public -vvv)
-                    (cd tests/Application && yarn build)
+                    (cd tests/Application && yarn encore production)
 
             -
                 name: Prepare test application cache
