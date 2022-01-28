@@ -9,7 +9,8 @@
         "sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0",
         "friendsofsymfony/elastica-bundle": "^6.0",
         "symfony/property-access": "^4.4 || ^5.2",
-        "bitbag/coding-standard": "^1.0"
+        "bitbag/coding-standard": "^1.0",
+        "symfony/orm-pack": "^2.1"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -39,7 +40,8 @@
         "symfony/dotenv": "^4.4 || ^5.2",
         "symfony/intl": "^4.4 || ^5.2",
         "symfony/web-profiler-bundle": "^4.4 || ^5.2",
-        "vimeo/psalm": "4.7.1"
+        "vimeo/psalm": "4.7.1",
+        "symfony/webpack-encore-bundle": "^1.13"
     },
     "conflict": {
         "symfony/form": "4.4.11 || 4.4.12"
