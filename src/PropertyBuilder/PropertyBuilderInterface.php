@@ -10,15 +10,15 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 interface PropertyBuilderInterface extends EventSubscriberInterface
 {
-    public function consumeEvent(TransformEvent $event): void;
+    public function consumeEvent(PostTransformEvent $event): void;
 
     public function buildProperty(
-        TransformEvent $event,
+        PostTransformEvent $event,
         string $class,
         callable $callback
     ): void;

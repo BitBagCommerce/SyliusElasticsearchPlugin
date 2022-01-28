@@ -12,7 +12,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Repository\OrderItemRepositoryInterface;
 use Elastica\Document;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 
 final class SoldUnitsPropertyBuilder extends AbstractBuilder
@@ -29,7 +29,7 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
         $this->soldUnitsProperty = $soldUnitsProperty;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $this->buildProperty(
             $event,

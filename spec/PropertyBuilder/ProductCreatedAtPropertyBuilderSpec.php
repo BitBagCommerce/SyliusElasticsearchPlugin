@@ -13,7 +13,8 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductCreatedAtPropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use Elastica\Document;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use PhpSpec\ObjectBehavior;
 
 final class ProductCreatedAtPropertyBuilderSpec extends ObjectBehavior
@@ -34,8 +35,9 @@ final class ProductCreatedAtPropertyBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event): void
+    function it_consumes_event(Document $document, $object): void
     {
+        $event = new PostTransformEvent($document->getWrappedObject(), [], $object->getWrappedObject());
         $this->consumeEvent($event);
     }
 }

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
@@ -35,7 +35,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         $this->excludedAttributes = $excludedAttributes;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $documentAttribute = $event->getObject();
 
