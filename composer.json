@@ -15,7 +15,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
         "symfony/proxy-manager-bridge": "^4.4 || ^5.4",
-        "polishsymfonycommunity/symfony-mocker-container": "^1.0"
+        "polishsymfonycommunity/symfony-mocker-container": "^1.0",
+        "doctrine/dbal": "^2.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
