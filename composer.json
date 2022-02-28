@@ -6,12 +6,15 @@
     "require": {
         "ext-json": "*",
         "php": "^7.4 || ^8.0",
-        "sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0 || ~1.11.0",
+	"sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0 || ~1.11.0",
         "friendsofsymfony/elastica-bundle": "^6.0",
         "symfony/property-access": "^4.4 || ^5.2",
         "bitbag/coding-standard": "^1.0.2",
-        "symfony/orm-pack": "^2.1",
-        "symfony/webpack-encore-bundle": "^1.13"
+        "symfony/webpack-encore-bundle": "^1.13",
+        "doctrine/doctrine-bundle": "^2.5",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^2.11",
+        "symfony/proxy-manager-bridge": "^5.4"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -69,5 +72,13 @@
         "post-create-project-cmd": [
             "php bin/create_node_symlink.php"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/thanks": true,
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     }
 }
