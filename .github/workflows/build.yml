@@ -28,14 +28,18 @@ jobs:
                 mysql: ["8.0"]
 
                 exclude:
+                    - sylius: ~1.8.0
+                      php: 8.0
+
                     - sylius: ~1.9.0
                       php: 8.0
 
                     - sylius: ~1.10.0
                       symfony: ^4.4
                     # friendsofsymfony/elastica-bundle - package is locking php 7.x
-                        
+
                     - sylius: ~1.11.0
+                      symfony: ^4.4
                       php: 7.4
 
         env:
