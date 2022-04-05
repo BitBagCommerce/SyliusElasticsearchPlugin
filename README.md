@@ -56,7 +56,7 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 If you use Sylius 1.4, you might get a compatibility issue for Pagerfanta. Please read [this issue](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/issues/23) in order to proceed with a workaround.
 
-*Note*: This Plugin currently supports ElasticSearch 5.3.x up to 6.8.x.  ElasticSearch ^7.x is not currently supported.
+*Note*: This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version `1.x`.
 
 ```bash
 $ composer require bitbag/elasticsearch-plugin
