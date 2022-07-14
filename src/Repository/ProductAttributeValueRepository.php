@@ -39,8 +39,8 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')
             ->setParameters([
-                ':attribute'=> $productAttribute,
-                ':main_taxon_id' => $taxon->getId()
+                ':attribute' => $productAttribute,
+                ':main_taxon_id' => $taxon->getId(),
             ])
             ->getQuery()
             ->getResult()

@@ -60,7 +60,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         }
 
         $taxon = $this->taxonContext->getTaxon();
-        $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute,$taxon);
+        $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute, $taxon);
 
         $choices = [];
         array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {

@@ -132,8 +132,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         array $attributeValues,
         string $property,
         array $attributesDefinitions
-    ): array
-    {
+    ): array {
         $reformattedValues = [];
         foreach ($attributeValues as $attributeValue) {
             switch ($attributesDefinitions[$property]) {
