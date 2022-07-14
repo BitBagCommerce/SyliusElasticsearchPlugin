@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
+use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
@@ -27,14 +28,19 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
     /** @var StringFormatterInterface */
     private $stringFormatter;
 
+    /** @var TaxonContextInterface */
+    private $taxonContext;
+
     public function __construct(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         LocaleContextInterface $localeContext,
-        StringFormatterInterface $stringFormatter
+        StringFormatterInterface $stringFormatter,
+        TaxonContextInterface $taxonContext
     ) {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->localeContext = $localeContext;
         $this->stringFormatter = $stringFormatter;
+        $this->taxonContext = $taxonContext;
     }
 
     public function mapToChoices(ProductAttributeInterface $productAttribute): array
@@ -53,7 +59,8 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
             return $choices;
         }
 
-        $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute);
+        $taxon = $this->taxonContext->getTaxon();
+        $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute,$taxon);
 
         $choices = [];
         array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {

@@ -17,6 +17,8 @@ use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeTranslation;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Product\Model\ProductAttributeTranslation;
+use Sylius\Component\Product\Model\ProductAttributeValue;
 
 final class AttributeBuilder extends AbstractBuilder
 {
@@ -90,13 +92,18 @@ final class AttributeBuilder extends AbstractBuilder
 
     private function processAttribute(
         AttributeInterface $attribute,
-        $productAttribute,
+        ProductAttributeValue $productAttribute,
         Document $document
     ): void
     {
         $attributeCode = $attribute->getCode();
         $attributeConfiguration = $attribute->getConfiguration();
+
+        /** @var ProductAttributeTranslation $attributeTranslation */
         foreach ($attribute->getTranslations() as $attributeTranslation) {
+            if ($attributeTranslation->getLocale() != $productAttribute->getLocaleCode()){
+                continue;
+            }
             $value = $productAttribute->getValue();
             $documentKey = $this->attributeNameResolver->resolvePropertyName($attributeCode);
             $code = \sprintf('%s_%s', $documentKey, $attributeTranslation->getLocale());

@@ -11,8 +11,9 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Sylius\Component\Attribute\Model\AttributeInterface;
+use Sylius\Component\Core\Model\Taxon;
 
 interface ProductAttributeValueRepositoryInterface
 {
-    public function getUniqueAttributeValues(AttributeInterface $productAttribute): array;
+    public function getUniqueAttributeValues(AttributeInterface $productAttribute, Taxon $taxon): array;
 }

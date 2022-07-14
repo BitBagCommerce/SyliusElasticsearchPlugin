@@ -40,6 +40,7 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" />
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.taxon" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
