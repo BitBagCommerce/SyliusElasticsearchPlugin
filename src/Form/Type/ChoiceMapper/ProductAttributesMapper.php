@@ -63,6 +63,16 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute, $taxon);
 
         $choices = [];
+        if ('percent' == $productAttribute->getType()){
+            foreach ($attributeValues as $productAttributeValue) {
+                $value = $productAttributeValue['value'];
+                $choice = $value * 100;
+                $choices[$choice] = $value;
+            }
+
+            return $choices;
+        }
+
         array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {
             $value = $productAttributeValue['value'];
 
