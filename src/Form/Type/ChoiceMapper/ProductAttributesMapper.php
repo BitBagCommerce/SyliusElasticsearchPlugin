@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
+use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesMapperCollectorInterface;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
@@ -31,16 +32,21 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
     /** @var TaxonContextInterface */
     private $taxonContext;
 
+    /** @var AttributesMapperCollectorInterface[] */
+    private $attributeMapper;
+
     public function __construct(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         LocaleContextInterface $localeContext,
         StringFormatterInterface $stringFormatter,
-        TaxonContextInterface $taxonContext
+        TaxonContextInterface $taxonContext,
+        iterable $attributeMapper
     ) {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->localeContext = $localeContext;
         $this->stringFormatter = $stringFormatter;
         $this->taxonContext = $taxonContext;
+        $this->attributeMapper = $attributeMapper;
     }
 
     public function mapToChoices(ProductAttributeInterface $productAttribute): array
@@ -58,21 +64,16 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
 
             return $choices;
         }
-
         $taxon = $this->taxonContext->getTaxon();
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute, $taxon);
 
-        $choices = [];
-        if ('percent' == $productAttribute->getType()){
-            foreach ($attributeValues as $productAttributeValue) {
-                $value = $productAttributeValue['value'];
-                $choice = $value * 100;
-                $choices[$choice] = $value;
+        foreach ($this->attributeMapper as $mapper) {
+            if ($mapper->supports($productAttribute->getType())) {
+                return $mapper->map($attributeValues);
             }
-
-            return $choices;
         }
 
+        $choices = [];
         array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {
             $value = $productAttributeValue['value'];
 

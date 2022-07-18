@@ -10,10 +10,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder\AttributesQueryBuilderCollectorInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeRepositoryInterface;
 use Elastica\Query\AbstractQuery;
-use Elastica\Query\BoolQuery;
-use Elastica\Query\Term;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class HasAttributesQueryBuilder implements QueryBuilderInterface
@@ -23,43 +22,31 @@ final class HasAttributesQueryBuilder implements QueryBuilderInterface
     /** @var ProductAttributeRepositoryInterface */
     private $productAttributeRepository;
 
+    /** @var AttributesQueryBuilderCollectorInterface[] */
+    private $attributeDriver;
+
     public function __construct(
-        LocaleContextInterface              $localeContext,
-        ProductAttributeRepositoryInterface $productAttributeRepository
-    )
-    {
+        LocaleContextInterface $localeContext,
+        ProductAttributeRepositoryInterface $productAttributeRepository,
+        iterable $attributeDriver
+    ) {
         $this->localeContext = $localeContext;
         $this->productAttributeRepository = $productAttributeRepository;
+        $this->attributeDriver = $attributeDriver;
     }
 
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $attributeQuery = new BoolQuery();
-
         $attributeName = str_replace('attribute_', '', $data['attribute']);
 
         $type = $this->productAttributeRepository->getAttributeTypeByName($attributeName);
 
-        switch ($type) {
-            case 'percent':
-            case 'integer':
-                foreach ((array)$data['attribute_values'] as $attributeValue) {
-                    $termQuery = new Term();
-                    $attribute = \sprintf('%s_%s', $data['attribute'], $this->localeContext->getLocaleCode());
-                    $termQuery->setTerm($attribute, $attributeValue);
-                    $attributeQuery->addShould($termQuery);
-                }
-                break;
-            default:
-                foreach ((array)$data['attribute_values'] as $attributeValue) {
-                    $termQuery = new Term();
-                    $attribute = \sprintf('%s_%s.keyword', $data['attribute'], $this->localeContext->getLocaleCode());
-                    $termQuery->setTerm($attribute, $attributeValue);
-                    $attributeQuery->addShould($termQuery);
-                }
-                break;
+        foreach ($this->attributeDriver as $driver) {
+            if ($driver->supports($type)) {
+                return $driver->buildQuery($data, $this->localeContext->getLocaleCode());
+            }
         }
 
-        return $attributeQuery;
+        return null;
     }
 }

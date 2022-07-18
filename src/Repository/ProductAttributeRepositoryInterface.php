@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
-
-use Sylius\Component\Product\Model\ProductAttribute;
-
 interface ProductAttributeRepositoryInterface
 {
     public function getAttributeTypeByName(string $attributeName): string;

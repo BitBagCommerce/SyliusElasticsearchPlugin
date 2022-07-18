@@ -11,12 +11,11 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Sylius\Component\Product\Model\ProductAttribute;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 {
-    /** @var RepositoryInterface  */
+    /** @var RepositoryInterface */
     private $productAttributeRepository;
 
     public function __construct(RepositoryInterface $productAttributeRepository)
@@ -32,7 +31,7 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
         $result = $queryBuilder
             ->select('p.type')
             ->where('p.code = :code')
-            ->setParameter(':code' ,$attributeName)
+            ->setParameter(':code', $attributeName)
             ->getQuery()
             ->getOneOrNullResult();
 

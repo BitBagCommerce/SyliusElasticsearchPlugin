@@ -99,7 +99,7 @@ final class AttributeBuilder extends AbstractBuilder
 
         /** @var ProductAttributeTranslation $attributeTranslation */
         foreach ($attribute->getTranslations() as $attributeTranslation) {
-            if ($productAttribute->getType() != 'percent' && $attributeTranslation->getLocale() != $productAttribute->getLocaleCode()) {
+            if ('percent' != $productAttribute->getType() && $attributeTranslation->getLocale() != $productAttribute->getLocaleCode()) {
                 continue;
             }
             $value = $productAttribute->getValue();
