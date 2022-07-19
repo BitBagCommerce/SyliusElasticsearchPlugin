@@ -33,14 +33,15 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
 
         return $queryBuilder
             ->join('o.subject', 'p', 'WITH', 'p.enabled = 1')
+            ->join('p.productTaxons', 't', 'WITH', 't.product = p.id')
             ->select('o.localeCode, o.' . $storageType . ' as value')
             ->where('o.attribute = :attribute')
-            ->andWhere('p.mainTaxon = :main_taxon_id')
+            ->andWhere('t.taxon = :taxon')
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')
             ->setParameters([
                 ':attribute' => $productAttribute,
-                ':main_taxon_id' => $taxon->getId(),
+                ':taxon' => $taxon->getId(),
             ])
             ->getQuery()
             ->getResult()
