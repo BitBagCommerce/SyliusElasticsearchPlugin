@@ -13,6 +13,8 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
+use Sylius\Component\Product\Model\ProductAttributeInterface;
+use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {
@@ -40,6 +42,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         $documentAttribute = $event->getObject();
 
         if (!$documentAttribute instanceof AttributeInterface
+            || !$documentAttribute instanceof ProductAttributeInterface
             || in_array($documentAttribute->getCode(), $this->excludedAttributes)
         ) {
             return;

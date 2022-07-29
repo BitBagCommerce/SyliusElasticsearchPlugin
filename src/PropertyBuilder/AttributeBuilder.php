@@ -31,7 +31,8 @@ final class AttributeBuilder extends AbstractBuilder
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
         StringFormatterInterface $stringFormatter
-    ) {
+    )
+    {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
     }
@@ -51,7 +52,6 @@ final class AttributeBuilder extends AbstractBuilder
     {
         foreach ($product->getAttributes() as $productAttribute) {
             $attribute = $productAttribute->getAttribute();
-
             if (!$attribute) {
                 continue;
             }
@@ -61,25 +61,26 @@ final class AttributeBuilder extends AbstractBuilder
     }
 
     private function resolveProductAttribute(
-        array $attributeConfiguration,
+        array                 $attributeConfiguration,
         $attributeValue,
-        AttributeTranslation $attribute
-    ): array {
-        if ('select' === $attribute->getTranslatable()->getType()) {
+        ProductAttributeValue $productAttribute
+    ): array
+    {
+        if ('select' === $productAttribute->getAttribute()->getType()) {
             $choices = $attributeConfiguration['choices'];
             if (is_array($attributeValue)) {
                 foreach ($attributeValue as $i => $item) {
-                    $attributeValue[$i] = $choices[$item][$attribute->getLocale()] ?? $item;
+                    $attributeValue[$i] = $choices[$item][$productAttribute->getLocaleCode()] ?? $item;
                 }
             } else {
-                $attributeValue = $choices[$attributeValue][$attribute->getLocale()] ?? $attributeValue;
+                $attributeValue = $choices[$attributeValue][$productAttribute->getLocaleCode()] ?? $attributeValue;
             }
         }
 
         $attributes = [];
         if (is_array($attributeValue)) {
             foreach ($attributeValue as $singleElement) {
-                $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
+                $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string)$singleElement);
             }
         } else {
             $attributeValue = is_string($attributeValue) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue) : $attributeValue;
@@ -90,27 +91,24 @@ final class AttributeBuilder extends AbstractBuilder
     }
 
     private function processAttribute(
-        AttributeInterface $attribute,
+        AttributeInterface    $attribute,
         ProductAttributeValue $productAttribute,
-        Document $document
-    ): void {
+        Document              $document
+    ): void
+    {
         $attributeCode = $attribute->getCode();
         $attributeConfiguration = $attribute->getConfiguration();
 
-        /** @var ProductAttributeTranslation $attributeTranslation */
-        foreach ($attribute->getTranslations() as $attributeTranslation) {
-            if ('percent' != $productAttribute->getType() && $attributeTranslation->getLocale() != $productAttribute->getLocaleCode()) {
-                continue;
-            }
-            $value = $productAttribute->getValue();
-            $documentKey = $this->attributeNameResolver->resolvePropertyName($attributeCode);
-            $code = \sprintf('%s_%s', $documentKey, $attributeTranslation->getLocale());
-            $values = $this->resolveProductAttribute(
-                $attributeConfiguration,
-                $value,
-                $attributeTranslation
-            );
-            $document->set($code, $values);
-        }
+        $value = $productAttribute->getValue();
+        $documentKey = $this->attributeNameResolver->resolvePropertyName($attributeCode);
+        $code = \sprintf('%s_%s', $documentKey, $productAttribute->getLocaleCode());
+
+        $values = $this->resolveProductAttribute(
+            $attributeConfiguration,
+            $value,
+            $productAttribute
+        );
+
+        $document->set($code, $values);
     }
 }

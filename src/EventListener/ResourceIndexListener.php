@@ -11,7 +11,11 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
+use Sylius\Component\Attribute\Model\AttributeValue;
+use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Product\Model\ProductAttribute;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
@@ -23,10 +27,14 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
     /** @var array */
     private $persistersMap;
 
-    public function __construct(ResourceRefresherInterface $resourceRefresher, array $persistersMap)
+    /** @var RepositoryInterface  */
+    private $attributeRepository;
+
+    public function __construct(ResourceRefresherInterface $resourceRefresher, array $persistersMap, RepositoryInterface $attributeRepository)
     {
         $this->resourceRefresher = $resourceRefresher;
         $this->persistersMap = $persistersMap;
+        $this->attributeRepository = $attributeRepository;
     }
 
     public function updateIndex(GenericEvent $event): void
@@ -41,8 +49,17 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
                 $resource = $resource->$method();
             }
 
+
             if ($resource instanceof $config[self::MODEL_KEY]) {
                 $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
+            }
+
+            if ($resource instanceof Product
+                && $config[self::MODEL_KEY] === 'Sylius\Component\Product\Model\ProductAttribute'
+            ) {
+                foreach ($this->attributeRepository->findAll() as $attribute) {
+                    $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);
+                }
             }
         }
     }
