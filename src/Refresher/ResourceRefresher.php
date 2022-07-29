@@ -13,7 +13,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Refresher;
 use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Webmozart\Assert\Assert;
 
 final class ResourceRefresher implements ResourceRefresherInterface
 {

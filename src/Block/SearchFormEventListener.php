@@ -36,8 +36,7 @@ final class SearchFormEventListener
         string $template,
         FormFactoryInterface $formFactory,
         RouterInterface $router
-    )
-    {
+    ) {
         $this->template = $template;
         $this->formFactory = $formFactory;
         $this->router = $router;
