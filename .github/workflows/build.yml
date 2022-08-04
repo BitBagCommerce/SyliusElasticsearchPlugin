@@ -179,6 +179,9 @@ jobs:
                 name: Validate database schema
                 run: (cd tests/Application && bin/console doctrine:schema:validate)
 
+            -   name: Run ECS
+                run: vendor/bin/ecs check src
+
             -
                 name: Run PHPSpec
                 run: vendor/bin/phpspec run --ansi -f progress --no-interaction

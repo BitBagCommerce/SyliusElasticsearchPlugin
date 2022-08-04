@@ -21,7 +21,7 @@ use Sylius\Component\Product\Model\ProductAttributeValue;
 final class AttributeBuilder extends AbstractBuilder
 {
     /** @var ConcatedNameResolverInterface */
-    private $attributeNameResolver;
+    private $attributeNzzzameResolver;
 
     /** @var StringFormatterInterface */
     private $stringFormatter;
