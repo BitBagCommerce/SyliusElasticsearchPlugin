@@ -10,36 +10,60 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
+use BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder\AttributesTypeTextQueryBuilder;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasAttributesQueryBuilder;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
+use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeRepository;
 use Elastica\Query\BoolQuery;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class HasAttributesQueryBuilderSpec extends ObjectBehavior
 {
-    function let(
-        LocaleContextInterface $localeContext
+    private iterable $attributeDriver;
+
+    public function let(
+        LocaleContextInterface $localeContext,
+        ProductAttributeRepository $productAttributeRepository,
+        AttributesTypeTextQueryBuilder $attributesTypeTextQueryBuilder
     ): void {
-        $this->beConstructedWith($localeContext);
+        $this->attributeDriver = new \ArrayIterator([$attributesTypeTextQueryBuilder->getWrappedObject()]);
+        $this->beConstructedWith($localeContext, $productAttributeRepository, $this->attributeDriver);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(HasAttributesQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface(): void
+    public function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(LocaleContextInterface $localeContext): void
-    {
-        $localeContext->getLocaleCode()->willReturn('en');
-        $this->buildQuery([
+    public function it_builds_query(
+        LocaleContextInterface $localeContext,
+        ProductAttributeRepository $productAttributeRepository,
+        AttributesTypeTextQueryBuilder $attributesTypeTextQueryBuilder,
+        BoolQuery $boolQuery
+    ): void {
+        $data = [
             'attribute_values' => ['XL', 'L'],
             'attribute' => 'size',
-        ])->shouldBeAnInstanceOf(BoolQuery::class);
+        ];
+        $attributeName = str_replace('attribute_', '', $data['attribute']);
+
+        $productAttributeRepository->getAttributeTypeByName($attributeName)
+            ->willReturn('select');
+
+        $attributesTypeTextQueryBuilder->supports('select')
+            ->willReturn(true);
+
+        $localeContext->getLocaleCode()->willReturn('en');
+        $attributesTypeTextQueryBuilder->buildQuery($data, 'en')
+            ->willReturn($boolQuery);
+
+        $this->buildQuery($data)
+            ->shouldBeAnInstanceOf(BoolQuery::class);
     }
 }
