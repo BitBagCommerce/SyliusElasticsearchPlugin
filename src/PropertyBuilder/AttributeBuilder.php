@@ -15,9 +15,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
-use Sylius\Component\Attribute\Model\AttributeTranslation;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Product\Model\ProductAttributeTranslation;
 use Sylius\Component\Product\Model\ProductAttributeValue;
 
 final class AttributeBuilder extends AbstractBuilder
@@ -31,8 +29,7 @@ final class AttributeBuilder extends AbstractBuilder
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
         StringFormatterInterface $stringFormatter
-    )
-    {
+    ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
     }
@@ -61,11 +58,10 @@ final class AttributeBuilder extends AbstractBuilder
     }
 
     private function resolveProductAttribute(
-        array                 $attributeConfiguration,
+        array $attributeConfiguration,
         $attributeValue,
         ProductAttributeValue $productAttribute
-    ): array
-    {
+    ): array {
         if ('select' === $productAttribute->getAttribute()->getType()) {
             $choices = $attributeConfiguration['choices'];
             if (is_array($attributeValue)) {
@@ -80,7 +76,7 @@ final class AttributeBuilder extends AbstractBuilder
         $attributes = [];
         if (is_array($attributeValue)) {
             foreach ($attributeValue as $singleElement) {
-                $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string)$singleElement);
+                $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
             }
         } else {
             $attributeValue = is_string($attributeValue) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue) : $attributeValue;
@@ -91,11 +87,10 @@ final class AttributeBuilder extends AbstractBuilder
     }
 
     private function processAttribute(
-        AttributeInterface    $attribute,
+        AttributeInterface $attribute,
         ProductAttributeValue $productAttribute,
-        Document              $document
-    ): void
-    {
+        Document $document
+    ): void {
         $attributeCode = $attribute->getCode();
         $attributeConfiguration = $attribute->getConfiguration();
 

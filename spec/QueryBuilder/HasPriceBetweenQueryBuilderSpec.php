@@ -24,7 +24,7 @@ use Sylius\Component\Currency\Model\CurrencyInterface;
 
 final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         PriceNameResolverInterface $priceNameResolver,
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
@@ -40,17 +40,17 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(HasPriceBetweenQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface(): void
+    public function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(
+    public function it_builds_query(
         PriceNameResolverInterface $priceNameResolver,
         ChannelContextInterface $channelContext,
         ChannelInterface $channel,
@@ -74,7 +74,7 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
         ])->shouldBeAnInstanceOf(Range::class);
     }
 
-    function it_converts_fractional_currency_properly(
+    public function it_converts_fractional_currency_properly(
         PriceNameResolverInterface $priceNameResolver,
         ChannelContextInterface $channelContext,
         ChannelInterface $channel,
@@ -105,7 +105,7 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    function it_build_query_with_max_price(
+    public function it_build_query_with_max_price(
         PriceNameResolverInterface $priceNameResolver,
         ChannelContextInterface $channelContext,
         ChannelInterface $channel,
@@ -134,7 +134,7 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    function it_build_query_with_min_price(
+    public function it_build_query_with_min_price(
         PriceNameResolverInterface $priceNameResolver,
         ChannelContextInterface $channelContext,
         ChannelInterface $channel,
@@ -163,7 +163,7 @@ final class HasPriceBetweenQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    function it_build_query_without_price_param(
+    public function it_build_query_without_price_param(
         PriceNameResolverInterface $priceNameResolver,
         ChannelContextInterface $channelContext,
         ChannelInterface $channel,

@@ -20,7 +20,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductAttributesFinderSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         FinderInterface $attributesFinder,
         QueryBuilderInterface $attributesByTaxonQueryBuilder
     ): void {
@@ -31,17 +31,17 @@ final class ProductAttributesFinderSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductAttributesFinder::class);
     }
 
-    function it_implements_product_attributes_finder_interface(): void
+    public function it_implements_product_attributes_finder_interface(): void
     {
         $this->shouldImplement(ProductAttributesFinderInterface::class);
     }
 
-    function it_finds_by_taxon(
+    public function it_finds_by_taxon(
         TaxonInterface $taxon,
         QueryBuilderInterface $attributesByTaxonQueryBuilder,
         FinderInterface $attributesFinder,

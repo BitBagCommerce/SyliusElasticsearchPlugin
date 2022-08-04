@@ -14,7 +14,7 @@ use PhpSpec\ObjectBehavior;
 
 final class ItemSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith(
             'Super cars',
@@ -26,7 +26,7 @@ final class ItemSpec extends ObjectBehavior
         );
     }
 
-    function it_returns_an_array(): void
+    public function it_returns_an_array(): void
     {
         $this->toArray()->shouldReturn([
             'taxon_name' => 'Super cars',
@@ -38,7 +38,7 @@ final class ItemSpec extends ObjectBehavior
         ]);
     }
 
-    function it_returns_values(): void
+    public function it_returns_values(): void
     {
         $this->taxonName()->shouldReturn('Super cars');
         $this->name()->shouldReturn('McLaren F1');

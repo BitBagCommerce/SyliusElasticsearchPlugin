@@ -14,7 +14,6 @@ use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {

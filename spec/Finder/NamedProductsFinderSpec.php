@@ -20,19 +20,19 @@ use PhpSpec\ObjectBehavior;
 
 final class NamedProductsFinderSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         QueryBuilderInterface $productsByPartialNameQueryBuilder,
         FinderInterface $productsFinder
     ): void {
         $this->beConstructedWith($productsByPartialNameQueryBuilder, $productsFinder);
     }
 
-    function it_is_a_named_products_finder(): void
+    public function it_is_a_named_products_finder(): void
     {
         $this->shouldImplement(NamedProductsFinderInterface::class);
     }
 
-    function it_finds_by_partial_name_of_products(
+    public function it_finds_by_partial_name_of_products(
         QueryBuilderInterface $productsByPartialNameQueryBuilder,
         FinderInterface $productsFinder,
         AbstractQuery $query

@@ -20,7 +20,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
         TaxonContextInterface $taxonContext,
@@ -37,22 +37,21 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopProductsSortDataHandler::class);
     }
 
-    function it_implements_sort_data_handler_interface(): void
+    public function it_implements_sort_data_handler_interface(): void
     {
         $this->shouldHaveType(SortDataHandlerInterface::class);
     }
 
-    function it_retrieves_data(
+    public function it_retrieves_data(
         TaxonContextInterface $taxonContext,
         TaxonInterface $taxon,
         ConcatedNameResolverInterface $taxonPositionNameResolver
-    ): void
-    {
+    ): void {
         $taxonContext->getTaxon()->willReturn($taxon);
         $taxon->getCode()->willReturn('t_shirt');
         $taxonPositionNameResolver->resolvePropertyName('t_shirt')->willReturn('taxon_position_t_shirts');

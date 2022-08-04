@@ -21,17 +21,17 @@ use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Pagerfanta\Pagerfanta;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Twig\Environment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 final class ListProductsActionSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         FormFactoryInterface $formFactory,
         DataHandlerInterface $shopProductListDataHandler,
         SortDataHandlerInterface $shopProductsSortDataHandler,
@@ -49,12 +49,12 @@ final class ListProductsActionSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ListProductsAction::class);
     }
 
-    function it_renders_product_list(
+    public function it_renders_product_list(
         Request $request,
         FormFactoryInterface $formFactory,
         FormInterface $form,

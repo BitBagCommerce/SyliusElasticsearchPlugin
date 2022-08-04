@@ -18,7 +18,7 @@ use PhpSpec\ObjectBehavior;
 
 final class ShopProductsQueryBuilderSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         QueryBuilderInterface $isEnabledQueryBuilder,
         QueryBuilderInterface $hasChannelQueryBuilder,
         QueryBuilderInterface $containsNameQueryBuilder,
@@ -40,17 +40,17 @@ final class ShopProductsQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopProductsQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface(): void
+    public function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(
+    public function it_builds_query(
         QueryBuilderInterface $isEnabledQueryBuilder,
         QueryBuilderInterface $hasChannelQueryBuilder,
         QueryBuilderInterface $containsNameQueryBuilder,

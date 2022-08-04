@@ -19,17 +19,17 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ImageTransformerSpec extends ObjectBehavior
 {
-    function let(FilterService $filterService): void
+    public function let(FilterService $filterService): void
     {
         $this->beConstructedWith($filterService);
     }
 
-    function it_is_a_transformer(): void
+    public function it_is_a_transformer(): void
     {
         $this->shouldImplement(TransformerInterface::class);
     }
 
-    function it_transforms_product_images_into_product_thumbnail(
+    public function it_transforms_product_images_into_product_thumbnail(
         ProductInterface $product,
         ImageInterface $productImage,
         FilterService $filterService

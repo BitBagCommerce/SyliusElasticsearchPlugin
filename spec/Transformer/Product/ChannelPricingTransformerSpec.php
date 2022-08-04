@@ -24,7 +24,7 @@ use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 
 final class ChannelPricingTransformerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ChannelContextInterface $channelContext,
         LocaleContextInterface $localeContext,
         ProductVariantResolverInterface $productVariantResolver,
@@ -33,12 +33,12 @@ final class ChannelPricingTransformerSpec extends ObjectBehavior
         $this->beConstructedWith($channelContext, $localeContext, $productVariantResolver, $moneyFormatter);
     }
 
-    function it_is_a_transformer(): void
+    public function it_is_a_transformer(): void
     {
         $this->shouldImplement(TransformerInterface::class);
     }
 
-    function it_transforms_product_channel_prices_into_formatted_price(
+    public function it_transforms_product_channel_prices_into_formatted_price(
         ChannelContextInterface $channelContext,
         LocaleContextInterface $localeContext,
         ProductVariantResolverInterface $productVariantResolver,
@@ -62,7 +62,7 @@ final class ChannelPricingTransformerSpec extends ObjectBehavior
         $this->transform($product);
     }
 
-    function it_returns_null_when_product_doeas_not_have_any_variant(
+    public function it_returns_null_when_product_doeas_not_have_any_variant(
         ChannelContextInterface $channelContext,
         ProductVariantResolverInterface $productVariantResolver,
         MoneyFormatterInterface $moneyFormatter,

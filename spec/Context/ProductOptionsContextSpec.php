@@ -21,24 +21,24 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductOptionsContextSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         TaxonContextInterface $taxonContext,
         ProductOptionsFinderInterface $optionsFinder
     ): void {
         $this->beConstructedWith($taxonContext, $optionsFinder);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductOptionsContext::class);
     }
 
-    function it_implements_product_options_context_interface(): void
+    public function it_implements_product_options_context_interface(): void
     {
         $this->shouldHaveType(ProductOptionsContextInterface::class);
     }
 
-    function it_gets_options(
+    public function it_gets_options(
         TaxonContextInterface $taxonContext,
         ProductOptionsFinderInterface $optionsFinder,
         TaxonInterface $taxon

@@ -22,23 +22,23 @@ use PhpSpec\ObjectBehavior;
 
 final class SoldUnitsPropertyBuilderSpec extends ObjectBehavior
 {
-    function let(OrderItemRepositoryInterface $orderItemRepository): void
+    public function let(OrderItemRepositoryInterface $orderItemRepository): void
     {
         $this->beConstructedWith($orderItemRepository, 'sold_units');
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(SoldUnitsPropertyBuilder::class);
         $this->shouldHaveType(AbstractBuilder::class);
     }
 
-    function it_implements_property_builder_interface(): void
+    public function it_implements_property_builder_interface(): void
     {
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(Document $document, $object): void
+    public function it_consumes_event(Document $document, $object): void
     {
         $event = new PostTransformEvent($document->getWrappedObject(), [], $object->getWrappedObject());
         $this->consumeEvent($event);

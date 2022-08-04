@@ -16,24 +16,24 @@ use PhpSpec\ObjectBehavior;
 
 final class PaginationDataHandlerSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith(
             9,
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(PaginationDataHandler::class);
     }
 
-    function it_implements_pagination_data_handler_interface(): void
+    public function it_implements_pagination_data_handler_interface(): void
     {
         $this->shouldHaveType(PaginationDataHandlerInterface::class);
     }
 
-    function it_retrieves_data(): void
+    public function it_retrieves_data(): void
     {
         $this->retrieveData([])->shouldBeEqualTo([
             PaginationDataHandlerInterface::PAGE_INDEX => 1,

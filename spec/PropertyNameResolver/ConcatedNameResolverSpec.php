@@ -18,22 +18,22 @@ use PhpSpec\ObjectBehavior;
 
 final class ConcatedNameResolverSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith('Book');
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ConcatedNameResolver::class);
     }
 
-    function it_implements_concated_name_resolver_interface(): void
+    public function it_implements_concated_name_resolver_interface(): void
     {
         $this->shouldHaveType(ConcatedNameResolverInterface::class);
     }
 
-    function it_resolves_property_name(): void
+    public function it_resolves_property_name(): void
     {
         $this->resolvePropertyName('En')->shouldBeEqualTo('book_en');
     }
