@@ -32,8 +32,7 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
         ResourceRefresherInterface $resourceRefresher,
         array $persistersMap,
         RepositoryInterface $attributeRepository
-    )
-    {
+    ) {
         $this->resourceRefresher = $resourceRefresher;
         $this->persistersMap = $persistersMap;
         $this->attributeRepository = $attributeRepository;
