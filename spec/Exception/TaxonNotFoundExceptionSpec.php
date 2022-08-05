@@ -16,17 +16,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class TaxonNotFoundExceptionSpec extends ObjectBehavior
 {
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(TaxonNotFoundException::class);
     }
 
-    function it_is_an_not_found_exception(): void
+    public function it_is_an_not_found_exception(): void
     {
         $this->shouldHaveType(NotFoundHttpException::class);
     }
 
-    function it_has_custom_message(): void
+    public function it_has_custom_message(): void
     {
         $this->getMessage()->shouldReturn('Taxon has not been found!');
     }

@@ -19,17 +19,17 @@ use PhpSpec\ObjectBehavior;
 
 final class HasOptionsQueryBuilderSpec extends ObjectBehavior
 {
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(HasOptionsQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface(): void
+    public function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(): void
+    public function it_builds_query(): void
     {
         $this->buildQuery([
             'option_values' => ['XL', 'L'],

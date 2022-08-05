@@ -15,17 +15,17 @@ use PhpSpec\ObjectBehavior;
 
 final class UnsetArrayElementsExtensionSpec extends ObjectBehavior
 {
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(UnsetArrayElementsExtension::class);
     }
 
-    function it_is_a_twig_extension(): void
+    public function it_is_a_twig_extension(): void
     {
         $this->shouldHaveType(\Twig_Extension::class);
     }
 
-    function it_unset_elments(): void
+    public function it_unset_elments(): void
     {
         $elements = [
             'option_l' => 'L',

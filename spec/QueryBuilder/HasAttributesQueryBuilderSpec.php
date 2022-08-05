@@ -18,23 +18,23 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class HasAttributesQueryBuilderSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         LocaleContextInterface $localeContext
     ): void {
         $this->beConstructedWith($localeContext);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(HasAttributesQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface(): void
+    public function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(LocaleContextInterface $localeContext): void
+    public function it_builds_query(LocaleContextInterface $localeContext): void
     {
         $localeContext->getLocaleCode()->willReturn('en');
         $this->buildQuery([

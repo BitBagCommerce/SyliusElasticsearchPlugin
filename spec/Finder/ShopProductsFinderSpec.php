@@ -23,7 +23,7 @@ use Prophecy\Argument;
 
 final class ShopProductsFinderSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         QueryBuilderInterface $shopProductsQueryBuilder,
         PaginatedFinderInterface $productFinder
     ): void {
@@ -33,17 +33,17 @@ final class ShopProductsFinderSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopProductsFinder::class);
     }
 
-    function it_implements_shop_products_finder_interface(): void
+    public function it_implements_shop_products_finder_interface(): void
     {
         $this->shouldHaveType(ShopProductsFinderInterface::class);
     }
 
-    function it_finds(
+    public function it_finds(
         QueryBuilderInterface $shopProductsQueryBuilder,
         PaginatedFinderInterface $productFinder,
         AbstractQuery $boolQuery,

@@ -17,22 +17,22 @@ use PhpSpec\ObjectBehavior;
 
 final class IsEnabledQueryBuilderSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith('enabled');
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(IsEnabledQueryBuilder::class);
     }
 
-    function it_implements_query_builder_interface(): void
+    public function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    function it_builds_query(): void
+    public function it_builds_query(): void
     {
         $this->buildQuery([])->shouldBeAnInstanceOf(Term::class);
     }

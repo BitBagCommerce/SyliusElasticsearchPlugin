@@ -18,17 +18,17 @@ use PhpSpec\ObjectBehavior;
 
 final class StringFormatterSpec extends ObjectBehavior
 {
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(StringFormatter::class);
     }
 
-    function it_implements_string_formatter_interface(): void
+    public function it_implements_string_formatter_interface(): void
     {
         $this->shouldHaveType(StringFormatterInterface::class);
     }
 
-    function it_formats_to_lowercase_without_spaces(): void
+    public function it_formats_to_lowercase_without_spaces(): void
     {
         $this->formatToLowercaseWithoutSpaces('StrIng in-De-x')->shouldBeEqualTo('string_in_de_x');
     }
