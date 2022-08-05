@@ -19,7 +19,7 @@ final class PriceFacetSpec extends ObjectBehavior
 {
     private $interval = 1000000;
 
-    public function let(
+    function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         MoneyFormatterInterface $moneyFormatter,
         ShopperContextInterface $shopperContext
@@ -35,17 +35,17 @@ final class PriceFacetSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(PriceFacet::class);
     }
 
-    public function it_implements_facet_interface(): void
+    function it_implements_facet_interface(): void
     {
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    public function it_returns_histogram_aggregation_for_price_field(
+    function it_returns_histogram_aggregation_for_price_field(
         ConcatedNameResolverInterface $channelPricingNameResolver
     ): void {
         $channelPricingNameResolver->resolvePropertyName('web_us')->shouldBeCalled()->willReturn('price_web_us');
@@ -55,7 +55,7 @@ final class PriceFacetSpec extends ObjectBehavior
         $this->getAggregation()->shouldBeLike($expectedHistogram);
     }
 
-    public function it_returns_bool_query_made_of_ranges_based_on_selected_histograms(
+    function it_returns_bool_query_made_of_ranges_based_on_selected_histograms(
         ConcatedNameResolverInterface $channelPricingNameResolver
     ): void {
         $channelPricingNameResolver->resolvePropertyName('web_us')->shouldBeCalled()->willReturn('price_web_us');
@@ -67,7 +67,7 @@ final class PriceFacetSpec extends ObjectBehavior
         $this->getQuery($selectedHistograms)->shouldBeLike($expectedQuery);
     }
 
-    public function it_returns_money_formatted_bucket_label(
+    function it_returns_money_formatted_bucket_label(
         MoneyFormatterInterface $moneyFormatter,
         ShopperContextInterface $shopperContext
     ): void {

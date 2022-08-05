@@ -19,7 +19,7 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class ContainsNameQueryBuilderSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         LocaleContextInterface $localeContext,
         ConcatedNameResolverInterface $productNameNameResolver
     ): void {
@@ -30,17 +30,17 @@ final class ContainsNameQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(ContainsNameQueryBuilder::class);
     }
 
-    public function it_implements_query_builder_interface(): void
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    public function it_builds_query(
+    function it_builds_query(
         LocaleContextInterface $localeContext,
         ConcatedNameResolverInterface $productNameNameResolver
     ): void {
@@ -51,7 +51,7 @@ final class ContainsNameQueryBuilderSpec extends ObjectBehavior
         $this->buildQuery(['name_property' => 'Book'])->shouldBeAnInstanceOf(MatchQuery::class);
     }
 
-    public function it_builds_returned_null_if_property_is_null(
+    function it_builds_returned_null_if_property_is_null(
         LocaleContextInterface $localeContext,
         ConcatedNameResolverInterface $productNameNameResolver
     ): void {

@@ -17,17 +17,17 @@ use PhpSpec\ObjectBehavior;
 
 final class ProductsByPartialNameQueryBuilderSpec extends ObjectBehavior
 {
-    public function let(QueryBuilderInterface $containsNameQueryBuilder): void
+    function let(QueryBuilderInterface $containsNameQueryBuilder): void
     {
         $this->beConstructedWith($containsNameQueryBuilder);
     }
 
-    public function it_is_a_query_builder(): void
+    function it_is_a_query_builder(): void
     {
         $this->shouldImplement(QueryBuilderInterface::class);
     }
 
-    public function it_builds_query(
+    function it_builds_query(
         QueryBuilderInterface $containsNameQueryBuilder,
         AbstractQuery $productsQuery
     ): void {

@@ -19,23 +19,23 @@ use PhpSpec\ObjectBehavior;
 
 final class ProductCreatedAtPropertyBuilderSpec extends ObjectBehavior
 {
-    public function let(): void
+    function let(): void
     {
         $this->beConstructedWith('created_at');
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductCreatedAtPropertyBuilder::class);
         $this->shouldHaveType(AbstractBuilder::class);
     }
 
-    public function it_implements_property_builder_interface(): void
+    function it_implements_property_builder_interface(): void
     {
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    public function it_consumes_event(Document $document, $object): void
+    function it_consumes_event(Document $document, $object): void
     {
         $event = new PostTransformEvent($document->getWrappedObject(), [], $object->getWrappedObject());
         $this->consumeEvent($event);

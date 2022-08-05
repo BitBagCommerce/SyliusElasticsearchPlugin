@@ -15,12 +15,12 @@ use PhpSpec\ObjectBehavior;
 
 final class ItemsResponseSpec extends ObjectBehavior
 {
-    public function let(): void
+    function let(): void
     {
         $this->beConstructedThrough('createEmpty');
     }
 
-    public function it_can_add_items(): void
+    function it_can_add_items(): void
     {
         $this->addItem(new Item(
             'Super cars',
@@ -34,7 +34,7 @@ final class ItemsResponseSpec extends ObjectBehavior
         $this->all()->shouldHaveCount(1);
     }
 
-    public function it_returns_an_array(): void
+    function it_returns_an_array(): void
     {
         $this->toArray()->shouldBeArray();
     }

@@ -21,17 +21,17 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductTaxonsMapperSpec extends ObjectBehavior
 {
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductTaxonsMapper::class);
     }
 
-    public function it_implements_product_taxons_mapper_interface(): void
+    function it_implements_product_taxons_mapper_interface(): void
     {
         $this->shouldHaveType(ProductTaxonsMapperInterface::class);
     }
 
-    public function it_maps_to_unique_codes(
+    function it_maps_to_unique_codes(
         ProductInterface $product,
         Collection $collection,
         TaxonInterface $taxon

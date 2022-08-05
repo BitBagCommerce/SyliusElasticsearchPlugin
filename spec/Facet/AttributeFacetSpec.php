@@ -9,12 +9,14 @@ use BitBag\SyliusElasticsearchPlugin\Facet\FacetInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Aggregation\Terms;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Sylius\Component\Attribute\Model\Attribute;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class AttributeFacetSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         ConcatedNameResolverInterface $attributeNameResolver,
         RepositoryInterface $attributeRepository,
         LocaleContextInterface $localeContext
@@ -23,17 +25,17 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->beConstructedWith($attributeNameResolver, $attributeRepository, 'attribute_code', $localeContext);
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(AttributeFacet::class);
     }
 
-    public function it_implements_facet_interface(): void
+    function it_implements_facet_interface(): void
     {
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    public function it_returns_terms_aggregation(LocaleContextInterface $localeContext): void
+    function it_returns_terms_aggregation(LocaleContextInterface $localeContext): void
     {
         $localeContext->getLocaleCode()->willReturn('en');
         $expectedAggregation = new Terms('');
@@ -42,7 +44,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getAggregation()->shouldBeLike($expectedAggregation);
     }
 
-    public function it_returns_terms_query(LocaleContextInterface $localeContext): void
+    function it_returns_terms_query(LocaleContextInterface $localeContext): void
     {
         $localeContext->getLocaleCode()->willReturn('en');
 
@@ -52,7 +54,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getQuery($selectedBuckets)->shouldBeLike($expectedQuery);
     }
 
-    public function it_returns_bucket_label_(): void
+    function it_returns_bucket_label_(): void
     {
         $this->getBucketLabel(['key' => 'value_label', 'doc_count' => 3])->shouldReturn('Value Label (3)');
     }

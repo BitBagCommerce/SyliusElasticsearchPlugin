@@ -18,10 +18,9 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 {
     private $isEnabeldQuery;
-
     private $hasChannelQuery;
 
-    public function let(
+    function let(
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         LocaleContextInterface $localeContext,
         QueryBuilderInterface $isEnabledQueryBuilder,
@@ -43,27 +42,27 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(SearchProductsQueryBuilder::class);
     }
 
-    public function it_implements_query_builder_interface(): void
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    public function it_throws_an_exception_if_query_is_not_present_in_data(): void
+    function it_throws_an_exception_if_query_is_not_present_in_data(): void
     {
         $this->shouldThrow(\RuntimeException::class)->during('buildQuery', [['not_relevant_key' => 'value']]);
     }
 
-    public function it_throws_an_exception_if_query_is_not_a_string(): void
+    function it_throws_an_exception_if_query_is_not_a_string(): void
     {
         $this->shouldThrow(\RuntimeException::class)->during('buildQuery', [['query' => new \stdClass()]]);
     }
 
-    public function it_builds_multi_match_query_with_provided_query_string(): void
+    function it_builds_multi_match_query_with_provided_query_string(): void
     {
         $expectedMultiMatch = new MultiMatch();
         $expectedMultiMatch->setQuery('bmw');
@@ -77,7 +76,7 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         $this->buildQuery(['query' => 'bmw'])->shouldBeLike($expectedQuery);
     }
 
-    public function it_builds_multi_match_query_with_provided_query_string_and_fields_from_registry(
+    function it_builds_multi_match_query_with_provided_query_string_and_fields_from_registry(
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         ConcatedNameResolverInterface $firstPropertyNameResolver,
         ConcatedNameResolverInterface $secondPropertyNameResolver

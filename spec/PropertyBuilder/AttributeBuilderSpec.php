@@ -22,7 +22,7 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class AttributeBuilderSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         ConcatedNameResolverInterface $attributeNameResolver,
         StringFormatterInterface $stringFormatter,
         LocaleContextInterface $localeContext
@@ -34,18 +34,18 @@ final class AttributeBuilderSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(AttributeBuilder::class);
         $this->shouldHaveType(AbstractBuilder::class);
     }
 
-    public function it_implements_property_builder_interface(): void
+    function it_implements_property_builder_interface(): void
     {
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    public function it_consumes_event(Document $document, $object): void
+    function it_consumes_event(Document $document, $object): void
     {
         $event = new PostTransformEvent($document->getWrappedObject(), [], $object->getWrappedObject());
         $this->consumeEvent($event);

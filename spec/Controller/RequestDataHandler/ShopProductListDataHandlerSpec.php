@@ -21,7 +21,7 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
 final class ShopProductListDataHandlerSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
         ProductAttributesFinderInterface $attributesFinder
@@ -37,17 +37,17 @@ final class ShopProductListDataHandlerSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopProductListDataHandler::class);
     }
 
-    public function it_implements_data_handler_interface(): void
+    function it_implements_data_handler_interface(): void
     {
         $this->shouldHaveType(DataHandlerInterface::class);
     }
 
-    public function it_retrieves_data(
+    function it_retrieves_data(
         LocaleContextInterface $localeContext,
         TaxonRepositoryInterface $taxonRepository,
         TaxonInterface $taxon
@@ -69,7 +69,7 @@ final class ShopProductListDataHandlerSpec extends ObjectBehavior
         ]);
     }
 
-    public function it_throws_taxon_not_found_exception_if_taxon_is_null(
+    function it_throws_taxon_not_found_exception_if_taxon_is_null(
         LocaleContextInterface $localeContext,
         TaxonInterface $taxon
     ): void {

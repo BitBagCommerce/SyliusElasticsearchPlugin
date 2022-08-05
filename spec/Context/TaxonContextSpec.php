@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class TaxonContextSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         RequestStack $requestStack,
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext
@@ -30,17 +30,17 @@ final class TaxonContextSpec extends ObjectBehavior
         $this->beConstructedWith($requestStack, $taxonRepository, $localeContext);
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(TaxonContext::class);
     }
 
-    public function it_implements_taxon_context_interface(): void
+    function it_implements_taxon_context_interface(): void
     {
         $this->shouldHaveType(TaxonContextInterface::class);
     }
 
-    public function it_gets_taxon(
+    function it_gets_taxon(
         RequestStack $requestStack,
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
@@ -58,7 +58,7 @@ final class TaxonContextSpec extends ObjectBehavior
         $this->getTaxon()->shouldBeEqualTo($taxon);
     }
 
-    public function it_throws_taxon_not_found_exception_if_taxon_is_null(
+    function it_throws_taxon_not_found_exception_if_taxon_is_null(
         RequestStack $requestStack,
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,

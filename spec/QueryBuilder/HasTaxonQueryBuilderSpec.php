@@ -17,29 +17,29 @@ use PhpSpec\ObjectBehavior;
 
 final class HasTaxonQueryBuilderSpec extends ObjectBehavior
 {
-    public function let(): void
+    function let(): void
     {
         $this->beConstructedWith('taxons_property');
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(HasTaxonQueryBuilder::class);
     }
 
-    public function it_implements_query_builder_interface(): void
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    public function it_builds_query(): void
+    function it_builds_query(): void
     {
         $this->buildQuery([
             'taxons_property' => 'book',
         ])->shouldBeAnInstanceOf(Terms::class);
     }
 
-    public function it_builds_returned_null_if_property_is_null(): void
+    function it_builds_returned_null_if_property_is_null(): void
     {
         $this->buildQuery(['taxons_property' => null])->shouldBeEqualTo(null);
     }
