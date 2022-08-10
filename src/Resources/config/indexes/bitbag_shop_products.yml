@@ -18,7 +18,6 @@ fos_elastica:
             index_name: "bitbag_shop_products_%kernel.environment%"
             properties:
                 enabled: ~
-                attribute: { boost: 8, type: keyword }
             persistence:
                 driver: orm
                 model: "%sylius.model.product.class%"
