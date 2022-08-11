@@ -18,22 +18,22 @@ use PhpSpec\ObjectBehavior;
 
 final class ProductAttributesByTaxonQueryBuilderSpec extends ObjectBehavior
 {
-    public function let(QueryBuilderInterface $hasTaxonQueryBuilder): void
+    function let(QueryBuilderInterface $hasTaxonQueryBuilder): void
     {
         $this->beConstructedWith($hasTaxonQueryBuilder);
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductAttributesByTaxonQueryBuilder::class);
     }
 
-    public function it_implements_query_builder_interface(): void
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    public function it_builds_query(
+    function it_builds_query(
         QueryBuilderInterface $hasTaxonQueryBuilder,
         AbstractQuery $taxonQuery
     ): void {

@@ -37,17 +37,17 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopProductsSortDataHandler::class);
     }
 
-    public function it_implements_sort_data_handler_interface(): void
+    function it_implements_sort_data_handler_interface(): void
     {
         $this->shouldHaveType(SortDataHandlerInterface::class);
     }
 
-    public function it_retrieves_data(
+    function it_retrieves_data(
         TaxonContextInterface $taxonContext,
         TaxonInterface $taxon,
         ConcatedNameResolverInterface $taxonPositionNameResolver

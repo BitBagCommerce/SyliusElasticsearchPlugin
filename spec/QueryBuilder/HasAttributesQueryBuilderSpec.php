@@ -22,7 +22,7 @@ final class HasAttributesQueryBuilderSpec extends ObjectBehavior
 {
     private iterable $attributeDriver;
 
-    public function let(
+    function let(
         LocaleContextInterface $localeContext,
         ProductAttributeRepository $productAttributeRepository,
         AttributesTypeTextQueryBuilder $attributesTypeTextQueryBuilder
@@ -31,17 +31,17 @@ final class HasAttributesQueryBuilderSpec extends ObjectBehavior
         $this->beConstructedWith($localeContext, $productAttributeRepository, $this->attributeDriver);
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(HasAttributesQueryBuilder::class);
     }
 
-    public function it_implements_query_builder_interface(): void
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    public function it_builds_query(
+    function it_builds_query(
         LocaleContextInterface $localeContext,
         ProductAttributeRepository $productAttributeRepository,
         AttributesTypeTextQueryBuilder $attributesTypeTextQueryBuilder,

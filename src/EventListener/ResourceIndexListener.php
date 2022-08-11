@@ -12,6 +12,7 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Product\Model\ProductAttribute;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -55,7 +56,7 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
             }
 
             if ($resource instanceof Product
-                && 'Sylius\Component\Product\Model\ProductAttribute' === $config[self::MODEL_KEY]
+                && ProductAttribute::class === $config[self::MODEL_KEY]
             ) {
                 foreach ($this->attributeRepository->findAll() as $attribute) {
                     $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);

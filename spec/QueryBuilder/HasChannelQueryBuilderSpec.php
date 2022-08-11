@@ -19,22 +19,22 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 final class HasChannelQueryBuilderSpec extends ObjectBehavior
 {
-    public function let(ChannelContextInterface $channelContext): void
+    function let(ChannelContextInterface $channelContext): void
     {
         $this->beConstructedWith($channelContext, 'channel_property');
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(HasChannelQueryBuilder::class);
     }
 
-    public function it_implements_query_builder_interface(): void
+    function it_implements_query_builder_interface(): void
     {
         $this->shouldHaveType(QueryBuilderInterface::class);
     }
 
-    public function it_builds_query(
+    function it_builds_query(
         ChannelContextInterface $channelContext,
         ChannelInterface $channel
     ): void {

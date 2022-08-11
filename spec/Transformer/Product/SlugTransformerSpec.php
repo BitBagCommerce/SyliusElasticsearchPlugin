@@ -17,17 +17,17 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class SlugTransformerSpec extends ObjectBehavior
 {
-    public function let(RouterInterface $router): void
+    function let(RouterInterface $router): void
     {
         $this->beConstructedWith($router);
     }
 
-    public function it_is_a_transformer(): void
+    function it_is_a_transformer(): void
     {
         $this->shouldImplement(TransformerInterface::class);
     }
 
-    public function it_transforms_product_slug_into_route(RouterInterface $router, ProductInterface $product): void
+    function it_transforms_product_slug_into_route(RouterInterface $router, ProductInterface $product): void
     {
         $product->getSlug()->willReturn('/super-quirky-shirt');
 

@@ -18,27 +18,27 @@ use PhpSpec\ObjectBehavior;
 
 final class PriceNameResolverSpec extends ObjectBehavior
 {
-    public function let(): void
+    function let(): void
     {
         $this->beConstructedWith('price');
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(PriceNameResolver::class);
     }
 
-    public function it_implements_price_name_resolver_interface(): void
+    function it_implements_price_name_resolver_interface(): void
     {
         $this->shouldHaveType(PriceNameResolverInterface::class);
     }
 
-    public function it_resolves_min_price_name(): void
+    function it_resolves_min_price_name(): void
     {
         $this->resolveMinPriceName()->shouldBeEqualTo('min_price');
     }
 
-    public function it_resolves_max_price_name(): void
+    function it_resolves_max_price_name(): void
     {
         $this->resolveMaxPriceName()->shouldBeEqualTo('max_price');
     }
