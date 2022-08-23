@@ -14,7 +14,9 @@ namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapp
 final class AttributesTypeDateMapper implements AttributesMapperCollectorInterface
 {
     private const ATTRIBUTES_TYPE = 'date';
+
     private const CHOICE_DATE_FORMAT = 'd-m-Y H:i';
+
     private const VALUE_DATE_FORMAT = 'Y-m-d H:i:s.sss';
 
     public function supports(string $type): bool

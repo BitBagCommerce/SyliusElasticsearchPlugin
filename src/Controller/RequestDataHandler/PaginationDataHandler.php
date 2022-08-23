@@ -30,7 +30,7 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
         return $data;
     }
 
-    private function resolvePage(array $requestData, array &$data): void
+    private function resolvePage(array $requestData, array & $data): void
     {
         $page = 1;
 
@@ -41,7 +41,7 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
         $data[self::PAGE_INDEX] = $page;
     }
 
-    private function resolveLimit(array $requestData, array &$data): void
+    private function resolveLimit(array $requestData, array & $data): void
     {
         $limit = $this->defaultLimit;
 
