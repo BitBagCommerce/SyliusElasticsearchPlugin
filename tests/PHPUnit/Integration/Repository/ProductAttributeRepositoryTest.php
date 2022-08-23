@@ -26,6 +26,12 @@ class ProductAttributeRepositoryTest extends IntegrationTestCase
         $this->attributeRepository = self::$container->get('bitbag.sylius_elasticsearch_plugin.repository.product_attribute_repository');
     }
 
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        self::ensureKernelShutdown();
+    }
+
     public function test_get_attribute_type_by_name(): void
     {
         $this->loadFixturesFromFiles(['Repository/ProductAttributeValueRepositoryTest/test_product_attribute_repository.yaml']);

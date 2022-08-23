@@ -29,6 +29,12 @@ class ProductAttributeValueRepositoryTest extends IntegrationTestCase
         $this->taxonRepository = self::$container->get('sylius.repository.taxon');
     }
 
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        self::ensureKernelShutdown();
+    }
+
     public function test_get_unique_attribute_values(): void
     {
         $this->loadFixturesFromFiles(['Repository/ProductAttributeValueRepositoryTest/test_product_attribute_value_repository.yaml']);

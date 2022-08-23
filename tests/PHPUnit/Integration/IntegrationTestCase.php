@@ -14,13 +14,12 @@ use ApiTestCase\JsonApiTestCase;
 
 abstract class IntegrationTestCase extends JsonApiTestCase
 {
-    protected $client;
-
     public function __construct(
         ?string $name = null,
         array $data = [],
         string $dataName = ''
-    ) {
+    )
+    {
         parent::__construct($name, $data, $dataName);
 
         $this->dataFixturesPath = __DIR__ . '/DataFixtures/ORM';
@@ -28,9 +27,6 @@ abstract class IntegrationTestCase extends JsonApiTestCase
 
     protected function setUp(): void
     {
-        if (null === $this->client) {
-            $this->client = static::createClient();
-        }
     }
 
     protected function tearDown(): void
