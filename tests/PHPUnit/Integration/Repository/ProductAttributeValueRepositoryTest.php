@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Integration\Repository;
 
-
-use ApiTestCase\JsonApiTestCase;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository;
 use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepository;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\AttributeRepository;
@@ -13,7 +13,6 @@ class ProductAttributeValueRepositoryTest extends IntegrationTestCase
 {
     /** @var ProductAttributeValueRepository */
     private $productAttributeValueRepository;
-
 
     /** @var AttributeRepository */
     private $attributeRepository;
@@ -29,6 +28,7 @@ class ProductAttributeValueRepositoryTest extends IntegrationTestCase
         $this->attributeRepository = self::$container->get('sylius.repository.product_attribute');
         $this->taxonRepository = self::$container->get('sylius.repository.taxon');
     }
+
     public function test_get_unique_attribute_values(): void
     {
         $this->loadFixturesFromFiles(['Repository/ProductAttributeValueRepositoryTest/test_product_attribute_value_repository.yaml']);
@@ -39,6 +39,6 @@ class ProductAttributeValueRepositoryTest extends IntegrationTestCase
         $result = $this->productAttributeValueRepository->getUniqueAttributeValues($attribute, $taxon);
 
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        $this->assertCount(1, $result);
     }
 }

@@ -7,14 +7,20 @@
 */
 
 declare(strict_types=1);
-namespace Tests\BitBag\SyliusElasticsearchPlugin\Integration;
 
+namespace Tests\BitBag\SyliusElasticsearchPlugin\Integration;
 
 use ApiTestCase\JsonApiTestCase;
 
 abstract class IntegrationTestCase extends JsonApiTestCase
 {
-    public function __construct(?string $name = null, array $data = [], string $dataName = '')
+    protected $client;
+
+    public function __construct(
+        ?string $name = null,
+        array $data = [],
+        string $dataName = ''
+    )
     {
         parent::__construct($name, $data, $dataName);
 
@@ -23,11 +29,12 @@ abstract class IntegrationTestCase extends JsonApiTestCase
 
     protected function setUp(): void
     {
-
+        if (null === $this->client) {
+            $this->client = static::createClient();
+        }
     }
 
     protected function tearDown(): void
     {
-
     }
 }

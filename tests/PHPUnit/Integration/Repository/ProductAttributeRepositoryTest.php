@@ -19,7 +19,6 @@ class ProductAttributeRepositoryTest extends IntegrationTestCase
     /** @var ProductAttributeRepository */
     private $attributeRepository;
 
-
     public function SetUp(): void
     {
         parent::SetUp();

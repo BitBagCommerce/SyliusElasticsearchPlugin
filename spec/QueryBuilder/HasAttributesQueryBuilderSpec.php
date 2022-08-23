@@ -47,13 +47,14 @@ final class HasAttributesQueryBuilderSpec extends ObjectBehavior
         AttributesTypeTextQueryBuilder $attributesTypeTextQueryBuilder,
         BoolQuery $boolQuery
     ): void {
+        $attributeName = 'Size';
         $data = [
             'attribute_values' => ['XL', 'L'],
-            'attribute' => 'size',
+            'attribute' => $attributeName,
         ];
-        $attributeName = str_replace('attribute_', '', $data['attribute']);
+        $queryAttributeName = str_replace('attribute_', '', $data['attribute']);
 
-        $productAttributeRepository->getAttributeTypeByName($attributeName)
+        $productAttributeRepository->getAttributeTypeByName($queryAttributeName)
             ->willReturn('select');
 
         $attributesTypeTextQueryBuilder->supports('select')
