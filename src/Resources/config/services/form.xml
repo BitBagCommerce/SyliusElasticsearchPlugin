@@ -60,7 +60,7 @@
             <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.datetype" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateTimeMapper">
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.date_time" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateTimeMapper">
             <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
         </service>
 
