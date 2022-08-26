@@ -18,6 +18,7 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 {
     private $isEnabeldQuery;
+
     private $hasChannelQuery;
 
     function let(

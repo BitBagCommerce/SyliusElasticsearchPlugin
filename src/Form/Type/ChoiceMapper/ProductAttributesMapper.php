@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper;
 
+use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
+use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesMapperCollectorInterface;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
@@ -27,14 +29,24 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
     /** @var StringFormatterInterface */
     private $stringFormatter;
 
+    /** @var TaxonContextInterface */
+    private $taxonContext;
+
+    /** @var AttributesMapperCollectorInterface[] */
+    private $attributeMapper;
+
     public function __construct(
         ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
         LocaleContextInterface $localeContext,
-        StringFormatterInterface $stringFormatter
+        StringFormatterInterface $stringFormatter,
+        TaxonContextInterface $taxonContext,
+        iterable $attributeMapper
     ) {
         $this->productAttributeValueRepository = $productAttributeValueRepository;
         $this->localeContext = $localeContext;
         $this->stringFormatter = $stringFormatter;
+        $this->taxonContext = $taxonContext;
+        $this->attributeMapper = $attributeMapper;
     }
 
     public function mapToChoices(ProductAttributeInterface $productAttribute): array
@@ -52,8 +64,14 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
 
             return $choices;
         }
+        $taxon = $this->taxonContext->getTaxon();
+        $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute, $taxon);
 
-        $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute);
+        foreach ($this->attributeMapper as $mapper) {
+            if ($mapper->supports($productAttribute->getType())) {
+                return $mapper->map($attributeValues);
+            }
+        }
 
         $choices = [];
         array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {

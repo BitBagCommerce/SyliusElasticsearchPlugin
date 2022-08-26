@@ -12,8 +12,9 @@ namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
+use Sylius\Component\Taxonomy\Model\Taxon;
 
-class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
+final class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
     /** @var BaseAttributeValueRepositoryInterface */
     private $baseAttributeValueRepository;
@@ -23,7 +24,7 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
         $this->baseAttributeValueRepository = $baseAttributeValueRepository;
     }
 
-    public function getUniqueAttributeValues(AttributeInterface $productAttribute): array
+    public function getUniqueAttributeValues(AttributeInterface $productAttribute, Taxon $taxon): array
     {
         $queryBuilder = $this->baseAttributeValueRepository->createQueryBuilder('o');
 
@@ -32,13 +33,18 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
 
         return $queryBuilder
             ->join('o.subject', 'p', 'WITH', 'p.enabled = 1')
+            ->join('p.productTaxons', 't', 'WITH', 't.product = p.id')
             ->select('o.localeCode, o.' . $storageType . ' as value')
             ->where('o.attribute = :attribute')
+            ->andWhere('t.taxon = :taxon')
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')
-            ->setParameter(':attribute', $productAttribute)
+            ->setParameters([
+                ':attribute' => $productAttribute,
+                ':taxon' => $taxon->getId(),
+            ])
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
 }

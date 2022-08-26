@@ -19,6 +19,7 @@
                     <argument key="serviceId" type="service" id="fos_elastica.object_persister.bitbag_shop_product" />
                 </argument>
             </argument>
+            <argument type="service" id="sylius.repository.product_attribute"/>
             <tag name="kernel.event_listener" event="sylius.product_attribute.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product_attribute.post_update" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.option.post_create" method="updateIndex" />

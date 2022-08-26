@@ -40,6 +40,8 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" />
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.taxon" />
+            <argument type="tagged_iterator" tag="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
@@ -52,6 +54,18 @@
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search.facets" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchFacetsType">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.date" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateMapper">
+            <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.date_time" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateTimeMapper">
+            <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.percent" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypePercentMapper">
+            <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
         </service>
     </services>
 </container>

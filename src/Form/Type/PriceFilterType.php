@@ -14,6 +14,8 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInter
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -62,6 +64,15 @@ final class PriceFilterType extends AbstractFilterType
                     ]),
                 ],
             ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                if (!empty($event->getData())) {
+                    $data = [];
+                    foreach ($event->getData() as $key => $item) {
+                        $data[$key] = trim($item);
+                    }
+                    $event->setData($data);
+                }
+            })
         ;
     }
 }

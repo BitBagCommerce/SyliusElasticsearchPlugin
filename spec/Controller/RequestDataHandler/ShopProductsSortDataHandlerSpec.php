@@ -20,7 +20,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
         TaxonContextInterface $taxonContext,
@@ -51,8 +51,7 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         TaxonContextInterface $taxonContext,
         TaxonInterface $taxon,
         ConcatedNameResolverInterface $taxonPositionNameResolver
-    ): void
-    {
+    ): void {
         $taxonContext->getTaxon()->willReturn($taxon);
         $taxon->getCode()->willReturn('t_shirt');
         $taxonPositionNameResolver->resolvePropertyName('t_shirt')->willReturn('taxon_position_t_shirts');

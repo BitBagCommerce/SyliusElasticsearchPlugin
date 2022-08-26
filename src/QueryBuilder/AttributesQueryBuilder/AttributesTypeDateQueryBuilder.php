@@ -1,0 +1,42 @@
+<?php
+
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
+declare(strict_types=1);
+
+namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder;
+
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Term;
+
+class AttributesTypeDateQueryBuilder implements AttributesQueryBuilderCollectorInterface
+{
+    private const AVAILABLE_ATTRIBUTES_TYPE = [
+        'date',
+        'datetime',
+    ];
+
+    public function supports(string $type): bool
+    {
+        return in_array($type, self::AVAILABLE_ATTRIBUTES_TYPE);
+    }
+
+    public function buildQuery(array $data, string $localCode): BoolQuery
+    {
+        $attributeQuery = new BoolQuery();
+
+        foreach ((array) $data['attribute_values'] as $attributeValue) {
+            $termQuery = new Term();
+            $attribute = \sprintf('%s_%s.date.keyword', $data['attribute'], $localCode);
+            $termQuery->setTerm($attribute, $attributeValue);
+            $attributeQuery->addShould($termQuery);
+        }
+
+        return $attributeQuery;
+    }
+}

@@ -33,6 +33,20 @@
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_attributes" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasAttributesQueryBuilder" >
             <argument type="service" id="sylius.context.locale"/>
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_repository"/>
+            <argument type="tagged_iterator" tag="bitbag_sylius_elasticsearch_plugin.query_builder.attributes" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.attributes.type.text" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder\AttributesTypeTextQueryBuilder">
+            <tag name="bitbag_sylius_elasticsearch_plugin.query_builder.attributes" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.attributes.type.number" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder\AttributesTypeNumberQueryBuilder">
+            <tag name="bitbag_sylius_elasticsearch_plugin.query_builder.attributes" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.attributes.type.date" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder\AttributesTypeDateQueryBuilder">
+            <tag name="bitbag_sylius_elasticsearch_plugin.query_builder.attributes" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_price_between" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasPriceBetweenQueryBuilder">

@@ -8,7 +8,6 @@ use BitBag\SyliusElasticsearchPlugin\Facet\FacetInterface;
 use BitBag\SyliusElasticsearchPlugin\Facet\TaxonFacet;
 use Elastica\Aggregation\Terms;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Component\Core\Model\Taxon;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
