@@ -10,6 +10,7 @@ parameters:
 
     bitbag_es_pagination_available_page_limits: [9, 18, 36]
     bitbag_es_pagination_default_limit: 9
+    bitbag_es_fuzziness: AUTO
 
 fos_elastica:
     clients:
