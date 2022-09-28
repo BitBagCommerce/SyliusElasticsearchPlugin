@@ -32,16 +32,21 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
     /** @var QueryBuilderInterface */
     private $hasChannelQueryBuilder;
 
+    /** @var string */
+    private $fuzziness;
+
     public function __construct(
         SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
         LocaleContextInterface $localeContext,
         QueryBuilderInterface $isEnabledQueryBuilder,
-        QueryBuilderInterface $hasChannelQueryBuilder
+        QueryBuilderInterface $hasChannelQueryBuilder,
+        string $fuzziness
     ) {
         $this->searchProperyNameResolverRegistry = $searchProperyNameResolverRegistry;
         $this->localeContext = $localeContext;
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
         $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
+        $this->fuzziness = $fuzziness;
     }
 
     public function buildQuery(array $data): ?AbstractQuery
@@ -68,7 +73,7 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
 
         $multiMatch = new MultiMatch();
         $multiMatch->setQuery($query);
-        $multiMatch->setFuzziness('AUTO');
+        $multiMatch->setFuzziness($this->fuzziness);
         $fields = [];
         foreach ($this->searchProperyNameResolverRegistry->getPropertyNameResolvers() as $propertyNameResolver) {
             $fields[] = $propertyNameResolver->resolvePropertyName($this->localeContext->getLocaleCode());
