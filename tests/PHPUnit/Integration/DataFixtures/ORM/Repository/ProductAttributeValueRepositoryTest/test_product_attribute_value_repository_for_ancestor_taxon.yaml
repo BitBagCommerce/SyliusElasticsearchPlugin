@@ -57,10 +57,16 @@ Sylius\Component\Core\Model\Taxon:
   glass_mugs:
     code: "glass_mugs"
     parent: "@mugs"
+  ceramic_mugs:
+    code: "ceramic_mugs"
+    parent: "@mugs"
+  metal_mugs:
+    code: "metal_mugs"
+    parent: "@mugs"
 
 Sylius\Component\Core\Model\ProductTaxon:
   productTaxon1:
     product: "@product_mug"
-    taxon: "@glass_mugs"
+    taxon: "@ceramic_mugs"
     position: 0
 
