@@ -19,9 +19,13 @@ final class ProductAttributeValueRepository implements ProductAttributeValueRepo
     /** @var BaseAttributeValueRepositoryInterface */
     private $baseAttributeValueRepository;
 
-    public function __construct(BaseAttributeValueRepositoryInterface $baseAttributeValueRepository)
+    /** @var bool */
+    private $includeAllDescendants;
+
+    public function __construct(BaseAttributeValueRepositoryInterface $baseAttributeValueRepository, bool $includeAllDescendants)
     {
         $this->baseAttributeValueRepository = $baseAttributeValueRepository;
+        $this->includeAllDescendants = $includeAllDescendants;
     }
 
     public function getUniqueAttributeValues(AttributeInterface $productAttribute, Taxon $taxon): array
@@ -31,18 +35,26 @@ final class ProductAttributeValueRepository implements ProductAttributeValueRepo
         /** @var string|null $storageType */
         $storageType = $productAttribute->getStorageType();
 
-        return $queryBuilder
+        $queryBuilder
             ->join('o.subject', 'p', 'WITH', 'p.enabled = 1')
             ->join('p.productTaxons', 't', 'WITH', 't.product = p.id')
             ->select('o.localeCode, o.' . $storageType . ' as value')
-            ->where('o.attribute = :attribute')
-            ->andWhere('t.taxon = :taxon')
+            ->andWhere('t.taxon = :taxon');
+
+        if (true === $this->includeAllDescendants) {
+            $queryBuilder->innerJoin('t.taxon', 'taxon')
+                ->orWhere('taxon.left >= :taxonLeft and taxon.right <= :taxonRight and taxon.root = :taxonRoot')
+                ->setParameter('taxonLeft', $taxon->getLeft())
+                ->setParameter('taxonRight', $taxon->getRight())
+                ->setParameter('taxonRoot', $taxon->getRoot());
+        }
+
+        return $queryBuilder
+            ->andWhere('o.attribute = :attribute')
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')
-            ->setParameters([
-                ':attribute' => $productAttribute,
-                ':taxon' => $taxon->getId(),
-            ])
+            ->setParameter('attribute', $productAttribute)
+            ->setParameter('taxon', $taxon->getId())
             ->getQuery()
             ->getResult()
             ;

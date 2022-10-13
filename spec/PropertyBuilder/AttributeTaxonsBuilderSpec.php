@@ -24,7 +24,8 @@ final class AttributeTaxonsBuilderSpec extends ObjectBehavior
     {
         $this->beConstructedWith(
             $taxonRepository,
-            'taxons'
+            'taxons',
+            true
         );
     }
 

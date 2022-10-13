@@ -13,6 +13,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
@@ -26,13 +27,18 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     /** @var array */
     private $excludedAttributes;
 
+    /** @var bool */
+    private $includeAllDescendants;
+
     public function __construct(
         TaxonRepositoryInterface $taxonRepository,
         string $taxonsProperty,
+        bool $includeAllDescendants,
         array $excludedAttributes = []
     ) {
         $this->taxonRepository = $taxonRepository;
         $this->taxonsProperty = $taxonsProperty;
+        $this->includeAllDescendants = $includeAllDescendants;
         $this->excludedAttributes = $excludedAttributes;
     }
 
@@ -50,8 +56,15 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         $taxons = $this->taxonRepository->getTaxonsByAttributeViaProduct($documentAttribute);
         $taxonCodes = [];
 
+        /** @var TaxonInterface $taxon */
         foreach ($taxons as $taxon) {
             $taxonCodes[] = $taxon->getCode();
+
+            if (true === $this->includeAllDescendants) {
+                foreach ($taxon->getAncestors() as $ancestor) {
+                    $taxonCodes[] = $ancestor->getCode();
+                }
+            }
         }
 
         $document = $event->getDocument();

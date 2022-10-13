@@ -68,6 +68,7 @@
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.attribute_taxons" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder">
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.taxon_repository" />
             <argument>%bitbag_es_shop_attribute_taxons_property%</argument>
+            <argument>%sylius_shop.product_grid.include_all_descendants%</argument>
             <argument>%bitbag_es_excluded_filter_attributes%</argument>
             <tag name="kernel.event_subscriber" />
         </service>
@@ -77,7 +78,9 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.mapper.product_taxons" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapper" />
+        <service id="bitbag_sylius_elasticsearch_plugin.property_builder.mapper.product_taxons" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapper">
+            <argument>%sylius_shop.product_grid.include_all_descendants%</argument>
+        </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.property_builder.product_description" class="BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductDescriptionBuilder">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.description" />

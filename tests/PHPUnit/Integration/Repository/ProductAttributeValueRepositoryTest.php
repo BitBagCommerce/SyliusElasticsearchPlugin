@@ -54,4 +54,17 @@ class ProductAttributeValueRepositoryTest extends IntegrationTestCase
         $this->assertNotEmpty($result);
         $this->assertCount(1, $result);
     }
+
+    public function test_get_unique_attribute_values_for_ancestor_taxon(): void
+    {
+        $this->loadFixturesFromFiles(['Repository/ProductAttributeValueRepositoryTest/test_product_attribute_value_repository_for_ancestor_taxon.yaml']);
+
+        $attribute = $this->attributeRepository->findAll()[0];
+        $taxon = $this->taxonRepository->findAll()[0];
+
+        $result = $this->productAttributeValueRepository->getUniqueAttributeValues($attribute, $taxon);
+
+        $this->assertNotEmpty($result);
+        $this->assertCount(1, $result);
+    }
 }
