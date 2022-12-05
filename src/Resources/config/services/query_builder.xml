@@ -88,5 +88,12 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_channel" />
             <argument>%bitbag_es_fuzziness%</argument>
         </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.taxon_facets" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\TaxonFacetsQueryBuilder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_channel" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_product_taxon" />
+            <argument>%bitbag_es_fuzziness%</argument>
+        </service>
     </services>
 </container>

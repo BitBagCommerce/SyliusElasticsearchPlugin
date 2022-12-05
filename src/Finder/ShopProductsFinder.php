@@ -12,6 +12,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
+use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -25,17 +26,30 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     /** @var PaginatedFinderInterface */
     private $productFinder;
 
+    /** @var RegistryInterface */
+    private $facetRegistry;
+
     public function __construct(
         QueryBuilderInterface $shopProductsQueryBuilder,
-        PaginatedFinderInterface $productFinder
+        PaginatedFinderInterface $productFinder,
+        RegistryInterface $facetRegistry
     ) {
         $this->shopProductsQueryBuilder = $shopProductsQueryBuilder;
         $this->productFinder = $productFinder;
+        $this->facetRegistry = $facetRegistry;
     }
 
     public function find(array $data): Pagerfanta
     {
         $boolQuery = $this->shopProductsQueryBuilder->buildQuery($data);
+
+        foreach ($data['facets'] as $facetId => $selectedBuckets) {
+            if (!$selectedBuckets) {
+                continue;
+            }
+            $facet = $this->facetRegistry->getFacetById($facetId);
+            $boolQuery->addFilter($facet->getQuery($selectedBuckets));
+        }
 
         $query = new Query($boolQuery);
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
