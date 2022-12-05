@@ -2,16 +2,16 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en_US
-    bitbag_es_shop_price_facet_interval: 1000000
+    bitbag_es_shop_price_facet_interval: 1000
 
 services:
 
-    bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type:
+    bitbag_sylius_elasticsearch_plugin.facet.attribute.dress_brand:
         class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
         arguments:
             - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
             - '@sylius.repository.product_attribute'
-            - Car_Type
+            - dress_brand
             - '@sylius.context.locale'
 
     bitbag_sylius_elasticsearch_plugin.facet.attribute.motorbike_type:
@@ -37,6 +37,9 @@ services:
             - '@sylius.repository.product_option'
             - SUPPLY
 
+    bitbag_sylius_elasticsearch_plugin.facet.property.is_shipping_required:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\BoolPropertyFacet
+
     bitbag_sylius_elasticsearch_plugin.facet.registry:
         class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
         calls:
@@ -50,8 +53,8 @@ services:
                   - '@bitbag_sylius_elasticsearch_plugin.facet.taxon'
             - method: addFacet
               arguments:
-                  - attribute_car_type
-                  - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.car_type'
+                  - attribute_dress_brand
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.dress_brand'
             - method: addFacet
               arguments:
                   - attribute_motorbike_type
@@ -64,3 +67,19 @@ services:
               arguments:
                   - option_supply
                   - '@bitbag_sylius_elasticsearch_plugin.facet.option.supply'
+            - method: addFacet
+              arguments:
+                  - enabled
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.property.is_shipping_required'
+
+    bitbag_sylius_elasticsearch_plugin.facet.taxon_registry:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
+        calls:
+            - method: addFacet
+              arguments:
+                  - price
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.price'
+            - method: addFacet
+              arguments:
+                  - enabled
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.property.is_shipping_required'
