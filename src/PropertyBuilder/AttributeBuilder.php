@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -14,17 +16,16 @@ use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
+use function sprintf;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductAttributeValue;
 
 final class AttributeBuilder extends AbstractBuilder
 {
-    /** @var ConcatedNameResolverInterface */
-    private $attributeNameResolver;
+    private ConcatedNameResolverInterface $attributeNameResolver;
 
-    /** @var StringFormatterInterface */
-    private $stringFormatter;
+    private StringFormatterInterface $stringFormatter;
 
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
@@ -79,7 +80,8 @@ final class AttributeBuilder extends AbstractBuilder
                 $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
             }
         } else {
-            $attributeValue = is_string($attributeValue) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue) : $attributeValue;
+            $attributeValue = is_string($attributeValue)
+                ? $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue) : $attributeValue;
             $attributes[] = $attributeValue;
         }
 
@@ -96,7 +98,7 @@ final class AttributeBuilder extends AbstractBuilder
 
         $value = $productAttribute->getValue();
         $documentKey = $this->attributeNameResolver->resolvePropertyName($attributeCode);
-        $code = \sprintf('%s_%s', $documentKey, $productAttribute->getLocaleCode());
+        $code = sprintf('%s_%s', $documentKey, $productAttribute->getLocaleCode());
 
         $values = $this->resolveProductAttribute(
             $attributeConfiguration,

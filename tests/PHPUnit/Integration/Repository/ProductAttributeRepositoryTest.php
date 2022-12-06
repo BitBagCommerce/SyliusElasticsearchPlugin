@@ -16,14 +16,14 @@ use Tests\BitBag\SyliusElasticsearchPlugin\Integration\IntegrationTestCase;
 
 class ProductAttributeRepositoryTest extends IntegrationTestCase
 {
-    /** @var ProductAttributeRepository */
-    private $attributeRepository;
+    private ProductAttributeRepository $attributeRepository;
 
     public function SetUp(): void
     {
         parent::SetUp();
+        $container = self::getContainer();
 
-        $this->attributeRepository = self::$container->get('bitbag.sylius_elasticsearch_plugin.repository.product_attribute_repository');
+        $this->attributeRepository = $container->get('bitbag.sylius_elasticsearch_plugin.repository.product_attribute_repository');
     }
 
     public function tearDown(): void
