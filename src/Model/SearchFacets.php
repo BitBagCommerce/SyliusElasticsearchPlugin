@@ -14,7 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Model;
 
 use Iterator;
 
-class SearchFacets implements Iterator
+final class SearchFacets implements Iterator
 {
     private array $selectedBuckets = [];
 
