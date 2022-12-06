@@ -21,23 +21,15 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["7.4", "8.0"]
-                symfony: ["^4.4", "^5.2"]
-                sylius: ["~1.9.0", "~1.10.0", "~1.11.0"]
+                php: ["8.0"]
+                symfony: ["^5.4", "^6.0"]
+                sylius: ["~1.11.0", "~1.12.0"]
                 node: ["14.x"]
                 mysql: ["8.0"]
 
                 exclude:
-                    - sylius: ~1.9.0
-                      php: 8.0
-
-                    - sylius: ~1.10.0
-                      symfony: ^4.4
-                    # friendsofsymfony/elastica-bundle - package is locking php 7.x
-
                     - sylius: ~1.11.0
-                      php: 7.4
-
+                      symfony: "^6.0"
         env:
             APP_ENV: test
             DATABASE_URL: "mysql://root:root@127.0.0.1/sylius?serverVersion=${{ matrix.mysql }}"
@@ -146,6 +138,11 @@ jobs:
                     key: ${{ runner.os }}-node-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json **/yarn.lock') }}
                     restore-keys: |
                         ${{ runner.os }}-node-${{ matrix.node }}-yarn-
+
+            -
+                name: Copy package.json.dist to package.json
+                if: matrix.sylius != ''
+                run: (cd tests/Application && cp package.json.\${{ matrix.sylius }}.dist package.json)
 
             -
                 name: Install JS dependencies

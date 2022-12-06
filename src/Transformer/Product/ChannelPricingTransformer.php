@@ -1,15 +1,18 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Transformer\Product;
 
+use RuntimeException;
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -20,17 +23,13 @@ use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 
 final class ChannelPricingTransformer implements TransformerInterface
 {
-    /** @var ChannelContextInterface */
-    private $channelContext;
+    private ChannelContextInterface $channelContext;
 
-    /** @var LocaleContextInterface */
-    private $localeContext;
+    private LocaleContextInterface $localeContext;
 
-    /** @var ProductVariantResolverInterface */
-    private $productVariantResolver;
+    private ProductVariantResolverInterface $productVariantResolver;
 
-    /** @var MoneyFormatterInterface */
-    private $moneyFormatter;
+    private MoneyFormatterInterface $moneyFormatter;
 
     public function __construct(
         ChannelContextInterface $channelContext,
@@ -50,7 +49,7 @@ final class ChannelPricingTransformer implements TransformerInterface
         $channel = $this->channelContext->getChannel();
 
         if (null === $channelBaseCurrency = $channel->getBaseCurrency()) {
-            throw new \RuntimeException('No channel currency configured');
+            throw new RuntimeException('No channel currency configured');
         }
 
         /** @var ProductVariantInterface|null $productVariant */
@@ -66,6 +65,10 @@ final class ChannelPricingTransformer implements TransformerInterface
             return null;
         }
 
-        return $this->moneyFormatter->format($productVariantPricing->getPrice(), $channelBaseCurrency->getCode(), $this->localeContext->getLocaleCode());
+        return $this->moneyFormatter->format(
+            $productVariantPricing->getPrice(),
+            $channelBaseCurrency->getCode(),
+            $this->localeContext->getLocaleCode()
+        );
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -16,19 +18,15 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
-class TaxonRepository implements TaxonRepositoryInterface
+final class TaxonRepository implements TaxonRepositoryInterface
 {
-    /** @var BaseTaxonRepositoryInterface|EntityRepository */
-    private $baseTaxonRepository;
+    private BaseTaxonRepositoryInterface|EntityRepository $baseTaxonRepository;
 
-    /** @var ProductRepositoryInterface|EntityRepository */
-    private $productRepository;
+    private ProductRepositoryInterface|EntityRepository $productRepository;
 
-    /** @var string */
-    private $productTaxonEntityClass;
+    private string $productTaxonEntityClass;
 
-    /** @var string */
-    private $productAttributeEntityClass;
+    private string $productAttributeEntityClass;
 
     public function __construct(
         BaseTaxonRepositoryInterface $baseTaxonRepository,

@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -19,11 +21,9 @@ use Pagerfanta\Pagerfanta;
 
 final class ShopProductsFinder implements ShopProductsFinderInterface
 {
-    /** @var QueryBuilderInterface */
-    private $shopProductsQueryBuilder;
+    private QueryBuilderInterface $shopProductsQueryBuilder;
 
-    /** @var PaginatedFinderInterface */
-    private $productFinder;
+    private PaginatedFinderInterface $productFinder;
 
     public function __construct(
         QueryBuilderInterface $shopProductsQueryBuilder,
@@ -41,8 +41,12 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
         $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
 
         $products = $this->productFinder->findPaginated($query);
-        $products->setMaxPerPage($data[PaginationDataHandlerInterface::LIMIT_INDEX]);
-        $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
+        if (null !== $data[PaginationDataHandlerInterface::LIMIT_INDEX]) {
+            $products->setMaxPerPage($data[PaginationDataHandlerInterface::LIMIT_INDEX]);
+        }
+        if (null !== $data[PaginationDataHandlerInterface::PAGE_INDEX]) {
+            $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
+        }
 
         return $products;
     }
