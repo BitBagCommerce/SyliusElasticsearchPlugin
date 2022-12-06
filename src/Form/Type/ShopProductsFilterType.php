@@ -13,14 +13,14 @@ namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
+use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
+use Pagerfanta\Adapter\AdapterInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Pagerfanta\Adapter\AdapterInterface;
-use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
-use Elastica\Query;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopProductsFilterType extends AbstractFilterType
@@ -108,9 +108,12 @@ final class ShopProductsFilterType extends AbstractFilterType
             return;
         }
 
-        $form->add('facets', SearchFacetsType::class, [
+        $form->add(
+            'facets',
+            SearchFacetsType::class,
+            [
                 'facets' => $adapter->getAggregations(),
-                'label' => false
+                'label' => false,
             ]
         );
     }
