@@ -47,6 +47,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
             if (!$selectedBuckets) {
                 continue;
             }
+
             $facet = $this->facetRegistry->getFacetById($facetId);
             $boolQuery->addFilter($facet->getQuery($selectedBuckets));
         }

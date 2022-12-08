@@ -10,11 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
-use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
-use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
-use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use Elastica\Query;
-use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolverInterface;
 use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
 use Pagerfanta\Adapter\AdapterInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,33 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopProductsFilterType extends AbstractFilterType
 {
-    /** @var string */
-    private $namePropertyPrefix;
+    private string $namePropertyPrefix;
 
-    /** @var PaginatedFinderInterface */
-    private $finder;
-
-    /** @var RegistryInterface */
-    private $facetRegistry;
-
-    /** @var QueryBuilderInterface */
-    private $searchProductsQueryBuilder;
-
-    /** @var DataHandlerInterface */
-    private $shopProductListDataHandler;
+    private ProductsFilterFacetResolverInterface $facetResolver;
 
     public function __construct(
         string $namePropertyPrefix,
-        PaginatedFinderInterface $finder,
-        RegistryInterface $facetRegistry,
-        QueryBuilderInterface $searchProductsQueryBuilder,
-        DataHandlerInterface $shopProductListDataHandler
+        ProductsFilterFacetResolverInterface $facetResolver
     ) {
         $this->namePropertyPrefix = $namePropertyPrefix;
-        $this->finder = $finder;
-        $this->facetRegistry = $facetRegistry;
-        $this->searchProductsQueryBuilder = $searchProductsQueryBuilder;
-        $this->shopProductListDataHandler = $shopProductListDataHandler;
+        $this->facetResolver = $facetResolver;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -63,7 +42,7 @@ final class ShopProductsFilterType extends AbstractFilterType
             ->add('price', PriceFilterType::class, ['required' => false, 'label' => false])
             ->setMethod('GET');
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'resolveFacets']);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'addFacets']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -73,33 +52,13 @@ final class ShopProductsFilterType extends AbstractFilterType
         ]);
     }
 
-    public function resolveFacets(FormEvent $event): void
+    public function addFacets(FormEvent $event): void
     {
-        $query = $this->getQuery($event);
+        $facets = $this->facetResolver->resolveFacets($event, $this->namePropertyPrefix);
 
-        foreach ($this->facetRegistry->getFacets() as $facetId => $facet) {
-            $query->addAggregation($facet->getAggregation()->setName($facetId));
+        if ($facets->getAdapter()) {
+            $this->modifyForm($event->getForm(), $facets->getAdapter());
         }
-
-        $query->setSize(0);
-
-        $results = $this->finder->findPaginated($query);
-
-        if ($results->getAdapter()) {
-            $this->modifyForm($event->getForm(), $results->getAdapter());
-        }
-    }
-
-    private function getQuery(FormEvent $event): Query
-    {
-        $eventData = $event->getData();
-        if (!isset($eventData[$this->namePropertyPrefix])) {
-            $eventData[$this->namePropertyPrefix] = '';
-        }
-
-        $data = $this->shopProductListDataHandler->retrieveData($eventData);
-
-        return new Query($this->searchProductsQueryBuilder->buildQuery($data));
     }
 
     private function modifyForm(FormInterface $form, AdapterInterface $adapter): void
