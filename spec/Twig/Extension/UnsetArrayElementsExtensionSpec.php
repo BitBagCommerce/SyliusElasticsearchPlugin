@@ -12,6 +12,7 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\Twig\Extension;
 
 use BitBag\SyliusElasticsearchPlugin\Twig\Extension\UnsetArrayElementsExtension;
 use PhpSpec\ObjectBehavior;
+use Twig\Extension\AbstractExtension;
 
 final class UnsetArrayElementsExtensionSpec extends ObjectBehavior
 {
@@ -22,7 +23,7 @@ final class UnsetArrayElementsExtensionSpec extends ObjectBehavior
 
     function it_is_a_twig_extension(): void
     {
-        $this->shouldHaveType(\Twig_Extension::class);
+        $this->shouldHaveType(AbstractExtension::class);
     }
 
     function it_unset_elments(): void

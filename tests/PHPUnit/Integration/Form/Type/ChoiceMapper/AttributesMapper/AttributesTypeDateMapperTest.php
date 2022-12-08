@@ -13,32 +13,29 @@ namespace PHPUnit\Integration\Form\Type\ChoiceMapper\AttributesMapper;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateMapper;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository;
-use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepository;
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\AttributeRepository;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Bundle\TaxonomyBundle\Doctrine\ORM\TaxonRepository;
 use Tests\BitBag\SyliusElasticsearchPlugin\Integration\IntegrationTestCase;
 
 class AttributesTypeDateMapperTest extends IntegrationTestCase
 {
-    /** @var ProductAttributeValueRepository */
-    private $productAttributeValueRepository;
+    private ProductAttributeValueRepository $productAttributeValueRepository;
 
-    /** @var AttributeRepository */
-    private $attributeRepository;
+    private EntityRepository $attributeRepository;
 
-    /** @var TaxonRepository */
-    private $taxonRepository;
+    private TaxonRepository $taxonRepository;
 
-    /** @var AttributesTypeDateMapper */
-    private $attributesTypeDateMapper;
+    private AttributesTypeDateMapper $attributesTypeDateMapper;
 
     public function SetUp(): void
     {
         parent::SetUp();
+        $container = self::getContainer();
 
-        $this->productAttributeValueRepository = self::$container->get('bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository');
-        $this->attributeRepository = self::$container->get('sylius.repository.product_attribute');
-        $this->taxonRepository = self::$container->get('sylius.repository.taxon');
-        $this->attributesTypeDateMapper = self::$container->get('bitbag_sylius_elasticsearch_plugin.form.mapper.type.date');
+        $this->productAttributeValueRepository = $container->get('bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository');
+        $this->attributeRepository = $container->get('sylius.repository.product_attribute');
+        $this->taxonRepository = $container->get('sylius.repository.taxon');
+        $this->attributesTypeDateMapper = $container->get('bitbag_sylius_elasticsearch_plugin.form.mapper.type.date');
     }
 
     public function tearDown(): void

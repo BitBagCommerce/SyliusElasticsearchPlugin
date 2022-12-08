@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -20,17 +22,13 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class SearchFormEventListener
 {
-    /** @var string */
-    private $template;
+    private string $template;
 
-    /** @var FormFactoryInterface */
-    private $formFactory;
+    private FormFactoryInterface $formFactory;
 
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
-    /** @var FormInterface */
-    private $form;
+    private ?FormInterface $form = null;
 
     public function __construct(
         string $template,
@@ -67,7 +65,11 @@ final class SearchFormEventListener
                 $search = new Search();
             }
             $this->form = $this->formFactory
-                ->create(SearchType::class, $search, ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]);
+                ->create(
+                    SearchType::class,
+                    $search,
+                    ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]
+                );
         }
 
         return $this->form;

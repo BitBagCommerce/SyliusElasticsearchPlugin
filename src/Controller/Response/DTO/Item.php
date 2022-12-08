@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -12,23 +14,17 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Response\DTO;
 
 final class Item
 {
-    /** @var string */
-    private $taxonName;
+    private string $taxonName;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var string */
-    private $description;
+    private ?string $description;
 
-    /** @var string */
-    private $slug;
+    private string $slug;
 
-    /** @var string */
-    private $price;
+    private ?string $price;
 
-    /** @var string */
-    private $image;
+    private ?string $image;
 
     public function __construct(
         string $taxonName,

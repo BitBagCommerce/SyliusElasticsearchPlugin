@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -14,11 +16,9 @@ use BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinderInterface;
 
 final class ProductOptionsContext implements ProductOptionsContextInterface
 {
-    /** @var TaxonContextInterface */
-    private $taxonContext;
+    private TaxonContextInterface $taxonContext;
 
-    /** @var ProductOptionsFinderInterface */
-    private $optionsFinder;
+    private ProductOptionsFinderInterface $optionsFinder;
 
     public function __construct(
         TaxonContextInterface $taxonContext,
@@ -31,8 +31,7 @@ final class ProductOptionsContext implements ProductOptionsContextInterface
     public function getOptions(): ?array
     {
         $taxon = $this->taxonContext->getTaxon();
-        $options = $this->optionsFinder->findByTaxon($taxon);
 
-        return $options;
+        return $this->optionsFinder->findByTaxon($taxon);
     }
 }

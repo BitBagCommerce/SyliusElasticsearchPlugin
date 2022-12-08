@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -20,20 +22,15 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionTaxonsBuilder extends AbstractBuilder
 {
-    /** @var RepositoryInterface */
-    private $productOptionValueRepository;
+    private RepositoryInterface $productOptionValueRepository;
 
-    /** @var ProductVariantRepositoryInterface */
-    private $productVariantRepository;
+    private ProductVariantRepositoryInterface $productVariantRepository;
 
-    /** @var ProductTaxonsMapperInterface */
-    private $productTaxonsMapper;
+    private ProductTaxonsMapperInterface $productTaxonsMapper;
 
-    /** @var string */
-    private $taxonsProperty;
+    private string $taxonsProperty;
 
-    /** @var array */
-    private $excludedOptions;
+    private array $excludedOptions;
 
     public function __construct(
         RepositoryInterface $productOptionValueRepository,

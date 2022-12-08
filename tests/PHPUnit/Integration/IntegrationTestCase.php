@@ -27,6 +27,7 @@ abstract class IntegrationTestCase extends JsonApiTestCase
 
     protected function setUp(): void
     {
+        self::bootKernel();
     }
 
     protected function tearDown(): void

@@ -70,11 +70,10 @@ final class ListProductsActionSpec extends ObjectBehavior
     ): void {
         $form->getData()->willReturn([]);
         $form->isValid()->willReturn(true);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->willReturn($form);
         $form->createView()->willReturn($formView);
 
         $formFactory->create(ShopProductsFilterType::class)->willReturn($form);
-
         $request->query = $queryParameters;
         $queryParameters->all()->willReturn([]);
 

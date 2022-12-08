@@ -13,6 +13,7 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder\AttributesQueryBuilder;
 
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Term;
+use function sprintf;
 
 class AttributesTypeDateQueryBuilder implements AttributesQueryBuilderCollectorInterface
 {
@@ -32,7 +33,7 @@ class AttributesTypeDateQueryBuilder implements AttributesQueryBuilderCollectorI
 
         foreach ((array) $data['attribute_values'] as $attributeValue) {
             $termQuery = new Term();
-            $attribute = \sprintf('%s_%s.date.keyword', $data['attribute'], $localCode);
+            $attribute = sprintf('%s_%s.date.keyword', $data['attribute'], $localCode);
             $termQuery->setTerm($attribute, $attributeValue);
             $attributeQuery->addShould($termQuery);
         }
