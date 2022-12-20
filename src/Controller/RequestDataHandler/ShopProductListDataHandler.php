@@ -12,19 +12,15 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
-use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
+use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinderInterface;
 use Sylius\Component\Attribute\AttributeType\CheckboxAttributeType;
 use Sylius\Component\Attribute\AttributeType\IntegerAttributeType;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttribute;
-use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
-    private TaxonRepositoryInterface $taxonRepository;
-
-    private LocaleContextInterface $localeContext;
+    private TaxonContextInterface $taxonContext;
 
     private ProductAttributesFinderInterface $attributesFinder;
 
@@ -37,16 +33,14 @@ final class ShopProductListDataHandler implements DataHandlerInterface
     private string $attributePropertyPrefix;
 
     public function __construct(
-        TaxonRepositoryInterface $taxonRepository,
-        LocaleContextInterface $localeContext,
+        TaxonContextInterface $taxonContext,
         ProductAttributesFinderInterface $attributesFinder,
         string $namePropertyPrefix,
         string $taxonsProperty,
         string $optionPropertyPrefix,
         string $attributePropertyPrefix
     ) {
-        $this->taxonRepository = $taxonRepository;
-        $this->localeContext = $localeContext;
+        $this->taxonContext = $taxonContext;
         $this->attributesFinder = $attributesFinder;
         $this->namePropertyPrefix = $namePropertyPrefix;
         $this->taxonsProperty = $taxonsProperty;
@@ -56,17 +50,16 @@ final class ShopProductListDataHandler implements DataHandlerInterface
 
     public function retrieveData(array $requestData): array
     {
-        $slug = $requestData['slug'];
-        $taxon = $this->taxonRepository->findOneBySlug($slug, $this->localeContext->getLocaleCode());
-
-        if (null === $taxon) {
-            throw new TaxonNotFoundException();
-        }
+        $taxon = $this->taxonContext->getTaxon();
 
         $data[$this->namePropertyPrefix] = (string) $requestData[$this->namePropertyPrefix];
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
         $data['taxon'] = $taxon;
-        $data = array_merge($data, $requestData['price']);
+        $data = array_merge(
+            $data,
+            $requestData['price'] ?? [],
+            ['facets' => $requestData['facets'] ?? []],
+        );
 
         $attributesDefinitions = $this->attributesFinder->findByTaxon($taxon);
 

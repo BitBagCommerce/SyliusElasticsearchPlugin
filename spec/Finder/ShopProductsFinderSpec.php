@@ -12,6 +12,7 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
+use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
@@ -25,11 +26,13 @@ final class ShopProductsFinderSpec extends ObjectBehavior
 {
     function let(
         QueryBuilderInterface $shopProductsQueryBuilder,
-        PaginatedFinderInterface $productFinder
+        PaginatedFinderInterface $productFinder,
+        RegistryInterface  $facetRegistry
     ): void {
         $this->beConstructedWith(
             $shopProductsQueryBuilder,
-            $productFinder
+            $productFinder,
+            $facetRegistry
         );
     }
 
@@ -53,6 +56,7 @@ final class ShopProductsFinderSpec extends ObjectBehavior
             SortDataHandlerInterface::SORT_INDEX => null,
             PaginationDataHandlerInterface::PAGE_INDEX => null,
             PaginationDataHandlerInterface::LIMIT_INDEX => null,
+            'facets' => [],
         ];
 
         $shopProductsQueryBuilder->buildQuery($data)->willReturn($boolQuery);
