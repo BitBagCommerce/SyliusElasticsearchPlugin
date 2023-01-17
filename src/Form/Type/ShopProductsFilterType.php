@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopProductsFilterType extends AbstractFilterType
 {
@@ -45,13 +44,6 @@ final class ShopProductsFilterType extends AbstractFilterType
             ->setMethod('GET');
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'addFacets']);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
     }
 
     public function addFacets(FormEvent $event): void
