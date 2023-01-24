@@ -9,7 +9,6 @@ export default class ElasticSearchAutocomplete {
             searchInput: '.app-quick-add-code-input',
             resultsTarget: '.results',
             resultContainerClassesArray: ['result'],
-            resultImageClass: 'image',
             resultContentClass: 'result__content',
             resultPriceClass: 'result__price',
             resultTitleClass: 'js-title',
