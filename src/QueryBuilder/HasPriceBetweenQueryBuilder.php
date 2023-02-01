@@ -89,6 +89,10 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     private function convertFromString(string $price): int
     {
+        if (!is_numeric(str_replace(',', '.', $price))) {
+            return 0;
+        }
+
         $transformer = new SyliusMoneyTransformer(2, false, NumberFormatter::ROUND_HALFUP, 100);
 
         return $transformer->reverseTransform($price);
