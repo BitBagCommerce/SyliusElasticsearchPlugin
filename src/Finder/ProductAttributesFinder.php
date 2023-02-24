@@ -34,13 +34,20 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
         $this->taxonsProperty = $taxonsProperty;
     }
 
-    public function findByTaxon(TaxonInterface $taxon): ?array
+    public function findByTaxon(TaxonInterface $taxon): array
     {
         $data = [];
         $data[$this->taxonsProperty] = strtolower($taxon->getCode());
 
         $query = $this->attributesByTaxonQueryBuilder->buildQuery($data);
 
-        return $this->attributesFinder->find($query, 20);
+        $productAttributes = $this->attributesFinder->find($query, 20);
+        
+        usort(
+            $productAttributes, 
+            fn(ProductAttribute $a, ProductAttribute $b) => $a->getPosition() <=> $b->getPosition()
+        );
+        
+        return $productAttributes;
     }
 }
