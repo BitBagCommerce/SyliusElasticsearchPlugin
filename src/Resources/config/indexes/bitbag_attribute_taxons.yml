@@ -4,7 +4,7 @@ parameters:
 fos_elastica:
     indexes:
         bitbag_attribute_taxons:
-            index_name: "bitbag_attribute_taxons_%kernel.environment%"
+            index_name: "%bitbag_es_index_prefix%bitbag_attribute_taxons_%kernel.environment%"
             properties:
                 attribute_code:
                     property_path: code
