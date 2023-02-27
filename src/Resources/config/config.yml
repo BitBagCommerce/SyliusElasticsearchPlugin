@@ -5,6 +5,8 @@ imports:
     - { resource: "indexes/bitbag_shop_facets.yml" }
 
 parameters:
+    env(BITBAG_ES_INDEX_PREFIX): ""
+    bitbag_es_index_prefix: "%env(BITBAG_ES_INDEX_PREFIX)%"
     bitbag_es_host: localhost
     bitbag_es_port: 9200
 
