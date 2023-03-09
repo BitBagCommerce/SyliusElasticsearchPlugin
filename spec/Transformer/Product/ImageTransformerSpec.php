@@ -35,11 +35,27 @@ final class ImageTransformerSpec extends ObjectBehavior
         FilterService $filterService
     ): void {
         $product->getImagesByType('main')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
-        $productImage->getPath()->willReturn('/path-to-image');
+        $productImage->getPath()->willReturn('/path-to-image.png');
 
         $filterService
-            ->getUrlOfFilteredImage('/path-to-image', 'sylius_shop_product_thumbnail')
+            ->getUrlOfFilteredImage('/path-to-image.png', 'sylius_shop_product_thumbnail')
             ->shouldBeCalled()
+        ;
+
+        $this->transform($product);
+    }
+
+    function it_does_not_transforms_svg_product_images_into_product_thumbnail(
+        ProductInterface $product,
+        ImageInterface $productImage,
+        FilterService $filterService
+    ): void {
+        $product->getImagesByType('main')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
+        $productImage->getPath()->willReturn('/path-to-image.svg');
+
+        $filterService
+            ->getUrlOfFilteredImage('/path-to-image.svg', 'sylius_shop_product_thumbnail')
+            ->shouldNotBeCalled()
         ;
 
         $this->transform($product);
