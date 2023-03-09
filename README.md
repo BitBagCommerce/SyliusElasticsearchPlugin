@@ -235,18 +235,17 @@ $ bin/console debug:container --parameters | grep bitbag
 ```bash
 $ composer install
 $ cd tests/Application
-$ bin/console assets:install public -e test
-$ bin/console doctrine:database:create -e test
-$ bin/console doctrine:schema:create -e test
+$ APP_ENV=test bin/console doctrine:database:create
+$ APP_ENV=test bin/console doctrine:schema:create
 // run elasticsearch
-$ bin/console sylius:fixtures:load -e test
-$ symfony server:run 127.0.0.1:8080 -d public -e test
-$ bin/console assets:install public -e test
+$ APP_ENV=test bin/console sylius:fixtures:load
+$ APP_ENV=test bin/console fos:elastica:populate
+$ APP_ENV=test symfony server:run 127.0.0.1:8080 -d
+$ APP_ENV=test bin/console assets:install
 $ open http://localhost:8080
 $ vendor/bin/behat
 $ vendor/bin/phpspec run
 ```
-
 
 # About us
 
