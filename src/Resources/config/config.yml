@@ -6,6 +6,8 @@ imports:
 
 parameters:
     env(BITBAG_ES_INDEX_PREFIX): ""
+    env(BITBAG_ES_HOST): "localhost"
+    env(BITBAG_ES_PORT): 9200
     bitbag_es_index_prefix: "%env(BITBAG_ES_INDEX_PREFIX)%"
     bitbag_es_host: "%env(BITBAG_ES_HOST)%"
     bitbag_es_port: "%env(BITBAG_ES_PORT)%"
