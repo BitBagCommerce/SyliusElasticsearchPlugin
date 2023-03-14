@@ -7,8 +7,8 @@ imports:
 parameters:
     env(BITBAG_ES_INDEX_PREFIX): ""
     bitbag_es_index_prefix: "%env(BITBAG_ES_INDEX_PREFIX)%"
-    bitbag_es_host: localhost
-    bitbag_es_port: 9200
+    bitbag_es_host: "%env(BITBAG_ES_HOST)%"
+    bitbag_es_port: "%env(BITBAG_ES_PORT)%"
 
     bitbag_es_pagination_available_page_limits: [9, 18, 36]
     bitbag_es_pagination_default_limit: 9
