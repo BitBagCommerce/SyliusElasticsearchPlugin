@@ -24,9 +24,12 @@ final class ImageTransformer implements TransformerInterface
 
     private FilterService $imagineFilter;
 
-    public function __construct(FilterService $imagineFilter)
+    private string $imagesPath;
+
+    public function __construct(FilterService $imagineFilter, string $imagesPath = '/media/image/')
     {
         $this->imagineFilter = $imagineFilter;
+        $this->imagesPath = $imagesPath;
     }
 
     public function transform(ProductInterface $product): ?string
@@ -40,6 +43,15 @@ final class ImageTransformer implements TransformerInterface
         /** @var ImageInterface $productImage */
         $productImage = $productThumbnails->first();
 
-        return $this->imagineFilter->getUrlOfFilteredImage($productImage->getPath(), self::SYLIUS_THUMBNAIL_FILTER);
+        if ($this->canImageBeFiltered($productImage->getPath())) {
+            return $this->imagineFilter->getUrlOfFilteredImage($productImage->getPath(), self::SYLIUS_THUMBNAIL_FILTER);
+        }
+
+        return $this->imagesPath . $productImage->getPath();
+    }
+
+    private function canImageBeFiltered(string $imagePath): bool
+    {
+        return !str_ends_with($imagePath, 'svg');
     }
 }
