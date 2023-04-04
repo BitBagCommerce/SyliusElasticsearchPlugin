@@ -40,7 +40,7 @@ final class SearchFacets implements Iterator
     /**
      * @inheritdoc
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->selectedBuckets);
     }
@@ -48,15 +48,15 @@ final class SearchFacets implements Iterator
     /**
      * @inheritdoc
      */
-    public function next()
+    public function next(): void
     {
-        return next($this->selectedBuckets);
+        next($this->selectedBuckets);
     }
 
     /**
      * @inheritdoc
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->selectedBuckets);
     }
@@ -74,7 +74,7 @@ final class SearchFacets implements Iterator
     /**
      * @inheritdoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->selectedBuckets);
     }
