@@ -59,7 +59,7 @@ If you use Sylius 1.4, you might get a compatibility issue for Pagerfanta. Pleas
 *Note*: This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version `1.x`.
 
 ```bash
-$ composer require bitbag/elasticsearch-plugin
+$ composer require bitbag/elasticsearch-plugin --no-scripts
 ```
 
 
@@ -145,17 +145,67 @@ fos_elastica:
     clients:
         default: { host: localhost, port: 9200 }
 ```
-In the end, with an elasticsearch server running, execute following command:
+In the end, with an elasticsearch server running, execute following commands:
 ```
+$ bin/console cache:clear
 $ bin/console fos:elastica:populate
 ```
 
 **Note:** If you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.
 
+### Configuring Webpack
+
+1. Import plugin's `webpack.config.js` file
+
+```js
+// webpack.config.js
+const [ bitbagElasticSearchShop ] = require('./vendor/bitbag/elasticsearch-plugin/webpack.config.js')
+...
+
+module.exports = [..., bitbagElasticSearchShop];
+```
+
+2. Add new packages in `./config/packages/assets.yaml`
+
+```yml
+# config/packages/assets.yaml
+
+framework:
+    assets:
+        packages:
+            # ...
+            elasticsearch_shop:
+                json_manifest_path: '%kernel.project_dir%/public/build/bitbag/elasticsearch/shop/manifest.json'
+```
+
+3. Add new build paths in `./config/packages/webpack_encore.yml`
+
+```yml
+# config/packages/webpack_encore.yml
+
+webpack_encore:
+    builds:
+        # ...
+        elasticsearch_shop: '%kernel.project_dir%/public/build/bitbag/elasticsearch/shop'
+```
+
+4. Add encore functions to your templates
+
+```twig
+{# @SyliusShopBundle/_scripts.html.twig #}
+{{ encore_entry_script_tags('bitbag-elasticsearch-shop', null, 'elasticsearch_shop') }}
+
+{# @SyliusShopBundle/_styles.html.twig #}
+{{ encore_entry_link_tags('bitbag-elasticsearch-shop', null, 'elasticsearch_shop') }}
+```
+
+5. Run `yarn encore dev` or `yarn encore production`
+
+
 ## Usage
 ### Rendering the shop products list
 
-When you go now to the `/{_locale}/products/taxon/{slug}` page, you should see a totally new set of filters. You should see something like this:
+When you go now to the `/{_locale}/products-list/{taxon-slug}` page, you should see a totally new set of filters. You should see something like this:
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/BitBagElasticesearchProductIndex.jpg" />
