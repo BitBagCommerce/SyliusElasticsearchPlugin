@@ -46,7 +46,7 @@ final class ProductAttributesFilterType extends AbstractFilterType
         foreach ($this->productAttributesContext->getAttributes() as $productAttribute) {
             if (
                 \in_array($productAttribute->getCode(), $this->excludedAttributes) ||
-                ($productAttribute instanceof FinderExcludable && $productAttribute->isFilterExcluded() === true)
+                ($productAttribute instanceof FinderExcludable && true === $productAttribute->isFilterExcluded())
             ) {
                 continue;
             }

@@ -11,9 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ProductVariantIndexListener implements EventSubscriberInterface
 {
-    /**
-     * @var ObjectPersister
-     */
+    /** @var ObjectPersister */
     private $objectPersister;
 
     public function __construct(ObjectPersister $objectPersister)

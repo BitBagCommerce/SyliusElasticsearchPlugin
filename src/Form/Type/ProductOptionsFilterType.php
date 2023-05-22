@@ -40,7 +40,7 @@ final class ProductOptionsFilterType extends AbstractFilterType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         foreach ($this->productOptionsContext->getOptions() as $productOption) {
-            if ($productOption instanceof FinderExcludable && $productOption->isFilterExcluded() === true) {
+            if ($productOption instanceof FinderExcludable && true === $productOption->isFilterExcluded()) {
                 continue;
             }
             $name = $this->optionNameResolver->resolvePropertyName($productOption->getCode());
