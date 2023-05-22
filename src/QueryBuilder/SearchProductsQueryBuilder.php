@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
@@ -14,28 +22,28 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
 {
     public const QUERY_KEY = 'query';
 
-    /** @var SearchPropertyNameResolverRegistryInterface */
-    private $searchProperyNameResolverRegistry;
+    private SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry;
 
-    /** @var LocaleContextInterface */
-    private $localeContext;
+    private LocaleContextInterface $localeContext;
 
-    /** @var QueryBuilderInterface */
-    private $isEnabledQueryBuilder;
+    private QueryBuilderInterface $isEnabledQueryBuilder;
 
-    /** @var QueryBuilderInterface */
-    private $hasChannelQueryBuilder;
+    private QueryBuilderInterface $hasChannelQueryBuilder;
+
+    private string $fuzziness;
 
     public function __construct(
         SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
         LocaleContextInterface $localeContext,
         QueryBuilderInterface $isEnabledQueryBuilder,
-        QueryBuilderInterface $hasChannelQueryBuilder
+        QueryBuilderInterface $hasChannelQueryBuilder,
+        string $fuzziness
     ) {
         $this->searchProperyNameResolverRegistry = $searchProperyNameResolverRegistry;
         $this->localeContext = $localeContext;
         $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
         $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
+        $this->fuzziness = $fuzziness;
     }
 
     public function buildQuery(array $data): ?AbstractQuery
@@ -62,7 +70,7 @@ final class SearchProductsQueryBuilder implements QueryBuilderInterface
 
         $multiMatch = new MultiMatch();
         $multiMatch->setQuery($query);
-        $multiMatch->setFuzziness('AUTO');
+        $multiMatch->setFuzziness($this->fuzziness);
         $fields = [];
         foreach ($this->searchProperyNameResolverRegistry->getPropertyNameResolvers() as $propertyNameResolver) {
             $fields[] = $propertyNameResolver->resolvePropertyName($this->localeContext->getLocaleCode());

@@ -18,7 +18,10 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 {
     private $isEnabeldQuery;
+
     private $hasChannelQuery;
+
+    private $fuzziness;
 
     function let(
         SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
@@ -31,14 +34,16 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         $this->isEnabeldQuery = new Term();
         $this->isEnabeldQuery->setTerm('enabled', true);
         $isEnabledQueryBuilder->buildQuery([])->willReturn($this->isEnabeldQuery);
-        $this->hasChannelQuery = new Terms();
-        $this->hasChannelQuery->setTerms('channels', ['web_us']);
+        $this->hasChannelQuery = new Terms('channels');
+        $this->hasChannelQuery->setTerms(['web_us']);
         $hasChannelQueryBuilder->buildQuery([])->willReturn($this->hasChannelQuery);
+        $this->fuzziness = 'AUTO';
         $this->beConstructedWith(
             $searchPropertyNameResolverRegistry,
             $localeContext,
             $isEnabledQueryBuilder,
-            $hasChannelQueryBuilder
+            $hasChannelQueryBuilder,
+            $this->fuzziness
         );
     }
 
@@ -66,7 +71,7 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
     {
         $expectedMultiMatch = new MultiMatch();
         $expectedMultiMatch->setQuery('bmw');
-        $expectedMultiMatch->setFuzziness('AUTO');
+        $expectedMultiMatch->setFuzziness($this->fuzziness);
         $expectedMultiMatch->setFields([]);
         $expectedQuery = new BoolQuery();
         $expectedQuery->addMust($expectedMultiMatch);
@@ -88,7 +93,7 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
         );
         $expectedMultiMatch = new MultiMatch();
         $expectedMultiMatch->setQuery('bmw');
-        $expectedMultiMatch->setFuzziness('AUTO');
+        $expectedMultiMatch->setFuzziness($this->fuzziness);
         $expectedMultiMatch->setFields(['property_1_en_us', 'property_2_en_us']);
         $expectedQuery = new BoolQuery();
         $expectedQuery->addMust($expectedMultiMatch);

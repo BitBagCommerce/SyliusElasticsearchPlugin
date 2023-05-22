@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -15,71 +15,97 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
+use function sprintf;
+use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Sylius\Component\Product\Model\ProductAttributeValue;
 
 final class AttributeBuilder extends AbstractBuilder
 {
-    /** @var ConcatedNameResolverInterface */
-    private $attributeNameResolver;
+    private ConcatedNameResolverInterface $attributeNameResolver;
 
-    /** @var StringFormatterInterface */
-    private $stringFormatter;
-
-    /** @var LocaleContextInterface */
-    private $localeContext;
+    private StringFormatterInterface $stringFormatter;
 
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
-        StringFormatterInterface $stringFormatter,
-        LocaleContextInterface $localeContext
+        StringFormatterInterface $stringFormatter
     ) {
         $this->attributeNameResolver = $attributeNameResolver;
         $this->stringFormatter = $stringFormatter;
-        $this->localeContext = $localeContext;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
-        $this->buildProperty($event, ProductInterface::class,
+        $this->buildProperty(
+            $event,
+            ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 $this->resolveProductAttributes($product, $document);
-            });
+            }
+        );
     }
 
     private function resolveProductAttributes(ProductInterface $product, Document $document): void
     {
-        foreach ($product->getAttributes() as $attributeValue) {
-            $attribute = $attributeValue->getAttribute();
+        foreach ($product->getAttributes() as $productAttribute) {
+            $attribute = $productAttribute->getAttribute();
             if (!$attribute) {
                 continue;
             }
-            $attributeCode = $attribute->getCode();
-            $index = $this->attributeNameResolver->resolvePropertyName($attributeCode);
-            $value = $attributeValue->getValue();
-            if ($attribute->getType() === 'select') {
-                $choices = $attribute->getConfiguration()['choices'] ?? [];
-                if (is_array($value)) {
-                    foreach ($value as $i => $item) {
-                        $value[$i] = $choices[$item][$this->localeContext->getLocaleCode()] ?? $item;
-                    }
-                } else {
-                    $value = $choices[$value][$this->localeContext->getLocaleCode()] ?? $value;
-                }
-            }
-            $attributes = [];
 
-            if (is_array($value)) {
-                foreach ($value as $singleElement) {
-                    $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
+            $this->processAttribute($attribute, $productAttribute, $document);
+        }
+    }
+
+    private function resolveProductAttribute(
+        array $attributeConfiguration,
+        $attributeValue,
+        ProductAttributeValue $productAttribute
+    ): array {
+        if ('select' === $productAttribute->getAttribute()->getType()) {
+            $choices = $attributeConfiguration['choices'] ?? [];
+            if (is_array($attributeValue)) {
+                foreach ($attributeValue as $i => $item) {
+                    $attributeValue[$i] = $choices[$item][$productAttribute->getLocaleCode()] ?? $item;
                 }
             } else {
-                $value = is_string($value) ? $this->stringFormatter->formatToLowercaseWithoutSpaces($value) : $value;
-                $attributes[] = $value;
+                $attributeValue = $choices[$attributeValue][$productAttribute->getLocaleCode()] ?? $attributeValue;
             }
-
-            $document->set($index, $attributes);
         }
+
+        $attributes = [];
+        if (is_array($attributeValue)) {
+            foreach ($attributeValue as $singleElement) {
+                $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
+            }
+        } else {
+            $attributeValue = is_string($attributeValue)
+                ? $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue) : $attributeValue;
+            $attributes[] = $attributeValue;
+        }
+
+        return $attributes;
+    }
+
+    private function processAttribute(
+        AttributeInterface $attribute,
+        ProductAttributeValue $productAttribute,
+        Document $document
+    ): void {
+        $attributeCode = $attribute->getCode();
+        $attributeConfiguration = $attribute->getConfiguration();
+
+        $value = $productAttribute->getValue();
+        $documentKey = $this->attributeNameResolver->resolvePropertyName($attributeCode);
+        $code = sprintf('%s_%s', $documentKey, $productAttribute->getLocaleCode());
+
+        $values = $this->resolveProductAttribute(
+            $attributeConfiguration,
+            $value,
+            $productAttribute
+        );
+
+        $document->set($code, $values);
     }
 }

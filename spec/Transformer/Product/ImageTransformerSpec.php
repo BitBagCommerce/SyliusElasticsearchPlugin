@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -36,12 +34,28 @@ final class ImageTransformerSpec extends ObjectBehavior
         ImageInterface $productImage,
         FilterService $filterService
     ): void {
-        $product->getImagesByType('thumbnail')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
-        $productImage->getPath()->willReturn('/path-to-image');
+        $product->getImagesByType('main')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
+        $productImage->getPath()->willReturn('/path-to-image.png');
 
         $filterService
-            ->getUrlOfFilteredImage('/path-to-image', 'sylius_shop_product_thumbnail')
+            ->getUrlOfFilteredImage('/path-to-image.png', 'sylius_shop_product_thumbnail')
             ->shouldBeCalled()
+        ;
+
+        $this->transform($product);
+    }
+
+    function it_does_not_transforms_svg_product_images_into_product_thumbnail(
+        ProductInterface $product,
+        ImageInterface $productImage,
+        FilterService $filterService
+    ): void {
+        $product->getImagesByType('main')->willReturn(new ArrayCollection([$productImage->getWrappedObject()]));
+        $productImage->getPath()->willReturn('/path-to-image.svg');
+
+        $filterService
+            ->getUrlOfFilteredImage('/path-to-image.svg', 'sylius_shop_product_thumbnail')
+            ->shouldNotBeCalled()
         ;
 
         $this->transform($product);

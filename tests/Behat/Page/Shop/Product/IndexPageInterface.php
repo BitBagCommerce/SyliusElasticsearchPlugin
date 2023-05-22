@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -20,24 +18,12 @@ interface IndexPageInterface extends BaseIndexPageInterface
 
     public function filter(): void;
 
-    /**
-     * @param string $attributeName
-     * @param string $attributeValueName
-     */
     public function checkAttribute(string $attributeName, string $attributeValueName): void;
 
-    /**
-     * @param string $optionName
-     * @param string $optionValueName
-     */
     public function checkOption(string $optionName, string $optionValueName): void;
 
     public function paginate(int $page): void;
 
-    /**
-     * @param int $min
-     * @param int $max
-     */
     public function filterPrice(int $min, int $max): void;
 
     public function changeLimit(int $limit): void;

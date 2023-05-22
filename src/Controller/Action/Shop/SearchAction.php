@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
@@ -11,39 +19,33 @@ use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 final class SearchAction
 {
-    /** @var EngineInterface */
-    private $templatingEngine;
+    private Environment $twig;
 
-    /** @var PaginatedFinderInterface */
-    private $finder;
+    private PaginatedFinderInterface $finder;
 
-    /** @var SearchFormEventListener */
-    private $searchFormEventListener;
+    private SearchFormEventListener $searchFormEventListener;
 
-    /** @var RegistryInterface */
-    private $facetRegistry;
+    private RegistryInterface $facetRegistry;
 
-    /** @var QueryBuilderInterface */
-    private $searchProductsQueryBuilder;
+    private QueryBuilderInterface $searchProductsQueryBuilder;
 
-    /** @var PaginationDataHandlerInterface */
-    private $paginationDataHandler;
+    private PaginationDataHandlerInterface $paginationDataHandler;
 
     public function __construct(
-        EngineInterface $templatingEngine,
+        Environment $twig,
         PaginatedFinderInterface $finder,
         SearchFormEventListener $searchFormEventListener,
         RegistryInterface $facetRegistry,
         QueryBuilderInterface $searchProductsQueryBuilder,
         PaginationDataHandlerInterface $paginationDataHandler
     ) {
-        $this->templatingEngine = $templatingEngine;
+        $this->twig = $twig;
         $this->finder = $finder;
         $this->searchFormEventListener = $searchFormEventListener;
         $this->facetRegistry = $facetRegistry;
@@ -85,9 +87,9 @@ final class SearchAction
             $results->setMaxPerPage($paginationData[PaginationDataHandlerInterface::LIMIT_INDEX]);
         }
 
-        return $this->templatingEngine->renderResponse(
+        return new Response($this->twig->render(
             $template,
             ['results' => $results, 'searchForm' => $form->createView()]
-        );
+        ));
     }
 }

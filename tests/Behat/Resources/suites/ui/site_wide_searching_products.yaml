@@ -22,4 +22,4 @@ default:
                 - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search
                 - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.home_page
             filters:
-                tags: "@site_wide_searching_products && @ui"
+                tags: "@site_wide_searching_products&&@ui"

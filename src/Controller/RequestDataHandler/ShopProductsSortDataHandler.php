@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -15,29 +15,23 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use UnexpectedValueException;
 
 final class ShopProductsSortDataHandler implements SortDataHandlerInterface
 {
-    /** @var ConcatedNameResolverInterface */
-    private $channelPricingNameResolver;
+    private ConcatedNameResolverInterface $channelPricingNameResolver;
 
-    /** @var ChannelContextInterface */
-    private $channelContext;
+    private ChannelContextInterface $channelContext;
 
-    /** @var TaxonContextInterface */
-    private $taxonContext;
+    private TaxonContextInterface $taxonContext;
 
-    /** @var ConcatedNameResolverInterface */
-    private $taxonPositionNameResolver;
+    private ConcatedNameResolverInterface $taxonPositionNameResolver;
 
-    /** @var string */
-    private $soldUnitsProperty;
+    private string $soldUnitsProperty;
 
-    /** @var string */
-    private $createdAtProperty;
+    private string $createdAtProperty;
 
-    /** @var string */
-    private $pricePropertyPrefix;
+    private string $pricePropertyPrefix;
 
     public function __construct(
         ConcatedNameResolverInterface $channelPricingNameResolver,
@@ -62,14 +56,14 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $data = [];
         $positionSortingProperty = $this->getPositionSortingProperty();
 
-        $orderBy = isset($requestData[self::ORDER_BY_INDEX]) ? $requestData[self::ORDER_BY_INDEX] : $positionSortingProperty;
-        $sort = isset($requestData[self::SORT_INDEX]) ? $requestData[self::SORT_INDEX] : self::SORT_ASC_INDEX;
+        $orderBy = $requestData[self::ORDER_BY_INDEX] ?? $positionSortingProperty;
+        $sort = $requestData[self::SORT_INDEX] ?? self::SORT_ASC_INDEX;
 
         $availableSorters = [$positionSortingProperty, $this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
         $availableSorting = [self::SORT_ASC_INDEX, self::SORT_DESC_INDEX];
 
         if (!in_array($orderBy, $availableSorters) || !in_array($sort, $availableSorting)) {
-            throw new \UnexpectedValueException();
+            throw new UnexpectedValueException();
         }
 
         if ($this->pricePropertyPrefix === $orderBy) {

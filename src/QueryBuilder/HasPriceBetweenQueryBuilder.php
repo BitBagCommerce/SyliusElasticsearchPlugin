@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -16,6 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInterface;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Range;
+use NumberFormatter;
 use Sylius\Bundle\MoneyBundle\Form\DataTransformer\SyliusMoneyTransformer;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -24,20 +25,15 @@ use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
 
 final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 {
-    /** @var ConcatedNameResolverInterface */
-    private $channelPricingNameResolver;
+    private ConcatedNameResolverInterface $channelPricingNameResolver;
 
-    /** @var PriceNameResolverInterface */
-    private $priceNameResolver;
+    private PriceNameResolverInterface $priceNameResolver;
 
-    /** @var ChannelContextInterface */
-    private $channelContext;
+    private ChannelContextInterface $channelContext;
 
-    /** @var CurrencyContextInterface */
-    private $currencyContext;
+    private CurrencyContextInterface $currencyContext;
 
-    /** @var CurrencyConverterInterface */
-    private $currencyConverter;
+    private CurrencyConverterInterface $currencyConverter;
 
     public function __construct(
         PriceNameResolverInterface $priceNameResolver,
@@ -55,20 +51,23 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $dataMinPrice = $data[$this->priceNameResolver->resolveMinPriceName()];
-        $dataMaxPrice = $data[$this->priceNameResolver->resolveMaxPriceName()];
+        $dataMinPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMinPriceName());
+        $dataMaxPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMaxPriceName());
 
-        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : 0;
-        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : \PHP_INT_MAX;
+        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : null;
+        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : null;
 
         $channelCode = $this->channelContext->getChannel()->getCode();
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         $rangeQuery = new Range();
 
-        $rangeQuery->setParam($propertyName, [
-            'gte' => $minPrice,
-            'lte' => $maxPrice,
-        ]);
+        $paramValue = $this->getQueryParamValue($minPrice, $maxPrice);
+
+        if (null === $paramValue) {
+            return null;
+        }
+
+        $rangeQuery->setParam($propertyName, $paramValue);
 
         return $rangeQuery;
     }
@@ -90,8 +89,28 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     private function convertFromString(string $price): int
     {
-        $transformer = new SyliusMoneyTransformer(2, false, SyliusMoneyTransformer::ROUND_HALF_UP, 100);
+        if (!is_numeric(str_replace(',', '.', $price))) {
+            return 0;
+        }
+
+        $transformer = new SyliusMoneyTransformer(2, false, NumberFormatter::ROUND_HALFUP, 100);
 
         return $transformer->reverseTransform($price);
+    }
+
+    private function getDataByKey(array $data, ?string $key = null): ?string
+    {
+        return $data[$key] ?? null;
+    }
+
+    private function getQueryParamValue(?int $min, ?int $max): ?array
+    {
+        foreach (['gte' => $min, 'lte' => $max] as $key => $value) {
+            if (null !== $value) {
+                $paramValue[$key] = $value;
+            }
+        }
+
+        return $paramValue ?? null;
     }
 }

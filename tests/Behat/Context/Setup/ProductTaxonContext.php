@@ -1,19 +1,17 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
@@ -28,13 +26,13 @@ final class ProductTaxonContext implements Context
     /** @var FactoryInterface */
     private $productTaxonFactory;
 
-    /** @var ObjectManager */
+    /** @var EntityManagerInterface */
     private $objectManager;
 
     public function __construct(
         SharedStorageInterface $sharedStorage,
         FactoryInterface $productTaxonFactory,
-        ObjectManager $objectManager
+        EntityManagerInterface $objectManager
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->productTaxonFactory = $productTaxonFactory;

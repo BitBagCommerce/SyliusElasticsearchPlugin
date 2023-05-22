@@ -5,12 +5,6 @@
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 {% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    {% include 'SyliusUiBundle::_stylesheets.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/css/bitbag-autocomplete-search.css'} %}
-{% endblock %}
-
 {% block content %}
     <h1 class="ui monster section dividing header">
         {{ taxon.name }}
@@ -61,14 +55,4 @@
         </div>
     </div>
     {{ form_end(form, {'render_rest': false}) }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% include 'SyliusUiBundle::_javascripts.html.twig' with {'path': 'bundles/bitbagsyliuselasticsearchplugin/js/bitbag-autocomplete-search.js'} %}
-
-    <script type="application/javascript">
-        $(document).autocompleteSearch('#products-search', '{{ url('bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name') }}?query={query}')
-    </script>
 {% endblock %}

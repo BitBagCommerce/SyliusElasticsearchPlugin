@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -18,8 +18,7 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
 final class ProductOptionsMapper implements ProductOptionsMapperInterface
 {
-    /** @var StringFormatterInterface */
-    private $stringFormatter;
+    private StringFormatterInterface $stringFormatter;
 
     public function __construct(StringFormatterInterface $stringFormatter)
     {
@@ -31,10 +30,13 @@ final class ProductOptionsMapper implements ProductOptionsMapperInterface
         $productOptionValues = $productOption->getValues()->toArray();
         $choices = [];
 
-        array_walk($productOptionValues, function (ProductOptionValueInterface $productOptionValue) use (&$choices): void {
-            $value = $productOptionValue->getValue();
-            $choices[$value] = $this->stringFormatter->formatToLowercaseWithoutSpaces($value);
-        });
+        array_walk(
+            $productOptionValues,
+            function (ProductOptionValueInterface $productOptionValue) use (&$choices): void {
+                $value = $productOptionValue->getValue();
+                $choices[$value] = $this->stringFormatter->formatToLowercaseWithoutSpaces($value);
+            }
+        );
 
         return $choices;
     }

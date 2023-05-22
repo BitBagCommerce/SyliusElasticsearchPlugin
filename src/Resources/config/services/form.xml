@@ -29,6 +29,7 @@
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType">
             <argument>%bitbag_es_shop_name_property_prefix%</argument>
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.resolver.facet_resolver" />
             <tag name="form.type" />
         </service>
 
@@ -40,10 +41,12 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" />
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.string_formatter" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.taxon" />
+            <argument type="tagged_iterator" tag="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
-            <argument type="service" id="fos_elastica.finder.bitbag_shop_product.default" />
+            <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" />
             <tag name="form.type" />
@@ -52,6 +55,24 @@
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search.facets" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchFacetsType">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.date" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateMapper">
+            <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.date_time" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateTimeMapper">
+            <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.mapper.type.percent" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypePercentMapper">
+            <tag name="bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.resolver.facet_resolver" class="BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolver">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.taxon_facets" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.taxon_registry" />
+            <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
         </service>
     </services>
 </container>

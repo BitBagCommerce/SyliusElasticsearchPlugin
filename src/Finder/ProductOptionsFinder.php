@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -18,14 +18,11 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductOptionsFinder implements ProductOptionsFinderInterface
 {
-    /** @var FinderInterface */
-    private $optionsFinder;
+    private FinderInterface $optionsFinder;
 
-    /** @var QueryBuilderInterface */
-    private $productOptionsByTaxonQueryBuilder;
+    private QueryBuilderInterface $productOptionsByTaxonQueryBuilder;
 
-    /** @var string */
-    private $taxonsProperty;
+    private string $taxonsProperty;
 
     /** @var int */
     private $filterMax;

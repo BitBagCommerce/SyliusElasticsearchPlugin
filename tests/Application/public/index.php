@@ -1,10 +1,12 @@
 <?php
 
-use Tests\BitBag\SyliusElasticsearchPlugin\Application\Kernel;
-use Symfony\Component\Debug\Debug;
-use Symfony\Component\HttpFoundation\Request;
+declare(strict_types=1);
 
-require dirname(__DIR__).'/config/bootstrap.php';
+use Symfony\Component\ErrorHandler\Debug;
+use Symfony\Component\HttpFoundation\Request;
+use Tests\BitBag\SyliusElasticsearchPlugin\Application\Kernel;
+
+require dirname(__DIR__) . '/config/bootstrap.php';
 
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);

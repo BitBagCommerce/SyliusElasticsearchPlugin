@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -20,17 +20,13 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRe
 
 final class TaxonRepository implements TaxonRepositoryInterface
 {
-    /** @var BaseTaxonRepositoryInterface|EntityRepository */
-    private $baseTaxonRepository;
+    private BaseTaxonRepositoryInterface|EntityRepository $baseTaxonRepository;
 
-    /** @var ProductRepositoryInterface|EntityRepository */
-    private $productRepository;
+    private ProductRepositoryInterface|EntityRepository $productRepository;
 
-    /** @var string */
-    private $productTaxonEntityClass;
+    private string $productTaxonEntityClass;
 
-    /** @var string */
-    private $productAttributeEntityClass;
+    private string $productAttributeEntityClass;
 
     public function __construct(
         BaseTaxonRepositoryInterface $baseTaxonRepository,

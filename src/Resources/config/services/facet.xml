@@ -15,6 +15,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.facet.registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry" />
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.taxon_registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry" />
         <service id="BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface" alias="bitbag_sylius_elasticsearch_plugin.facet.registry" />
     </services>
 </container>

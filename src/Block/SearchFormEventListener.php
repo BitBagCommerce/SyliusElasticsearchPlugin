@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Block;
@@ -14,20 +22,19 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class SearchFormEventListener
 {
-    /** @var string */
-    private $template;
+    private string $template;
 
-    /** @var FormFactoryInterface */
-    private $formFactory;
+    private FormFactoryInterface $formFactory;
 
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
-    /** @var FormInterface */
-    private $form;
+    private ?FormInterface $form = null;
 
-    public function __construct(string $template, FormFactoryInterface $formFactory, RouterInterface $router)
-    {
+    public function __construct(
+        string $template,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router
+    ) {
         $this->template = $template;
         $this->formFactory = $formFactory;
         $this->router = $router;
@@ -42,7 +49,7 @@ final class SearchFormEventListener
                 $event->getSettings(),
                 [
                     'template' => $this->template,
-                    'form' => $this->getForm()->createView()
+                    'form' => $this->getForm()->createView(),
                 ]
             )
         );
@@ -58,8 +65,13 @@ final class SearchFormEventListener
                 $search = new Search();
             }
             $this->form = $this->formFactory
-                ->create(SearchType::class, $search, ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]);
+                ->create(
+                    SearchType::class,
+                    $search,
+                    ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]
+                );
         }
+
         return $this->form;
     }
 }

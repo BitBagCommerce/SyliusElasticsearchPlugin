@@ -23,4 +23,4 @@ default:
 
                 - bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.product
             filters:
-                tags: "@filtering_products && @ui"
+                tags: "@filtering_products&&@ui"

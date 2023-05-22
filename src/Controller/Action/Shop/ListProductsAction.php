@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -17,32 +17,26 @@ use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\PaginationDat
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SortDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Twig\Environment;
 
 final class ListProductsAction
 {
-    /** @var FormFactoryInterface */
-    private $formFactory;
+    private FormFactoryInterface $formFactory;
 
-    /** @var DataHandlerInterface */
-    private $shopProductListDataHandler;
+    private DataHandlerInterface $shopProductListDataHandler;
 
-    /** @var SortDataHandlerInterface */
-    private $shopProductsSortDataHandler;
+    private SortDataHandlerInterface $shopProductsSortDataHandler;
 
-    /** @var PaginationDataHandlerInterface */
-    private $paginationDataHandler;
+    private PaginationDataHandlerInterface $paginationDataHandler;
 
-    /** @var ShopProductsFinderInterface */
-    private $shopProductsFinder;
+    private ShopProductsFinderInterface $shopProductsFinder;
 
-    /** @var EngineInterface */
-    private $templatingEngine;
+    private Environment $twig;
 
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -50,19 +44,19 @@ final class ListProductsAction
         SortDataHandlerInterface $shopProductsSortDataHandler,
         PaginationDataHandlerInterface $paginationDataHandler,
         ShopProductsFinderInterface $shopProductsFinder,
-        EngineInterface $templatingEngine
+        Environment $twig
     ) {
         $this->formFactory = $formFactory;
         $this->shopProductListDataHandler = $shopProductListDataHandler;
         $this->shopProductsSortDataHandler = $shopProductsSortDataHandler;
         $this->paginationDataHandler = $paginationDataHandler;
         $this->shopProductsFinder = $shopProductsFinder;
-        $this->templatingEngine = $templatingEngine;
+        $this->twig = $twig;
     }
 
     public function __invoke(Request $request): Response
     {
-        $form = $this->formFactory->createNamed(null, ShopProductsFilterType::class);
+        $form = $this->formFactory->create(ShopProductsFilterType::class);
         $form->handleRequest($request);
         $requestData = array_merge(
             $form->getData(),
@@ -83,17 +77,17 @@ final class ListProductsAction
         $template = $request->get('template');
         $products = $this->shopProductsFinder->find($data);
 
-        return $this->templatingEngine->renderResponse($template, [
+        return new Response($this->twig->render($template, [
             'form' => $form->createView(),
             'products' => $products,
             'taxon' => $data['taxon'],
-        ]);
+        ]));
     }
 
     private function clearInvalidEntries(FormInterface $form, array $requestData): array
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        foreach ($form->getErrors(true, true) as $error) {
+        foreach ($form->getErrors(true) as $error) {
             $errorOrigin = $error->getOrigin();
             $propertyAccessor->setValue(
                 $requestData,

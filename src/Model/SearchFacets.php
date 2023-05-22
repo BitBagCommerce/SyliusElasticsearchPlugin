@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Model;
 
-class SearchFacets implements \Iterator
+use Iterator;
+
+final class SearchFacets implements Iterator
 {
-    /** @var array[] */
-    private $selectedBuckets = [];
+    private array $selectedBuckets = [];
 
     public function __get(string $facetId)
     {
@@ -29,43 +38,43 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->selectedBuckets);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function next()
+    public function next(): void
     {
-        return next($this->selectedBuckets);
+        next($this->selectedBuckets);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->selectedBuckets);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function valid()
+    public function valid(): bool
     {
         $key = key($this->selectedBuckets);
 
-        return $key !== null && $key !== false;
+        return null !== $key && false !== $key;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->selectedBuckets);
     }
