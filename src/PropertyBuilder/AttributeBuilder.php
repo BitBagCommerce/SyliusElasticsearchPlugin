@@ -16,10 +16,10 @@ use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
+use function sprintf;
 use Sylius\Component\Attribute\AttributeType\DateAttributeType;
 use Sylius\Component\Attribute\AttributeType\DatetimeAttributeType;
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
-use function sprintf;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductAttributeValue;
@@ -90,15 +90,17 @@ final class AttributeBuilder extends AbstractBuilder
             switch (true) {
                 case is_string($attributeValue):
                     $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue);
+
                     break;
                 case $attributeValue instanceof \DateTime:
-                    $attributeFormat = $productAttribute->getConfiguration()['format'] ?? null;
-                    $defaultFormat = DateAttributeType::TYPE === $productAttribute->getStorageType() ?
+                    $attributeFormat = $productAttribute->getAttribute()->getConfiguration()['format'] ?? null;
+                    $defaultFormat = DateAttributeType::TYPE === $productAttribute->getAttribute()->getStorageType() ?
                         self::DEFAULT_DATE_FORMAT :
                         self::DEFAULT_DATE_TIME_FORMAT
                     ;
 
                     $attributes[] = $attributeValue->format($attributeFormat ?? $defaultFormat);
+
                     break;
                 default:
                     $attributes[] = $attributeValue;
