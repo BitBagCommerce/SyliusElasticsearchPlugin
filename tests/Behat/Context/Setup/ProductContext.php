@@ -122,8 +122,7 @@ final class ProductContext implements Context
         int $quantity,
         int $min,
         int $max
-    ): void
-    {
+    ): void {
         $channel = $this->sharedStorage->get('channel');
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
         $products = $this->sharedStorage->get('products');
@@ -183,8 +182,7 @@ final class ProductContext implements Context
         int $quantity,
         string $optionName,
         string $value
-    ): void
-    {
+    ): void {
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
         $products = $this->sharedStorage->get('products');
 
@@ -211,8 +209,7 @@ final class ProductContext implements Context
         string $productName,
         int $price = 100,
         ChannelInterface $channel = null
-    ): ProductInterface
-    {
+    ): ProductInterface {
         if (null === $channel && $this->sharedStorage->has('channel')) {
             $channel = $this->sharedStorage->get('channel');
         }
@@ -253,8 +250,7 @@ final class ProductContext implements Context
         ProductOptionInterface $option,
         string $value,
         string $code
-    ): ProductOptionValueInterface
-    {
+    ): ProductOptionValueInterface {
         /** @var ProductOptionValueInterface $optionValue */
         $optionValue = $this->productOptionValueFactory->createNew();
 

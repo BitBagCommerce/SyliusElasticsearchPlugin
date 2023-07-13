@@ -18,8 +18,7 @@ abstract class IntegrationTestCase extends JsonApiTestCase
         ?string $name = null,
         array $data = [],
         string $dataName = ''
-    )
-    {
+    ) {
         parent::__construct($name, $data, $dataName);
 
         $this->dataFixturesPath = __DIR__ . '/DataFixtures/ORM';
