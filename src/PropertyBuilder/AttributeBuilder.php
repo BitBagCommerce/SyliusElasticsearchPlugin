@@ -129,8 +129,8 @@ final class AttributeBuilder extends AbstractBuilder
         );
 
         $values = in_array($attribute->getStorageType(), [DateAttributeType::TYPE, DatetimeAttributeType::TYPE]) ?
-            ($values[0] ?? null) :
-            null
+            ($values[0] ?? $values) :
+            $values
         ;
 
         $document->set($code, $values);
