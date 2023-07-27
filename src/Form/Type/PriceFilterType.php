@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints\Type;
 final class PriceFilterType extends AbstractFilterType
 {
     public const MAXIMUM_PRICE_VALUE = 9999999999999999;
+
     private PriceNameResolverInterface $priceNameResolver;
 
     private CurrencyContextInterface $currencyContext;
@@ -52,9 +53,9 @@ final class PriceFilterType extends AbstractFilterType
                     new PositiveOrZero([
                         'message' => 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
                     ]),
-                    new LessThan(PriceFilterType::MAXIMUM_PRICE_VALUE, options: [
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large'
-                    ])
+                    new LessThan(self::MAXIMUM_PRICE_VALUE, options: [
+                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
+                    ]),
                 ],
             ])
             ->add($this->priceNameResolver->resolveMaxPriceName(), MoneyType::class, [
@@ -69,9 +70,9 @@ final class PriceFilterType extends AbstractFilterType
                     new PositiveOrZero([
                         'message' => 'bitbag_sylius_elasticsearch_plugin.max_price_positive_or_zero',
                     ]),
-                    new LessThan(PriceFilterType::MAXIMUM_PRICE_VALUE, options: [
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large'
-                    ])
+                    new LessThan(self::MAXIMUM_PRICE_VALUE, options: [
+                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
+                    ]),
                 ],
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
