@@ -48,7 +48,8 @@
         "twig/extra-bundle": "^3.4"
     },
     "conflict": {
-        "symfony/form": "4.4.11 || 4.4.12"
+        "symfony/form": "4.4.11 || 4.4.12",
+        "doctrine/orm": ">=2.15.2"
     },
     "autoload": {
         "psr-4": {
