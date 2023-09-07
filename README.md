@@ -283,18 +283,25 @@ $ bin/console debug:container --parameters | grep bitbag
 
 ## Testing
 ```bash
-$ composer install
-$ cd tests/Application
-$ APP_ENV=test bin/console doctrine:database:create
-$ APP_ENV=test bin/console doctrine:schema:create
-// run elasticsearch
-$ APP_ENV=test bin/console sylius:fixtures:load
-$ APP_ENV=test bin/console fos:elastica:populate
-$ APP_ENV=test symfony server:run 127.0.0.1:8080 -d
-$ APP_ENV=test bin/console assets:install
-$ open http://localhost:8080
-$ vendor/bin/behat
-$ vendor/bin/phpspec run
+composer install
+cd tests/Application
+APP_ENV=test bin/console doctrine:database:create
+APP_ENV=test bin/console doctrine:schema:create
+# run elasticsearch
+APP_ENV=test bin/console sylius:fixtures:load
+APP_ENV=test bin/console fos:elastica:populate
+# How to get symfony CLI https://symfony.com/download
+# To get working https use `symfony server:ca:install`
+APP_ENV=test symfony server:start --port=8080 --dir=public --daemon
+APP_ENV=test bin/console assets:install public
+# copy config of your choice tests/Application/package.json.~X.Y.Z.dist as tests/Application/package.json
+yarn install
+yarn encore production
+open https://localhost:8080
+cd ../..
+APP_ENV=test vendor/bin/behat
+vendor/bin/phpspec run
+
 ```
 
 # About us
