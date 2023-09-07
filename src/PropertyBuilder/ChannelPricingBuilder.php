@@ -37,14 +37,27 @@ final class ChannelPricingBuilder extends AbstractBuilder
                     return;
                 }
 
+                /** @var array<string, array<int>> $pricesPerChannel */
+                $pricesPerChannel = [];
+
                 /** @var ProductVariantInterface $productVariant */
-                $productVariant = $product->getVariants()->first();
+                foreach ($product->getVariants() as $productVariant) {
+                    foreach ($productVariant->getChannelPricings() as $variantChannelPricing) {
+                        $channelCode = $variantChannelPricing->getChannelCode();
+                        if (null === $channelCode) {
+                            continue;
+                        }
+                        $elasticFieldName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
+                        $channelPrice = $variantChannelPricing->getPrice();
 
-                foreach ($productVariant->getChannelPricings() as $channelPricing) {
-                    $propertyName = $this->channelPricingNameResolver
-                        ->resolvePropertyName($channelPricing->getChannelCode());
+                        if ($channelPrice !== null) {
+                            $pricesPerChannel[$elasticFieldName][] = $channelPrice;
+                        }
+                    }
+                }
 
-                    $document->set($propertyName, $channelPricing->getPrice());
+                foreach ($pricesPerChannel as $elasticFieldName => $channelVariantPrices) {
+                    $document->set($elasticFieldName, array_unique($channelVariantPrices));
                 }
             }
         );
