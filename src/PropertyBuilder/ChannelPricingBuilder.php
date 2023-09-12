@@ -57,7 +57,7 @@ final class ChannelPricingBuilder extends AbstractBuilder
                 }
 
                 foreach ($pricesPerChannel as $elasticFieldName => $channelVariantPrices) {
-                    $document->set($elasticFieldName, array_unique($channelVariantPrices));
+                    $document->set($elasticFieldName, array_values(array_unique($channelVariantPrices)));
                 }
             }
         );
