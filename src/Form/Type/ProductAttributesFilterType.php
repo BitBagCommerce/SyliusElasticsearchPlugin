@@ -51,6 +51,10 @@ final class ProductAttributesFilterType extends AbstractFilterType
             $choices = $this->productAttributesMapper->mapToChoices($productAttribute);
             $choices = array_unique($choices);
 
+            if ([] === $choices) {
+                continue;
+            }
+
             $builder->add($name, ChoiceType::class, [
                 'label' => $productAttribute->getName(),
                 'required' => false,
