@@ -61,7 +61,7 @@ final class ShopProductsQueryBuilder implements QueryBuilderInterface
     {
         $boolQuery = new BoolQuery();
 
-        $boolQuery->addMust($this->isEnabledQueryBuilder->buildQuery($data));
+        $boolQuery->addFilter($this->isEnabledQueryBuilder->buildQuery($data));
         $boolQuery->addMust($this->hasChannelQueryBuilder->buildQuery($data));
 
         $nameQuery = $this->containsNameQueryBuilder->buildQuery($data);
