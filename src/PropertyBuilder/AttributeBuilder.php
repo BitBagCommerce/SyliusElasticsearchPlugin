@@ -17,12 +17,19 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use function sprintf;
+use Sylius\Component\Attribute\AttributeType\DateAttributeType;
+use Sylius\Component\Attribute\AttributeType\DatetimeAttributeType;
+use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductAttributeValue;
 
 final class AttributeBuilder extends AbstractBuilder
 {
+    public const DEFAULT_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
+    public const DEFAULT_DATE_FORMAT = 'Y-m-d';
+
     private ConcatedNameResolverInterface $attributeNameResolver;
 
     private StringFormatterInterface $stringFormatter;
@@ -63,7 +70,7 @@ final class AttributeBuilder extends AbstractBuilder
         $attributeValue,
         ProductAttributeValue $productAttribute
     ): array {
-        if ('select' === $productAttribute->getAttribute()->getType()) {
+        if (SelectAttributeType::TYPE === $productAttribute->getAttribute()->getType()) {
             $choices = $attributeConfiguration['choices'] ?? [];
             if (is_array($attributeValue)) {
                 foreach ($attributeValue as $i => $item) {
@@ -80,9 +87,24 @@ final class AttributeBuilder extends AbstractBuilder
                 $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces((string) $singleElement);
             }
         } else {
-            $attributeValue = is_string($attributeValue)
-                ? $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue) : $attributeValue;
-            $attributes[] = $attributeValue;
+            switch (true) {
+                case is_string($attributeValue):
+                    $attributes[] = $this->stringFormatter->formatToLowercaseWithoutSpaces($attributeValue);
+
+                    break;
+                case $attributeValue instanceof \DateTime:
+                    $attributeFormat = $productAttribute->getAttribute()->getConfiguration()['format'] ?? null;
+                    $defaultFormat = DateAttributeType::TYPE === $productAttribute->getAttribute()->getStorageType() ?
+                        self::DEFAULT_DATE_FORMAT :
+                        self::DEFAULT_DATE_TIME_FORMAT
+                    ;
+
+                    $attributes[] = $attributeValue->format($attributeFormat ?? $defaultFormat);
+
+                    break;
+                default:
+                    $attributes[] = $attributeValue;
+            }
         }
 
         return $attributes;
@@ -105,6 +127,11 @@ final class AttributeBuilder extends AbstractBuilder
             $value,
             $productAttribute
         );
+
+        $values = in_array($attribute->getStorageType(), [DateAttributeType::TYPE, DatetimeAttributeType::TYPE]) ?
+            ($values[0] ?? $values) :
+            $values
+        ;
 
         $document->set($code, $values);
     }
