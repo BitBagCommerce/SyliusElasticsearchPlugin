@@ -15,6 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Product\Model\ProductAttribute;
+use Sylius\Component\Product\Model\ProductOption;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -28,14 +29,18 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
 
     private RepositoryInterface $attributeRepository;
 
+    private RepositoryInterface $productOptionRepository;
+
     public function __construct(
         ResourceRefresherInterface $resourceRefresher,
         array $persistersMap,
-        RepositoryInterface $attributeRepository
+        RepositoryInterface $attributeRepository,
+        RepositoryInterface $productOptionRepository
     ) {
         $this->resourceRefresher = $resourceRefresher;
         $this->persistersMap = $persistersMap;
         $this->attributeRepository = $attributeRepository;
+        $this->productOptionRepository = $productOptionRepository;
     }
 
     public function updateIndex(GenericEvent $event): void
@@ -50,17 +55,49 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
                 $resource = $resource->$method();
             }
 
-            if ($resource instanceof $config[self::MODEL_KEY]) {
-                $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
-            }
-
-            if ($resource instanceof Product
-                && ProductAttribute::class === $config[self::MODEL_KEY]
-            ) {
-                foreach ($this->attributeRepository->findAll() as $attribute) {
-                    $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);
-                }
-            }
+            $this->refreshResource($resource, $config);
         }
+    }
+
+    private function refreshResource(
+        ResourceInterface $resource,
+        array $config
+    ): void {
+        if ($resource instanceof $config[self::MODEL_KEY]) {
+            $this->resourceRefresher->refresh(
+                $resource,
+                $config[self::SERVICE_ID_KEY]
+            );
+        }
+
+        if (!$resource instanceof Product) {
+            return;
+        }
+
+        $resourceRepository = $this->getResourceRespository($config);
+
+        if (null === $resourceRepository) {
+            return;
+        }
+
+        foreach ($resourceRepository->findAll() as $resourceItem) {
+            $this->resourceRefresher->refresh(
+                $resourceItem,
+                $config[self::SERVICE_ID_KEY]
+            );
+        }
+    }
+
+    private function getResourceRespository(array $config): ?RepositoryInterface
+    {
+        if (ProductAttribute::class === $config[self::MODEL_KEY]) {
+            return $this->attributeRepository;
+        }
+
+        if (ProductOption::class === $config[self::MODEL_KEY]) {
+            return $this->productOptionRepository;
+        }
+
+        return null;
     }
 }

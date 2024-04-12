@@ -20,14 +20,18 @@
                 </argument>
             </argument>
             <argument type="service" id="sylius.repository.product_attribute"/>
+            <argument type="service" id="sylius.repository.product_option"/>
             <tag name="kernel.event_listener" event="sylius.product_attribute.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product_attribute.post_update" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.option.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.option.post_update" method="updateIndex" />
+            <tag name="kernel.event_listener" event="sylius.option.post_delete" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product.post_update" method="updateIndex" />
+            <tag name="kernel.event_listener" event="sylius.product.post_delete" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product_variant.post_create" method="updateIndex" />
             <tag name="kernel.event_listener" event="sylius.product_variant.post_update" method="updateIndex" />
+            <tag name="kernel.event_listener" event="sylius.product_variant.post_delete" method="updateIndex" />
         </service>
         <service id="bitbag_sylius_elasticsearch_plugin.event_listener.product_taxon_index" class="BitBag\SyliusElasticsearchPlugin\EventListener\ProductTaxonIndexListener">
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.refresher.resource" />
