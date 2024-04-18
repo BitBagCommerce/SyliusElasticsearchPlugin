@@ -72,6 +72,7 @@ final class ListProductsActionSpec extends ObjectBehavior
         $form->isValid()->willReturn(true);
         $form->handleRequest($request)->willReturn($form);
         $form->createView()->willReturn($formView);
+        $form->isSubmitted()->willReturn(true);
 
         $formFactory->create(ShopProductsFilterType::class)->willReturn($form);
         $request->query = $queryParameters;
