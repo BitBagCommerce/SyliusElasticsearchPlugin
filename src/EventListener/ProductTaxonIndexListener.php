@@ -1,39 +1,37 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
+
+declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
+use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
-use Webmozart\Assert\Assert;
 
 final class ProductTaxonIndexListener
 {
-    /** @var ResourceRefresherInterface */
-    private $resourceRefresher;
+    private ResourceRefresherInterface $resourceRefresher;
 
-    /** @var string */
-    private $objectPersisterId;
+    private ObjectPersisterInterface $objectPersister;
 
-    public function __construct(ResourceRefresherInterface $resourceRefresher, string $objectPersisterId)
-    {
+    public function __construct(
+        ResourceRefresherInterface $resourceRefresher,
+        ObjectPersisterInterface $objectPersister
+    ) {
         $this->resourceRefresher = $resourceRefresher;
-        $this->objectPersisterId = $objectPersisterId;
+        $this->objectPersister = $objectPersister;
     }
 
     public function updateIndex(ProductTaxonInterface $productTaxon): void
     {
-        $this->resourceRefresher->refresh($productTaxon->getProduct(), $this->objectPersisterId);
+        $this->resourceRefresher->refresh($productTaxon->getProduct(), $this->objectPersister);
     }
 }

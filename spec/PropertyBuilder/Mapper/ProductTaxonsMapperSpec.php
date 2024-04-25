@@ -21,6 +21,13 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductTaxonsMapperSpec extends ObjectBehavior
 {
+    function let(): void
+    {
+        $this->beConstructedWith(
+            true
+        );
+    }
+
     function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductTaxonsMapper::class);

@@ -1,4 +1,4 @@
-@site_wide_searching_products
+@site_wide_searching_products @sylius112
 Feature: Site-wide products search
   In order to quickly find products I want to buy
   As a Customer

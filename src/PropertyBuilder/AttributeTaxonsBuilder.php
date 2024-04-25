@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -13,35 +13,39 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepositoryInterface;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Attribute\Model\AttributeInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
+use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {
-    /** @var TaxonRepositoryInterface */
-    protected $taxonRepository;
+    protected TaxonRepositoryInterface $taxonRepository;
 
-    /** @var string */
-    private $taxonsProperty;
+    private string $taxonsProperty;
 
-    /** @var array */
-    private $excludedAttributes;
+    private array $excludedAttributes;
+
+    private bool $includeAllDescendants;
 
     public function __construct(
         TaxonRepositoryInterface $taxonRepository,
         string $taxonsProperty,
+        bool $includeAllDescendants,
         array $excludedAttributes = []
     ) {
         $this->taxonRepository = $taxonRepository;
         $this->taxonsProperty = $taxonsProperty;
+        $this->includeAllDescendants = $includeAllDescendants;
         $this->excludedAttributes = $excludedAttributes;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $documentAttribute = $event->getObject();
 
         if (!$documentAttribute instanceof AttributeInterface
+            || !$documentAttribute instanceof ProductAttributeInterface
             || in_array($documentAttribute->getCode(), $this->excludedAttributes)
         ) {
             return;
@@ -50,8 +54,15 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         $taxons = $this->taxonRepository->getTaxonsByAttributeViaProduct($documentAttribute);
         $taxonCodes = [];
 
+        /** @var TaxonInterface $taxon */
         foreach ($taxons as $taxon) {
             $taxonCodes[] = $taxon->getCode();
+
+            if (true === $this->includeAllDescendants) {
+                foreach ($taxon->getAncestors() as $ancestor) {
+                    $taxonCodes[] = $ancestor->getCode();
+                }
+            }
         }
 
         $document = $event->getDocument();

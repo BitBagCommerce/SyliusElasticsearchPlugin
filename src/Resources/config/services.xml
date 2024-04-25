@@ -25,6 +25,11 @@
 
         <service id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository">
             <argument type="service" id="sylius.repository.product_attribute_value" />
+            <argument>%sylius_shop.product_grid.include_all_descendants%</argument>
+        </service>
+
+        <service id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeRepository">
+            <argument type="service" id="sylius.repository.product_attribute" />
         </service>
 
         <service id="bitbag.sylius_elasticsearch_plugin.repository.order_item_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\OrderItemRepository">

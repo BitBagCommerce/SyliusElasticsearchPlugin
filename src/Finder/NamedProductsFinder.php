@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -17,11 +17,9 @@ use FOS\ElasticaBundle\Finder\FinderInterface;
 
 final class NamedProductsFinder implements NamedProductsFinderInterface
 {
-    /** @var QueryBuilderInterface */
-    private $productsByPartialNameQueryBuilder;
+    private QueryBuilderInterface $productsByPartialNameQueryBuilder;
 
-    /** @var FinderInterface */
-    private $productsFinder;
+    private FinderInterface $productsFinder;
 
     public function __construct(
         QueryBuilderInterface $productsByPartialNameQueryBuilder,

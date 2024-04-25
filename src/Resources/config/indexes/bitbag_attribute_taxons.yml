@@ -4,17 +4,15 @@ parameters:
 fos_elastica:
     indexes:
         bitbag_attribute_taxons:
-            index_name: "bitbag_attribute_taxons_%kernel.environment%"
-            types:
-                default:
-                    properties:
-                        attribute_code:
-                            property_path: code
-                    persistence:
-                        driver: orm
-                        model: "%sylius.model.product_attribute.class%"
-                        listener:
-                            defer: true
-                            logger: true
-                        elastica_to_model_transformer:
-                            ignore_missing: true
+            index_name: "%bitbag_es_index_prefix%bitbag_attribute_taxons_%kernel.environment%"
+            properties:
+                attribute_code:
+                    property_path: code
+            persistence:
+                driver: orm
+                model: "%sylius.model.product_attribute.class%"
+                listener:
+                    defer: false
+                    logger: true
+                elastica_to_model_transformer:
+                    ignore_missing: true

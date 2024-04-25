@@ -21,13 +21,13 @@ use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
 use Pagerfanta\Pagerfanta;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Twig\Environment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 final class ListProductsActionSpec extends ObjectBehavior
 {
@@ -70,11 +70,10 @@ final class ListProductsActionSpec extends ObjectBehavior
     ): void {
         $form->getData()->willReturn([]);
         $form->isValid()->willReturn(true);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->willReturn($form);
         $form->createView()->willReturn($formView);
 
         $formFactory->create(ShopProductsFilterType::class)->willReturn($form);
-
         $request->query = $queryParameters;
         $queryParameters->all()->willReturn([]);
 

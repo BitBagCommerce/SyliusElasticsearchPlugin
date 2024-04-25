@@ -5,14 +5,16 @@
     "license": "MIT",
     "require": {
         "ext-json": "*",
-        "php": "^7.3 || ^7.4",
-        "sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0",
-        "friendsofsymfony/elastica-bundle": "^5.0",
-        "symfony/property-access": "^4.4 || ^5.2"
+        "php": "^8.0",
+        "sylius/sylius": "~1.11.0 ||  >=1.12.13 || ~1.13.0",
+        "friendsofsymfony/elastica-bundle": "^6.0",
+        "symfony/property-access": "^5.4 || ^6.0",
+        "symfony/webpack-encore-bundle": "^1.16",
+        "symfony/proxy-manager-bridge": "^5.4 || ^6.0"
     },
     "require-dev": {
-        "behat/behat": "^3.6.1",
-        "behat/mink-selenium2-driver": "^1.4",
+        "behat/behat": "^3.7",
+        "behat/mink-selenium2-driver": "~1.6.0",
         "dmore/behat-chrome-extension": "^1.3",
         "dmore/chrome-mink-driver": "^2.7",
         "friends-of-behat/mink": "^1.8",
@@ -23,7 +25,6 @@
         "friends-of-behat/suite-settings-extension": "^1.0",
         "friends-of-behat/symfony-extension": "^2.1",
         "friends-of-behat/variadic-extension": "^1.3",
-        "friendsofsymfony/oauth-server-bundle": "^1.6 || >2.0.0-alpha.0 ^2.0@dev",
         "phpspec/phpspec": "^7.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.82",
@@ -31,22 +32,31 @@
         "phpstan/phpstan-strict-rules": "^0.12.0",
         "phpstan/phpstan-webmozart-assert": "0.12.12",
         "phpunit/phpunit": "^9.5",
-        "sensiolabs/security-checker": "^6.0",
         "sylius-labs/coding-standard": "^4.0",
-        "symfony/browser-kit": "^4.4 || ^5.2",
-        "symfony/debug-bundle": "^4.4 || ^5.2",
-        "symfony/dotenv": "^4.4 || ^5.2",
-        "symfony/intl": "^4.4 || ^5.2",
-        "symfony/web-profiler-bundle": "^4.4 || ^5.2",
-        "vimeo/psalm": "4.7.1"
+        "symfony/browser-kit": "^5.4 || ^6.0",
+        "symfony/debug-bundle": "^5.4 || ^6.0",
+        "symfony/dotenv": "^5.4 || ^6.0",
+        "symfony/intl": "^5.4 || ^6.0",
+        "symfony/web-profiler-bundle": "^5.4 || ^6.0",
+        "vimeo/psalm": "4.27.0",
+        "bitbag/coding-standard": "^1.0.1",
+        "league/flysystem-bundle": "2.4.0",
+        "polishsymfonycommunity/symfony-mocker-container": "^1.0",
+        "lchrusciel/api-test-case": "^5.2",
+        "symfony/mailer": "^5.4 || ^6.0",
+        "sylius/mailer-bundle":  "^1.8 || ^2.0@beta",
+        "twig/extra-bundle": "^3.4"
     },
     "conflict": {
-        "symfony/form": "4.4.11 || 4.4.12"
+        "symfony/form": "4.4.11 || 4.4.12",
+        "api-platform/core": "v2.7.17",
+        "sylius/sylius": ">= 1.12.0 < 1.12.13"
     },
     "autoload": {
         "psr-4": {
             "BitBag\\SyliusElasticsearchPlugin\\": "src/",
-            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Application\\": "tests/Application"
+            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Application\\": "tests/Application",
+            "Tests\\BitBag\\SyliusElasticsearchPlugin\\Integration\\": "tests/PHPUnit/Integration"
         }
     },
     "autoload-dev": {
@@ -66,5 +76,13 @@
         "post-create-project-cmd": [
             "php bin/create_node_symlink.php"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/thanks": true,
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     }
 }

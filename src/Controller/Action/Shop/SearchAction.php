@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
@@ -17,23 +25,17 @@ use Twig\Environment;
 
 final class SearchAction
 {
-    /** @var Environment */
-    private $twig;
+    private Environment $twig;
 
-    /** @var PaginatedFinderInterface */
-    private $finder;
+    private PaginatedFinderInterface $finder;
 
-    /** @var SearchFormEventListener */
-    private $searchFormEventListener;
+    private SearchFormEventListener $searchFormEventListener;
 
-    /** @var RegistryInterface */
-    private $facetRegistry;
+    private RegistryInterface $facetRegistry;
 
-    /** @var QueryBuilderInterface */
-    private $searchProductsQueryBuilder;
+    private QueryBuilderInterface $searchProductsQueryBuilder;
 
-    /** @var PaginationDataHandlerInterface */
-    private $paginationDataHandler;
+    private PaginationDataHandlerInterface $paginationDataHandler;
 
     public function __construct(
         Environment $twig,

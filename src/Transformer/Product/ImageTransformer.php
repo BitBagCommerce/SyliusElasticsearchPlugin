@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -18,16 +18,18 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ImageTransformer implements TransformerInterface
 {
-    private const SYLIUS_THUMBNAIL_TYPE = 'thumbnail';
+    private const SYLIUS_THUMBNAIL_TYPE = 'main';
 
     private const SYLIUS_THUMBNAIL_FILTER = 'sylius_shop_product_thumbnail';
 
-    /** @var FilterService */
-    private $imagineFilter;
+    private FilterService $imagineFilter;
 
-    public function __construct(FilterService $imagineFilter)
+    private string $imagesPath;
+
+    public function __construct(FilterService $imagineFilter, string $imagesPath = '/media/image/')
     {
         $this->imagineFilter = $imagineFilter;
+        $this->imagesPath = $imagesPath;
     }
 
     public function transform(ProductInterface $product): ?string
@@ -41,6 +43,15 @@ final class ImageTransformer implements TransformerInterface
         /** @var ImageInterface $productImage */
         $productImage = $productThumbnails->first();
 
-        return $this->imagineFilter->getUrlOfFilteredImage($productImage->getPath(), self::SYLIUS_THUMBNAIL_FILTER);
+        if ($this->canImageBeFiltered($productImage->getPath())) {
+            return $this->imagineFilter->getUrlOfFilteredImage($productImage->getPath(), self::SYLIUS_THUMBNAIL_FILTER);
+        }
+
+        return $this->imagesPath . $productImage->getPath();
+    }
+
+    private function canImageBeFiltered(string $imagePath): bool
+    {
+        return !str_ends_with($imagePath, 'svg');
     }
 }

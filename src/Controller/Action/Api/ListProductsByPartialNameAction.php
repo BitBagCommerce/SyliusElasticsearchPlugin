@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -23,17 +23,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ListProductsByPartialNameAction
 {
-    /** @var NamedProductsFinderInterface */
-    private $namedProductsFinder;
+    private NamedProductsFinderInterface $namedProductsFinder;
 
-    /** @var TransformerInterface */
-    private $productSlugTransformer;
+    private TransformerInterface $productSlugTransformer;
 
-    /** @var TransformerInterface */
-    private $productChannelPriceTransformer;
+    private TransformerInterface $productChannelPriceTransformer;
 
-    /** @var TransformerInterface */
-    private $productImageTransformer;
+    private TransformerInterface $productImageTransformer;
 
     public function __construct(
         NamedProductsFinderInterface $namedProductsFinder,
@@ -52,7 +48,7 @@ final class ListProductsByPartialNameAction
         $itemsResponse = ItemsResponse::createEmpty();
 
         if (null === $request->query->get('query')) {
-            return JsonResponse::create($itemsResponse->toArray());
+            return new JsonResponse($itemsResponse->toArray());
         }
 
         $products = $this->namedProductsFinder->findByNamePart($request->query->get('query'));
@@ -73,6 +69,6 @@ final class ListProductsByPartialNameAction
             ));
         }
 
-        return JsonResponse::create($itemsResponse->toArray());
+        return new JsonResponse($itemsResponse->toArray());
     }
 }

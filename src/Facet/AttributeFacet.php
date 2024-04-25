@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * another great project.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
@@ -9,23 +17,21 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
+use RuntimeException;
+use function sprintf;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class AttributeFacet implements FacetInterface
 {
-    /** @var ConcatedNameResolverInterface */
-    private $attributeNameResolver;
+    private ConcatedNameResolverInterface $attributeNameResolver;
 
-    /** @var RepositoryInterface */
-    private $productAttributeRepository;
+    private RepositoryInterface $productAttributeRepository;
 
-    /** @var string */
-    private $attributeCode;
+    private string $attributeCode;
 
-    /** @var LocaleContextInterface */
-    private $localeContext;
+    private LocaleContextInterface $localeContext;
 
     public function __construct(
         ConcatedNameResolverInterface $attributeNameResolver,
@@ -66,16 +72,18 @@ final class AttributeFacet implements FacetInterface
 
     private function getFieldName(): string
     {
-        return \sprintf('%s_%s.keyword',
+        return sprintf(
+            '%s_%s.keyword',
             $this->attributeNameResolver->resolvePropertyName($this->attributeCode),
-            $this->localeContext->getLocaleCode());
+            $this->localeContext->getLocaleCode()
+        );
     }
 
     private function getProductAttribute(): AttributeInterface
     {
         $attribute = $this->productAttributeRepository->findOneBy(['code' => $this->attributeCode]);
         if (!$attribute instanceof AttributeInterface) {
-            throw new \RuntimeException(sprintf('Cannot find attribute with code "%s"', $this->attributeCode));
+            throw new RuntimeException(sprintf('Cannot find attribute with code "%s"', $this->attributeCode));
         }
 
         return $attribute;

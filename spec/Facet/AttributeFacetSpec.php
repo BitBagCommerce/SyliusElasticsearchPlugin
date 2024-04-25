@@ -9,8 +9,6 @@ use BitBag\SyliusElasticsearchPlugin\Facet\FacetInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Aggregation\Terms;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Sylius\Component\Attribute\Model\Attribute;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 

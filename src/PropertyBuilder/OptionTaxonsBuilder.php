@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -14,7 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductVariantRepositoryInterface;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductOptionInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
@@ -22,20 +22,15 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionTaxonsBuilder extends AbstractBuilder
 {
-    /** @var RepositoryInterface */
-    private $productOptionValueRepository;
+    private RepositoryInterface $productOptionValueRepository;
 
-    /** @var ProductVariantRepositoryInterface */
-    private $productVariantRepository;
+    private ProductVariantRepositoryInterface $productVariantRepository;
 
-    /** @var ProductTaxonsMapperInterface */
-    private $productTaxonsMapper;
+    private ProductTaxonsMapperInterface $productTaxonsMapper;
 
-    /** @var string */
-    private $taxonsProperty;
+    private string $taxonsProperty;
 
-    /** @var array */
-    private $excludedOptions;
+    private array $excludedOptions;
 
     public function __construct(
         RepositoryInterface $productOptionValueRepository,
@@ -51,7 +46,7 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         $this->excludedOptions = $excludedOptions;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $documentProductOption = $event->getObject();
 
@@ -78,10 +73,10 @@ final class OptionTaxonsBuilder extends AbstractBuilder
             $product = $productVariant->getProduct();
 
             if ($documentProductOption === $option && $product->isEnabled()) {
-                $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
+                $taxons = array_merge($taxons, $this->productTaxonsMapper->mapToUniqueCodes($product));
             }
         }
 
-        $document->set($this->taxonsProperty, array_unique($taxons));
+        $document->set($this->taxonsProperty, array_values(array_unique($taxons)));
     }
 }

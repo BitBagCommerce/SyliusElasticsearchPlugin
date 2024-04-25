@@ -1,21 +1,19 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Service;
 
-use FOS\ElasticaBundle\Event\IndexPopulateEvent;
-use FOS\ElasticaBundle\Event\TypePopulateEvent;
+use FOS\ElasticaBundle\Event\PostIndexPopulateEvent;
+use FOS\ElasticaBundle\Event\PreIndexPopulateEvent;
 use FOS\ElasticaBundle\Index\IndexManager;
-use FOS\ElasticaBundle\Index\Resetter;
+use FOS\ElasticaBundle\Index\ResetterInterface;
 use FOS\ElasticaBundle\Persister\PagerPersisterInterface;
 use FOS\ElasticaBundle\Persister\PagerPersisterRegistry;
 use FOS\ElasticaBundle\Provider\PagerProviderRegistry;
@@ -38,22 +36,15 @@ final class Populate
     /** @var PagerPersisterInterface */
     private $pagerPersister;
 
-    /** @var Resetter */
+    /** @var ResetterInterface */
     private $resetter;
 
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param IndexManager $indexManager
-     * @param PagerProviderRegistry $pagerProviderRegistry
-     * @param PagerPersisterRegistry $pagerPersisterRegistry
-     * @param Resetter $resetter
-     */
     public function __construct(
         EventDispatcherInterface $dispatcher,
         IndexManager $indexManager,
         PagerProviderRegistry $pagerProviderRegistry,
         PagerPersisterRegistry $pagerPersisterRegistry,
-        Resetter $resetter
+        ResetterInterface $resetter
     ) {
         $this->dispatcher = $dispatcher;
         $this->indexManager = $indexManager;
@@ -74,51 +65,25 @@ final class Populate
         ];
 
         foreach ($indexes as $index) {
-            $event = new IndexPopulateEvent($index, true, $options);
-            $this->dispatcher->dispatch($event, IndexPopulateEvent::PRE_INDEX_POPULATE);
+            $event = new PreIndexPopulateEvent($index, true, $options);
+            $this->dispatcher->dispatch($event);
 
             if ($event->isReset()) {
                 $this->resetter->resetIndex($index, true);
             }
 
-            $types = array_keys($this->pagerProviderRegistry->getIndexProviders($index));
-            foreach ($types as $type) {
-                $this->populateIndexType($index, $type, false, $event->getOptions());
-            }
+            $provider = $this->pagerProviderRegistry->getProvider($index);
 
-            $this->dispatcher->dispatch($event, IndexPopulateEvent::POST_INDEX_POPULATE);
+            $pager = $provider->provide($options);
+            $options['indexName'] = $index;
+
+            $this->pagerPersister->insert($pager, $options);
+
+            $event = new PostIndexPopulateEvent($index, true, $options);
+            $this->dispatcher->dispatch($event);
 
             $this->refreshIndex($index);
         }
-    }
-
-    /**
-     * @param string $index
-     * @param string $type
-     * @param bool $reset
-     * @param array $options
-     */
-    private function populateIndexType(string $index, string $type, bool $reset, array $options): void
-    {
-        $event = new TypePopulateEvent($index, $type, $reset, $options);
-        $this->dispatcher->dispatch($event, TypePopulateEvent::PRE_TYPE_POPULATE);
-
-        if ($event->isReset()) {
-            $this->resetter->resetIndexType($index, $type);
-        }
-
-        $provider = $this->pagerProviderRegistry->getProvider($index, $type);
-
-        $pager = $provider->provide($options);
-
-        $options['indexName'] = $index;
-        $options['typeName'] = $type;
-
-        $this->pagerPersister->insert($pager, $options);
-
-        $this->dispatcher->dispatch($event, TypePopulateEvent::POST_TYPE_POPULATE);
-
-        $this->refreshIndex($index);
     }
 
     private function refreshIndex(string $index): void

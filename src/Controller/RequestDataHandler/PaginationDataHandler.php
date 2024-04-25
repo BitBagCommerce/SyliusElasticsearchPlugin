@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -14,8 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 
 final class PaginationDataHandler implements PaginationDataHandlerInterface
 {
-    /** @var int */
-    private $defaultLimit;
+    private int $defaultLimit;
 
     public function __construct(int $defaultLimit)
     {
@@ -32,7 +31,7 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
         return $data;
     }
 
-    private function resolvePage(array $requestData, array &$data): void
+    private function resolvePage(array $requestData, array & $data): void
     {
         $page = 1;
 
@@ -43,7 +42,7 @@ final class PaginationDataHandler implements PaginationDataHandlerInterface
         $data[self::PAGE_INDEX] = $page;
     }
 
-    private function resolveLimit(array $requestData, array &$data): void
+    private function resolveLimit(array $requestData, array & $data): void
     {
         $limit = $this->defaultLimit;
 

@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -120,8 +118,11 @@ final class ProductContext implements Context
     /**
      * @Given /^(\d+) of these products are priced between ("[^"]+") and ("[^"]+")$/
      */
-    public function ofTheseProductsArePricedBetweenAnd(int $quantity, int $min, int $max): void
-    {
+    public function ofTheseProductsArePricedBetweenAnd(
+        int $quantity,
+        int $min,
+        int $max
+    ): void {
         $channel = $this->sharedStorage->get('channel');
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
         $products = $this->sharedStorage->get('products');
@@ -177,8 +178,11 @@ final class ProductContext implements Context
     /**
      * @Given :quantity of these products have :optionName option with :value value
      */
-    public function ofTheseProductsHaveOptionWithValue(int $quantity, string $optionName, string $value): void
-    {
+    public function ofTheseProductsHaveOptionWithValue(
+        int $quantity,
+        string $optionName,
+        string $value
+    ): void {
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
         $products = $this->sharedStorage->get('products');
 
@@ -201,8 +205,11 @@ final class ProductContext implements Context
         $this->objectManager->flush();
     }
 
-    private function createProduct(string $productName, int $price = 100, ChannelInterface $channel = null): ProductInterface
-    {
+    private function createProduct(
+        string $productName,
+        int $price = 100,
+        ChannelInterface $channel = null
+    ): ProductInterface {
         if (null === $channel && $this->sharedStorage->has('channel')) {
             $channel = $this->sharedStorage->get('channel');
         }
@@ -239,8 +246,11 @@ final class ProductContext implements Context
         return $product;
     }
 
-    private function addProductOption(ProductOptionInterface $option, string $value, string $code): ProductOptionValueInterface
-    {
+    private function addProductOption(
+        ProductOptionInterface $option,
+        string $value,
+        string $code
+    ): ProductOptionValueInterface {
         /** @var ProductOptionValueInterface $optionValue */
         $optionValue = $this->productOptionValueFactory->createNew();
 

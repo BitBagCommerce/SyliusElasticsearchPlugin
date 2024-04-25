@@ -64,3 +64,11 @@ services:
               arguments:
                   - option_supply
                   - '@bitbag_sylius_elasticsearch_plugin.facet.option.supply'
+
+    bitbag_sylius_elasticsearch_plugin.facet.taxon_registry:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
+        calls:
+            - method: addFacet
+              arguments:
+                  - price
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.price'

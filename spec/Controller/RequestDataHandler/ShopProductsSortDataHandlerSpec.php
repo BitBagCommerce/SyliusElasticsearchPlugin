@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -22,7 +20,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
         TaxonContextInterface $taxonContext,
@@ -53,8 +51,7 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         TaxonContextInterface $taxonContext,
         TaxonInterface $taxon,
         ConcatedNameResolverInterface $taxonPositionNameResolver
-    ): void
-    {
+    ): void {
         $taxonContext->getTaxon()->willReturn($taxon);
         $taxon->getCode()->willReturn('t_shirt');
         $taxonPositionNameResolver->resolvePropertyName('t_shirt')->willReturn('taxon_position_t_shirts');

@@ -4,8 +4,8 @@
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
  * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
@@ -16,19 +16,24 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolverInter
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Type;
 
 final class PriceFilterType extends AbstractFilterType
 {
-    /** @var PriceNameResolverInterface */
-    private $priceNameResolver;
+    public const MAXIMUM_PRICE_VALUE = 9999999999999999;
 
-    /** @var CurrencyContextInterface */
-    private $currencyContext;
+    private PriceNameResolverInterface $priceNameResolver;
 
-    public function __construct(PriceNameResolverInterface $priceNameResolver, CurrencyContextInterface $currencyContext)
-    {
+    private CurrencyContextInterface $currencyContext;
+
+    public function __construct(
+        PriceNameResolverInterface $priceNameResolver,
+        CurrencyContextInterface $currencyContext
+    ) {
         $this->priceNameResolver = $priceNameResolver;
         $this->currencyContext = $currencyContext;
     }
@@ -48,6 +53,9 @@ final class PriceFilterType extends AbstractFilterType
                     new PositiveOrZero([
                         'message' => 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
                     ]),
+                    new LessThan(self::MAXIMUM_PRICE_VALUE, options: [
+                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
+                    ]),
                 ],
             ])
             ->add($this->priceNameResolver->resolveMaxPriceName(), MoneyType::class, [
@@ -60,10 +68,22 @@ final class PriceFilterType extends AbstractFilterType
                         'message' => 'bitbag_sylius_elasticsearch_plugin.max_price_numeric',
                     ]),
                     new PositiveOrZero([
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
+                        'message' => 'bitbag_sylius_elasticsearch_plugin.max_price_positive_or_zero',
+                    ]),
+                    new LessThan(self::MAXIMUM_PRICE_VALUE, options: [
+                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
                     ]),
                 ],
             ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                if (!empty($event->getData())) {
+                    $data = [];
+                    foreach ($event->getData() as $key => $item) {
+                        $data[$key] = trim($item);
+                    }
+                    $event->setData($data);
+                }
+            })
         ;
     }
 }
