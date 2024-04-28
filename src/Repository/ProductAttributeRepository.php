@@ -26,16 +26,21 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 
     public function getAttributeTypeByName(string $attributeName): string
     {
+        $result = $this->getAttributeByName($attributeName);
+
+        return $result['type'];
+    }
+
+    public function getAttributeByName(string $attributeName): ?array
+    {
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->productAttributeRepository->createQueryBuilder('p');
 
-        $result = $queryBuilder
-            ->select('p.type')
+        return $queryBuilder
+            ->select('p.type, p.translatable')
             ->where('p.code = :code')
             ->setParameter(':code', $attributeName)
             ->getQuery()
             ->getOneOrNullResult();
-
-        return $result['type'];
     }
 }

@@ -40,11 +40,13 @@ final class HasAttributesQueryBuilder implements QueryBuilderInterface
     {
         $attributeName = str_replace('attribute_', '', $data['attribute']);
 
-        $type = $this->productAttributeRepository->getAttributeTypeByName($attributeName);
+        $attribute = $this->productAttributeRepository->getAttributeByName($attributeName);
+        $type = $attribute['type'];
+        $translatable = $attribute['translatable'];
 
         foreach ($this->attributeDriver as $driver) {
             if ($driver->supports($type)) {
-                return $driver->buildQuery($data, $this->localeContext->getLocaleCode());
+                return $driver->buildQuery($data, $translatable ? $this->localeContext->getLocaleCode() : '');
             }
         }
 

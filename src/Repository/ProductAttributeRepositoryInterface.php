@@ -15,4 +15,5 @@ namespace BitBag\SyliusElasticsearchPlugin\Repository;
 interface ProductAttributeRepositoryInterface
 {
     public function getAttributeTypeByName(string $attributeName): string;
+    public function getAttributeByName(string $attributeName): ?array;
 }
