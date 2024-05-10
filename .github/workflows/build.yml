@@ -135,10 +135,10 @@ jobs:
                     restore-keys: |
                         ${{ runner.os }}-node-${{ matrix.node }}-yarn-
 
-            -
-                name: Copy package.json.dist to package.json
-                if: matrix.sylius != ''
-                run: (cd tests/Application && cp "package.json.${{ matrix.sylius }}.dist" package.json)
+#            -
+#                name: Copy package.json.dist to package.json
+#                if: matrix.sylius != ''
+#                run: (cd tests/Application && cp "package.json.${{ matrix.sylius }}.dist" package.json)
 
             -
                 name: Install JS dependencies
@@ -166,7 +166,6 @@ jobs:
 
             -
                 name: Validate composer.json
-                if: ${{ matrix.sylius != '1.13.x-dev as 1.13.0' }}
                 run: composer validate --ansi --strict
 
             -
@@ -182,12 +181,10 @@ jobs:
 
             -
                 name: Run Behat
-                if: ${{ matrix.sylius != '1.13.x-dev as 1.13.0' }}
                 run: vendor/bin/behat --colors --strict -vvv --no-interaction  --tags '~@sylius113' || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun --tags '~@sylius113'
 
             -
                 name: Run Behat
-                if: ${{ matrix.sylius == '1.13.x-dev as 1.13.0' }}
                 run: vendor/bin/behat --colors --strict -vvv --no-interaction --tags '~@sylius112' || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun --tags '~@sylius112'
 
 
