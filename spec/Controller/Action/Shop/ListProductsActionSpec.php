@@ -70,6 +70,7 @@ final class ListProductsActionSpec extends ObjectBehavior
     ): void {
         $form->getData()->willReturn([]);
         $form->isValid()->willReturn(true);
+        $form->isSubmitted()->willReturn(true);
         $form->handleRequest($request)->willReturn($form);
         $form->createView()->willReturn($formView);
 

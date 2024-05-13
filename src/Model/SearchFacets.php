@@ -34,7 +34,7 @@ final class SearchFacets implements Iterator
 
     public function __isset(string $facetId)
     {
-        return isset($this->selectedBuckets[$facetId]);
+        return true;
     }
 
     /**
