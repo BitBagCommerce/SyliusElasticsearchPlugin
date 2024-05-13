@@ -1,9 +1,9 @@
 name: Build
 
 on:
-#    push:
-#        branches-ignore:
-#            - 'dependabot/**'
+    push:
+        branches-ignore:
+            - 'dependabot/**'
     pull_request: ~
     release:
         types: [created]
@@ -134,11 +134,6 @@ jobs:
                     key: ${{ runner.os }}-node-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json **/yarn.lock') }}
                     restore-keys: |
                         ${{ runner.os }}-node-${{ matrix.node }}-yarn-
-
-#            -
-#                name: Copy package.json.dist to package.json
-#                if: matrix.sylius != ''
-#                run: (cd tests/Application && cp "package.json.${{ matrix.sylius }}.dist" package.json)
 
             -
                 name: Install JS dependencies
