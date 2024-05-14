@@ -176,10 +176,12 @@ jobs:
 
             -
                 name: Run Behat
+                if: ${{ matrix.sylius != '~1.13.0' }}
                 run: vendor/bin/behat --colors --strict -vvv --no-interaction  --tags '~@sylius113' || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun --tags '~@sylius113'
 
             -
                 name: Run Behat
+                if: ${{ matrix.sylius == '~1.13.0' }}
                 run: vendor/bin/behat --colors --strict -vvv --no-interaction --tags '~@sylius112' || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun --tags '~@sylius112'
 
 
