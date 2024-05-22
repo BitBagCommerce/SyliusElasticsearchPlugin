@@ -18,4 +18,6 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 interface ProductVariantRepositoryInterface
 {
     public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ?ProductVariantInterface;
+
+    public function findByOptionValue(ProductOptionValueInterface $productOptionValue): array;
 }
