@@ -36,4 +36,14 @@ final class ProductVariantRepository implements ProductVariantRepositoryInterfac
             ->getOneOrNullResult()
         ;
     }
+
+    public function findByOptionValue(ProductOptionValueInterface $productOptionValue): array
+    {
+        return $this->baseProductVariantRepository->createQueryBuilder('o')
+            ->where(':optionValue MEMBER OF o.optionValues')
+            ->setParameter('optionValue', $productOptionValue)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -13,8 +13,10 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
-use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Model\ProductAttribute;
+use Sylius\Component\Product\Model\ProductOption;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -28,14 +30,18 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
 
     private RepositoryInterface $attributeRepository;
 
+    private RepositoryInterface $optionRepository;
+
     public function __construct(
         ResourceRefresherInterface $resourceRefresher,
         array $persistersMap,
-        RepositoryInterface $attributeRepository
+        RepositoryInterface $attributeRepository,
+        RepositoryInterface $optionRepository
     ) {
         $this->resourceRefresher = $resourceRefresher;
         $this->persistersMap = $persistersMap;
         $this->attributeRepository = $attributeRepository;
+        $this->optionRepository = $optionRepository;
     }
 
     public function updateIndex(GenericEvent $event): void
@@ -54,11 +60,16 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
                 $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
             }
 
-            if ($resource instanceof Product
-                && ProductAttribute::class === $config[self::MODEL_KEY]
-            ) {
-                foreach ($this->attributeRepository->findAll() as $attribute) {
-                    $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);
+            if ($resource instanceof ProductInterface || $resource instanceof ProductVariantInterface) {
+                if (ProductAttribute::class === $config[self::MODEL_KEY]) {
+                    foreach ($this->attributeRepository->findAll() as $attribute) {
+                        $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);
+                    }
+                }
+                if (ProductOption::class === $config[self::MODEL_KEY]) {
+                    foreach ($this->optionRepository->findAll() as $option) {
+                        $this->resourceRefresher->refresh($option, $config[self::SERVICE_ID_KEY]);
+                    }
                 }
             }
         }
