@@ -28,6 +28,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter" class="BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.auto_registry" />
             <argument>%bitbag_es_shop_name_property_prefix%</argument>
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.resolver.facet_resolver" />
             <tag name="form.type" />
@@ -46,6 +47,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.auto_registry" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.resolver.site_wide_facet_resolver" />
             <tag name="form.type" />
         </service>

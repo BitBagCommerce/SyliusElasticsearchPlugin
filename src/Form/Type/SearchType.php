@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
+use BitBag\SyliusElasticsearchPlugin\Facet\AutoDiscoverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\EventSubscriber\AddFacetsEventSubscriber;
 use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
@@ -22,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class SearchType extends AbstractType
 {
     public function __construct(
+        private AutoDiscoverRegistryInterface $autoDiscoverRegistry,
         private ProductsFilterFacetResolverInterface $facetsResolver
     ) {
     }
@@ -33,7 +35,10 @@ final class SearchType extends AbstractType
             ->setMethod('GET')
         ;
 
-        $builder->addEventSubscriber(new AddFacetsEventSubscriber($this->facetsResolver));
+        $builder->addEventSubscriber(new AddFacetsEventSubscriber(
+            $this->autoDiscoverRegistry,
+            $this->facetsResolver
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

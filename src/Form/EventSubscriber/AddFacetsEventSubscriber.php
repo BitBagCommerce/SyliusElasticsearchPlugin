@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\EventSubscriber;
 
-use BitBag\SyliusElasticsearchPlugin\Form\Resolver\FacetsResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\Facet\AutoDiscoverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchFacetsType;
 use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormInterface;
 final class AddFacetsEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
+        private AutoDiscoverRegistryInterface $autoDiscoverRegistry,
         private ProductsFilterFacetResolverInterface $facetsResolver,
         private string $namePropertyPrefix = '',
     ) {
@@ -31,6 +32,7 @@ final class AddFacetsEventSubscriber implements EventSubscriberInterface
 
     public function addFacets(FormEvent $event): void
     {
+        $this->autoDiscoverRegistry->autoRegister();
         $adapter = $this->facetsResolver->resolveFacets($event, $this->namePropertyPrefix)->getAdapter();
 
         $this->modifyForm($event->getForm(), $adapter);

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
+use BitBag\SyliusElasticsearchPlugin\Facet\AutoDiscoverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\Form\EventSubscriber\AddFacetsEventSubscriber;
 use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 final class ShopProductsFilterType extends AbstractFilterType
 {
     public function __construct(
+        private AutoDiscoverRegistryInterface $autoDiscoverRegistry,
         private string $namePropertyPrefix,
         private ProductsFilterFacetResolverInterface $facetResolver
     ) {
@@ -31,6 +33,10 @@ final class ShopProductsFilterType extends AbstractFilterType
             ->add('price', PriceFilterType::class, ['required' => false, 'label' => false])
             ->setMethod('GET');
 
-        $builder->addEventSubscriber(new AddFacetsEventSubscriber($this->facetResolver, $this->namePropertyPrefix));
+        $builder->addEventSubscriber(new AddFacetsEventSubscriber(
+            $this->autoDiscoverRegistry,
+            $this->facetResolver,
+            $this->namePropertyPrefix
+        ));
     }
 }
