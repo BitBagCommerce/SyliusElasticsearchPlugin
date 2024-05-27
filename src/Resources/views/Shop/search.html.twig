@@ -19,9 +19,12 @@
                     <div style="display: none;">
                         {{ form_row(searchForm.box) }}
                     </div>
-                    <div class="item">
-                        {{ form_rest(searchForm) }}
-                    </div>
+                    {% for facet in searchForm.facets %}
+                        <div class="item">
+                            {{ form_label(facet) }}
+                            {{ form_widget(facet) }}
+                        </div>
+                    {% endfor %}
                     <div class="item">
                         <button type="submit" class="ui primary icon labeled button fluid">
                             <i class="search icon"></i>
@@ -32,6 +35,15 @@
             </div>
         </div>
         <div class="twelve wide column">
+            <div class="ui segment">
+                <div class="ui stackable grid">
+                    <div class="five wide column">
+                        {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_sorting.html.twig' %}
+                        {% include '@BitBagSyliusElasticsearchPlugin/Shop/Product/Index/_pagination.html.twig' %}
+                    </div>
+                </div>
+            </div>
+
             {% if results|length > 0 %}
                 <div class="ui three column stackable grid" id="search_results">
                     {% for product in results %}
