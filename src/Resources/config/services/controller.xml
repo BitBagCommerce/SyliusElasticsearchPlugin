@@ -2,16 +2,6 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="bitbag_sylius_elasticsearch_plugin.controller.action.shop.list_products" class="BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop\ListProductsAction">
-            <argument type="service" id="form.factory" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_product_list" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.shop_products" />
-            <argument type="service" id="twig" />
-            <tag name="controller.service_arguments" />
-        </service>
-
         <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_product_list" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductListDataHandler">
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.taxon" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.product_attributes" />
@@ -33,6 +23,17 @@
             <argument>%bitbag_es_shop_product_sold_units%</argument>
             <argument>%bitbag_es_shop_product_created_at%</argument>
             <argument>%bitbag_es_shop_product_price_property_prefix%</argument>
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.site_wide" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\SiteWideDataHandler">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.taxon" class="BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\TaxonDataHandler">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_product_list" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination" />
         </service>
     </services>
 </container>
