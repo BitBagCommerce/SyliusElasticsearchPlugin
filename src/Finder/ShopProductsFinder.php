@@ -22,43 +22,38 @@ use Pagerfanta\Pagerfanta;
 
 final class ShopProductsFinder implements ShopProductsFinderInterface
 {
-    private QueryBuilderInterface $shopProductsQueryBuilder;
-
-    private PaginatedFinderInterface $productFinder;
-
-    /** @var RegistryInterface */
-    private $facetRegistry;
-
     public function __construct(
-        QueryBuilderInterface $shopProductsQueryBuilder,
-        PaginatedFinderInterface $productFinder,
-        RegistryInterface $facetRegistry
+        private QueryBuilderInterface $queryBuilder,
+        private PaginatedFinderInterface $productFinder,
+        private RegistryInterface $facetRegistry
     ) {
-        $this->shopProductsQueryBuilder = $shopProductsQueryBuilder;
-        $this->productFinder = $productFinder;
-        $this->facetRegistry = $facetRegistry;
     }
 
     public function find(array $data): Pagerfanta
     {
-        $boolQuery = $this->shopProductsQueryBuilder->buildQuery($data);
+        $boolQuery = $this->queryBuilder->buildQuery($data);
 
-        foreach ($data['facets'] as $facetId => $selectedBuckets) {
-            if (!$selectedBuckets) {
-                continue;
+        if (array_key_exists('facets', $data) && is_array($data['facets'])) {
+            foreach ($data['facets'] as $facetId => $selectedBuckets) {
+                if (!$selectedBuckets) {
+                    continue;
+                }
+
+                $facet = $this->facetRegistry->getFacetById($facetId);
+                $boolQuery->addFilter($facet->getQuery($selectedBuckets));
             }
-
-            $facet = $this->facetRegistry->getFacetById($facetId);
-            $boolQuery->addFilter($facet->getQuery($selectedBuckets));
         }
 
         $query = new Query($boolQuery);
-        $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
+        if (array_key_exists(SortDataHandlerInterface::SORT_INDEX, $data)) {
+            $query->addSort($data[SortDataHandlerInterface::SORT_INDEX]);
+        }
 
         $products = $this->productFinder->findPaginated($query);
         if (null !== $data[PaginationDataHandlerInterface::LIMIT_INDEX]) {
             $products->setMaxPerPage($data[PaginationDataHandlerInterface::LIMIT_INDEX]);
         }
+
         if (null !== $data[PaginationDataHandlerInterface::PAGE_INDEX]) {
             $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
         }

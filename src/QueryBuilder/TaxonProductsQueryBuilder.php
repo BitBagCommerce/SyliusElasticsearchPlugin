@@ -15,46 +15,19 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 
-final class ShopProductsQueryBuilder implements QueryBuilderInterface
+final class TaxonProductsQueryBuilder implements QueryBuilderInterface
 {
-    private QueryBuilderInterface $isEnabledQueryBuilder;
-
-    private QueryBuilderInterface $hasChannelQueryBuilder;
-
-    private QueryBuilderInterface $containsNameQueryBuilder;
-
-    private QueryBuilderInterface $hasTaxonQueryBuilder;
-
-    private QueryBuilderInterface $hasOptionsQueryBuilder;
-
-    private QueryBuilderInterface $hasAttributesQueryBuilder;
-
-    private QueryBuilderInterface $hasPriceBetweenQueryBuilder;
-
-    private string $optionPropertyPrefix;
-
-    private string $attributePropertyPrefix;
-
     public function __construct(
-        QueryBuilderInterface $isEnabledQueryBuilder,
-        QueryBuilderInterface $hasChannelQueryBuilder,
-        QueryBuilderInterface $containsNameQueryBuilder,
-        QueryBuilderInterface $hasTaxonQueryBuilder,
-        QueryBuilderInterface $hasOptionsQueryBuilder,
-        QueryBuilderInterface $hasAttributesQueryBuilder,
-        QueryBuilderInterface $hasPriceBetweenQueryBuilder,
-        string $optionPropertyPrefix,
-        string $attributePropertyPrefix
+        private QueryBuilderInterface $isEnabledQueryBuilder,
+        private QueryBuilderInterface $hasChannelQueryBuilder,
+        private QueryBuilderInterface $containsNameQueryBuilder,
+        private QueryBuilderInterface $hasTaxonQueryBuilder,
+        private QueryBuilderInterface $hasOptionsQueryBuilder,
+        private QueryBuilderInterface $hasAttributesQueryBuilder,
+        private QueryBuilderInterface $hasPriceBetweenQueryBuilder,
+        private string $optionPropertyPrefix,
+        private string $attributePropertyPrefix
     ) {
-        $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
-        $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
-        $this->containsNameQueryBuilder = $containsNameQueryBuilder;
-        $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
-        $this->hasOptionsQueryBuilder = $hasOptionsQueryBuilder;
-        $this->hasAttributesQueryBuilder = $hasAttributesQueryBuilder;
-        $this->hasPriceBetweenQueryBuilder = $hasPriceBetweenQueryBuilder;
-        $this->optionPropertyPrefix = $optionPropertyPrefix;
-        $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
     public function buildQuery(array $data): AbstractQuery

@@ -8,9 +8,15 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.finder.shop_products" class="BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder">
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.shop_products" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.taxon_products" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.taxon_registry" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.finder.search_products" class="BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_products" />
+            <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.finder.product_options" class="BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinder">

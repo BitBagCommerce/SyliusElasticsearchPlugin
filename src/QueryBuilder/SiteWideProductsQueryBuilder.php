@@ -18,32 +18,17 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
-final class SearchProductsQueryBuilder implements QueryBuilderInterface
+final class SiteWideProductsQueryBuilder implements QueryBuilderInterface
 {
     public const QUERY_KEY = 'query';
 
-    private SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry;
-
-    private LocaleContextInterface $localeContext;
-
-    private QueryBuilderInterface $isEnabledQueryBuilder;
-
-    private QueryBuilderInterface $hasChannelQueryBuilder;
-
-    private string $fuzziness;
-
     public function __construct(
-        SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
-        LocaleContextInterface $localeContext,
-        QueryBuilderInterface $isEnabledQueryBuilder,
-        QueryBuilderInterface $hasChannelQueryBuilder,
-        string $fuzziness
+        private SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
+        private LocaleContextInterface $localeContext,
+        private QueryBuilderInterface $isEnabledQueryBuilder,
+        private QueryBuilderInterface $hasChannelQueryBuilder,
+        private string $fuzziness
     ) {
-        $this->searchProperyNameResolverRegistry = $searchProperyNameResolverRegistry;
-        $this->localeContext = $localeContext;
-        $this->isEnabledQueryBuilder = $isEnabledQueryBuilder;
-        $this->hasChannelQueryBuilder = $hasChannelQueryBuilder;
-        $this->fuzziness = $fuzziness;
     }
 
     public function buildQuery(array $data): ?AbstractQuery
