@@ -11,12 +11,12 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use BitBag\SyliusElasticsearchPlugin\QueryBuilder\ShopProductsQueryBuilder;
+use BitBag\SyliusElasticsearchPlugin\QueryBuilder\TaxonProductsQueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use PhpSpec\ObjectBehavior;
 
-final class ShopProductsQueryBuilderSpec extends ObjectBehavior
+final class TaxonProductsQueryBuilderSpec extends ObjectBehavior
 {
     function let(
         QueryBuilderInterface $isEnabledQueryBuilder,
@@ -42,7 +42,7 @@ final class ShopProductsQueryBuilderSpec extends ObjectBehavior
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(ShopProductsQueryBuilder::class);
+        $this->shouldHaveType(TaxonProductsQueryBuilder::class);
     }
 
     function it_implements_query_builder_interface(): void

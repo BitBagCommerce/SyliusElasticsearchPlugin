@@ -23,14 +23,10 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
     public function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         ChannelContextInterface $channelContext,
-        TaxonContextInterface $taxonContext,
-        ConcatedNameResolverInterface $taxonPositionNameResolver
     ): void {
         $this->beConstructedWith(
             $channelPricingNameResolver,
             $channelContext,
-            $taxonContext,
-            $taxonPositionNameResolver,
             'sold_units',
             'created_at',
             'price'
@@ -50,15 +46,13 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
     function it_retrieves_data(
         TaxonContextInterface $taxonContext,
         TaxonInterface $taxon,
-        ConcatedNameResolverInterface $taxonPositionNameResolver
     ): void {
         $taxonContext->getTaxon()->willReturn($taxon);
         $taxon->getCode()->willReturn('t_shirt');
-        $taxonPositionNameResolver->resolvePropertyName('t_shirt')->willReturn('taxon_position_t_shirts');
 
         $this->retrieveData([])->shouldBeEqualTo([
             'sort' => [
-                'taxon_position_t_shirts' => [
+                'created_at' => [
                     'order' => SortDataHandlerInterface::SORT_ASC_INDEX,
                     'unmapped_type' => 'keyword',
                 ],

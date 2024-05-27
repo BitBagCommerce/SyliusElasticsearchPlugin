@@ -7,7 +7,7 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use BitBag\SyliusElasticsearchPlugin\QueryBuilder\SearchProductsQueryBuilder;
+use BitBag\SyliusElasticsearchPlugin\QueryBuilder\SiteWideProductsQueryBuilder;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
 use Elastica\Query\Term;
@@ -15,7 +15,7 @@ use Elastica\Query\Terms;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
-final class SearchProductsQueryBuilderSpec extends ObjectBehavior
+final class SiteWideProductsQueryBuilderSpec extends ObjectBehavior
 {
     private $isEnabeldQuery;
 
@@ -49,7 +49,7 @@ final class SearchProductsQueryBuilderSpec extends ObjectBehavior
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(SearchProductsQueryBuilder::class);
+        $this->shouldHaveType(SiteWideProductsQueryBuilder::class);
     }
 
     function it_implements_query_builder_interface(): void
