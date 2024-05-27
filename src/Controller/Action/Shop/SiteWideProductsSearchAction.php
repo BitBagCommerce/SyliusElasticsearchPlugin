@@ -46,7 +46,7 @@ final class SiteWideProductsSearchAction extends AbstractSearchAction
             $template,
             [
                 'results' => $results ?? null,
-                'searchForm' => $form->createView()
+                'searchForm' => $form->createView(),
             ]
         ));
     }

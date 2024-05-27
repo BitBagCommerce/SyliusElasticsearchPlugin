@@ -33,7 +33,7 @@ final class AutoDiscoverRegistry implements AutoDiscoverRegistryInterface
         private LocaleContextInterface $localeContext,
         private RegistryInterface $registry,
         private array $excludedAttributes = [],
-        private array $excludedOptions = [],
+        private array $excludedOptions = []
     ) {
     }
 

@@ -27,7 +27,7 @@ final class AddFacetsEventSubscriber implements EventSubscriberInterface
     public function __construct(
         private AutoDiscoverRegistryInterface $autoDiscoverRegistry,
         private ProductsFilterFacetResolverInterface $facetsResolver,
-        private string $namePropertyPrefix = '',
+        private string $namePropertyPrefix = ''
     ) {
     }
 

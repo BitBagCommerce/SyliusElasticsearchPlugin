@@ -8,6 +8,8 @@
  * an email on hello@bitbag.io.
  */
 
+declare(strict_types=1);
+
 namespace BitBag\SyliusElasticsearchPlugin\Facet;
 
 interface AutoDiscoverRegistryInterface

@@ -21,7 +21,7 @@ final class TaxonFacetsQueryBuilder implements TaxonFacetsQueryBuilderInterface
     public function __construct(
         private DataHandlerInterface $shopProductListDataHandler,
         private QueryBuilderInterface $searchProductsQueryBuilder,
-        private RegistryInterface $facetRegistry,
+        private RegistryInterface $facetRegistry
     ) {
     }
 
