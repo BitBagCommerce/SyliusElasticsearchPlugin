@@ -19,12 +19,14 @@
                     <div style="display: none;">
                         {{ form_row(searchForm.box) }}
                     </div>
-                    {% for facet in searchForm.facets %}
-                        <div class="item">
-                            {{ form_label(facet) }}
-                            {{ form_widget(facet) }}
-                        </div>
-                    {% endfor %}
+                    {% if searchForm.facets is defined %}
+                        {% for facet in searchForm.facets %}
+                            <div class="item">
+                                {{ form_label(facet) }}
+                                {{ form_widget(facet, sylius_test_form_attribute(facet.vars.id)) }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <div class="item">
                         <button type="submit" class="ui primary icon labeled button fluid">
                             <i class="search icon"></i>

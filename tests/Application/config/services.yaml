@@ -3,3 +3,16 @@
 parameters:
     locale: en_US
     bitbag_es_shop_price_facet_interval: 1000000
+
+services:
+    bitbag_sylius_elasticsearch_plugin.facet.registry:
+        class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
+        calls:
+            - method: addFacet
+              arguments:
+                  - price
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.price'
+            - method: addFacet
+              arguments:
+                  - taxon
+                  - '@bitbag_sylius_elasticsearch_plugin.facet.taxon'

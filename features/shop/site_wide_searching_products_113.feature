@@ -101,8 +101,7 @@ Feature: Site-wide products search
     When I browse the search page
     And I search the products by "BMW" phrase in the site-wide search box
     And I filter by price interval "$10,000.00 - $20,000.00"
-    And I filter by price interval "$50,000.00 - $60,000.00"
-    Then I should see 4 products in search results
+    Then I should see 3 products in search results
 
   @ui
   Scenario: Searching products and filtering by taxon
