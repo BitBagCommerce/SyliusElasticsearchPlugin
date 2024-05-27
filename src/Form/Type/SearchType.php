@@ -12,37 +12,18 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
-use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
+use BitBag\SyliusElasticsearchPlugin\Form\EventSubscriber\AddFacetsEventSubscriber;
+use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
-use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
-use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use Elastica\Query;
-use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
-use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
-use Pagerfanta\Adapter\AdapterInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SearchType extends AbstractType
 {
-    private PaginatedFinderInterface $finder;
-
-    private RegistryInterface $facetRegistry;
-
-    private QueryBuilderInterface $searchProductsQueryBuilder;
-
     public function __construct(
-        PaginatedFinderInterface $finder,
-        RegistryInterface $facetRegistry,
-        QueryBuilderInterface $searchProductsQueryBuilder
+        private ProductsFilterFacetResolverInterface $facetsResolver
     ) {
-        $this->finder = $finder;
-        $this->facetRegistry = $facetRegistry;
-        $this->searchProductsQueryBuilder = $searchProductsQueryBuilder;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -52,41 +33,7 @@ final class SearchType extends AbstractType
             ->setMethod('GET')
         ;
 
-        $formModifier = function (FormInterface $form, AdapterInterface $adapter) {
-            if (!$adapter instanceof FantaPaginatorAdapter) {
-                return;
-            }
-
-            $form->add('facets', SearchFacetsType::class, ['facets' => $adapter->getAggregations(), 'label' => false]);
-        };
-
-        $builder
-            ->get('box')
-            ->addEventListener(
-                FormEvents::POST_SUBMIT,
-                function (FormEvent $event) use ($formModifier) {
-                    /** @var SearchBox $data */
-                    $data = $event->getForm()->getData();
-
-                    if (!$data->getQuery()) {
-                        return;
-                    }
-
-                    $query = new Query($this->searchProductsQueryBuilder->buildQuery(['query' => $data->getQuery()]));
-
-                    foreach ($this->facetRegistry->getFacets() as $facetId => $facet) {
-                        $query->addAggregation($facet->getAggregation()->setName($facetId));
-                    }
-                    $query->setSize(0);
-
-                    $results = $this->finder->findPaginated($query);
-
-                    if ($results->getAdapter()) {
-                        $formModifier($event->getForm()->getParent(), $results->getAdapter());
-                    }
-                }
-            )
-        ;
+        $builder->addEventSubscriber(new AddFacetsEventSubscriber($this->facetsResolver));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -18,6 +18,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/** @deprecated  */
 final class ProductOptionsFilterType extends AbstractFilterType
 {
     private ProductOptionsContextInterface $productOptionsContext;

@@ -46,9 +46,7 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.type.search" class="BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType">
-            <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.search_products" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.form.resolver.site_wide_facet_resolver" />
             <tag name="form.type" />
         </service>
 
@@ -71,7 +69,13 @@
 
         <service id="bitbag_sylius_elasticsearch_plugin.form.resolver.facet_resolver" class="BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolver">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.taxon_facets" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.taxon_registry" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
+            <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.resolver.site_wide_facet_resolver" class="BitBag\SyliusElasticsearchPlugin\Form\Resolver\FacetsResolver">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_facets" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
         </service>
     </services>
