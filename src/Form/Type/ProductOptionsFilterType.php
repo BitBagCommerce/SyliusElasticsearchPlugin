@@ -21,20 +21,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 /** @deprecated  */
 final class ProductOptionsFilterType extends AbstractFilterType
 {
-    private ProductOptionsContextInterface $productOptionsContext;
-
-    private ConcatedNameResolverInterface $optionNameResolver;
-
-    private ProductOptionsMapperInterface $productOptionsMapper;
-
     public function __construct(
-        ProductOptionsContextInterface $productOptionsContext,
-        ConcatedNameResolverInterface $optionNameResolver,
-        ProductOptionsMapperInterface $productOptionsMapper
+        private ProductOptionsContextInterface $productOptionsContext,
+        private ConcatedNameResolverInterface $optionNameResolver,
+        private ProductOptionsMapperInterface $productOptionsMapper
     ) {
-        $this->productOptionsContext = $productOptionsContext;
-        $this->optionNameResolver = $optionNameResolver;
-        $this->productOptionsMapper = $productOptionsMapper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

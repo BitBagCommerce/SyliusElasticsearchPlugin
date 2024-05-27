@@ -17,11 +17,9 @@ use Elastica\Query\Terms;
 
 final class HasTaxonQueryBuilder implements QueryBuilderInterface
 {
-    private string $taxonsProperty;
-
-    public function __construct(string $taxonsProperty)
-    {
-        $this->taxonsProperty = $taxonsProperty;
+    public function __construct(
+        private string $taxonsProperty
+    ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery

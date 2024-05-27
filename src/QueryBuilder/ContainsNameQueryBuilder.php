@@ -19,20 +19,11 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class ContainsNameQueryBuilder implements QueryBuilderInterface
 {
-    private LocaleContextInterface $localeContext;
-
-    private ConcatedNameResolverInterface $productNameNameResolver;
-
-    private string $namePropertyPrefix;
-
     public function __construct(
-        LocaleContextInterface $localeContext,
-        ConcatedNameResolverInterface $productNameNameResolver,
-        string $namePropertyPrefix
+        private LocaleContextInterface $localeContext,
+        private ConcatedNameResolverInterface $productNameNameResolver,
+        private string $namePropertyPrefix
     ) {
-        $this->localeContext = $localeContext;
-        $this->productNameNameResolver = $productNameNameResolver;
-        $this->namePropertyPrefix = $namePropertyPrefix;
     }
 
     public function buildQuery(array $data): ?AbstractQuery

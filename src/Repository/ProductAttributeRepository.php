@@ -17,11 +17,9 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 {
-    private RepositoryInterface $productAttributeRepository;
-
-    public function __construct(RepositoryInterface $productAttributeRepository)
-    {
-        $this->productAttributeRepository = $productAttributeRepository;
+    public function __construct(
+        private RepositoryInterface $productAttributeRepository
+    ) {
     }
 
     public function getAttributeTypeByName(string $attributeName): string

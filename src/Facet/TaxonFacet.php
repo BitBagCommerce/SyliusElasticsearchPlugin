@@ -23,14 +23,10 @@ final class TaxonFacet implements FacetInterface
 {
     public const FACET_ID = 'taxon';
 
-    private string $taxonsPropertyName;
-
-    private TaxonRepositoryInterface $taxonRepository;
-
-    public function __construct(TaxonRepositoryInterface $taxonRepository, string $taxonsPropertyName)
-    {
-        $this->taxonRepository = $taxonRepository;
-        $this->taxonsPropertyName = $taxonsPropertyName;
+    public function __construct(
+        private TaxonRepositoryInterface $taxonRepository,
+        private string $taxonsPropertyName
+    ) {
     }
 
     public function getAggregation(): AbstractAggregation

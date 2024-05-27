@@ -22,29 +22,14 @@ use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 final class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
-    private ProductAttributeValueRepositoryInterface $productAttributeValueRepository;
-
-    private LocaleContextInterface $localeContext;
-
-    private StringFormatterInterface $stringFormatter;
-
-    private TaxonContextInterface $taxonContext;
-
-    /** @var AttributesMapperCollectorInterface[] */
-    private iterable $attributeMapper;
-
     public function __construct(
-        ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
-        LocaleContextInterface $localeContext,
-        StringFormatterInterface $stringFormatter,
-        TaxonContextInterface $taxonContext,
-        iterable $attributeMapper
+        private ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
+        private LocaleContextInterface $localeContext,
+        private StringFormatterInterface $stringFormatter,
+        private TaxonContextInterface $taxonContext,
+        /** @var $attributeMapper AttributesMapperCollectorInterface[] */
+        private iterable $attributeMapper
     ) {
-        $this->productAttributeValueRepository = $productAttributeValueRepository;
-        $this->localeContext = $localeContext;
-        $this->stringFormatter = $stringFormatter;
-        $this->taxonContext = $taxonContext;
-        $this->attributeMapper = $attributeMapper;
     }
 
     public function mapToChoices(ProductAttributeInterface $productAttribute): array

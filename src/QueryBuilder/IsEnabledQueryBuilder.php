@@ -17,11 +17,9 @@ use Elastica\Query\Term;
 
 final class IsEnabledQueryBuilder implements QueryBuilderInterface
 {
-    private string $enabledProperty;
-
-    public function __construct(string $enabledProperty)
-    {
-        $this->enabledProperty = $enabledProperty;
+    public function __construct(
+        private string $enabledProperty
+    ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery

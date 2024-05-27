@@ -20,32 +20,14 @@ use Sylius\Component\Product\Model\ProductAttribute;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
-    private TaxonContextInterface $taxonContext;
-
-    private ProductAttributesFinderInterface $attributesFinder;
-
-    private string $namePropertyPrefix;
-
-    private string $taxonsProperty;
-
-    private string $optionPropertyPrefix;
-
-    private string $attributePropertyPrefix;
-
     public function __construct(
-        TaxonContextInterface $taxonContext,
-        ProductAttributesFinderInterface $attributesFinder,
-        string $namePropertyPrefix,
-        string $taxonsProperty,
-        string $optionPropertyPrefix,
-        string $attributePropertyPrefix
+        private TaxonContextInterface $taxonContext,
+        private ProductAttributesFinderInterface $attributesFinder,
+        private string $namePropertyPrefix,
+        private string $taxonsProperty,
+        private string $optionPropertyPrefix,
+        private string $attributePropertyPrefix
     ) {
-        $this->taxonContext = $taxonContext;
-        $this->attributesFinder = $attributesFinder;
-        $this->namePropertyPrefix = $namePropertyPrefix;
-        $this->taxonsProperty = $taxonsProperty;
-        $this->optionPropertyPrefix = $optionPropertyPrefix;
-        $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
     public function retrieveData(array $requestData): array

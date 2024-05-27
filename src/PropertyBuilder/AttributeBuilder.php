@@ -30,16 +30,10 @@ final class AttributeBuilder extends AbstractBuilder
 
     public const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
-    private ConcatedNameResolverInterface $attributeNameResolver;
-
-    private StringFormatterInterface $stringFormatter;
-
     public function __construct(
-        ConcatedNameResolverInterface $attributeNameResolver,
-        StringFormatterInterface $stringFormatter
+        private ConcatedNameResolverInterface $attributeNameResolver,
+        private StringFormatterInterface $stringFormatter
     ) {
-        $this->attributeNameResolver = $attributeNameResolver;
-        $this->stringFormatter = $stringFormatter;
     }
 
     public function consumeEvent(PostTransformEvent $event): void

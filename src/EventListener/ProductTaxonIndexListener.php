@@ -18,16 +18,10 @@ use Sylius\Component\Core\Model\ProductTaxonInterface;
 
 final class ProductTaxonIndexListener
 {
-    private ResourceRefresherInterface $resourceRefresher;
-
-    private ObjectPersisterInterface $objectPersister;
-
     public function __construct(
-        ResourceRefresherInterface $resourceRefresher,
-        ObjectPersisterInterface $objectPersister
+        private ResourceRefresherInterface $resourceRefresher,
+        private ObjectPersisterInterface $objectPersister
     ) {
-        $this->resourceRefresher = $resourceRefresher;
-        $this->objectPersister = $objectPersister;
     }
 
     public function updateIndex(ProductTaxonInterface $productTaxon): void
