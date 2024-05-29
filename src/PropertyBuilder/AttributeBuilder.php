@@ -71,7 +71,7 @@ final class AttributeBuilder extends AbstractBuilder
         ProductAttributeValue $productAttribute
     ): array {
         if (SelectAttributeType::TYPE === $productAttribute->getAttribute()->getType()) {
-            $choices = $attributeConfiguration['choices'];
+            $choices = $attributeConfiguration['choices'] ?? [];
             if (is_array($attributeValue)) {
                 foreach ($attributeValue as $i => $item) {
                     $attributeValue[$i] = $choices[$item][$productAttribute->getLocaleCode()] ?? $item;
