@@ -18,15 +18,15 @@ use FOS\ElasticaBundle\Finder\FinderInterface;
 final class NamedProductsFinder implements NamedProductsFinderInterface
 {
     public function __construct(
-        private QueryBuilderInterface $productsByPartialNameQueryBuilder,
+        private QueryBuilderInterface $queryBuilder,
         private FinderInterface $productsFinder
     ) {
     }
 
     public function findByNamePart(string $namePart): ?array
     {
-        $data = ['name' => $namePart];
-        $query = $this->productsByPartialNameQueryBuilder->buildQuery($data);
+        $data = ['query' => $namePart];
+        $query = $this->queryBuilder->buildQuery($data);
 
         return $this->productsFinder->find($query);
     }
