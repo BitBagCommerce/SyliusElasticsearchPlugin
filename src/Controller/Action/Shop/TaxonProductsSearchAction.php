@@ -40,7 +40,7 @@ final class TaxonProductsSearchAction extends AbstractSearchAction
         return new Response($this->twig->render($template, [
             'form' => $form->createView(),
             'products' => $products,
-            'taxon' => $data['taxon'],
+            'taxon' => $data['taxon'] ?? null,
         ]));
     }
 }
