@@ -3,7 +3,7 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="bitbag_sylius_elasticsearch_plugin.finder.named_products" class="BitBag\SyliusElasticsearchPlugin\Finder\NamedProductsFinder">
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_products" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
         </service>
 

@@ -12,35 +12,39 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
-use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use Elastica\Query\AbstractQuery;
-use Elastica\Query\MatchQuery;
+use Elastica\Query\MultiMatch;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class ContainsNameQueryBuilder implements QueryBuilderInterface
 {
     public function __construct(
         private LocaleContextInterface $localeContext,
-        private ConcatedNameResolverInterface $productNameNameResolver,
-        private string $namePropertyPrefix
+        private SearchPropertyNameResolverRegistryInterface $searchProperyNameResolverRegistry,
+        private string $fuzziness = 'AUTO'
     ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery
     {
         $localeCode = $this->localeContext->getLocaleCode();
-        $propertyName = $this->productNameNameResolver->resolvePropertyName($localeCode);
+        $query = $data['name'] ?? $data['query'] ?? null;
 
-        if (!$name = $data[$this->namePropertyPrefix]) {
+        if (null === $query || '' === $query) {
             return null;
         }
 
-        $nameQuery = new MatchQuery();
+        $fields = [];
+        foreach ($this->searchProperyNameResolverRegistry->getPropertyNameResolvers() as $propertyNameResolver) {
+            $fields[] = $propertyNameResolver->resolvePropertyName($localeCode);
+        }
 
-        $nameQuery->setFieldQuery($propertyName, $name);
-        $nameQuery->setFieldFuzziness($propertyName, 2);
-        $nameQuery->setFieldMinimumShouldMatch($propertyName, 2);
+        $multiMatch = new MultiMatch();
+        $multiMatch->setQuery($query);
+        $multiMatch->setFuzziness($this->fuzziness);
+        $multiMatch->setFields($fields);
 
-        return $nameQuery;
+        return $multiMatch;
     }
 }

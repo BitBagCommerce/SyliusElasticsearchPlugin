@@ -13,8 +13,7 @@
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder">
             <argument type="service" id="sylius.context.locale" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.name" />
-            <argument>%bitbag_es_shop_name_property_prefix%</argument>
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_product_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder">
@@ -82,10 +81,9 @@
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_products" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\SiteWideProductsQueryBuilder">
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" />
-            <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.is_enabled" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_channel" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" />
             <argument>%bitbag_es_fuzziness%</argument>
         </service>
 
