@@ -20,12 +20,14 @@
                         {{ form_row(searchForm.box) }}
                     </div>
                     {% if searchForm.facets is defined %}
-                        {% for facet in searchForm.facets %}
-                            <div class="item">
-                                {{ form_label(facet) }}
-                                {{ form_widget(facet, sylius_test_form_attribute(facet.vars.id)) }}
-                            </div>
-                        {% endfor %}
+                        <div class="bitbag-sylius-elasticsearch-plugin-facets-form">
+                            {% for facet in searchForm.facets %}
+                                <div class="item">
+                                    {{ form_label(facet) }}
+                                    {{ form_widget(facet, sylius_test_form_attribute(facet.vars.id)) }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     {% endif %}
                     <div class="item">
                         <button type="submit" class="ui primary icon labeled button fluid">

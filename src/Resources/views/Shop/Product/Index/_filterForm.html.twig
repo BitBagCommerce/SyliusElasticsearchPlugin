@@ -1,9 +1,11 @@
-{% for facet in form.facets %}
-    <div class="item">
-        {{ form_label(facet) }}
-        {{ form_widget(facet) }}
-    </div>
-{% endfor %}
+<div class="bitbag-sylius-elasticsearch-plugin-facets-form">
+    {% for facet in form.facets %}
+        <div class="item">
+            {{ form_label(facet) }}
+            {{ form_widget(facet) }}
+        </div>
+    {% endfor %}
+</div>
 <div class="item">
     {{ form_row(form.price) }}
 </div>
