@@ -86,7 +86,6 @@ The final effect should look like the following:
 ```
 use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface as BitBagElasticsearchPluginVariant;
 use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface as BaseProductVariantInterface;
 
 class ProductVariant extends BaseProductVariant implements BaseProductVariantInterface, BitBagElasticsearchPluginVariant
