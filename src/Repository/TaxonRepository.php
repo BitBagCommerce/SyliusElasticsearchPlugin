@@ -18,7 +18,7 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
-final class TaxonRepository implements TaxonRepositoryInterface
+class TaxonRepository implements TaxonRepositoryInterface
 {
     public function __construct(
         private BaseTaxonRepositoryInterface|EntityRepository $baseTaxonRepository,

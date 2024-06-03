@@ -17,7 +17,7 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface as BaseProductVariantRepositoryInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
-final class ProductVariantRepository implements ProductVariantRepositoryInterface
+class ProductVariantRepository implements ProductVariantRepositoryInterface
 {
     public function __construct(
         private BaseProductVariantRepositoryInterface|EntityRepository $baseProductVariantRepository

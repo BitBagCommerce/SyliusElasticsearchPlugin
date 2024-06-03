@@ -16,7 +16,7 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
 use Sylius\Component\Taxonomy\Model\Taxon;
 
-final class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
+class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
     public function __construct(
         private BaseAttributeValueRepositoryInterface $baseAttributeValueRepository,

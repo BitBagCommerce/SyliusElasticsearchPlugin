@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-final class OrderItemRepository implements OrderItemRepositoryInterface
+class OrderItemRepository implements OrderItemRepositoryInterface
 {
     public function __construct(
         private OrderItemRepositoryInterface|EntityRepository $baseOrderItemRepository
