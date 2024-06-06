@@ -21,7 +21,8 @@ abstract class IntegrationTestCase extends JsonApiTestCase
     ) {
         parent::__construct($name, $data, $dataName);
 
-        $this->dataFixturesPath = __DIR__ . '/DataFixtures/ORM';
+        $this->dataFixturesPath = __DIR__ . \DIRECTORY_SEPARATOR . 'DataFixtures' . \DIRECTORY_SEPARATOR . 'ORM';
+        $this->expectedResponsesPath = __DIR__ . \DIRECTORY_SEPARATOR . 'Responses' . \DIRECTORY_SEPARATOR . 'Expected';
     }
 
     protected function setUp(): void
