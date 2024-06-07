@@ -26,7 +26,11 @@ final class ProductListingTest extends JsonApiTestCase
         $this->loadFixturesFromFiles(['test_it_finds_products_by_name.yaml']);
         $this->populateElasticsearch();
 
-        $this->client->request('GET', '/api/v2/shop/products/search?query=mug');
+        $this->client->request(
+            'GET',
+            '/api/v2/shop/products/search?query=mug'
+        );
+
         $response = $this->client->getResponse();
         $this->assertResponse($response, 'test_it_finds_products_by_name', Response::HTTP_OK);
     }
@@ -36,9 +40,27 @@ final class ProductListingTest extends JsonApiTestCase
         $this->loadFixturesFromFiles(['test_it_finds_products_by_name_and_facets.yaml']);
         $this->populateElasticsearch();
 
-        $this->client->request('GET', '/api/v2/shop/products/search?query=mug&facets[color][]=red');
+        $this->client->request(
+            'GET',
+            '/api/v2/shop/products/search?query=mug&facets[color][]=red'
+        );
+
         $response = $this->client->getResponse();
         $this->assertResponse($response, 'test_it_finds_products_by_name_and_facets', Response::HTTP_OK);
+    }
+
+    public function test_it_finds_products_by_name_and_multiple_facets(): void
+    {
+        $this->loadFixturesFromFiles(['test_it_finds_products_by_name_and_multiple_facets.yaml']);
+        $this->populateElasticsearch();
+
+        $this->client->request(
+            'GET',
+            '/api/v2/shop/products/search?query=mug&facets[color][]=red&facets[material][]=ceramic'
+        );
+
+        $response = $this->client->getResponse();
+        $this->assertResponse($response, 'test_it_finds_products_by_name_and_multiple_facets', Response::HTTP_OK);
     }
 
     private function populateElasticsearch(): void
