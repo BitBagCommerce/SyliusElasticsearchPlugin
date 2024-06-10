@@ -18,26 +18,15 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/** @deprecated  */
 final class ProductAttributesFilterType extends AbstractFilterType
 {
-    private ProductAttributesContextInterface $productAttributesContext;
-
-    private ConcatedNameResolverInterface $attributeNameResolver;
-
-    private ProductAttributesMapperInterface $productAttributesMapper;
-
-    protected array $excludedAttributes;
-
     public function __construct(
-        ProductAttributesContextInterface $productAttributesContext,
-        ConcatedNameResolverInterface $attributeNameResolver,
-        ProductAttributesMapperInterface $productAttributesMapper,
-        array $excludedAttributes
+        private ProductAttributesContextInterface $productAttributesContext,
+        private ConcatedNameResolverInterface $attributeNameResolver,
+        private ProductAttributesMapperInterface $productAttributesMapper,
+        private array $excludedAttributes
     ) {
-        $this->productAttributesContext = $productAttributesContext;
-        $this->attributeNameResolver = $attributeNameResolver;
-        $this->productAttributesMapper = $productAttributesMapper;
-        $this->excludedAttributes = $excludedAttributes;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $attributes): void

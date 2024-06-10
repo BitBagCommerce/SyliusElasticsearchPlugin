@@ -14,8 +14,19 @@
             <argument type="string">%bitbag_es_shop_product_taxons_property%</argument>
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.facet.registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry" />
-        <service id="bitbag_sylius_elasticsearch_plugin.facet.taxon_registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry" />
-        <service id="BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface" alias="bitbag_sylius_elasticsearch_plugin.facet.registry" />
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.registry" class="BitBag\SyliusElasticsearchPlugin\Facet\Registry"/>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.facet.auto_registry" class="BitBag\SyliusElasticsearchPlugin\Facet\AutoDiscoverRegistry">
+            <argument type="string">%bitbag_es_facets_auto_discover%</argument>
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_repository" />
+            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.repository.product_option_repository" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.option" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
+            <argument>%bitbag_es_excluded_facet_attributes%</argument>
+            <argument>%bitbag_es_excluded_facet_options%</argument>
+        </service>
+
     </services>
 </container>

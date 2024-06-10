@@ -18,16 +18,10 @@ use Webmozart\Assert\Assert;
 
 final class ProductContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var IndexPageInterface */
-    private $productIndexPage;
-
-    public function __construct(IndexPageInterface $productIndexPage, SharedStorageInterface $sharedStorage)
-    {
-        $this->productIndexPage = $productIndexPage;
-        $this->sharedStorage = $sharedStorage;
+    public function __construct(
+        private IndexPageInterface $productIndexPage,
+        private SharedStorageInterface $sharedStorage
+    ) {
     }
 
     /**

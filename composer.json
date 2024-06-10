@@ -4,10 +4,10 @@
     "description": "BitBag Elasticsearch plugin for Sylius.",
     "license": "MIT",
     "require": {
+        "php": "^8.1",
         "ext-json": "*",
-        "php": "^8.0",
         "friendsofsymfony/elastica-bundle": "^6.0",
-        "sylius/sylius": ">=1.12.13 || ~1.13.0",
+        "sylius/sylius": "~1.13.0",
         "symfony/property-access": "^5.4 || ^6.0",
         "symfony/webpack-encore-bundle": "^1.15",
         "symfony/proxy-manager-bridge": "^5.4 || ^6.0"
@@ -35,7 +35,7 @@
         "phpstan/phpstan-doctrine": "1.3.69",
         "phpstan/phpstan-strict-rules": "^1.3.0",
         "phpstan/phpstan-webmozart-assert": "^1.2.0",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^9.0 || ^10.0",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
         "robertfausk/behat-panther-extension": "^1.1",
         "sylius-labs/coding-standard": "^4.2",

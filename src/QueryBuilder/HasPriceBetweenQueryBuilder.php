@@ -25,28 +25,13 @@ use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
 
 final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 {
-    private ConcatedNameResolverInterface $channelPricingNameResolver;
-
-    private PriceNameResolverInterface $priceNameResolver;
-
-    private ChannelContextInterface $channelContext;
-
-    private CurrencyContextInterface $currencyContext;
-
-    private CurrencyConverterInterface $currencyConverter;
-
     public function __construct(
-        PriceNameResolverInterface $priceNameResolver,
-        ConcatedNameResolverInterface $channelPricingNameResolver,
-        ChannelContextInterface $channelContext,
-        CurrencyContextInterface $currencyContext,
-        CurrencyConverterInterface $currencyConverter
+        private PriceNameResolverInterface $priceNameResolver,
+        private ConcatedNameResolverInterface $channelPricingNameResolver,
+        private ChannelContextInterface $channelContext,
+        private CurrencyContextInterface $currencyContext,
+        private CurrencyConverterInterface $currencyConverter
     ) {
-        $this->channelPricingNameResolver = $channelPricingNameResolver;
-        $this->priceNameResolver = $priceNameResolver;
-        $this->channelContext = $channelContext;
-        $this->currencyContext = $currencyContext;
-        $this->currencyConverter = $currencyConverter;
     }
 
     public function buildQuery(array $data): ?AbstractQuery

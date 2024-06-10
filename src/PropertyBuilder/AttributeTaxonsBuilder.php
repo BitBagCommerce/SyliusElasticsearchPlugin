@@ -20,24 +20,12 @@ use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 final class AttributeTaxonsBuilder extends AbstractBuilder
 {
-    protected TaxonRepositoryInterface $taxonRepository;
-
-    private string $taxonsProperty;
-
-    private array $excludedAttributes;
-
-    private bool $includeAllDescendants;
-
     public function __construct(
-        TaxonRepositoryInterface $taxonRepository,
-        string $taxonsProperty,
-        bool $includeAllDescendants,
-        array $excludedAttributes = []
+        private TaxonRepositoryInterface $taxonRepository,
+        private string $taxonsProperty,
+        private bool $includeAllDescendants,
+        private array $excludedAttributes = []
     ) {
-        $this->taxonRepository = $taxonRepository;
-        $this->taxonsProperty = $taxonsProperty;
-        $this->includeAllDescendants = $includeAllDescendants;
-        $this->excludedAttributes = $excludedAttributes;
     }
 
     public function consumeEvent(PostTransformEvent $event): void

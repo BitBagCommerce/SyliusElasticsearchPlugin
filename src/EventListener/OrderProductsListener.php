@@ -21,16 +21,10 @@ use Webmozart\Assert\Assert;
 
 final class OrderProductsListener
 {
-    private ResourceRefresherInterface $resourceRefresher;
-
-    private ObjectPersisterInterface $productPersister;
-
     public function __construct(
-        ResourceRefresherInterface $resourceRefresher,
-        ObjectPersisterInterface $productPersister
+        private ResourceRefresherInterface $resourceRefresher,
+        private ObjectPersisterInterface $productPersister
     ) {
-        $this->resourceRefresher = $resourceRefresher;
-        $this->productPersister = $productPersister;
     }
 
     public function updateOrderProducts(GenericEvent $event): void

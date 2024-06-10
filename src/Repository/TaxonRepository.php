@@ -18,26 +18,14 @@ use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
-final class TaxonRepository implements TaxonRepositoryInterface
+class TaxonRepository implements TaxonRepositoryInterface
 {
-    private BaseTaxonRepositoryInterface|EntityRepository $baseTaxonRepository;
-
-    private ProductRepositoryInterface|EntityRepository $productRepository;
-
-    private string $productTaxonEntityClass;
-
-    private string $productAttributeEntityClass;
-
     public function __construct(
-        BaseTaxonRepositoryInterface $baseTaxonRepository,
-        ProductRepositoryInterface $productRepository,
-        string $productTaxonEntityClass,
-        string $productAttributeEntityClass
+        private BaseTaxonRepositoryInterface|EntityRepository $baseTaxonRepository,
+        private ProductRepositoryInterface|EntityRepository $productRepository,
+        private string $productTaxonEntityClass,
+        private string $productAttributeEntityClass
     ) {
-        $this->baseTaxonRepository = $baseTaxonRepository;
-        $this->productRepository = $productRepository;
-        $this->productTaxonEntityClass = $productTaxonEntityClass;
-        $this->productAttributeEntityClass = $productAttributeEntityClass;
     }
 
     public function getTaxonsByAttributeViaProduct(AttributeInterface $attribute): array

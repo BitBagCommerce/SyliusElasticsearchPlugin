@@ -24,24 +24,12 @@ use Webmozart\Assert\Assert;
 
 final class ResourceIndexListener implements ResourceIndexListenerInterface
 {
-    private ResourceRefresherInterface $resourceRefresher;
-
-    private array $persistersMap;
-
-    private RepositoryInterface $attributeRepository;
-
-    private RepositoryInterface $optionRepository;
-
     public function __construct(
-        ResourceRefresherInterface $resourceRefresher,
-        array $persistersMap,
-        RepositoryInterface $attributeRepository,
-        RepositoryInterface $optionRepository
+        private ResourceRefresherInterface $resourceRefresher,
+        private array $persistersMap,
+        private RepositoryInterface $attributeRepository,
+        private RepositoryInterface $optionRepository
     ) {
-        $this->resourceRefresher = $resourceRefresher;
-        $this->persistersMap = $persistersMap;
-        $this->attributeRepository = $attributeRepository;
-        $this->optionRepository = $optionRepository;
     }
 
     public function updateIndex(GenericEvent $event): void

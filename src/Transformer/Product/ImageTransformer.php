@@ -22,14 +22,10 @@ final class ImageTransformer implements TransformerInterface
 
     private const SYLIUS_THUMBNAIL_FILTER = 'sylius_shop_product_thumbnail';
 
-    private FilterService $imagineFilter;
-
-    private string $imagesPath;
-
-    public function __construct(FilterService $imagineFilter, string $imagesPath = '/media/image/')
-    {
-        $this->imagineFilter = $imagineFilter;
-        $this->imagesPath = $imagesPath;
+    public function __construct(
+        private FilterService $imagineFilter,
+        private string $imagesPath = '/media/image/'
+    ) {
     }
 
     public function transform(ProductInterface $product): ?string

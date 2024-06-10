@@ -15,4 +15,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Repository;
 interface ProductAttributeRepositoryInterface
 {
     public function getAttributeTypeByName(string $attributeName): string;
+
+    public function findAllWithTranslations(?string $locale): array;
 }

@@ -23,24 +23,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ListProductsByPartialNameAction
 {
-    private NamedProductsFinderInterface $namedProductsFinder;
-
-    private TransformerInterface $productSlugTransformer;
-
-    private TransformerInterface $productChannelPriceTransformer;
-
-    private TransformerInterface $productImageTransformer;
-
     public function __construct(
-        NamedProductsFinderInterface $namedProductsFinder,
-        TransformerInterface $productSlugResolver,
-        TransformerInterface $productChannelPriceResolver,
-        TransformerInterface $productImageResolver
+        private NamedProductsFinderInterface $namedProductsFinder,
+        private TransformerInterface $productSlugTransformer,
+        private TransformerInterface $productChannelPriceTransformer,
+        private TransformerInterface $productImageTransformer
     ) {
-        $this->namedProductsFinder = $namedProductsFinder;
-        $this->productSlugTransformer = $productSlugResolver;
-        $this->productChannelPriceTransformer = $productChannelPriceResolver;
-        $this->productImageTransformer = $productImageResolver;
     }
 
     public function __invoke(Request $request): Response

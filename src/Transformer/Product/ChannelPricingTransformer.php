@@ -23,24 +23,12 @@ use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 
 final class ChannelPricingTransformer implements TransformerInterface
 {
-    private ChannelContextInterface $channelContext;
-
-    private LocaleContextInterface $localeContext;
-
-    private ProductVariantResolverInterface $productVariantResolver;
-
-    private MoneyFormatterInterface $moneyFormatter;
-
     public function __construct(
-        ChannelContextInterface $channelContext,
-        LocaleContextInterface $localeContext,
-        ProductVariantResolverInterface $productVariantResolver,
-        MoneyFormatterInterface $moneyFormatter
+        private ChannelContextInterface $channelContext,
+        private LocaleContextInterface $localeContext,
+        private ProductVariantResolverInterface $productVariantResolver,
+        private MoneyFormatterInterface $moneyFormatter
     ) {
-        $this->channelContext = $channelContext;
-        $this->localeContext = $localeContext;
-        $this->productVariantResolver = $productVariantResolver;
-        $this->moneyFormatter = $moneyFormatter;
     }
 
     public function transform(ProductInterface $product): ?string

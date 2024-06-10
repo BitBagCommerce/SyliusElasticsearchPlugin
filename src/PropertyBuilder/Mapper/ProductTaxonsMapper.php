@@ -16,11 +16,9 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
 {
-    private bool $includeAllDescendants;
-
-    public function __construct(bool $includeAllDescendants)
-    {
-        $this->includeAllDescendants = $includeAllDescendants;
+    public function __construct(
+        private bool $includeAllDescendants
+    ) {
     }
 
     public function mapToUniqueCodes(ProductInterface $product): array

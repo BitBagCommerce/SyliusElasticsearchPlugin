@@ -18,11 +18,9 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
 {
-    private string $createdAtProperty;
-
-    public function __construct(string $createdAtProperty)
-    {
-        $this->createdAtProperty = $createdAtProperty;
+    public function __construct(
+        private string $createdAtProperty
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void

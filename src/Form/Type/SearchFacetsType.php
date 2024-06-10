@@ -20,11 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SearchFacetsType extends AbstractType
 {
-    private RegistryInterface $facetRegistry;
-
-    public function __construct(RegistryInterface $facetRegistry)
-    {
-        $this->facetRegistry = $facetRegistry;
+    public function __construct(
+        private RegistryInterface $facetRegistry
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

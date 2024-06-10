@@ -17,11 +17,9 @@ use Elastica\Query\BoolQuery;
 
 final class ProductOptionsByTaxonQueryBuilder implements QueryBuilderInterface
 {
-    private QueryBuilderInterface $hasTaxonQueryBuilder;
-
-    public function __construct(QueryBuilderInterface $hasTaxonQueryBuilder)
-    {
-        $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
+    public function __construct(
+        private QueryBuilderInterface $hasTaxonQueryBuilder
+    ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery

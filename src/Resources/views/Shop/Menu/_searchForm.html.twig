@@ -2,10 +2,10 @@
     <div class="ui fluid category search">
         <div class="ui icon input" style="width: 100%;">
 
-            {% form_theme settings.form '@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchFormTheme.html.twig' %}
-            {{ form_start(settings.form, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
-            {{ form_row(settings.form.box) }}
-            {{ form_end(settings.form, {'render_rest': false}) }}
+            {% form_theme form '@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchFormTheme.html.twig' %}
+            {{ form_start(form, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate', 'action': path('bitbag_sylius_elasticsearch_plugin_shop_search')}}) }}
+            {{ form_row(form.box) }}
+            {{ form_end(form, {'render_rest': false}) }}
 
         </div>
     </div>

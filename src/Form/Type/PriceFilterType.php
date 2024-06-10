@@ -26,16 +26,10 @@ final class PriceFilterType extends AbstractFilterType
 {
     public const MAXIMUM_PRICE_VALUE = 9999999999999999;
 
-    private PriceNameResolverInterface $priceNameResolver;
-
-    private CurrencyContextInterface $currencyContext;
-
     public function __construct(
-        PriceNameResolverInterface $priceNameResolver,
-        CurrencyContextInterface $currencyContext
+        private PriceNameResolverInterface $priceNameResolver,
+        private CurrencyContextInterface $currencyContext
     ) {
-        $this->priceNameResolver = $priceNameResolver;
-        $this->currencyContext = $currencyContext;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

@@ -1,7 +1,7 @@
 bitbag_sylius_elasticsearch_plugin_shop_list_products:
     path: /{_locale}/products-list/{slug}
     defaults:
-        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.list_products
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.taxon_products_search
         template: "@BitBagSyliusElasticsearchPlugin/Shop/Product/index.html.twig"
     requirements:
         slug: .+
@@ -16,5 +16,5 @@ bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name:
 bitbag_sylius_elasticsearch_plugin_shop_search:
     path: /{_locale}/search
     defaults:
-        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.search
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.site_wide_products_search
         template: "@BitBagSyliusElasticsearchPlugin/Shop/search.html.twig"

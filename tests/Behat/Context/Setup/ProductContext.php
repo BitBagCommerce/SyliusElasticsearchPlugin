@@ -29,57 +29,20 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class ProductContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var ProductFactoryInterface */
-    private $productFactory;
-
-    /** @var FactoryInterface */
-    private $channelPricingFactory;
-
-    /** @var FactoryInterface */
-    private $productOptionFactory;
-
-    /** @var FactoryInterface */
-    private $productOptionValueFactory;
-
-    /** @var EntityManagerInterface */
-    private $objectManager;
-
-    /** @var ProductVariantResolverInterface */
-    private $defaultVariantResolver;
-
-    /** @var SlugGeneratorInterface */
-    private $slugGenerator;
-
     /** @var \Faker\Generator */
     private $faker;
 
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        ProductRepositoryInterface $productRepository,
-        ProductFactoryInterface $productFactory,
-        FactoryInterface $channelPricingFactory,
-        FactoryInterface $productOptionFactory,
-        FactoryInterface $productOptionValueFactory,
-        EntityManagerInterface $objectManager,
-        ProductVariantResolverInterface $defaultVariantResolver,
-        SlugGeneratorInterface $slugGenerator
+        private SharedStorageInterface $sharedStorage,
+        private ProductRepositoryInterface $productRepository,
+        private ProductFactoryInterface $productFactory,
+        private FactoryInterface $channelPricingFactory,
+        private FactoryInterface $productOptionFactory,
+        private FactoryInterface $productOptionValueFactory,
+        private EntityManagerInterface $objectManager,
+        private ProductVariantResolverInterface $defaultVariantResolver,
+        private SlugGeneratorInterface $slugGenerator
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->productRepository = $productRepository;
-        $this->productFactory = $productFactory;
-        $this->channelPricingFactory = $channelPricingFactory;
-        $this->productOptionFactory = $productOptionFactory;
-        $this->productOptionValueFactory = $productOptionValueFactory;
-        $this->objectManager = $objectManager;
-        $this->defaultVariantResolver = $defaultVariantResolver;
-        $this->slugGenerator = $slugGenerator;
-
         $this->faker = \Faker\Factory::create();
     }
 

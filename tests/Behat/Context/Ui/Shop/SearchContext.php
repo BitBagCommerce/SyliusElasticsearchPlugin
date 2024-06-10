@@ -11,12 +11,9 @@ use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\SearchPageInterface;
 
 final class SearchContext implements Context
 {
-    /** @var SearchPageInterface */
-    private $searchPage;
-
-    public function __construct(SearchPageInterface $searchPage)
-    {
-        $this->searchPage = $searchPage;
+    public function __construct(
+        private SearchPageInterface $searchPage
+    ) {
     }
 
     /**
