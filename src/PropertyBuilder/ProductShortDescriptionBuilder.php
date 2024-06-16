@@ -20,11 +20,9 @@ use Sylius\Component\Core\Model\ProductTranslationInterface;
 
 final class ProductShortDescriptionBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $productShortDescriptionNameResolver;
-
-    public function __construct(ConcatedNameResolverInterface $productShortDescriptionNameResolver)
-    {
-        $this->productShortDescriptionNameResolver = $productShortDescriptionNameResolver;
+    public function __construct(
+        private ConcatedNameResolverInterface $productShortDescriptionNameResolver
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void

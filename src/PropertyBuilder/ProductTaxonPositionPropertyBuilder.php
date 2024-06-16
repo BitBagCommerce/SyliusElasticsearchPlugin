@@ -19,11 +19,9 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $taxonPositionNameResolver;
-
-    public function __construct(ConcatedNameResolverInterface $taxonPositionNameResolver)
-    {
-        $this->taxonPositionNameResolver = $taxonPositionNameResolver;
+    public function __construct(
+        private ConcatedNameResolverInterface $taxonPositionNameResolver
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void

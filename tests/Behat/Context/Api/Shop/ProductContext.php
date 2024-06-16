@@ -18,16 +18,10 @@ use Webmozart\Assert\Assert;
 
 final class ProductContext implements Context
 {
-    /** @var AbstractBrowser */
-    private $client;
-
-    /** @var RouterInterface */
-    private $router;
-
-    public function __construct(AbstractBrowser $client, RouterInterface $router)
-    {
-        $this->client = $client;
-        $this->router = $router;
+    public function __construct(
+        private AbstractBrowser $client,
+        private RouterInterface $router
+    ) {
     }
 
     /**

@@ -17,11 +17,9 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class SlugTransformer implements TransformerInterface
 {
-    private RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
-    {
-        $this->router = $router;
+    public function __construct(
+        private RouterInterface $router
+    ) {
     }
 
     public function transform(ProductInterface $product): ?string

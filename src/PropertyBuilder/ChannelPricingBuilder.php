@@ -20,11 +20,9 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class ChannelPricingBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $channelPricingNameResolver;
-
-    public function __construct(ConcatedNameResolverInterface $channelPricingNameResolver)
-    {
-        $this->channelPricingNameResolver = $channelPricingNameResolver;
+    public function __construct(
+        private ConcatedNameResolverInterface $channelPricingNameResolver
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void

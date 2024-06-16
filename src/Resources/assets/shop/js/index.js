@@ -1,1 +1,2 @@
-import './initAutocomleate';
+import './initAutocomplete';
+import './initCheckboxChangeSubmit';

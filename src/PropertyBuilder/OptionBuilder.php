@@ -20,16 +20,10 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 final class OptionBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $optionNameResolver;
-
-    private StringFormatterInterface $stringFormatter;
-
     public function __construct(
-        ConcatedNameResolverInterface $optionNameResolver,
-        StringFormatterInterface $stringFormatter
+        private ConcatedNameResolverInterface $optionNameResolver,
+        private StringFormatterInterface $stringFormatter
     ) {
-        $this->optionNameResolver = $optionNameResolver;
-        $this->stringFormatter = $stringFormatter;
     }
 
     public function consumeEvent(PostTransformEvent $event): void

@@ -17,32 +17,17 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
-use RuntimeException;
 use function sprintf;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class AttributeFacet implements FacetInterface
 {
-    private ConcatedNameResolverInterface $attributeNameResolver;
-
-    private RepositoryInterface $productAttributeRepository;
-
-    private string $attributeCode;
-
-    private LocaleContextInterface $localeContext;
-
     public function __construct(
-        ConcatedNameResolverInterface $attributeNameResolver,
-        RepositoryInterface $productAttributeRepository,
-        string $attributeCode,
-        LocaleContextInterface $localeContext
+        private ConcatedNameResolverInterface $attributeNameResolver,
+        private AttributeInterface $attribute,
+        private LocaleContextInterface $localeContext
     ) {
-        $this->attributeNameResolver = $attributeNameResolver;
-        $this->productAttributeRepository = $productAttributeRepository;
-        $this->attributeCode = $attributeCode;
-        $this->localeContext = $localeContext;
     }
 
     public function getAggregation(): AbstractAggregation
@@ -74,18 +59,13 @@ final class AttributeFacet implements FacetInterface
     {
         return sprintf(
             '%s_%s.keyword',
-            $this->attributeNameResolver->resolvePropertyName($this->attributeCode),
+            $this->attributeNameResolver->resolvePropertyName($this->getProductAttribute()->getCode()),
             $this->localeContext->getLocaleCode()
         );
     }
 
     private function getProductAttribute(): AttributeInterface
     {
-        $attribute = $this->productAttributeRepository->findOneBy(['code' => $this->attributeCode]);
-        if (!$attribute instanceof AttributeInterface) {
-            throw new RuntimeException(sprintf('Cannot find attribute with code "%s"', $this->attributeCode));
-        }
-
-        return $attribute;
+        return $this->attribute;
     }
 }

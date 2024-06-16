@@ -16,12 +16,11 @@ class Search
 {
     private ?SearchBox $box;
 
-    private ?SearchFacets $facets;
+    private array $facets = [];
 
     public function __construct()
     {
         $this->box = new SearchBox();
-        $this->facets = new SearchFacets();
     }
 
     public function getBox(): ?SearchBox
@@ -34,12 +33,12 @@ class Search
         $this->box = $box;
     }
 
-    public function getFacets(): ?SearchFacets
+    public function getFacets(): array
     {
         return $this->facets;
     }
 
-    public function setFacets(?SearchFacets $facets): void
+    public function setFacets(array $facets): void
     {
         $this->facets = $facets;
     }

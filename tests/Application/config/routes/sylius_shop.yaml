@@ -12,3 +12,13 @@ sylius_shop_default_locale:
     methods: [GET]
     defaults:
         _controller: sylius.controller.shop.locale_switch::switchAction
+
+redirect_sylius_shop_product_index:
+    path: /{_locale}/taxons/{slug}
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: bitbag_sylius_elasticsearch_plugin_shop_list_products
+        permanent: true
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+        slug: .+

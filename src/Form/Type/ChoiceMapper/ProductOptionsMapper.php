@@ -18,11 +18,9 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
 final class ProductOptionsMapper implements ProductOptionsMapperInterface
 {
-    private StringFormatterInterface $stringFormatter;
-
-    public function __construct(StringFormatterInterface $stringFormatter)
-    {
-        $this->stringFormatter = $stringFormatter;
+    public function __construct(
+        private StringFormatterInterface $stringFormatter
+    ) {
     }
 
     public function mapToChoices(ProductOptionInterface $productOption): array

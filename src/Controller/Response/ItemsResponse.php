@@ -16,12 +16,10 @@ use BitBag\SyliusElasticsearchPlugin\Controller\Response\DTO\Item;
 
 final class ItemsResponse
 {
-    /** @var array|Item[] */
-    private array $items;
-
-    private function __construct(array $itemsList)
-    {
-        $this->items = $itemsList;
+    private function __construct(
+        /** @var $items array|Item[] */
+        private array $items
+    ) {
     }
 
     public static function createEmpty(): self

@@ -19,21 +19,12 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class HasAttributesQueryBuilder implements QueryBuilderInterface
 {
-    private LocaleContextInterface $localeContext;
-
-    private ProductAttributeRepositoryInterface $productAttributeRepository;
-
-    /** @var AttributesQueryBuilderCollectorInterface[] */
-    private iterable $attributeDriver;
-
     public function __construct(
-        LocaleContextInterface $localeContext,
-        ProductAttributeRepositoryInterface $productAttributeRepository,
-        iterable $attributeDriver
+        private LocaleContextInterface $localeContext,
+        private ProductAttributeRepositoryInterface $productAttributeRepository,
+        /** @var AttributesQueryBuilderCollectorInterface[] */
+        private iterable $attributeDriver
     ) {
-        $this->localeContext = $localeContext;
-        $this->productAttributeRepository = $productAttributeRepository;
-        $this->attributeDriver = $attributeDriver;
     }
 
     public function buildQuery(array $data): ?AbstractQuery

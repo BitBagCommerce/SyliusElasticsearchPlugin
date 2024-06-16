@@ -11,9 +11,10 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
+use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
-use Elastica\Query\MatchQuery;
+use Elastica\Query\MultiMatch;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
@@ -21,13 +22,16 @@ final class ContainsNameQueryBuilderSpec extends ObjectBehavior
 {
     function let(
         LocaleContextInterface $localeContext,
+        SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         ConcatedNameResolverInterface $productNameNameResolver
     ): void {
         $this->beConstructedWith(
             $localeContext,
-            $productNameNameResolver,
-            'name_property'
+            $searchPropertyNameResolverRegistry,
+            'AUTO'
         );
+
+        $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn([$productNameNameResolver]);
     }
 
     function it_is_initializable(): void
@@ -42,23 +46,30 @@ final class ContainsNameQueryBuilderSpec extends ObjectBehavior
 
     function it_builds_query(
         LocaleContextInterface $localeContext,
+        SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         ConcatedNameResolverInterface $productNameNameResolver
     ): void {
         $localeContext->getLocaleCode()->willReturn('en');
 
-        $productNameNameResolver->resolvePropertyName('en')->willReturn('en');
+        $productNameNameResolver->resolvePropertyName('en')->willReturn('name_en');
 
-        $this->buildQuery(['name_property' => 'Book'])->shouldBeAnInstanceOf(MatchQuery::class);
+        $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn([$productNameNameResolver]);
+
+        $query = $this->buildQuery(['name' => 'Book']);
+        $query->shouldBeAnInstanceOf(MultiMatch::class);
     }
 
-    function it_builds_returned_null_if_property_is_null(
+    function it_returns_null_when_no_query(
         LocaleContextInterface $localeContext,
+        SearchPropertyNameResolverRegistryInterface $searchPropertyNameResolverRegistry,
         ConcatedNameResolverInterface $productNameNameResolver
     ): void {
         $localeContext->getLocaleCode()->willReturn('en');
 
-        $productNameNameResolver->resolvePropertyName('en')->willReturn('en');
+        $productNameNameResolver->resolvePropertyName('en')->willReturn('name_en');
 
-        $this->buildQuery(['name_property' => null])->shouldBeEqualTo(null);
+        $searchPropertyNameResolverRegistry->getPropertyNameResolvers()->willReturn([$productNameNameResolver]);
+
+        $this->buildQuery([])->shouldReturn(null);
     }
 }

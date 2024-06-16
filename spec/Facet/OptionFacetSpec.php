@@ -9,20 +9,18 @@ use BitBag\SyliusElasticsearchPlugin\Facet\OptionFacet;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Aggregation\Terms;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Product\Model\ProductOption;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Component\Product\Model\ProductOptionInterface;
 
 final class OptionFacetSpec extends ObjectBehavior
 {
-    function let(ConcatedNameResolverInterface $optionNameResolver, RepositoryInterface $productOptionRepository): void
+    function let(ConcatedNameResolverInterface $optionNameResolver, ProductOptionInterface $productOption): void
     {
         $optionCode = 'SUPPLY';
         $optionNameResolver->resolvePropertyName('SUPPLY')->willReturn('option_SUPPLY');
-        $productOption = new ProductOption();
         $productOption->setCurrentLocale('en_US');
-        $productOption->setName('Supply');
-        $productOptionRepository->findOneBy(['code' => 'SUPPLY'])->willReturn($productOption);
-        $this->beConstructedWith($optionNameResolver, $productOptionRepository, $optionCode);
+        $productOption->getName()->willReturn('Supply');
+        $productOption->getCode()->willReturn($optionCode);
+        $this->beConstructedWith($optionNameResolver, $productOption, $optionCode);
     }
 
     function it_is_initializable(): void

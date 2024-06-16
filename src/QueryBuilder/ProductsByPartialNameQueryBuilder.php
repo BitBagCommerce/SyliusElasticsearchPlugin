@@ -17,11 +17,9 @@ use Elastica\Query\BoolQuery;
 
 final class ProductsByPartialNameQueryBuilder implements QueryBuilderInterface
 {
-    private QueryBuilderInterface $containsNameQueryBuilder;
-
-    public function __construct(QueryBuilderInterface $containsNameQueryBuilder)
-    {
-        $this->containsNameQueryBuilder = $containsNameQueryBuilder;
+    public function __construct(
+        private QueryBuilderInterface $containsNameQueryBuilder
+    ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery
