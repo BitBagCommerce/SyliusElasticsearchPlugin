@@ -22,9 +22,6 @@
         }
     ],
     "facets": {
-        "price": {
-            "buckets": []
-        },
         "taxon": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,

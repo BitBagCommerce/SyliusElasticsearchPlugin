@@ -47,6 +47,8 @@ final class FacetsResolver implements FacetsResolverInterface
             return [];
         }
 
-        return $adapter->getAggregations();
+        return array_filter($adapter->getAggregations(), function ($facet) {
+            return [] !== $facet['buckets'] ?? [];
+        });
     }
 }
