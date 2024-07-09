@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Webmozart\Assert\Assert;
 
 final class TaxonProductsQueryBuilder implements QueryBuilderInterface
 {
@@ -34,8 +35,14 @@ final class TaxonProductsQueryBuilder implements QueryBuilderInterface
     {
         $boolQuery = new BoolQuery();
 
-        $boolQuery->addMust($this->isEnabledQueryBuilder->buildQuery($data));
-        $boolQuery->addMust($this->hasChannelQueryBuilder->buildQuery($data));
+        $isEnabledQuery = $this->isEnabledQueryBuilder->buildQuery($data);
+        $hasChannelQuery = $this->hasChannelQueryBuilder->buildQuery($data);
+
+        Assert::notNull($isEnabledQuery);
+        Assert::notNull($hasChannelQuery);
+
+        $boolQuery->addMust($isEnabledQuery);
+        $boolQuery->addMust($hasChannelQuery);
 
         $nameQuery = $this->containsNameQueryBuilder->buildQuery($data);
         $this->addMustIfNotNull($nameQuery, $boolQuery);
@@ -57,7 +64,9 @@ final class TaxonProductsQueryBuilder implements QueryBuilderInterface
         foreach ($data as $key => $value) {
             if (0 === strpos($key, $this->optionPropertyPrefix) && 0 < count($value)) {
                 $optionQuery = $this->hasOptionsQueryBuilder->buildQuery(['option' => $key, 'option_values' => $value]);
-                $boolQuery->addMust($optionQuery);
+                if (null !== $optionQuery) {
+                    $boolQuery->addMust($optionQuery);
+                }
             }
         }
     }
@@ -67,7 +76,9 @@ final class TaxonProductsQueryBuilder implements QueryBuilderInterface
         foreach ($data as $key => $value) {
             if (0 === strpos($key, $this->attributePropertyPrefix) && 0 < count($value)) {
                 $optionQuery = $this->hasAttributesQueryBuilder->buildQuery(['attribute' => $key, 'attribute_values' => $value]);
-                $boolQuery->addMust($optionQuery);
+                if (null !== $optionQuery) {
+                    $boolQuery->addMust($optionQuery);
+                }
             }
         }
     }

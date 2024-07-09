@@ -77,10 +77,10 @@ final class Item
         return [
             'taxon_name' => $this->taxonName(),
             'name' => $this->name(),
-            'description' => $this->description() ?: '',
+            'description' => $this->description() ?? '',
             'slug' => $this->slug(),
             'price' => $this->price(),
-            'image' => $this->image() ?: '',
+            'image' => $this->image() ?? '',
         ];
     }
 }

@@ -24,7 +24,7 @@ class AttributesTypeDateQueryBuilder implements AttributesQueryBuilderCollectorI
 
     public function supports(string $type): bool
     {
-        return in_array($type, self::AVAILABLE_ATTRIBUTES_TYPE);
+        return in_array($type, self::AVAILABLE_ATTRIBUTES_TYPE, true);
     }
 
     public function buildQuery(array $data, string $localCode): BoolQuery

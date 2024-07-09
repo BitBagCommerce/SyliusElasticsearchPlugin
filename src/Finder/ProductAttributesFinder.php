@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
+use Elastica\Query\AbstractQuery;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 
@@ -28,8 +29,9 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
     public function findByTaxon(TaxonInterface $taxon): ?array
     {
         $data = [];
-        $data[$this->taxonsProperty] = strtolower($taxon->getCode());
+        $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());
 
+        /** @var AbstractQuery $query */
         $query = $this->attributesByTaxonQueryBuilder->buildQuery($data);
 
         return $this->attributesFinder->find($query, 20);

@@ -33,8 +33,11 @@ final class ProductNameBuilder extends AbstractBuilder
             function (ProductInterface $product, Document $document): void {
                 /** @var ProductTranslationInterface $productTranslation */
                 foreach ($product->getTranslations() as $productTranslation) {
+                    /** @var string $locale */
+                    $locale = $productTranslation->getLocale();
+
                     $propertyName = $this->productNameNameResolver
-                        ->resolvePropertyName($productTranslation->getLocale());
+                        ->resolvePropertyName($locale);
 
                     $document->set($propertyName, $productTranslation->getName());
                 }

@@ -34,7 +34,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
 
         if (!$documentAttribute instanceof AttributeInterface
             || !$documentAttribute instanceof ProductAttributeInterface
-            || in_array($documentAttribute->getCode(), $this->excludedAttributes)
+            || in_array($documentAttribute->getCode(), $this->excludedAttributes, true)
         ) {
             return;
         }

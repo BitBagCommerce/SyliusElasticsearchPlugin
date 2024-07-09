@@ -49,22 +49,25 @@ final class AttributeBuilder extends AbstractBuilder
 
     private function resolveProductAttributes(ProductInterface $product, Document $document): void
     {
+        /** @var ProductAttributeValue $productAttribute */
         foreach ($product->getAttributes() as $productAttribute) {
             $attribute = $productAttribute->getAttribute();
-            if (!$attribute) {
+            if (null === $attribute) {
                 continue;
             }
-
             $this->processAttribute($attribute, $productAttribute, $document);
         }
     }
 
     private function resolveProductAttribute(
         array $attributeConfiguration,
-        $attributeValue,
+        mixed $attributeValue,
         ProductAttributeValue $productAttribute
     ): array {
-        if (SelectAttributeType::TYPE === $productAttribute->getAttribute()->getType()) {
+        /** @var AttributeInterface $attribute */
+        $attribute = $productAttribute->getAttribute();
+
+        if (SelectAttributeType::TYPE === $attribute->getType()) {
             $choices = $attributeConfiguration['choices'];
             if (is_array($attributeValue)) {
                 foreach ($attributeValue as $i => $item) {
@@ -87,8 +90,8 @@ final class AttributeBuilder extends AbstractBuilder
 
                     break;
                 case $attributeValue instanceof \DateTime:
-                    $attributeFormat = $productAttribute->getAttribute()->getConfiguration()['format'] ?? null;
-                    $defaultFormat = DateAttributeType::TYPE === $productAttribute->getAttribute()->getStorageType() ?
+                    $attributeFormat = $attribute->getConfiguration()['format'] ?? null;
+                    $defaultFormat = DateAttributeType::TYPE === $attribute->getStorageType() ?
                         self::DEFAULT_DATE_FORMAT :
                         self::DEFAULT_DATE_TIME_FORMAT
                     ;
@@ -109,6 +112,7 @@ final class AttributeBuilder extends AbstractBuilder
         ProductAttributeValue $productAttribute,
         Document $document
     ): void {
+        /** @var string $attributeCode */
         $attributeCode = $attribute->getCode();
         $attributeConfiguration = $attribute->getConfiguration();
 
@@ -122,7 +126,7 @@ final class AttributeBuilder extends AbstractBuilder
             $productAttribute
         );
 
-        $values = in_array($attribute->getStorageType(), [DateAttributeType::TYPE, DatetimeAttributeType::TYPE]) ?
+        $values = in_array($attribute->getStorageType(), [DateAttributeType::TYPE, DatetimeAttributeType::TYPE], true) ?
             ($values[0] ?? $values) :
             $values
         ;

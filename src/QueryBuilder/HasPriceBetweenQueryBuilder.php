@@ -22,6 +22,7 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
+use Webmozart\Assert\Assert;
 
 final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 {
@@ -39,9 +40,10 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $dataMinPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMinPriceName());
         $dataMaxPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMaxPriceName());
 
-        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : null;
-        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : null;
+        $minPrice = (null !== $dataMinPrice) ? $this->resolveBasePrice($dataMinPrice) : null;
+        $maxPrice = (null !== $dataMaxPrice) ? $this->resolveBasePrice($dataMaxPrice) : null;
 
+        /** @var string $channelCode */
         $channelCode = $this->channelContext->getChannel()->getCode();
         $propertyName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         $rangeQuery = new Range();
@@ -62,8 +64,13 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $price = $this->convertFromString($price);
         /** @var ChannelInterface $channel */
         $channel = $this->channelContext->getChannel();
+        $channelBaseCurrency = $channel->getBaseCurrency();
+
+        Assert::notNull($channelBaseCurrency);
+
         $currentCurrencyCode = $this->currencyContext->getCurrencyCode();
-        $channelBaseCurrencyCode = $channel->getBaseCurrency()->getCode();
+        /** @var string $channelBaseCurrencyCode */
+        $channelBaseCurrencyCode = $channelBaseCurrency->getCode();
 
         if ($currentCurrencyCode !== $channelBaseCurrencyCode) {
             $price = $this->currencyConverter->convert($price, $currentCurrencyCode, $channelBaseCurrencyCode);
@@ -80,7 +87,10 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
         $transformer = new SyliusMoneyTransformer(2, false, NumberFormatter::ROUND_HALFUP, 100);
 
-        return $transformer->reverseTransform($price);
+        /** @var int $convertedPrice */
+        $convertedPrice = $transformer->reverseTransform($price);
+
+        return $convertedPrice;
     }
 
     private function getDataByKey(array $data, ?string $key = null): ?string
@@ -90,6 +100,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     private function getQueryParamValue(?int $min, ?int $max): ?array
     {
+        $paramValue = null;
         foreach (['gte' => $min, 'lte' => $max] as $key => $value) {
             if (null !== $value) {
                 $paramValue[$key] = $value;

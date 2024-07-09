@@ -70,7 +70,7 @@ final class PriceFilterType extends AbstractFilterType
                 ],
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                if (!empty($event->getData())) {
+                if (null !== $event->getData()) {
                     $data = [];
                     foreach ($event->getData() as $key => $item) {
                         $data[$key] = trim($item);

@@ -16,6 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\Exception\TaxonNotFoundException;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class TaxonContext implements TaxonContextInterface
@@ -29,11 +30,15 @@ final class TaxonContext implements TaxonContextInterface
 
     public function getTaxon(): TaxonInterface
     {
-        $slug = $this->requestStack->getCurrentRequest()->get('slug');
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        $slug = $request->get('slug');
         $localeCode = $this->localeContext->getLocaleCode();
         /** @var TaxonInterface $taxon */
         $taxon = $this->taxonRepository->findOneBySlug($slug, $localeCode);
 
+        /** @phpstan-ignore-next-line */
         if (null === $slug || null === $taxon) {
             throw new TaxonNotFoundException();
         }

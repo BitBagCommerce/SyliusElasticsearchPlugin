@@ -15,6 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 final class ProductTaxonIndexListener
 {
@@ -26,6 +27,9 @@ final class ProductTaxonIndexListener
 
     public function updateIndex(ProductTaxonInterface $productTaxon): void
     {
-        $this->resourceRefresher->refresh($productTaxon->getProduct(), $this->objectPersister);
+        /** @var ResourceInterface $product */
+        $product = $productTaxon->getProduct();
+
+        $this->resourceRefresher->refresh($product, $this->objectPersister);
     }
 }

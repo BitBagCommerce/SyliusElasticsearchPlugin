@@ -31,6 +31,7 @@ final class ProductOptionsMapper implements ProductOptionsMapperInterface
         array_walk(
             $productOptionValues,
             function (ProductOptionValueInterface $productOptionValue) use (&$choices): void {
+                /** @var string $value */
                 $value = $productOptionValue->getValue();
                 $choices[$value] = $this->stringFormatter->formatToLowercaseWithoutSpaces($value);
             }

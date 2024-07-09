@@ -17,6 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\Att
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
+use Sylius\Component\Core\Model\Taxon;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 
@@ -47,6 +48,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
 
             return $choices;
         }
+        /** @var Taxon $taxon */
         $taxon = $this->taxonContext->getTaxon();
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute, $taxon);
 

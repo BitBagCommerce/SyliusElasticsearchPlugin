@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Twig\Environment;
@@ -30,9 +31,15 @@ abstract class AbstractSearchAction
 
     protected function clearInvalidEntries(FormInterface $form, array $requestData): array
     {
+        /** @var FormError $error */
         foreach ($form->getErrors(true) as $error) {
+            /** @var FormInterface $errorOrigin */
             $errorOrigin = $error->getOrigin();
-            $path = ($errorOrigin->getParent()->getPropertyPath() ?? '') . $errorOrigin->getPropertyPath();
+
+            /** @var FormInterface $parent */
+            $parent = $errorOrigin->getParent();
+
+            $path = ($parent->getPropertyPath() ?? '') . $errorOrigin->getPropertyPath();
 
             $keys = explode('][', trim($path, '[]'));
 

@@ -39,8 +39,11 @@ final class ImageTransformer implements TransformerInterface
         /** @var ImageInterface $productImage */
         $productImage = $productThumbnails->first();
 
-        if ($this->canImageBeFiltered($productImage->getPath())) {
-            return $this->imagineFilter->getUrlOfFilteredImage($productImage->getPath(), self::SYLIUS_THUMBNAIL_FILTER);
+        /** @var string $path */
+        $path = $productImage->getPath();
+
+        if ($this->canImageBeFiltered($path)) {
+            return $this->imagineFilter->getUrlOfFilteredImage($path, self::SYLIUS_THUMBNAIL_FILTER);
         }
 
         return $this->imagesPath . $productImage->getPath();

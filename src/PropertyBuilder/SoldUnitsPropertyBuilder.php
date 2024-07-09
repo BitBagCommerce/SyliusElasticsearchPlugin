@@ -16,6 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\Repository\OrderItemRepositoryInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class SoldUnitsPropertyBuilder extends AbstractBuilder
 {
@@ -33,6 +34,7 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
             function (ProductInterface $product, Document $document): void {
                 $soldUnits = 0;
 
+                /** @var ProductVariantInterface $productVariant */
                 foreach ($product->getVariants() as $productVariant) {
                     $soldUnits += $this->orderItemRepository->countByVariant($productVariant);
                 }

@@ -16,6 +16,7 @@ use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use Symfony\Component\Form\FormEvent;
+use Webmozart\Assert\Assert;
 
 final class SiteWideFacetsQueryBuilder implements SiteWideFacetsQueryBuilderInterface
 {
@@ -29,12 +30,16 @@ final class SiteWideFacetsQueryBuilder implements SiteWideFacetsQueryBuilderInte
     {
         /** @var Search $data */
         $data = $event->getData();
+        $box = $data->getBox();
 
+        Assert::notNull($box);
+
+        /** @var Query\BoolQuery $boolQuery */
         $boolQuery = $this->queryBuilder->buildQuery([
-            'query' => $data['box']['query'] ?? '',
+            'query' => $box->getQuery() ?? '',
         ]);
 
-        foreach ($data['facets'] ?? [] as $facetId => $selectedBuckets) {
+        foreach ($data->getFacets() as $facetId => $selectedBuckets) {
             if (!$selectedBuckets) {
                 continue;
             }

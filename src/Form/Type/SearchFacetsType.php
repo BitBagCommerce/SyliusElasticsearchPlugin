@@ -17,6 +17,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 final class SearchFacetsType extends AbstractType
 {
@@ -33,7 +34,8 @@ final class SearchFacetsType extends AbstractType
             foreach ($facetData['buckets'] as $bucket) {
                 $choices[$facet->getBucketLabel($bucket)] = $bucket['key'];
             }
-            if (!empty($choices)) {
+//            Assert::notEmpty($choices);
+            if ([] !== $choices) {
                 $builder
                     ->add(
                         $facetId,
