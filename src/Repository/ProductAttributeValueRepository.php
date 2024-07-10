@@ -20,7 +20,7 @@ use Sylius\Component\Taxonomy\Model\Taxon;
 class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
     public function __construct(
-        private BaseAttributeValueRepositoryInterface|EntityRepository $baseAttributeValueRepository,
+        private BaseAttributeValueRepositoryInterface $baseAttributeValueRepository,
         private bool $includeAllDescendants
     ) {
     }

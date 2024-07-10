@@ -18,18 +18,17 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 {
     public function __construct(
-        private RepositoryInterface|EntityRepository $productAttributeRepository
+        private RepositoryInterface $productAttributeRepository
     ) {
     }
 
     public function getAttributeTypeByName(string $attributeName): string
     {
-        /** @var EntityRepository $productAttributeRepository */
-        $productAttributeRepository = $this->productAttributeRepository;
-
-        $queryBuilder = $productAttributeRepository->createQueryBuilder('p');
+        /** @var EntityRepository $queryBuilder */
+        $queryBuilder = $this->productAttributeRepository;
 
         $result = $queryBuilder
+            ->createQueryBuilder('p')
             ->select('p.type')
             ->where('p.code = :code')
             ->setParameter(':code', $attributeName)
@@ -44,12 +43,13 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
         /** @var EntityRepository $productAttributeRepository */
         $productAttributeRepository = $this->productAttributeRepository;
 
-        $queryBuilder = $productAttributeRepository->createQueryBuilder('p');
+        $queryBuilder = $productAttributeRepository->createQueryBuilder('o');
 
         if (null !== $locale) {
             $queryBuilder
                 ->addSelect('translation')
-                ->leftJoin('o.translations', 'ot')
+                /** @phpstan-ignore-next-line phpstan can't read relationship correctly */
+                ->leftJoin('o.translations', 'translation', 'ot')
                 ->andWhere('translation.locale = :locale')
                 ->setParameter('locale', $locale)
             ;

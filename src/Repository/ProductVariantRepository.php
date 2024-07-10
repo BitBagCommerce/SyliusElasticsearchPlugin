@@ -29,7 +29,8 @@ class ProductVariantRepository implements ProductVariantRepositoryInterface
         /** @var EntityRepository $baseProductVariantRepository */
         $baseProductVariantRepository = $this->baseProductVariantRepository;
 
-        return $baseProductVariantRepository->createQueryBuilder('o')
+        return $baseProductVariantRepository
+            ->createQueryBuilder('o')
             ->where(':optionValue MEMBER OF o.optionValues')
             ->setParameter('optionValue', $productOptionValue)
             ->getQuery()
@@ -43,7 +44,8 @@ class ProductVariantRepository implements ProductVariantRepositoryInterface
         /** @var EntityRepository $baseProductVariantRepository */
         $baseProductVariantRepository = $this->baseProductVariantRepository;
 
-        return $baseProductVariantRepository->createQueryBuilder('o')
+        return $baseProductVariantRepository
+            ->createQueryBuilder('o')
             ->where(':optionValue MEMBER OF o.optionValues')
             ->setParameter('optionValue', $productOptionValue)
             ->getQuery()

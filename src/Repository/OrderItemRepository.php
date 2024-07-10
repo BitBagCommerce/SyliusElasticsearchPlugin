@@ -25,7 +25,7 @@ class OrderItemRepository implements OrderItemRepositoryInterface
 
     public function countByVariant(ProductVariantInterface $variant, array $orderStates = []): int
     {
-        if ([] === $orderStates) {
+        if ([] !== $orderStates) {
             $orderStates = [OrderInterface::STATE_CANCELLED, OrderInterface::STATE_CART];
         }
 

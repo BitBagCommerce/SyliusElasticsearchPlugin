@@ -18,27 +18,28 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 class ProductOptionRepository implements ProductOptionRepositoryInterface
 {
     public function __construct(
-        private RepositoryInterface|EntityRepository $productOptionRepository
+        private RepositoryInterface $productOptionRepository
     ) {
     }
 
     public function findAllWithTranslations(?string $locale): array
     {
-        /** @var EntityRepository $productOptionRepository */
-        $productOptionRepository = $this->productOptionRepository;
-
-        $queryBuilder = $productOptionRepository->createQueryBuilder('o');
+        /** @var EntityRepository $queryBuilder */
+        $queryBuilder = $this->productOptionRepository;
 
         if (null !== $locale) {
             $queryBuilder
+                ->createQueryBuilder('o')
                 ->addSelect('translation')
-                ->leftJoin('o.translations', 'ot')
+                /** @phpstan-ignore-next-line phpstan can't read relationship correctly */
+                ->leftJoin('o.translations', 'translation', 'ot')
                 ->andWhere('translation.locale = :locale')
                 ->setParameter('locale', $locale)
             ;
         }
 
         return $queryBuilder
+            ->createQueryBuilder('o')
             ->getQuery()
             ->getResult()
         ;

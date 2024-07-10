@@ -43,7 +43,8 @@ class TaxonRepository implements TaxonRepositoryInterface
             ->leftJoin($this->productTaxonEntityClass, 'pt', Join::WITH, 'pt.taxon = t.id')
             ->where(
                 'pt.product IN(' .
-                    $productRepository->createQueryBuilder('p')
+                $productRepository
+                    ->createQueryBuilder('p')
                     ->leftJoin($this->productAttributeEntityClass, 'pav', Join::WITH, 'pav.subject = p.id')
                     ->where('pav.attribute = :attribute')
                     ->getQuery()
