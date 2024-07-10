@@ -66,8 +66,7 @@ $bundles = [
     BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
 ];
 
-
-if ( defined(SyliusCoreBundle::class.'::VERSION_ID') && SyliusCoreBundle::VERSION_ID >= '11300') {
+if (defined(SyliusCoreBundle::class . '::VERSION_ID') && SyliusCoreBundle::VERSION_ID >= '11300') {
     $bundles[Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle::class] = ['all' => true];
 }
 
