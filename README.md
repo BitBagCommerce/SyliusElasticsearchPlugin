@@ -205,6 +205,9 @@ webpack_encore:
 
 5. Run `yarn encore dev` or `yarn encore production`
 
+## Functionalities 
+
+All main functionalities of the plugin are described [here.](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/doc/functionalities.md)
 
 ## Usage
 
