@@ -35,10 +35,9 @@ final class TaxonContext implements TaxonContextInterface
 
         $slug = $request->get('slug');
         $localeCode = $this->localeContext->getLocaleCode();
-        /** @var TaxonInterface $taxon */
+        /** @var TaxonInterface|null $taxon */
         $taxon = $this->taxonRepository->findOneBySlug($slug, $localeCode);
 
-        /** @phpstan-ignore-next-line */
         if (null === $slug || null === $taxon) {
             throw new TaxonNotFoundException();
         }

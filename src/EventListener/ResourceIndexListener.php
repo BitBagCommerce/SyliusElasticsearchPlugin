@@ -34,6 +34,7 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
 
     public function updateIndex(GenericEvent $event): void
     {
+        /** @var ResourceInterface|null $resource */
         $resource = $event->getSubject();
 
         Assert::isInstanceOf($resource, ResourceInterface::class);
@@ -41,12 +42,12 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
             $method = $config[self::GET_PARENT_METHOD_KEY] ?? null;
 
             if (null !== $method && method_exists($resource, $method)) {
-                /** @phpstan-ignore-next-line */
+                /** @phpstan-ignore-next-line Variable method call on mixed or other bugs */
                 $resource = $resource->$method();
             }
 
             if ($resource instanceof $config[self::MODEL_KEY]) {
-                /** @phpstan-ignore-next-line */
+                /** @var ResourceInterface $resource */
                 $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
             }
 
