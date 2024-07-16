@@ -47,7 +47,7 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
             }
 
             if ($resource instanceof $config[self::MODEL_KEY]) {
-                /** @var ResourceInterface $resource */
+                /** @phpstan-ignore-next-line refresh method needs ResourceInterface but ECS doesn't see $resource variable in method. */
                 $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
             }
 
