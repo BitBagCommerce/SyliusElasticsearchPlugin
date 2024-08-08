@@ -44,7 +44,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         // When we change the functionality, it breaks search filtering on empty price fields value
         /** @phpstan-ignore-next-line  */
         $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : null;
-        
+
         /** @phpstan-ignore-next-line  */
         $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : null;
 
