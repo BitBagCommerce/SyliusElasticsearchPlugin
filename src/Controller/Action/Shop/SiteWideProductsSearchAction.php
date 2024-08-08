@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
+use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,8 +30,11 @@ final class SiteWideProductsSearchAction extends AbstractSearchAction
             /** @var Search $search */
             $search = $form->getData();
 
+            /** @var SearchBox $searchBox */
+            $searchBox = $search->getBox();
+
             $data = array_merge(
-                ['query' => $search->getBox()->getQuery()],
+                ['query' => $searchBox->getQuery()],
                 ['facets' => $search->getFacets()],
                 $this->dataHandler->retrieveData($request->query->all()),
             );

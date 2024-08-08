@@ -36,7 +36,7 @@ final class PriceFacet implements FacetInterface
     public function getAggregation(): AbstractAggregation
     {
         $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
-            $this->shopperContext->getChannel()->getCode()
+            (string) $this->shopperContext->getChannel()->getCode()
         );
         $histogram = new Histogram(self::FACET_ID, $priceFieldName, $this->interval);
         $histogram->setMinimumDocumentCount(1);
@@ -47,7 +47,7 @@ final class PriceFacet implements FacetInterface
     public function getQuery(array $selectedBuckets): AbstractQuery
     {
         $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
-            $this->shopperContext->getChannel()->getCode()
+            (string) $this->shopperContext->getChannel()->getCode()
         );
         $query = new BoolQuery();
         foreach ($selectedBuckets as $selectedBucket) {

@@ -15,6 +15,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Webmozart\Assert\Assert;
 
 final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
 {
@@ -29,6 +30,7 @@ final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
             $event,
             ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
+                Assert::notNull($product->getCreatedAt());
                 $createdAt = (int) $product->getCreatedAt()->format('U');
 
                 $document->set($this->createdAtProperty, $createdAt);

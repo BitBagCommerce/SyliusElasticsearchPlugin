@@ -17,6 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Product\Model\ProductOptionInterface;
 
 final class OptionBuilder extends AbstractBuilder
 {
@@ -41,10 +42,18 @@ final class OptionBuilder extends AbstractBuilder
     {
         foreach ($product->getVariants() as $productVariant) {
             foreach ($productVariant->getOptionValues() as $productOptionValue) {
-                $optionCode = $productOptionValue->getOption()->getCode();
+                /** @var ProductOptionInterface $option */
+                $option = $productOptionValue->getOption();
+
+                /** @var string $optionCode */
+                $optionCode = $option->getCode();
+
+                /** @var string $value */
+                $value = $productOptionValue->getValue();
+
                 $index = $this->optionNameResolver->resolvePropertyName($optionCode);
                 $options = $document->has($index) ? $document->get($index) : [];
-                $value = $this->stringFormatter->formatToLowercaseWithoutSpaces($productOptionValue->getValue());
+                $value = $this->stringFormatter->formatToLowercaseWithoutSpaces($value);
                 $options[] = $value;
 
                 $document->set($index, array_values(array_unique($options)));

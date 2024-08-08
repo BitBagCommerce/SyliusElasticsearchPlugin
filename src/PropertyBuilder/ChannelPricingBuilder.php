@@ -39,8 +39,11 @@ final class ChannelPricingBuilder extends AbstractBuilder
                 $productVariant = $product->getVariants()->first();
 
                 foreach ($productVariant->getChannelPricings() as $channelPricing) {
+                    /** @var string $channelCode */
+                    $channelCode = $channelPricing->getChannelCode();
+
                     $propertyName = $this->channelPricingNameResolver
-                        ->resolvePropertyName($channelPricing->getChannelCode());
+                        ->resolvePropertyName($channelCode);
 
                     $document->set($propertyName, $channelPricing->getPrice());
                 }

@@ -49,11 +49,11 @@ final class OptionFacet implements FacetInterface
 
     public function getLabel(): string
     {
-        return $this->productOption->getName();
+        return (string) $this->productOption->getName();
     }
 
     private function getFieldName(): string
     {
-        return $this->optionNameResolver->resolvePropertyName($this->productOption->getCode()) . '.keyword';
+        return $this->optionNameResolver->resolvePropertyName((string) $this->productOption->getCode()) . '.keyword';
     }
 }

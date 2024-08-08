@@ -37,11 +37,12 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $availableSorters = [$this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
         $availableSorting = [self::SORT_ASC_INDEX, self::SORT_DESC_INDEX];
 
-        if (!in_array($orderBy, $availableSorters) || !in_array($sort, $availableSorting)) {
+        if (!in_array($orderBy, $availableSorters, true) || !in_array($sort, $availableSorting, true)) {
             throw new UnexpectedValueException();
         }
 
         if ($this->pricePropertyPrefix === $orderBy) {
+            /** @var string $channelCode */
             $channelCode = $this->channelContext->getChannel()->getCode();
             $orderBy = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         }

@@ -32,10 +32,11 @@ final class ShopProductListDataHandler implements DataHandlerInterface
 
     public function retrieveData(array $requestData): array
     {
+        $data = [];
         $taxon = $this->taxonContext->getTaxon();
 
         $data[$this->namePropertyPrefix] = (string) $requestData[$this->namePropertyPrefix];
-        $data[$this->taxonsProperty] = strtolower($taxon->getCode());
+        $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());
         $data['taxon'] = $taxon;
         $data = array_merge(
             $data,
@@ -77,7 +78,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
             return;
         }
 
-        $attributeTypes = $this->getAttributeTypes($attributesDefinitions);
+        $attributeTypes = $this->getAttributeTypes((array) $attributesDefinitions);
 
         foreach ($requestData['attributes'] as $key => $value) {
             if (!is_array($value) || 0 !== strpos($key, $this->attributePropertyPrefix)) {

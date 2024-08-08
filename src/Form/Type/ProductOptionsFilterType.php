@@ -30,7 +30,9 @@ final class ProductOptionsFilterType extends AbstractFilterType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        foreach ($this->productOptionsContext->getOptions() as $productOption) {
+        /** @var array $options */
+        $options = $this->productOptionsContext->getOptions();
+        foreach ($options as $productOption) {
             $name = $this->optionNameResolver->resolvePropertyName($productOption->getCode());
             $choices = $this->productOptionsMapper->mapToChoices($productOption);
             $choices = array_unique($choices);

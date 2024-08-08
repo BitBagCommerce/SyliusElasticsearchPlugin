@@ -31,6 +31,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
 
     public function find(array $data): Pagerfanta
     {
+        /** @var Query\BoolQuery $boolQuery */
         $boolQuery = $this->queryBuilder->buildQuery($data);
 
         if (array_key_exists('facets', $data) && is_array($data['facets'])) {

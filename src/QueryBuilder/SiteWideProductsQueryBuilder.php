@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Webmozart\Assert\Assert;
 
 final class SiteWideProductsQueryBuilder implements QueryBuilderInterface
 {
@@ -28,8 +29,14 @@ final class SiteWideProductsQueryBuilder implements QueryBuilderInterface
     {
         $boolQuery = new BoolQuery();
 
-        $boolQuery->addMust($this->isEnabledQueryBuilder->buildQuery([]));
-        $boolQuery->addMust($this->hasChannelQueryBuilder->buildQuery([]));
+        $isEnabledQuery = $this->isEnabledQueryBuilder->buildQuery([]);
+        $hasChannelQuery = $this->hasChannelQueryBuilder->buildQuery([]);
+
+        Assert::notNull($isEnabledQuery);
+        Assert::notNull($hasChannelQuery);
+
+        $boolQuery->addMust($isEnabledQuery);
+        $boolQuery->addMust($hasChannelQuery);
 
         $nameQuery = $this->containsNameQueryBuilder->buildQuery($data);
         $this->addMustIfNotNull($nameQuery, $boolQuery);

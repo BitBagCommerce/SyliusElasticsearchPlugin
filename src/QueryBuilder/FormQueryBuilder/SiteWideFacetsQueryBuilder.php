@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder\FormQueryBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
-use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use Symfony\Component\Form\FormEvent;
@@ -27,9 +26,10 @@ final class SiteWideFacetsQueryBuilder implements SiteWideFacetsQueryBuilderInte
 
     public function getQuery(FormEvent $event): Query
     {
-        /** @var Search $data */
+        /** @var array $data */
         $data = $event->getData();
 
+        /** @var Query\BoolQuery $boolQuery */
         $boolQuery = $this->queryBuilder->buildQuery([
             'query' => $data['box']['query'] ?? '',
         ]);

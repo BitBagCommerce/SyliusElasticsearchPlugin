@@ -52,14 +52,14 @@ final class AttributeFacet implements FacetInterface
 
     public function getLabel(): string
     {
-        return $this->getProductAttribute()->getName();
+        return (string) $this->getProductAttribute()->getName();
     }
 
     private function getFieldName(): string
     {
         return sprintf(
             '%s_%s.keyword',
-            $this->attributeNameResolver->resolvePropertyName($this->getProductAttribute()->getCode()),
+            $this->attributeNameResolver->resolvePropertyName((string) $this->getProductAttribute()->getCode()),
             $this->localeContext->getLocaleCode()
         );
     }

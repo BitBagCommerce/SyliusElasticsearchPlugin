@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class ProductAttributeRepository implements ProductAttributeRepositoryInterface
@@ -24,10 +24,11 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 
     public function getAttributeTypeByName(string $attributeName): string
     {
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = $this->productAttributeRepository->createQueryBuilder('p');
+        /** @var EntityRepository $queryBuilder */
+        $queryBuilder = $this->productAttributeRepository;
 
         $result = $queryBuilder
+            ->createQueryBuilder('p')
             ->select('p.type')
             ->where('p.code = :code')
             ->setParameter(':code', $attributeName)
@@ -39,12 +40,15 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 
     public function findAllWithTranslations(?string $locale): array
     {
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = $this->productAttributeRepository->createQueryBuilder('o');
+        /** @var EntityRepository $productAttributeRepository */
+        $productAttributeRepository = $this->productAttributeRepository;
+
+        $queryBuilder = $productAttributeRepository->createQueryBuilder('o');
 
         if (null !== $locale) {
             $queryBuilder
                 ->addSelect('translation')
+                /** @phpstan-ignore-next-line phpstan can't read relationship correctly */
                 ->leftJoin('o.translations', 'translation', 'ot')
                 ->andWhere('translation.locale = :locale')
                 ->setParameter('locale', $locale)
