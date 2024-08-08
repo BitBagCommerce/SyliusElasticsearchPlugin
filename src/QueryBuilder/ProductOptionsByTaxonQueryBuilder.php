@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
-use Webmozart\Assert\Assert;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Webmozart\Assert\Assert;
 
 final class ProductOptionsByTaxonQueryBuilder implements QueryBuilderInterface
 {

@@ -40,8 +40,13 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         $dataMinPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMinPriceName());
         $dataMaxPrice = $this->getDataByKey($data, $this->priceNameResolver->resolveMaxPriceName());
 
-        $minPrice = (null !== $dataMinPrice) ? $this->resolveBasePrice($dataMinPrice) : null;
-        $maxPrice = (null !== $dataMaxPrice) ? $this->resolveBasePrice($dataMaxPrice) : null;
+        // PHPStan is not right here: Only booleans are allowed in a ternary operator condition, string|null given
+        // When we change the functionality, it breaks search filtering on empty price fields value
+        /** @phpstan-ignore-next-line  */
+        $minPrice = $dataMinPrice ? $this->resolveBasePrice($dataMinPrice) : null;
+        
+        /** @phpstan-ignore-next-line  */
+        $maxPrice = $dataMaxPrice ? $this->resolveBasePrice($dataMaxPrice) : null;
 
         /** @var string $channelCode */
         $channelCode = $this->channelContext->getChannel()->getCode();

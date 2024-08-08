@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
-use Webmozart\Assert\Assert;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Webmozart\Assert\Assert;
 
 final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
 {
