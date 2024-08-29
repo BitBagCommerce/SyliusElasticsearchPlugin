@@ -18,20 +18,18 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 
 final class HasChannelQueryBuilder implements QueryBuilderInterface
 {
-    private ChannelContextInterface $channelContext;
-
-    private string $channelsProperty;
-
-    public function __construct(ChannelContextInterface $channelContext, string $channelsProperty)
-    {
-        $this->channelContext = $channelContext;
-        $this->channelsProperty = $channelsProperty;
+    public function __construct(
+        private ChannelContextInterface $channelContext,
+        private string $channelsProperty
+    ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery
     {
         $channelQuery = new Terms($this->channelsProperty);
-        $channelQuery->setTerms([strtolower($this->channelContext->getChannel()->getCode())]);
+        /** @var string $channelCode */
+        $channelCode = $this->channelContext->getChannel()->getCode();
+        $channelQuery->setTerms([strtolower($channelCode)]);
 
         return $channelQuery;
     }

@@ -3,3 +3,4 @@ bitbag_sylius_elasticsearch_plugin:
     max_price_numeric: Max price must be a valid price
     min_price_positive_or_zero: Min price cannot be negative
     max_price_positive_or_zero: Max price cannot be negative
+    price_value_too_large: Provided price value is too large

@@ -11,22 +11,18 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder\FormQueryBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
+use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use Symfony\Component\Form\FormEvent;
 
 final class TaxonFacetsQueryBuilder implements TaxonFacetsQueryBuilderInterface
 {
-    private DataHandlerInterface $shopProductListDataHandler;
-
-    private QueryBuilderInterface $searchProductsQueryBuilder;
-
     public function __construct(
-        DataHandlerInterface $shopProductListDataHandler,
-        QueryBuilderInterface $searchProductsQueryBuilder
+        private DataHandlerInterface $shopProductListDataHandler,
+        private QueryBuilderInterface $searchProductsQueryBuilder,
+        private RegistryInterface $facetRegistry
     ) {
-        $this->shopProductListDataHandler = $shopProductListDataHandler;
-        $this->searchProductsQueryBuilder = $searchProductsQueryBuilder;
     }
 
     public function getQuery(FormEvent $event, string $namePropertyPrefix): Query
@@ -38,6 +34,18 @@ final class TaxonFacetsQueryBuilder implements TaxonFacetsQueryBuilderInterface
 
         $data = $this->shopProductListDataHandler->retrieveData($eventData);
 
-        return new Query($this->searchProductsQueryBuilder->buildQuery($data));
+        /** @var Query\BoolQuery $boolQuery */
+        $boolQuery = $this->searchProductsQueryBuilder->buildQuery($data);
+
+        foreach ($data['facets'] ?? [] as $facetId => $selectedBuckets) {
+            if (!$selectedBuckets) {
+                continue;
+            }
+
+            $facet = $this->facetRegistry->getFacetById($facetId);
+            $boolQuery->addFilter($facet->getQuery($selectedBuckets));
+        }
+
+        return new Query($boolQuery);
     }
 }

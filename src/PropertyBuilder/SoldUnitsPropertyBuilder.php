@@ -16,17 +16,14 @@ use BitBag\SyliusElasticsearchPlugin\Repository\OrderItemRepositoryInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class SoldUnitsPropertyBuilder extends AbstractBuilder
 {
-    private OrderItemRepositoryInterface $orderItemRepository;
-
-    private string $soldUnitsProperty;
-
-    public function __construct(OrderItemRepositoryInterface $orderItemRepository, string $soldUnitsProperty)
-    {
-        $this->orderItemRepository = $orderItemRepository;
-        $this->soldUnitsProperty = $soldUnitsProperty;
+    public function __construct(
+        private OrderItemRepositoryInterface $orderItemRepository,
+        private string $soldUnitsProperty
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void
@@ -37,6 +34,7 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
             function (ProductInterface $product, Document $document): void {
                 $soldUnits = 0;
 
+                /** @var ProductVariantInterface $productVariant */
                 foreach ($product->getVariants() as $productVariant) {
                     $soldUnits += $this->orderItemRepository->countByVariant($productVariant);
                 }

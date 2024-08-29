@@ -1,0 +1,58 @@
+services:
+    app:
+        container_name: app
+        build:
+            context: .
+        environment:
+            APP_ENV: "dev"
+            DATABASE_URL: "mysql://root:mysql@mysql/sylius_%kernel.environment%?charset=utf8mb4"
+#            DATABASE_URL: "pgsql://root:postgres@postgres/sylius_%kernel.environment%?charset=utf8" # When using postgres
+            PHP_DATE_TIMEZONE: "Europe/Warsaw"
+            ELASTICSEARCH_URL: "http://elasticsearch:9200/"
+        volumes:
+            - ./:/app:delegated
+            - ./.docker/php.ini:/etc/php8/php.ini:delegated
+            - ./.docker/nginx.conf:/etc/nginx/nginx.conf:delegated
+        ports:
+            - 80:80
+        depends_on:
+            - mysql
+        networks:
+            - sylius
+
+    mysql:
+        container_name: mysql
+        image: mysql:8.0
+        platform: linux/amd64
+        environment:
+            MYSQL_ROOT_PASSWORD: mysql
+        ports:
+            - ${MYSQL_PORT:-3306}:3306
+        networks:
+            - sylius
+
+#    postgres:
+#        image: postgres:14-alpine
+#        environment:
+#            POSTGRES_USER: root
+#            POSTGRES_PASSWORD: postgres
+#        ports:
+#            - ${POSTGRES_PORT:-5432}:5432
+#        networks:
+#            - sylius
+
+    elasticsearch:
+        container_name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.5
+        environment:
+            discovery.type: "single-node"
+            ES_JAVA_OPTS: -Xms512m -Xmx512m
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        networks:
+            - sylius
+
+networks:
+    sylius:
+        driver: bridge

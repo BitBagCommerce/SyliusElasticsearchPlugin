@@ -16,21 +16,16 @@ use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
 final class OrderProductsListener
 {
-    private ResourceRefresherInterface $resourceRefresher;
-
-    private ObjectPersisterInterface $productPersister;
-
     public function __construct(
-        ResourceRefresherInterface $resourceRefresher,
-        ObjectPersisterInterface $productPersister
+        private ResourceRefresherInterface $resourceRefresher,
+        private ObjectPersisterInterface $productPersister
     ) {
-        $this->resourceRefresher = $resourceRefresher;
-        $this->productPersister = $productPersister;
     }
 
     public function updateOrderProducts(GenericEvent $event): void
@@ -40,7 +35,10 @@ final class OrderProductsListener
 
         /** @var OrderItemInterface $orderItem */
         foreach ($order->getItems() as $orderItem) {
-            $this->resourceRefresher->refresh($orderItem->getProduct(), $this->productPersister);
+            /** @var ResourceInterface $product */
+            $product = $orderItem->getProduct();
+
+            $this->resourceRefresher->refresh($product, $this->productPersister);
         }
     }
 }

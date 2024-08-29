@@ -18,7 +18,7 @@ final class SearchFacets implements Iterator
 {
     private array $selectedBuckets = [];
 
-    public function __get(string $facetId)
+    public function __get(string $facetId): array
     {
         if (!array_key_exists($facetId, $this->selectedBuckets)) {
             return [];
@@ -27,14 +27,14 @@ final class SearchFacets implements Iterator
         return $this->selectedBuckets[$facetId];
     }
 
-    public function __set(string $facetId, $selectedBuckets)
+    public function __set(string $facetId, string $selectedBuckets): void
     {
         $this->selectedBuckets[$facetId] = $selectedBuckets;
     }
 
     public function __isset(string $facetId)
     {
-        return isset($this->selectedBuckets[$facetId]);
+        return true;
     }
 
     /**
@@ -68,7 +68,7 @@ final class SearchFacets implements Iterator
     {
         $key = key($this->selectedBuckets);
 
-        return null !== $key && false !== $key;
+        return null !== $key;
     }
 
     /**

@@ -18,20 +18,11 @@ use Symfony\Component\Form\FormEvent;
 
 final class ProductsFilterFacetResolver implements ProductsFilterFacetResolverInterface
 {
-    private TaxonFacetsQueryBuilderInterface $queryBuilder;
-
-    private RegistryInterface $facetRegistry;
-
-    private PaginatedFinderInterface $finder;
-
     public function __construct(
-        TaxonFacetsQueryBuilderInterface $queryBuilder,
-        RegistryInterface $facetRegistry,
-        PaginatedFinderInterface $finder
+        private TaxonFacetsQueryBuilderInterface $queryBuilder,
+        private RegistryInterface $facetRegistry,
+        private PaginatedFinderInterface $finder
     ) {
-        $this->queryBuilder = $queryBuilder;
-        $this->facetRegistry = $facetRegistry;
-        $this->finder = $finder;
     }
 
     public function resolveFacets(FormEvent $event, string $namePropertyPrefix): Pagerfanta

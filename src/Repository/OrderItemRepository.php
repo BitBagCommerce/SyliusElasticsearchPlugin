@@ -16,22 +16,23 @@ use Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-final class OrderItemRepository implements OrderItemRepositoryInterface
+class OrderItemRepository implements OrderItemRepositoryInterface
 {
-    private OrderItemRepositoryInterface|EntityRepository $baseOrderItemRepository;
-
-    public function __construct(EntityRepository $baseOrderItemRepository)
-    {
-        $this->baseOrderItemRepository = $baseOrderItemRepository;
+    public function __construct(
+        private OrderItemRepositoryInterface|EntityRepository $baseOrderItemRepository
+    ) {
     }
 
     public function countByVariant(ProductVariantInterface $variant, array $orderStates = []): int
     {
-        if (empty($orderStates)) {
+        if ([] !== $orderStates) {
             $orderStates = [OrderInterface::STATE_CANCELLED, OrderInterface::STATE_CART];
         }
 
-        return (int) ($this->baseOrderItemRepository
+        /** @var EntityRepository $baseOrderItemRepository */
+        $baseOrderItemRepository = $this->baseOrderItemRepository;
+
+        return (int) ($baseOrderItemRepository
             ->createQueryBuilder('oi')
             ->select('SUM(oi.quantity)')
             ->join('oi.order', 'o')

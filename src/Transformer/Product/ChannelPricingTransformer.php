@@ -20,32 +20,21 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
+use Webmozart\Assert\Assert;
 
 final class ChannelPricingTransformer implements TransformerInterface
 {
-    private ChannelContextInterface $channelContext;
-
-    private LocaleContextInterface $localeContext;
-
-    private ProductVariantResolverInterface $productVariantResolver;
-
-    private MoneyFormatterInterface $moneyFormatter;
-
     public function __construct(
-        ChannelContextInterface $channelContext,
-        LocaleContextInterface $localeContext,
-        ProductVariantResolverInterface $productVariantResolver,
-        MoneyFormatterInterface $moneyFormatter
+        private ChannelContextInterface $channelContext,
+        private LocaleContextInterface $localeContext,
+        private ProductVariantResolverInterface $productVariantResolver,
+        private MoneyFormatterInterface $moneyFormatter
     ) {
-        $this->channelContext = $channelContext;
-        $this->localeContext = $localeContext;
-        $this->productVariantResolver = $productVariantResolver;
-        $this->moneyFormatter = $moneyFormatter;
     }
 
     public function transform(ProductInterface $product): ?string
     {
-        /** @var ChannelInterface|null $channel */
+        /** @var ChannelInterface $channel */
         $channel = $this->channelContext->getChannel();
 
         if (null === $channelBaseCurrency = $channel->getBaseCurrency()) {
@@ -64,6 +53,9 @@ final class ChannelPricingTransformer implements TransformerInterface
         if (null === $productVariantPricing) {
             return null;
         }
+
+        Assert::integer($productVariantPricing->getPrice());
+        Assert::string($channelBaseCurrency->getCode());
 
         return $this->moneyFormatter->format(
             $productVariantPricing->getPrice(),

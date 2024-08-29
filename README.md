@@ -48,13 +48,18 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 [![](https://bitbag.io/wp-content/uploads/2020/10/button-contact.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_elasticsearch)
 
 
+# Requirements
+
+----
+
+This plugin requires elasticsearch server running. You can install it by following the instructions on the [official website](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html).
+In plugin repository there is Docker Compose file that can be used to run Elasticsearch server.
 
 # Installation
 
 ----
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
-If you use Sylius 1.4, you might get a compatibility issue for Pagerfanta. Please read [this issue](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/issues/23) in order to proceed with a workaround.
 
 *Note*: This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version `1.x`.
 
@@ -81,7 +86,6 @@ The final effect should look like the following:
 ```
 use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface as BitBagElasticsearchPluginVariant;
 use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface as BaseProductVariantInterface;
 
 class ProductVariant extends BaseProductVariant implements BaseProductVariantInterface, BitBagElasticsearchPluginVariant
@@ -134,7 +138,7 @@ $ bin/console assets:install
 
 fos_elastica:
     clients:
-        default: { host: localhost, port: 9200 }
+        default: { url: '%env(ELASTICSEARCH_URL)%' }
     indexes:
         app: ~
 ```
@@ -143,7 +147,7 @@ should become:
 
 fos_elastica:
     clients:
-        default: { host: localhost, port: 9200 }
+        default: { url: '%env(ELASTICSEARCH_URL)%' }
 ```
 In the end, with an elasticsearch server running, execute following commands:
 ```
@@ -201,14 +205,40 @@ webpack_encore:
 
 5. Run `yarn encore dev` or `yarn encore production`
 
+## Functionalities 
+
+All main functionalities of the plugin are described [here.](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/doc/functionalities.md)
 
 ## Usage
-### Rendering the shop products list
+
+### Scope of the search
+
+This plugin offers a site-wide search feature and taxon search feature. It is easily extendable to add more search scopes. For example in Marketplace suite you can create Vendor specific search scope.
+
+### Searching site-wide products
+
+There is searchbar in the header of the shop. 
+
+<div align="center">
+    <img src="doc/es_browser.png" />
+</div>
+
+You can easily modify it by overriding the `@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchForm.html.twig` template or disable it by setting:
+```yml
+sylius_ui:
+  events:
+    sylius.shop.layout.header.content:
+      blocks:
+        bitbag_es_search_form:
+          enabled: false
+```
+
+### Searching taxon products
 
 When you go now to the `/{_locale}/products-list/{taxon-slug}` page, you should see a totally new set of filters. You should see something like this:
 
 <div align="center">
-    <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/BitBagElasticesearchProductIndex.jpg" />
+    <img src="doc/es_results.png" />
 </div>
 
 You might also want to refer the horizontal menu to a new product list page. Follow below instructions to do so:
@@ -229,12 +259,52 @@ If you're using vertical menu - follow steps above with `_verticalMenu.html.twig
 You might not want to show some specific options or attributes in the menu. You can set specific parameters for that:
 ```yml
 parameters:
-    bitbag_es_excluded_filter_options: []
-    bitbag_es_excluded_filter_attributes: ['book_isbn', 'book_pages']
+    bitbag_es_excluded_facet_attributes: ['jeans_material']
+    bitbag_es_excluded_facet_options: ['t_shirt_size']
 ```
 
-By default, all options and attributes are indexed. After you change these parameters, remember to run `bin/console fo:el:po` command again
-(a shortcut for `fos:elastica:populate`).
+By default, all options and attributes filters are shown.
+
+It is also possible to disable options and attribute filters autodiscovery by setting the following parameters:
+```yml
+parameters:
+    bitbag_es_facets_auto_discover: false
+```
+
+Then you have to manually register your filters:
+
+Available filters:
+* [`TaxonFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/TaxonFacet.php) which allows to filter your search results by taxons using the ElasticSearch [`Terms`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html) aggregation.
+* [`AttributeFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/AttributeFacet.php) which allows to filter your search results by product attributes values using the ElasticSearch [`Terms`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html) aggregation.
+* [`OptionFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/OptionFacet.php) which is the same as `AttributeFacet` but for product options.
+* [`PriceFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/PriceFacet.php) which allows to filter search results by price range the ElasticSearch [`Histogram`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html) aggregation.
+
+Example of manual registration of filters:
+```yml
+services:
+    bitbag_sylius_elasticsearch_plugin.facet.attribute.t_shirt_brand:
+      class: BitBag\SyliusElasticsearchPlugin\Facet\AttributeFacet
+      arguments:
+        - '@bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute'
+        - '@=service("sylius.repository.product_attribute").findOneBy({"code": "t_shirt_brand"})'
+        - '@sylius.context.locale'
+
+    bitbag_sylius_elasticsearch_plugin.facet.registry:
+      class: BitBag\SyliusElasticsearchPlugin\Facet\Registry
+      calls:
+        -   method: addFacet
+            arguments:
+              - t_shirt_brand
+              - '@bitbag_sylius_elasticsearch_plugin.facet.attribute.t_shirt_brand'
+        - method: addFacet
+          arguments:
+            - price
+            - '@bitbag_sylius_elasticsearch_plugin.facet.price'
+        - method: addFacet
+          arguments:
+            - taxon
+            - '@bitbag_sylius_elasticsearch_plugin.facet.taxon'
+```
 
 ### Reindexing
 
@@ -254,20 +324,6 @@ fos_elastica:
 
 Indexes with `bitbag_shop_product`, `bitbag_attribute_taxons` and `bitbag_option_taxons` keys are available so far.
 
-### Site-wide search
-
-This plugin offers a site-wide search feature as well. You have a search box field where you query all products indexed on ElasticSearch. When you enter a query in the search box the results will appear in the search results page.
-
-### Facets
-
-You can also add search facets (a.k.a. filters) to your search results page, both taxon and site-wide search. To do so you have to add facets to the `bitbag_sylius_elasticsearch_plugin.facet.registry` (for site-wide search) or `bitbag_sylius_elasticsearch_plugin.facet.taxon_registry` (for taxon search) service (see an example of those service definitions [here](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/tests/Application/config/services.yaml)). A facet is a service which implements the `BitBag\SyliusElasticsearchPlugin\Facet\FacetInterface`. You can implement your own facets from scratch or you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) one of the basic facet implementation included in this plugin, which are:
-
-* [`TaxonFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/TaxonFacet.php) which allows to filter your search results by taxons using the ElasticSearch [`Terms`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html) aggregation.
-* [`AttributeFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/AttributeFacet.php) which allows to filter your search results by product attributes values using the ElasticSearch [`Terms`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html) aggregation.
-* [`OptionFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/OptionFacet.php) which is the same as `AttributeFacet` but for product options.
-* [`PriceFacet`](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/src/Facet/PriceFacet.php) which allows to filter search results by price range the ElasticSearch [`Histogram`](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html) aggregation.
-
-You can see an example of the definition of all of these facets [here](https://github.com/BitBagCommerce/SyliusElasticsearchPlugin/blob/master/tests/Application/config/services.yaml).
 
 ## Customization
 
@@ -314,10 +370,10 @@ We build **unforgettable**, consistent digital customer journeys on top of the *
 Our team is fluent in **Polish, English, German and, French**. That is why our cooperation with clients from all over the world is smooth.
 
 **Some numbers from BitBag regarding Sylius:**
-- 50+ **experts** including consultants, UI/UX designers, Sylius trained front-end and back-end developers,
-- 120+ projects **delivered** on top of Sylius,
-- 25+ **countries** of BitBag’s customers,
-- 4+ **years** in the Sylius ecosystem.
+- 70+ **experts** including consultants, UI/UX designers, Sylius trained front-end and back-end developers,
+- 150+ projects **delivered** on top of Sylius,
+- 30+ **countries** of BitBag’s customers,
+- 7+ **years** in the Sylius ecosystem.
 
 **Our services:**
 - Business audit/Consulting in the field of **strategy** development,

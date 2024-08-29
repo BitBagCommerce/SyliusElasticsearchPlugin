@@ -18,11 +18,9 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
 final class ProductOptionsMapper implements ProductOptionsMapperInterface
 {
-    private StringFormatterInterface $stringFormatter;
-
-    public function __construct(StringFormatterInterface $stringFormatter)
-    {
-        $this->stringFormatter = $stringFormatter;
+    public function __construct(
+        private StringFormatterInterface $stringFormatter
+    ) {
     }
 
     public function mapToChoices(ProductOptionInterface $productOption): array
@@ -33,6 +31,7 @@ final class ProductOptionsMapper implements ProductOptionsMapperInterface
         array_walk(
             $productOptionValues,
             function (ProductOptionValueInterface $productOptionValue) use (&$choices): void {
+                /** @var string $value */
                 $value = $productOptionValue->getValue();
                 $choices[$value] = $this->stringFormatter->formatToLowercaseWithoutSpaces($value);
             }

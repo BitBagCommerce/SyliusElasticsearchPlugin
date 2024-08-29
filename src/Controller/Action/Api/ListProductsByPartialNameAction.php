@@ -23,24 +23,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ListProductsByPartialNameAction
 {
-    private NamedProductsFinderInterface $namedProductsFinder;
-
-    private TransformerInterface $productSlugTransformer;
-
-    private TransformerInterface $productChannelPriceTransformer;
-
-    private TransformerInterface $productImageTransformer;
-
     public function __construct(
-        NamedProductsFinderInterface $namedProductsFinder,
-        TransformerInterface $productSlugResolver,
-        TransformerInterface $productChannelPriceResolver,
-        TransformerInterface $productImageResolver
+        private NamedProductsFinderInterface $namedProductsFinder,
+        private TransformerInterface $productSlugTransformer,
+        private TransformerInterface $productChannelPriceTransformer,
+        private TransformerInterface $productImageTransformer
     ) {
-        $this->namedProductsFinder = $namedProductsFinder;
-        $this->productSlugTransformer = $productSlugResolver;
-        $this->productChannelPriceTransformer = $productChannelPriceResolver;
-        $this->productImageTransformer = $productImageResolver;
     }
 
     public function __invoke(Request $request): Response
@@ -51,7 +39,8 @@ final class ListProductsByPartialNameAction
             return new JsonResponse($itemsResponse->toArray());
         }
 
-        $products = $this->namedProductsFinder->findByNamePart($request->query->get('query'));
+        /** @var array $products */
+        $products = $this->namedProductsFinder->findByNamePart((string) $request->query->get('query'));
 
         /** @var ProductInterface $product */
         foreach ($products as $product) {
@@ -60,10 +49,10 @@ final class ListProductsByPartialNameAction
             }
 
             $itemsResponse->addItem(new Item(
-                $productMainTaxon->getName(),
-                $product->getName(),
+                (string) $productMainTaxon->getName(),
+                (string) $product->getName(),
                 $product->getShortDescription(),
-                $this->productSlugTransformer->transform($product),
+                (string) $this->productSlugTransformer->transform($product),
                 $this->productChannelPriceTransformer->transform($product),
                 $this->productImageTransformer->transform($product)
             ));

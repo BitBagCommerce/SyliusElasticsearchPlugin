@@ -13,8 +13,10 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
-use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Product\Model\ProductAttribute;
+use Sylius\Component\Product\Model\ProductOption;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -22,24 +24,17 @@ use Webmozart\Assert\Assert;
 
 final class ResourceIndexListener implements ResourceIndexListenerInterface
 {
-    private ResourceRefresherInterface $resourceRefresher;
-
-    private array $persistersMap;
-
-    private RepositoryInterface $attributeRepository;
-
     public function __construct(
-        ResourceRefresherInterface $resourceRefresher,
-        array $persistersMap,
-        RepositoryInterface $attributeRepository
+        private ResourceRefresherInterface $resourceRefresher,
+        private array $persistersMap,
+        private RepositoryInterface $attributeRepository,
+        private RepositoryInterface $optionRepository
     ) {
-        $this->resourceRefresher = $resourceRefresher;
-        $this->persistersMap = $persistersMap;
-        $this->attributeRepository = $attributeRepository;
     }
 
     public function updateIndex(GenericEvent $event): void
     {
+        /** @var ResourceInterface|null $resource */
         $resource = $event->getSubject();
 
         Assert::isInstanceOf($resource, ResourceInterface::class);
@@ -47,18 +42,27 @@ final class ResourceIndexListener implements ResourceIndexListenerInterface
             $method = $config[self::GET_PARENT_METHOD_KEY] ?? null;
 
             if (null !== $method && method_exists($resource, $method)) {
+                /** @phpstan-ignore-next-line Variable method call on mixed or other bugs */
                 $resource = $resource->$method();
             }
 
             if ($resource instanceof $config[self::MODEL_KEY]) {
+                /** @phpstan-ignore-next-line refresh method needs ResourceInterface but ECS doesn't see $resource variable in method. */
                 $this->resourceRefresher->refresh($resource, $config[self::SERVICE_ID_KEY]);
             }
 
-            if ($resource instanceof Product
-                && ProductAttribute::class === $config[self::MODEL_KEY]
-            ) {
-                foreach ($this->attributeRepository->findAll() as $attribute) {
-                    $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);
+            if ($resource instanceof ProductInterface || $resource instanceof ProductVariantInterface) {
+                if (ProductAttribute::class === $config[self::MODEL_KEY]) {
+                    foreach ($this->attributeRepository->findAll() as $attribute) {
+                        /** @var ResourceInterface $attribute */
+                        $this->resourceRefresher->refresh($attribute, $config[self::SERVICE_ID_KEY]);
+                    }
+                }
+                if (ProductOption::class === $config[self::MODEL_KEY]) {
+                    foreach ($this->optionRepository->findAll() as $option) {
+                        /** @var ResourceInterface $option */
+                        $this->resourceRefresher->refresh($option, $config[self::SERVICE_ID_KEY]);
+                    }
                 }
             }
         }

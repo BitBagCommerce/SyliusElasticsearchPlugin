@@ -6,10 +6,8 @@
 {% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
 
 {% block content %}
-    <h1 class="ui monster section dividing header">
-        {{ taxon.name }}
-        <div class="sub header">{{ taxon.description }}</div>
-    </h1>
+    {% include '@SyliusShop/Product/Index/_header.html.twig' %}
+
     {{ form_start(form, {'method': 'GET', 'attr': {'class': 'ui loadable form'}}) }}
     <div class="ui stackable grid">
         <div class="four wide column">

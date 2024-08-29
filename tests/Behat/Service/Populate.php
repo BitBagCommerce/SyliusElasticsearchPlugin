@@ -14,43 +14,19 @@ use FOS\ElasticaBundle\Event\PostIndexPopulateEvent;
 use FOS\ElasticaBundle\Event\PreIndexPopulateEvent;
 use FOS\ElasticaBundle\Index\IndexManager;
 use FOS\ElasticaBundle\Index\ResetterInterface;
-use FOS\ElasticaBundle\Persister\PagerPersisterInterface;
 use FOS\ElasticaBundle\Persister\PagerPersisterRegistry;
 use FOS\ElasticaBundle\Provider\PagerProviderRegistry;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class Populate
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-
-    /** @var IndexManager */
-    private $indexManager;
-
-    /** @var PagerProviderRegistry */
-    private $pagerProviderRegistry;
-
-    /** @var PagerPersisterRegistry */
-    private $pagerPersisterRegistry;
-
-    /** @var PagerPersisterInterface */
-    private $pagerPersister;
-
-    /** @var ResetterInterface */
-    private $resetter;
-
     public function __construct(
-        EventDispatcherInterface $dispatcher,
-        IndexManager $indexManager,
-        PagerProviderRegistry $pagerProviderRegistry,
-        PagerPersisterRegistry $pagerPersisterRegistry,
-        ResetterInterface $resetter
+        private EventDispatcherInterface $dispatcher,
+        private IndexManager $indexManager,
+        private PagerProviderRegistry $pagerProviderRegistry,
+        private PagerPersisterRegistry $pagerPersisterRegistry,
+        private ResetterInterface $resetter
     ) {
-        $this->dispatcher = $dispatcher;
-        $this->indexManager = $indexManager;
-        $this->pagerProviderRegistry = $pagerProviderRegistry;
-        $this->pagerPersisterRegistry = $pagerPersisterRegistry;
-        $this->resetter = $resetter;
     }
 
     public function populateIndex(): void

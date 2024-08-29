@@ -23,38 +23,13 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class ProductAttributeContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var RepositoryInterface */
-    private $productAttributeRepository;
-
-    /** @var AttributeFactoryInterface */
-    private $productAttributeFactory;
-
-    /** @var FactoryInterface */
-    private $productAttributeValueFactory;
-
-    /** @var EntityManagerInterface */
-    private $objectManager;
-
-    /** @var \Faker\Generator */
-    private $faker;
-
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        RepositoryInterface $productAttributeRepository,
-        AttributeFactoryInterface $productAttributeFactory,
-        FactoryInterface $productAttributeValueFactory,
-        EntityManagerInterface $objectManager
+        private SharedStorageInterface $sharedStorage,
+        private RepositoryInterface $productAttributeRepository,
+        private AttributeFactoryInterface $productAttributeFactory,
+        private FactoryInterface $productAttributeValueFactory,
+        private EntityManagerInterface $objectManager
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->productAttributeRepository = $productAttributeRepository;
-        $this->productAttributeFactory = $productAttributeFactory;
-        $this->productAttributeValueFactory = $productAttributeValueFactory;
-        $this->objectManager = $objectManager;
-
-        $this->faker = \Faker\Factory::create();
     }
 
     /**

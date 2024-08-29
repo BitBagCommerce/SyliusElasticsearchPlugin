@@ -12,27 +12,25 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Product\Repository\ProductAttributeValueRepositoryInterface as BaseAttributeValueRepositoryInterface;
 use Sylius\Component\Taxonomy\Model\Taxon;
 
-final class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
+class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
-    private BaseAttributeValueRepositoryInterface $baseAttributeValueRepository;
-
-    private bool $includeAllDescendants;
-
     public function __construct(
-        BaseAttributeValueRepositoryInterface $baseAttributeValueRepository,
-        bool $includeAllDescendants
+        private BaseAttributeValueRepositoryInterface $baseAttributeValueRepository,
+        private bool $includeAllDescendants
     ) {
-        $this->baseAttributeValueRepository = $baseAttributeValueRepository;
-        $this->includeAllDescendants = $includeAllDescendants;
     }
 
     public function getUniqueAttributeValues(AttributeInterface $productAttribute, Taxon $taxon): array
     {
-        $queryBuilder = $this->baseAttributeValueRepository->createQueryBuilder('o');
+        /** @var EntityRepository $baseAttributeValueRepository */
+        $baseAttributeValueRepository = $this->baseAttributeValueRepository;
+
+        $queryBuilder = $baseAttributeValueRepository->createQueryBuilder('o');
 
         /** @var string|null $storageType */
         $storageType = $productAttribute->getStorageType();

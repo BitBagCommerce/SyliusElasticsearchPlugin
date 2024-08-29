@@ -16,14 +16,13 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $taxonPositionNameResolver;
-
-    public function __construct(ConcatedNameResolverInterface $taxonPositionNameResolver)
-    {
-        $this->taxonPositionNameResolver = $taxonPositionNameResolver;
+    public function __construct(
+        private ConcatedNameResolverInterface $taxonPositionNameResolver
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void
@@ -32,10 +31,16 @@ final class ProductTaxonPositionPropertyBuilder extends AbstractBuilder
             $event,
             ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
-                foreach ($product->getProductTaxons() as $taxon) {
+                foreach ($product->getProductTaxons() as $productTaxon) {
+                    /** @var TaxonInterface $taxon */
+                    $taxon = $productTaxon->getTaxon();
+
+                    /** @var string $code */
+                    $code = $taxon->getCode();
+
                     $document->set(
-                        $this->taxonPositionNameResolver->resolvePropertyName($taxon->getTaxon()->getCode()),
-                        $taxon->getPosition()
+                        $this->taxonPositionNameResolver->resolvePropertyName($code),
+                        $productTaxon->getPosition()
                     );
                 }
             }

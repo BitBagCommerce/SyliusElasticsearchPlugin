@@ -20,40 +20,23 @@ use Sylius\Component\Product\Model\ProductAttribute;
 
 final class ShopProductListDataHandler implements DataHandlerInterface
 {
-    private TaxonContextInterface $taxonContext;
-
-    private ProductAttributesFinderInterface $attributesFinder;
-
-    private string $namePropertyPrefix;
-
-    private string $taxonsProperty;
-
-    private string $optionPropertyPrefix;
-
-    private string $attributePropertyPrefix;
-
     public function __construct(
-        TaxonContextInterface $taxonContext,
-        ProductAttributesFinderInterface $attributesFinder,
-        string $namePropertyPrefix,
-        string $taxonsProperty,
-        string $optionPropertyPrefix,
-        string $attributePropertyPrefix
+        private TaxonContextInterface $taxonContext,
+        private ProductAttributesFinderInterface $attributesFinder,
+        private string $namePropertyPrefix,
+        private string $taxonsProperty,
+        private string $optionPropertyPrefix,
+        private string $attributePropertyPrefix
     ) {
-        $this->taxonContext = $taxonContext;
-        $this->attributesFinder = $attributesFinder;
-        $this->namePropertyPrefix = $namePropertyPrefix;
-        $this->taxonsProperty = $taxonsProperty;
-        $this->optionPropertyPrefix = $optionPropertyPrefix;
-        $this->attributePropertyPrefix = $attributePropertyPrefix;
     }
 
     public function retrieveData(array $requestData): array
     {
+        $data = [];
         $taxon = $this->taxonContext->getTaxon();
 
         $data[$this->namePropertyPrefix] = (string) $requestData[$this->namePropertyPrefix];
-        $data[$this->taxonsProperty] = strtolower($taxon->getCode());
+        $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());
         $data['taxon'] = $taxon;
         $data = array_merge(
             $data,
@@ -95,7 +78,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
             return;
         }
 
-        $attributeTypes = $this->getAttributeTypes($attributesDefinitions);
+        $attributeTypes = $this->getAttributeTypes((array) $attributesDefinitions);
 
         foreach ($requestData['attributes'] as $key => $value) {
             if (!is_array($value) || 0 !== strpos($key, $this->attributePropertyPrefix)) {

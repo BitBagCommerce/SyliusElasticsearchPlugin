@@ -20,11 +20,9 @@ use Sylius\Component\Core\Model\ProductTranslationInterface;
 
 final class ProductDescriptionBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $productDescriptionNameResolver;
-
-    public function __construct(ConcatedNameResolverInterface $productDescriptionNameResolver)
-    {
-        $this->productDescriptionNameResolver = $productDescriptionNameResolver;
+    public function __construct(
+        private ConcatedNameResolverInterface $productDescriptionNameResolver
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void
@@ -35,8 +33,11 @@ final class ProductDescriptionBuilder extends AbstractBuilder
             function (ProductInterface $product, Document $document): void {
                 /** @var ProductTranslationInterface $productTranslation */
                 foreach ($product->getTranslations() as $productTranslation) {
+                    /** @var string $locale */
+                    $locale = $productTranslation->getLocale();
+
                     $propertyName = $this->productDescriptionNameResolver->resolvePropertyName(
-                        $productTranslation->getLocale()
+                        $locale
                     );
                     $document->set($propertyName, $productTranslation->getDescription());
                 }

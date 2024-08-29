@@ -17,26 +17,14 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
-use RuntimeException;
 use Sylius\Component\Product\Model\ProductOptionInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionFacet implements FacetInterface
 {
-    private ConcatedNameResolverInterface $optionNameResolver;
-
-    private RepositoryInterface $productOptionRepository;
-
-    private string $productOptionCode;
-
     public function __construct(
-        ConcatedNameResolverInterface $optionNameResolver,
-        RepositoryInterface $productOptionRepository,
-        string $optionCode
+        private ConcatedNameResolverInterface $optionNameResolver,
+        private ProductOptionInterface $productOption,
     ) {
-        $this->optionNameResolver = $optionNameResolver;
-        $this->productOptionRepository = $productOptionRepository;
-        $this->productOptionCode = $optionCode;
     }
 
     public function getAggregation(): AbstractAggregation
@@ -61,16 +49,11 @@ final class OptionFacet implements FacetInterface
 
     public function getLabel(): string
     {
-        $productOption = $this->productOptionRepository->findOneBy(['code' => $this->productOptionCode]);
-        if (!$productOption instanceof ProductOptionInterface) {
-            throw new RuntimeException(sprintf('Cannot find product option with code "%s"', $this->productOptionCode));
-        }
-
-        return $productOption->getName();
+        return (string) $this->productOption->getName();
     }
 
     private function getFieldName(): string
     {
-        return $this->optionNameResolver->resolvePropertyName($this->productOptionCode) . '.keyword';
+        return $this->optionNameResolver->resolvePropertyName((string) $this->productOption->getCode()) . '.keyword';
     }
 }

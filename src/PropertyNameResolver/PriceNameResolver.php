@@ -14,11 +14,9 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyNameResolver;
 
 final class PriceNameResolver implements PriceNameResolverInterface
 {
-    private string $pricePropertyPrefix;
-
-    public function __construct(string $pricePropertyPrefix)
-    {
-        $this->pricePropertyPrefix = $pricePropertyPrefix;
+    public function __construct(
+        private string $pricePropertyPrefix
+    ) {
     }
 
     public function resolveMinPriceName(): string

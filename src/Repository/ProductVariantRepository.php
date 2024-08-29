@@ -17,23 +17,39 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface as BaseProductVariantRepositoryInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 
-final class ProductVariantRepository implements ProductVariantRepositoryInterface
+class ProductVariantRepository implements ProductVariantRepositoryInterface
 {
-    private BaseProductVariantRepositoryInterface|EntityRepository $baseProductVariantRepository;
-
-    public function __construct(BaseProductVariantRepositoryInterface $baseProductVariantRepository)
-    {
-        $this->baseProductVariantRepository = $baseProductVariantRepository;
+    public function __construct(
+        private BaseProductVariantRepositoryInterface|EntityRepository $baseProductVariantRepository
+    ) {
     }
 
     public function findOneByOptionValue(ProductOptionValueInterface $productOptionValue): ?ProductVariantInterface
     {
-        return $this->baseProductVariantRepository->createQueryBuilder('o')
+        /** @var EntityRepository $baseProductVariantRepository */
+        $baseProductVariantRepository = $this->baseProductVariantRepository;
+
+        return $baseProductVariantRepository
+            ->createQueryBuilder('o')
             ->where(':optionValue MEMBER OF o.optionValues')
             ->setParameter('optionValue', $productOptionValue)
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult()
+        ;
+    }
+
+    public function findByOptionValue(ProductOptionValueInterface $productOptionValue): array
+    {
+        /** @var EntityRepository $baseProductVariantRepository */
+        $baseProductVariantRepository = $this->baseProductVariantRepository;
+
+        return $baseProductVariantRepository
+            ->createQueryBuilder('o')
+            ->where(':optionValue MEMBER OF o.optionValues')
+            ->setParameter('optionValue', $productOptionValue)
+            ->getQuery()
+            ->getResult()
         ;
     }
 }

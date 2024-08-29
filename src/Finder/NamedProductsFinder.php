@@ -13,26 +13,22 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Finder;
 
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
+use Elastica\Query\AbstractQuery;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 
 final class NamedProductsFinder implements NamedProductsFinderInterface
 {
-    private QueryBuilderInterface $productsByPartialNameQueryBuilder;
-
-    private FinderInterface $productsFinder;
-
     public function __construct(
-        QueryBuilderInterface $productsByPartialNameQueryBuilder,
-        FinderInterface $productsFinder
+        private QueryBuilderInterface $queryBuilder,
+        private FinderInterface $productsFinder
     ) {
-        $this->productsByPartialNameQueryBuilder = $productsByPartialNameQueryBuilder;
-        $this->productsFinder = $productsFinder;
     }
 
     public function findByNamePart(string $namePart): ?array
     {
-        $data = ['name' => $namePart];
-        $query = $this->productsByPartialNameQueryBuilder->buildQuery($data);
+        $data = ['query' => $namePart];
+        /** @var AbstractQuery $query */
+        $query = $this->queryBuilder->buildQuery($data);
 
         return $this->productsFinder->find($query);
     }

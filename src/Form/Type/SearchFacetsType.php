@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace BitBag\SyliusElasticsearchPlugin\Form\Type;
 
 use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
-use BitBag\SyliusElasticsearchPlugin\Model\SearchFacets;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,11 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SearchFacetsType extends AbstractType
 {
-    private RegistryInterface $facetRegistry;
-
-    public function __construct(RegistryInterface $facetRegistry)
-    {
-        $this->facetRegistry = $facetRegistry;
+    public function __construct(
+        private RegistryInterface $facetRegistry
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -36,7 +33,7 @@ final class SearchFacetsType extends AbstractType
             foreach ($facetData['buckets'] as $bucket) {
                 $choices[$facet->getBucketLabel($bucket)] = $bucket['key'];
             }
-            if (!empty($choices)) {
+            if ([] !== $choices) {
                 $builder
                     ->add(
                         $facetId,
@@ -56,6 +53,5 @@ final class SearchFacetsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('facets');
-        $resolver->setDefault('data_class', SearchFacets::class);
     }
 }

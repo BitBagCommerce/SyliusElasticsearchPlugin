@@ -15,35 +15,19 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductVariantRepositoryInterface;
 use FOS\ElasticaBundle\Event\PostTransformEvent;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductOptionInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OptionTaxonsBuilder extends AbstractBuilder
 {
-    private RepositoryInterface $productOptionValueRepository;
-
-    private ProductVariantRepositoryInterface $productVariantRepository;
-
-    private ProductTaxonsMapperInterface $productTaxonsMapper;
-
-    private string $taxonsProperty;
-
-    private array $excludedOptions;
-
     public function __construct(
-        RepositoryInterface $productOptionValueRepository,
-        ProductVariantRepositoryInterface $productVariantRepository,
-        ProductTaxonsMapperInterface $productTaxonsMapper,
-        string $taxonsProperty,
-        array $excludedOptions = []
+        private RepositoryInterface $productOptionValueRepository,
+        private ProductVariantRepositoryInterface $productVariantRepository,
+        private ProductTaxonsMapperInterface $productTaxonsMapper,
+        private string $taxonsProperty,
+        private array $excludedOptions = []
     ) {
-        $this->productOptionValueRepository = $productOptionValueRepository;
-        $this->productVariantRepository = $productVariantRepository;
-        $this->productTaxonsMapper = $productTaxonsMapper;
-        $this->taxonsProperty = $taxonsProperty;
-        $this->excludedOptions = $excludedOptions;
     }
 
     public function consumeEvent(PostTransformEvent $event): void
@@ -57,23 +41,20 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         }
 
         $document = $event->getDocument();
-        $optionValues = $this->productOptionValueRepository->findAll();
+        $optionValues = $this->productOptionValueRepository->findBy(['option' => $documentProductOption]);
         $taxons = [];
 
         /** @var ProductOptionValueInterface $optionValue */
         foreach ($optionValues as $optionValue) {
             $option = $optionValue->getOption();
-            $productVariant = $this->productVariantRepository->findOneByOptionValue($optionValue);
+            $productVariants = $this->productVariantRepository->findByOptionValue($optionValue);
 
-            if (null === $productVariant) {
-                continue;
-            }
+            foreach ($productVariants as $productVariant) {
+                $product = $productVariant->getProduct();
 
-            /** @var ProductInterface $product */
-            $product = $productVariant->getProduct();
-
-            if ($documentProductOption === $option && $product->isEnabled()) {
-                $taxons = array_merge($taxons, $this->productTaxonsMapper->mapToUniqueCodes($product));
+                if ($documentProductOption === $option && $product->isEnabled()) {
+                    $taxons = array_merge($taxons, $this->productTaxonsMapper->mapToUniqueCodes($product));
+                }
             }
         }
 

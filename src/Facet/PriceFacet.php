@@ -25,30 +25,18 @@ final class PriceFacet implements FacetInterface
 {
     public const FACET_ID = 'price';
 
-    private ConcatedNameResolverInterface $channelPricingNameResolver;
-
-    private MoneyFormatterInterface $moneyFormatter;
-
-    private ShopperContextInterface $shopperContext;
-
-    private int $interval;
-
     public function __construct(
-        ConcatedNameResolverInterface $channelPricingNameResolver,
-        MoneyFormatterInterface $moneyFormatter,
-        ShopperContextInterface $shopperContext,
-        int $interval
+        private ConcatedNameResolverInterface $channelPricingNameResolver,
+        private MoneyFormatterInterface $moneyFormatter,
+        private ShopperContextInterface $shopperContext,
+        private int $interval
     ) {
-        $this->channelPricingNameResolver = $channelPricingNameResolver;
-        $this->moneyFormatter = $moneyFormatter;
-        $this->interval = $interval;
-        $this->shopperContext = $shopperContext;
     }
 
     public function getAggregation(): AbstractAggregation
     {
         $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
-            $this->shopperContext->getChannel()->getCode()
+            (string) $this->shopperContext->getChannel()->getCode()
         );
         $histogram = new Histogram(self::FACET_ID, $priceFieldName, $this->interval);
         $histogram->setMinimumDocumentCount(1);
@@ -59,7 +47,7 @@ final class PriceFacet implements FacetInterface
     public function getQuery(array $selectedBuckets): AbstractQuery
     {
         $priceFieldName = $this->channelPricingNameResolver->resolvePropertyName(
-            $this->shopperContext->getChannel()->getCode()
+            (string) $this->shopperContext->getChannel()->getCode()
         );
         $query = new BoolQuery();
         foreach ($selectedBuckets as $selectedBucket) {

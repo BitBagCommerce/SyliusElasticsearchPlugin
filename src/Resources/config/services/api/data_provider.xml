@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag_sylius_elasticsearch_plugin.api.data_provider.product_collection" class="BitBag\SyliusElasticsearchPlugin\Api\DataProvider\ProductCollectionDataProvider">
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.api.request_data_handler" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.search_products" />
+            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.api.resolver.facets" />
+            <tag name="api_platform.collection_data_provider" priority="10" />
+        </service>
+    </services>
+</container>

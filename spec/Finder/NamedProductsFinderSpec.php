@@ -37,7 +37,7 @@ final class NamedProductsFinderSpec extends ObjectBehavior
         FinderInterface $productsFinder,
         AbstractQuery $query
     ): void {
-        $productsByPartialNameQueryBuilder->buildQuery(['name' => 'part'])->willReturn($query);
+        $productsByPartialNameQueryBuilder->buildQuery(['query' => 'part'])->willReturn($query);
 
         $productsFinder->find($query)->willReturn([]);
 

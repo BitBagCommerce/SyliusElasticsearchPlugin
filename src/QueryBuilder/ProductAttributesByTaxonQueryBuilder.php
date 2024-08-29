@@ -14,20 +14,21 @@ namespace BitBag\SyliusElasticsearchPlugin\QueryBuilder;
 
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Webmozart\Assert\Assert;
 
 final class ProductAttributesByTaxonQueryBuilder implements QueryBuilderInterface
 {
-    private QueryBuilderInterface $hasTaxonQueryBuilder;
-
-    public function __construct(QueryBuilderInterface $hasTaxonQueryBuilder)
-    {
-        $this->hasTaxonQueryBuilder = $hasTaxonQueryBuilder;
+    public function __construct(
+        private QueryBuilderInterface $hasTaxonQueryBuilder
+    ) {
     }
 
     public function buildQuery(array $data): ?AbstractQuery
     {
         $boolQuery = new BoolQuery();
         $taxonQuery = $this->hasTaxonQueryBuilder->buildQuery($data);
+
+        Assert::notNull($taxonQuery);
 
         $boolQuery->addMust($taxonQuery);
 

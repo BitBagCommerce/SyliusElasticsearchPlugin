@@ -20,11 +20,9 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class ChannelPricingBuilder extends AbstractBuilder
 {
-    private ConcatedNameResolverInterface $channelPricingNameResolver;
-
-    public function __construct(ConcatedNameResolverInterface $channelPricingNameResolver)
-    {
-        $this->channelPricingNameResolver = $channelPricingNameResolver;
+    public function __construct(
+        private ConcatedNameResolverInterface $channelPricingNameResolver
+    ) {
     }
 
     public function consumeEvent(PostTransformEvent $event): void
@@ -50,12 +48,14 @@ final class ChannelPricingBuilder extends AbstractBuilder
                         $elasticFieldName = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
                         $channelPrice = $variantChannelPricing->getPrice();
 
-                        if ($channelPrice !== null) {
-                            $pricesPerChannel[$elasticFieldName][] = $channelPrice;
-                        }
-                    }
-                }
+                foreach ($productVariant->getChannelPricings() as $channelPricing) {
+                    /** @var string $channelCode */
+                    $channelCode = $channelPricing->getChannelCode();
 
+                    $propertyName = $this->channelPricingNameResolver
+                        ->resolvePropertyName($channelCode);
+                }
+                      
                 foreach ($pricesPerChannel as $elasticFieldName => $channelVariantPrices) {
                     $document->set($elasticFieldName, array_values(array_unique($channelVariantPrices)));
                 }

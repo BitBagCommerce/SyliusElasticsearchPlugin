@@ -17,34 +17,20 @@ use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\Att
 use BitBag\SyliusElasticsearchPlugin\Formatter\StringFormatterInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryInterface;
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
+use Sylius\Component\Core\Model\Taxon;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
 
 final class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
-    private ProductAttributeValueRepositoryInterface $productAttributeValueRepository;
-
-    private LocaleContextInterface $localeContext;
-
-    private StringFormatterInterface $stringFormatter;
-
-    private TaxonContextInterface $taxonContext;
-
-    /** @var AttributesMapperCollectorInterface[] */
-    private iterable $attributeMapper;
-
     public function __construct(
-        ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
-        LocaleContextInterface $localeContext,
-        StringFormatterInterface $stringFormatter,
-        TaxonContextInterface $taxonContext,
-        iterable $attributeMapper
+        private ProductAttributeValueRepositoryInterface $productAttributeValueRepository,
+        private LocaleContextInterface $localeContext,
+        private StringFormatterInterface $stringFormatter,
+        private TaxonContextInterface $taxonContext,
+        /** @var $attributeMapper AttributesMapperCollectorInterface[] */
+        private iterable $attributeMapper
     ) {
-        $this->productAttributeValueRepository = $productAttributeValueRepository;
-        $this->localeContext = $localeContext;
-        $this->stringFormatter = $stringFormatter;
-        $this->taxonContext = $taxonContext;
-        $this->attributeMapper = $attributeMapper;
     }
 
     public function mapToChoices(ProductAttributeInterface $productAttribute): array
@@ -62,6 +48,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
 
             return $choices;
         }
+        /** @var Taxon $taxon */
         $taxon = $this->taxonContext->getTaxon();
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute, $taxon);
 
