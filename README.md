@@ -58,152 +58,23 @@ In plugin repository there is Docker Compose file that can be used to run Elasti
 # Installation
 
 ----
+### Requirements
+**Note:** This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version 1.x.
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 
-*Note*: This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version `1.x`.
+| Package       | Version         |
+|---------------|-----------------|
+| PHP           | \>=8.1          |
+| sylius/sylius | 1.12.x - 1.13.x |
+| MySQL         | \>= 5.7         |
+| NodeJS        | \>= 18.x        |
+| ElasticSearch | \>= 7.x         |
 
-```bash
-$ composer require bitbag/elasticsearch-plugin --no-scripts
-```
+----
 
-
-Add plugin dependencies to your `config/bundles.php` file:
-```php
-return [
-    ...
-
-    FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
-    BitBag\SyliusElasticsearchPlugin\BitBagSyliusElasticsearchPlugin::class => ['all' => true],
-];
-```
-
-Use trait `BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait` in an overridden ProductVariant entity class. [see how to overwrite a sylius model](https://docs.sylius.com/en/1.9/customization/model.html)
-
-also Use `BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface` interface in ProductVariant entity class.
-The final effect should look like the following:
-
-```
-use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface as BitBagElasticsearchPluginVariant;
-use BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait;
-use Sylius\Component\Core\Model\ProductVariantInterface as BaseProductVariantInterface;
-
-class ProductVariant extends BaseProductVariant implements BaseProductVariantInterface, BitBagElasticsearchPluginVariant
-{
-    use ProductVariantTrait;
-    
-    ...
-}
-```
-
-Import required config in your `config/packages/_sylius.yaml` file:
-```yaml
-# config/packages/_sylius.yaml
-
-imports:
-    ...
-    
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/config.yml" }
-```
-
-Import routing **on top** of your `config/routes.yaml` file:
-```yaml
-# config/routes.yaml
-
-bitbag_sylius_elasticsearch_plugin:
-    resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
-```
-
-...and set up the redirection from the default Sylius shop products index page on top of your `config/routes/sylius_shop.yaml`
-file.
-```
-# config/routes/sylius_shop.yaml
-
-redirect_sylius_shop_product_index:
-    path: /{_locale}/taxons/{slug}
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-    defaults:
-        route: bitbag_sylius_elasticsearch_plugin_shop_list_products
-        permanent: true
-    requirements:
-        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
-        slug: .+
-```
-...and update installed assets with the following command:
-```
-$ bin/console assets:install
-```
-...and remove the default ElasticSearch index (`app`) defined by `FOSElasticaBundle` in `config/packages/fos_elastica.yaml`:
-```
-
-fos_elastica:
-    clients:
-        default: { url: '%env(ELASTICSEARCH_URL)%' }
-    indexes:
-        app: ~
-```
-should become:
-```
-
-fos_elastica:
-    clients:
-        default: { url: '%env(ELASTICSEARCH_URL)%' }
-```
-In the end, with an elasticsearch server running, execute following commands:
-```
-$ bin/console cache:clear
-$ bin/console fos:elastica:populate
-```
-
-**Note:** If you are running it on production, add the `-e prod` flag to this command. Elastic are created with environment suffix.
-
-### Configuring Webpack
-
-1. Import plugin's `webpack.config.js` file
-
-```js
-// webpack.config.js
-const [ bitbagElasticSearchShop ] = require('./vendor/bitbag/elasticsearch-plugin/webpack.config.js')
-...
-
-module.exports = [..., bitbagElasticSearchShop];
-```
-
-2. Add new packages in `./config/packages/assets.yaml`
-
-```yml
-# config/packages/assets.yaml
-
-framework:
-    assets:
-        packages:
-            # ...
-            elasticsearch_shop:
-                json_manifest_path: '%kernel.project_dir%/public/build/bitbag/elasticsearch/shop/manifest.json'
-```
-
-3. Add new build paths in `./config/packages/webpack_encore.yml`
-
-```yml
-# config/packages/webpack_encore.yml
-
-webpack_encore:
-    builds:
-        # ...
-        elasticsearch_shop: '%kernel.project_dir%/public/build/bitbag/elasticsearch/shop'
-```
-
-4. Add encore functions to your templates
-
-```twig
-{# @SyliusShopBundle/_scripts.html.twig #}
-{{ encore_entry_script_tags('bitbag-elasticsearch-shop', null, 'elasticsearch_shop') }}
-
-{# @SyliusShopBundle/_styles.html.twig #}
-{{ encore_entry_link_tags('bitbag-elasticsearch-shop', null, 'elasticsearch_shop') }}
-```
-
-5. Run `yarn encore dev` or `yarn encore production`
+### Full installation guide
+- [See the full installation guide](doc/installation.md)
 
 ## Functionalities 
 
