@@ -22,7 +22,8 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
     public function __construct(
         private FinderInterface $optionsFinder,
         private QueryBuilderInterface $productOptionsByTaxonQueryBuilder,
-        private string $taxonsProperty
+        private string $taxonsProperty,
+        private int $filterMax = 20
     ) {
     }
 
@@ -34,6 +35,6 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
         /** @var AbstractQuery $query */
         $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);
 
-        return $this->optionsFinder->find($query, 20);
+        return $this->optionsFinder->find($query, $this->filterMax);
     }
 }
