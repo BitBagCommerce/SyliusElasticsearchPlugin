@@ -19,7 +19,9 @@ final class ResourceRefresher implements ResourceRefresherInterface
 {
     public function refresh(ResourceInterface $resource, ObjectPersisterInterface $objectPersister): void
     {
-        $objectPersister->deleteById($resource->getId());
-        $objectPersister->replaceOne($resource);
+        if ($resource->getId()) {
+            $objectPersister->deleteById($resource->getId());
+            $objectPersister->replaceOne($resource);
+        }
     }
 }
