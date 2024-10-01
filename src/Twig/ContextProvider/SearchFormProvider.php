@@ -14,6 +14,7 @@ namespace BitBag\SyliusElasticsearchPlugin\Twig\ContextProvider;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
 use Sylius\Bundle\UiBundle\ContextProvider\ContextProviderInterface;
+use Sylius\Bundle\UiBundle\Registry\Block;
 use Sylius\Bundle\UiBundle\Registry\TemplateBlock;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -28,7 +29,7 @@ final class SearchFormProvider implements ContextProviderInterface
     ) {
     }
 
-    public function provide(array $templateContext, TemplateBlock $templateBlock): array
+    public function provide(array $templateContext, Block $templateBlock): array
     {
         $form = $this->formFactory->create(SearchType::class);
         $templateContext['form'] = $form->createView();
@@ -36,7 +37,7 @@ final class SearchFormProvider implements ContextProviderInterface
         return $templateContext;
     }
 
-    public function supports(TemplateBlock $templateBlock): bool
+    public function supports(Block $templateBlock): bool
     {
         return self::EVENT_NAME === $templateBlock->getEventName()
             && self::BLOCK_NAME === $templateBlock->getName();

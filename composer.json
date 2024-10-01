@@ -7,13 +7,13 @@
         "php": "^8.1",
         "ext-json": "*",
         "friendsofsymfony/elastica-bundle": "^6.4",
-        "sylius/sylius": "~v2.0.0-alpha.1",
         "symfony/property-access": "^6.4",
         "symfony/proxy-manager-bridge": "^6.4",
         "symfony/stimulus-bundle": "^2.19",
         "symfony/ux-autocomplete": "^2.19",
         "symfony/ux-live-component": "^2.19",
-        "symfony/webpack-encore-bundle": "^1.15"
+        "sylius/sylius": "~2.0.0",
+        "symfony/webpack-encore-bundle": "^2.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -43,16 +43,17 @@
         "robertfausk/behat-panther-extension": "^1.1",
         "sylius-labs/coding-standard": "^4.2",
         "sylius-labs/suite-tags-extension": "^0.2",
-        "symfony/browser-kit": "^6.4",
-        "symfony/debug-bundle": "^6.4",
         "symfony/dotenv": "^6.4",
         "symfony/intl": "^6.4",
-        "symfony/web-profiler-bundle": "^6.4"
+        "symfony/browser-kit": "^6.4 || ^7.1",
+        "symfony/debug-bundle": "^6.4 || ^7.1",
+        "symfony/http-client": "^6.4 || ^7.1",
+        "symfony/intl": "^6.4 || ^7.1",
+        "symfony/web-profiler-bundle": "^6.4 || ^7.1"
     },
     "conflict": {
         "api-platform/core": "v2.7.17",
-        "symfony/framework-bundle": "6.2.8",
-        "behat/mink-selenium2-driver": ">=1.7.0"
+        "symfony/framework-bundle": "6.2.8"
     },
     "config": {
         "sort-packages": true,
@@ -65,10 +66,9 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "v2.0.x-dev"
         },
         "symfony": {
-            "require": "^6.4"
+            "require": "^6.0 || ^7.0"
         }
     },
     "autoload": {
