@@ -1,7 +1,13 @@
 {
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@popperjs/core": "^2.11.8",
+    "@tabler/core": "^1.0.0-beta21",
+    "apexcharts": "^3.53.0",
+    "bootstrap": "^5.3.3",
     "chart.js": "^3.7.1",
+    "flag-icons": "^7.2.3",
+    "infinite-tree": "^1.18.0",
     "jquery": "^3.5.0",
     "jquery.dirtyforms": "^2.0.0",
     "lightbox2": "^2.9.0",
@@ -9,6 +15,10 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@symfony/stimulus-bridge": "^3.2.2",
+    "@symfony/ux-autocomplete": "file:../../vendor/symfony/ux-autocomplete/assets",
+    "@symfony/ux-live-component": "file:../../vendor/symfony/ux-live-component/assets",
     "@symfony/webpack-encore": "^1.6.1",
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -23,7 +33,10 @@
     "eslint-plugin-import": "^2.11.0",
     "merge-stream": "^1.0.0",
     "sass": "^1.39.2",
-    "sass-loader": "^12.1.0"
+    "sass-loader": "^12.1.0",
+    "slugify": "^1.6.6",
+    "stimulus-use": "^0.52.2",
+    "tom-select": "^2.3.1"
   },
   "scripts": {
     "dev": "yarn encore dev",
