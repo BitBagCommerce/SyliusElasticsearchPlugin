@@ -71,6 +71,20 @@ final class ProductListingTest extends JsonApiTestCase
         $this->assertResponse($response, 'test_it_finds_products_by_name_and_multiple_facets', Response::HTTP_OK);
     }
 
+    public function test_it_updates_facets(): void
+    {
+        $this->loadFixturesFromFiles(['test_it_updates_facets.yaml']);
+        $this->populateElasticsearch();
+
+        $this->client->request(
+            'GET',
+            '/api/v2/shop/products/search?query=mug&facets[color][]=red&facets[material][]=ceramic'
+        );
+
+        $response = $this->client->getResponse();
+        $this->assertResponse($response, 'test_it_updates_facets', Response::HTTP_OK);
+    }
+
     private function populateElasticsearch(): void
     {
         $process = new Process(['tests/Application/bin/console', 'fos:elastica:populate']);

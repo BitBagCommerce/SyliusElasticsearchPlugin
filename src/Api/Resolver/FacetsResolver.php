@@ -33,12 +33,22 @@ final class FacetsResolver implements FacetsResolverInterface
     {
         $this->autoDiscoverRegistry->autoRegister();
 
+        /** @var Query\BoolQuery $boolQuery */
         $boolQuery = $this->queryBuilder->buildQuery($data);
         $query = new Query($boolQuery);
         $query->setSize(0);
 
         foreach ($this->facetRegistry->getFacets() as $facetId => $facet) {
             $query->addAggregation($facet->getAggregation()->setName($facetId));
+        }
+
+        foreach ($data['facets'] ?? [] as $facetId => $selectedBuckets) {
+            if (!$selectedBuckets) {
+                continue;
+            }
+
+            $facet = $this->facetRegistry->getFacetById($facetId);
+            $boolQuery->addFilter($facet->getQuery($selectedBuckets));
         }
 
         $facets = $this->finder->findPaginated($query);
