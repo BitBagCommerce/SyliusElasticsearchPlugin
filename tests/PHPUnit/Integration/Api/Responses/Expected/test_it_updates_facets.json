@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "productTaxons": [
+        "/api/v2/shop/product-taxons/@string@"
+      ],
+      "mainTaxon": null,
+      "averageRating": 0,
+      "images": [],
+      "id": "@integer@",
+      "code": "MUG",
+      "variants": [],
+      "options": [],
+      "associations": [],
+      "createdAt": "@string@",
+      "updatedAt": "@string@",
+      "shortDescription": null,
+      "reviews": [],
+      "name": "Mug",
+      "description": "@string@",
+      "slug": "mug"
+    }
+  ],
+  "facets": {
+    "material": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "ceramic",
+          "doc_count": 1
+        }
+      ]
+    },
+    "color": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "red",
+          "doc_count": 1
+        }
+      ]
+    },
+    "taxon": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "mugs",
+          "doc_count": 1
+        }
+      ]
+    }
+  },
+  "pagination": {
+    "current_page": 1,
+    "has_previous_page": false,
+    "has_next_page": false,
+    "per_page": 9,
+    "total_items": 1,
+    "total_pages": 1
+  }
+}
