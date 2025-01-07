@@ -17,6 +17,7 @@ use BitBag\SyliusElasticsearchPlugin\Form\EventSubscriber\AddFacetsEventSubscrib
 use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,7 +32,14 @@ final class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('box', SearchBoxType::class, ['label' => false])
+            ->add('query', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'bitbag_sylius_elasticsearch_plugin.ui.search_box.query.placeholder',
+                    'class' => 'prompt app-quick-add-code-input',
+                ],
+            ])
             ->setMethod('GET')
         ;
 

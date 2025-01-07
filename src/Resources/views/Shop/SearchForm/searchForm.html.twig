@@ -1,0 +1,11 @@
+{% form_theme search_form '@SyliusShop/form/theme.html.twig' %}
+
+{{ form_start(search_form, {'action': path('bitbag_sylius_elasticsearch_plugin_shop_search')}) }}
+    <div class="input-group">
+        {{ form_widget(search_form.query) }}
+        <button class="btn btn btn-outline-secondary btn-sm" type="submit" aria-label="search button">
+            {{ ux_icon('tabler:search') }}
+        </button>
+    </div>
+{{ form_end(search_form, {'render_rest': false}) }}
+<div class="results"></div>

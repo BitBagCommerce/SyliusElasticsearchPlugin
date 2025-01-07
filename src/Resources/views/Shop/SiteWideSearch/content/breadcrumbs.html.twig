@@ -1,0 +1,6 @@
+{% from '@SyliusShop/shared/breadcrumbs.html.twig' import breadcrumbs as breadcrumbs %}
+
+{{ breadcrumbs([
+    { label: 'sylius.ui.home'|trans, path: path('sylius_shop_homepage'), active: false },
+    { label: 'bitbag_sylius_elasticsearch_plugin.ui.search_header'|trans, active: true }
+]) }}

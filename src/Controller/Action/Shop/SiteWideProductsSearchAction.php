@@ -30,11 +30,8 @@ final class SiteWideProductsSearchAction extends AbstractSearchAction
             /** @var Search $search */
             $search = $form->getData();
 
-            /** @var SearchBox $searchBox */
-            $searchBox = $search->getBox();
-
             $data = array_merge(
-                ['query' => $searchBox->getQuery()],
+                ['query' => $search->getQuery()],
                 ['facets' => $search->getFacets()],
                 $this->dataHandler->retrieveData($request->query->all()),
             );
@@ -49,8 +46,9 @@ final class SiteWideProductsSearchAction extends AbstractSearchAction
         return new Response($this->twig->render(
             $template,
             [
-                'results' => $results ?? null,
-                'searchForm' => $form->createView(),
+                'products' => $results ?? null,
+                'resources' => $results ?? null,
+                'search_form' => $form->createView(),
             ]
         ));
     }

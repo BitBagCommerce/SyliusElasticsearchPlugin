@@ -12,25 +12,20 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Model;
 
-class Search
+final class Search
 {
-    private ?SearchBox $box;
+    private ?string $query = null;
 
     private array $facets = [];
 
-    public function __construct()
+    public function getQuery(): ?string
     {
-        $this->box = new SearchBox();
+        return $this->query;
     }
 
-    public function getBox(): ?SearchBox
+    public function setQuery(?string $query): void
     {
-        return $this->box;
-    }
-
-    public function setBox(?SearchBox $box): void
-    {
-        $this->box = $box;
+        $this->query = $query;
     }
 
     public function getFacets(): array

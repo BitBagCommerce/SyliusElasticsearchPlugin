@@ -1,0 +1,23 @@
+{% if hookable_metadata.context.products.nbResults > 0 %}
+
+    {% set route = app.request.attributes.get('_route') %}
+    {% set route_parameters = app.request.query.all|unset_elements(['order_by', 'sort', 'page']) %}
+
+    {% if app.request.query.all()['order_by'] is not defined or app.request.query.all()['order_by'] is empty %}
+        {% set current_sorting_label = 'bitbag_sylius_elasticsearch_plugin.ui.newest'|trans|lower %}
+    {% elseif app.request.query.all()['order_by'] == 'sold_units'%}
+        {% set current_sorting_label = 'bitbag_sylius_elasticsearch_plugin.ui.bestsellers'|trans|lower %}
+    {% elseif app.request.query.all()['order_by'] == 'product_created_at' and app.request.query.all()['sort'] == 'desc'%}
+        {% set current_sorting_label = 'bitbag_sylius_elasticsearch_plugin.ui.newest'|trans|lower %}
+    {% elseif app.request.query.all()['order_by'] == 'product_created_at' and app.request.query.all()['sort'] == 'asc'%}
+        {% set current_sorting_label = 'bitbag_sylius_elasticsearch_plugin.ui.oldest'|trans|lower %}
+    {% elseif app.request.query.all()['order_by'] == 'price' and app.request.query.all()['sort'] == 'desc'%}
+        {% set current_sorting_label = 'bitbag_sylius_elasticsearch_plugin.ui.most_expensive'|trans|lower %}
+    {% elseif app.request.query.all()['order_by'] == 'price' and app.request.query.all()['sort'] == 'asc'%}
+        {% set current_sorting_label = 'bitbag_sylius_elasticsearch_plugin.ui.cheapest'|trans|lower %}
+    {% endif %}
+
+    <div class="dropdown">
+        {% hook 'sorting' with { route, route_parameters, current_sorting_label } %}
+    </div>
+{% endif %}

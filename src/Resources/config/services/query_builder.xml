@@ -53,7 +53,7 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing" />
             <argument type="service" id="sylius.context.channel" />
             <argument type="service" id="sylius.context.currency.channel_aware" />
-            <argument type="service" id="sylius.currency_converter" />
+            <argument type="service" id="sylius.converter.currency" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductAttributesByTaxonQueryBuilder">

@@ -4,7 +4,7 @@
     <services>
         <service id="bitbag_sylius_elasticsearch_plugin.facet.price" class="BitBag\SyliusElasticsearchPlugin\Facet\PriceFacet">
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing" />
-            <argument type="service" id="sylius.money_formatter" />
+            <argument type="service" id="sylius.formatter.money" />
             <argument type="service" id="sylius.context.shopper" />
             <argument type="string">%bitbag_es_shop_price_facet_interval%</argument>
         </service>

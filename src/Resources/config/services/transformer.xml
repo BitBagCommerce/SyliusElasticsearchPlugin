@@ -5,8 +5,8 @@
         <service id="BitBag\SyliusElasticsearchPlugin\Transformer\Product\ChannelPricingTransformer">
             <argument type="service" id="sylius.context.channel" />
             <argument type="service" id="sylius.context.locale" />
-            <argument type="service" id="sylius.product_variant_resolver.default" />
-            <argument type="service" id="sylius.money_formatter" />
+            <argument type="service" id="sylius.resolver.product_variant.default" />
+            <argument type="service" id="sylius.formatter.money" />
         </service>
 
         <service id="BitBag\SyliusElasticsearchPlugin\Transformer\Product\ImageTransformer">

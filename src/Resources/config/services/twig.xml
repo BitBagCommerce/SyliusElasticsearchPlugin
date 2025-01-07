@@ -12,5 +12,13 @@
             <tag name="sylius.ui.template_event.context_provider" />
         </service>
 
+        <service
+                id="bitbag.sylius_elasticsearch_plugin.twig.component.product_search_form"
+                class="BitBag\SyliusElasticsearchPlugin\Twig\Component\SearchFormComponent"
+        >
+            <argument type="service" id="form.factory" />
+
+            <tag name="sylius.twig_component" key="bitbag.sylius_elasticsearch_plugin:search_form" />
+        </service>
     </services>
 </container>

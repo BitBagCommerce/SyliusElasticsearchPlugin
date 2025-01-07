@@ -17,4 +17,4 @@ bitbag_sylius_elasticsearch_plugin_shop_search:
     path: /{_locale}/search
     defaults:
         _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.site_wide_products_search
-        template: "@BitBagSyliusElasticsearchPlugin/Shop/search.html.twig"
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/SiteWideSearch/index.html.twig"
