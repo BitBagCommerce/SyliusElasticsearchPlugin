@@ -18,7 +18,8 @@
       "reviews": [],
       "name": "Mug",
       "description": "@string@",
-      "slug": "mug"
+      "slug": "mug",
+      "defaultVariant": null
     }
   ],
   "facets": {

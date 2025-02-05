@@ -5,7 +5,7 @@
                 "/api/v2/shop/product-taxons/@string@"
             ],
             "mainTaxon": null,
-            "averageRating": 0,
+            "averageRating": "@integer@ || @float@",
             "images": [],
             "id": "@integer@",
             "code": "MUG",
@@ -18,7 +18,8 @@
             "reviews": [],
             "name": "Mug",
             "description": "@string@",
-            "slug": "mug"
+            "slug": "mug",
+            "defaultVariant": null
         }
     ],
     "facets": {
