@@ -12,16 +12,16 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Api\DataProvider;
 
-use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
-use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProviderInterface;
 use BitBag\SyliusElasticsearchPlugin\Api\RequestDataHandler\RequestDataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Api\Resolver\FacetsResolverInterface;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinderInterface;
+use Webmozart\Assert\Assert;
 
-final class ProductCollectionDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+final class ProductCollectionDataProvider implements ProviderInterface
 {
-    private const SUPPORTED_OPERATION_TYPE = 'elasticsearch_shop_get';
-
     public function __construct(
         private RequestDataHandlerInterface $dataHandler,
         private ShopProductsFinderInterface $shopProductsFinder,
@@ -29,17 +29,19 @@ final class ProductCollectionDataProvider implements ContextAwareCollectionDataP
     ) {
     }
 
-    public function getCollection(
-        string $resourceClass,
-        string $operationName = null,
-        array $context = []
-    ) {
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    {
+        Assert::isInstanceOf($operation, GetCollection::class);
+
         $data = $this->dataHandler->retrieveData($context);
+
         $facets = $this->facetsResolver->resolve($data);
+
         $products = $this->shopProductsFinder->find($data);
 
-        return [
-            'items' => $products->jsonSerialize(),
+        /** @var array $result */
+        $result =  [
+            'items' => iterator_to_array($products->getCurrentPageResults()),
             'facets' => $facets,
             'pagination' => [
                 'current_page' => $products->getCurrentPage(),
@@ -50,13 +52,7 @@ final class ProductCollectionDataProvider implements ContextAwareCollectionDataP
                 'total_pages' => $products->getNbPages(),
             ],
         ];
-    }
 
-    public function supports(
-        string $resourceClass,
-        string $operationName = null,
-        array $context = []
-    ): bool {
-        return self::SUPPORTED_OPERATION_TYPE === $operationName;
+        return $result;
     }
 }
