@@ -9,8 +9,8 @@
         "friendsofsymfony/elastica-bundle": "^6.0",
         "sylius/sylius": "~2.0.0",
         "symfony/property-access": "^6.4 || ^7.1",
-        "symfony/webpack-encore-bundle": "^2.2",
-        "symfony/proxy-manager-bridge": "^6.4 || ^7.1"
+        "symfony/proxy-manager-bridge": "^6.4 || ^7.1",
+        "symfony/webpack-encore-bundle": "^2.2"
     },
     "require-dev": {
         "behat/behat": "^3.16",

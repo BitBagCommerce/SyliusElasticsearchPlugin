@@ -22,7 +22,6 @@ use Prophecy\Argument;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -49,29 +48,24 @@ final class TaxonProductsSearchActionSpec extends ObjectBehavior
     }
 
     function it_renders_product_list(
-        Request $request,
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        ParameterBag $queryParameters,
         DataHandlerInterface $dataHandler,
         Pagerfanta $pagerfanta,
         FormView $formView,
         Environment $twig,
         Response $response,
-        ShopProductsFinderInterface $finder,
+        ShopProductsFinderInterface $finder
     ): void {
         $form->getData()->willReturn([]);
         $form->isValid()->willReturn(true);
         $form->isSubmitted()->willReturn(true);
-        $form->handleRequest($request)->willReturn($form);
+        $form->handleRequest(Argument::any())->willReturn($form);
         $form->createView()->willReturn($formView);
 
         $formFactory->create(ShopProductsFilterType::class)->willReturn($form);
-        $request->query = $queryParameters;
-        $queryParameters->all()->willReturn([]);
 
-        $request->get('template')->willReturn('@Template');
-        $request->get('slug')->willReturn(null);
+        $request = new Request(query: ['slug' => null], attributes: ['template' => '@Template']);
 
         $dataHandler->retrieveData(['slug' => null])->willReturn(['taxon' => null]);
 

@@ -1,2 +1,2 @@
 bitbag_sylius_elasticsearch_plugin:
-    resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
+    resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"

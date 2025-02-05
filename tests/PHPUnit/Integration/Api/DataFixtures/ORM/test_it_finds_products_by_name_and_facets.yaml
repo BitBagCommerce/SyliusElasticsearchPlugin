@@ -24,8 +24,6 @@ Sylius\Component\Core\Model\Product:
     code: 'MUG'
     channels: ['@channel_web']
     currentLocale: 'en_US'
-    translations:
-      en_US: '@product_translation_mug'
   product_mug2:
     code: 'MUG2'
     channels: ['@channel_web']

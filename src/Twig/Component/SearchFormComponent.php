@@ -6,7 +6,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Twig\Component;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
