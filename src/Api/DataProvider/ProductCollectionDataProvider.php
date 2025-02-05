@@ -33,8 +33,7 @@ final class ProductCollectionDataProvider implements ProviderInterface
         Operation $operation,
         array $uriVariables = [],
         array $context = []
-    ): object|array|null
-    {
+    ): object|array|null {
         Assert::isInstanceOf($operation, GetCollection::class);
 
         $data = $this->dataHandler->retrieveData($context);
