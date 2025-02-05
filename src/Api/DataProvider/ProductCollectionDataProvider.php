@@ -29,7 +29,11 @@ final class ProductCollectionDataProvider implements ProviderInterface
     ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(
+        Operation $operation,
+        array $uriVariables = [],
+        array $context = []
+    ): object|array|null
     {
         Assert::isInstanceOf($operation, GetCollection::class);
 
@@ -40,7 +44,7 @@ final class ProductCollectionDataProvider implements ProviderInterface
         $products = $this->shopProductsFinder->find($data);
 
         /** @var array $result */
-        $result =  [
+        $result = [
             'items' => iterator_to_array($products->getCurrentPageResults()),
             'facets' => $facets,
             'pagination' => [
