@@ -68,7 +68,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
     public function assertPriceIntervals(array $expectedIntervals): void
     {
         $priceIntervals = array_map(
-            static fn(NodeElement $element) => trim($element->getText()),
+            static fn (NodeElement $element) => trim($element->getText()),
             $this->getElement('search_facets_price')->findAll('css', '.form-check-label')
         );
 
@@ -91,7 +91,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
     public function assertTaxonFacetOptions(array $expectedOptions): void
     {
         $options = array_map(
-            static fn(NodeElement $element) => trim($element->getText()),
+            static fn (NodeElement $element) => trim($element->getText()),
             $this->getElement('search_facets_taxon')->findAll('css', '.form-check-label')
         );
 
@@ -118,7 +118,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         $field->check();
 
         if (!$this->hasElement('search_facets_filter_button')) {
-            throw new \Exception("Filter button not found on the page.");
+            throw new \Exception('Filter button not found on the page.');
         }
 
         $this->getElement('search_facets_filter_button')->click();
@@ -136,7 +136,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         $field->check();
 
         if (!$this->hasElement('search_facets_filter_button')) {
-            throw new \Exception("Filter button not found on the page.");
+            throw new \Exception('Filter button not found on the page.');
         }
 
         $this->getElement('search_facets_filter_button')->click();
@@ -154,7 +154,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         }
 
         $options = array_map(
-            static fn(NodeElement $element) => trim($element->getText()),
+            static fn (NodeElement $element) => trim($element->getText()),
             $this->getElement($element)->findAll('css', '.form-check-label')
         );
 
@@ -182,7 +182,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         }
 
         $options = array_map(
-            static fn(NodeElement $element) => trim($element->getText()),
+            static fn (NodeElement $element) => trim($element->getText()),
             $this->getElement($element)->findAll('css', '.form-check-label')
         );
 
