@@ -1,4 +1,4 @@
-{% if hookable_metadata.context.products.nbResults > 0 %}
+{% if hookable_metadata.context.products is defined and hookable_metadata.context.products is not empty and hookable_metadata.context.products.nbResults is defined and hookable_metadata.context.products.nbResults > 0 %}
 
     {% set route = app.request.attributes.get('_route') %}
     {% set route_parameters = app.request.query.all|unset_elements(['order_by', 'sort', 'page']) %}

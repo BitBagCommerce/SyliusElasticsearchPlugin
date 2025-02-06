@@ -1,6 +1,6 @@
 {% import '@SyliusShop/shared/messages.html.twig' as messages %}
 
-{% set products = hookable_metadata.context.products %}
+{% set products = hookable_metadata.context.products is defined and hookable_metadata.context.products is not empty ? hookable_metadata.context.products : [] %}
 
 {% if products|length > 0 %}
     <div class="products-grid" {{ sylius_test_html_attribute('products') }}>

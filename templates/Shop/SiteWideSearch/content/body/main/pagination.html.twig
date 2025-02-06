@@ -1,4 +1,6 @@
-{% set products = hookable_metadata.context.products %}
+{% set products = hookable_metadata.context.products is defined and hookable_metadata.context.products is not empty ? hookable_metadata.context.products : null %}
 {% import '@SyliusShop/shared/pagination/pagination.html.twig' as pagination %}
 
-{{ pagination.simple(products) }}
+{% if products is not null %}
+    {{ pagination.simple(products) }}
+{% endif %}
