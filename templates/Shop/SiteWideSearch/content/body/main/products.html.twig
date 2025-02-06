@@ -3,7 +3,7 @@
 {% set products = hookable_metadata.context.products is defined and hookable_metadata.context.products is not empty ? hookable_metadata.context.products : [] %}
 
 {% if products|length > 0 %}
-    <div class="products-grid" {{ sylius_test_html_attribute('products') }}>
+    <div id="search_results" class="products-grid" {{ sylius_test_html_attribute('products') }}>
         {% for product in products %}
             {{ component('sylius_shop:product:card', { product: product, template: '@SyliusShop/product/common/card.html.twig' }) }}
         {% endfor %}

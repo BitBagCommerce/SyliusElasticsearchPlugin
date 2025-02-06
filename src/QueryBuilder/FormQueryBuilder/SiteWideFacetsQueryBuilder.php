@@ -31,7 +31,7 @@ final class SiteWideFacetsQueryBuilder implements SiteWideFacetsQueryBuilderInte
 
         /** @var Query\BoolQuery $boolQuery */
         $boolQuery = $this->queryBuilder->buildQuery([
-            'query' => $data['box']['query'] ?? '',
+            'query' => $data['query'] ?? '',
         ]);
 
         foreach ($data['facets'] ?? [] as $facetId => $selectedBuckets) {
