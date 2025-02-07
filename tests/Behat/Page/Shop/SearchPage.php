@@ -106,40 +106,52 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         );
     }
 
+    public function filterByFacet(string $facetName, string $label): void
+    {
+        $session = $this->getSession();
+        $currentUrl = $session->getCurrentUrl();
+
+        $parsedUrl = parse_url($currentUrl);
+        $queryParams = [];
+
+        if (!empty($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryParams);
+        }
+
+        $facetElement = $this->getElement("search_facets_{$facetName}");
+        if (!$facetElement) {
+            throw new \Exception("Facet '{$facetName}' not found.");
+        }
+
+        foreach ($facetElement->findAll('css', '.form-check-input') as $checkbox) {
+            $labelElement = $checkbox->getParent()->find('css', 'label');
+
+            if ($labelElement && preg_replace('/\s*\(\d+\)$/', '', trim($labelElement->getText())) === $label) {
+                $queryParams['bitbag_elasticsearch_search']['facets'][$facetName][] = $checkbox->getAttribute('value');
+
+                $newUrl = sprintf('%s://%s%s?%s',
+                    $parsedUrl['scheme'] ?? 'http',
+                    $parsedUrl['host'] ?? 'localhost',
+                    $parsedUrl['path'] ?? '',
+                    http_build_query($queryParams)
+                );
+
+                $session->visit($newUrl);
+                return;
+            }
+        }
+
+        throw new \Exception("Filter option '{$label}' not found in facet '{$facetName}'.");
+    }
+
     public function filterByPriceInterval(string $intervalLabel): void
     {
-        $priceFacet = $this->getElement('search_facets_price');
-        $field = $priceFacet->findField($intervalLabel);
-
-        if (!$field) {
-            throw new \Exception("Price filter option '{$intervalLabel}' not found.");
-        }
-
-        $field->check();
-
-        if (!$this->hasElement('search_facets_filter_button')) {
-            throw new \Exception('Filter button not found on the page.');
-        }
-
-        $this->getElement('search_facets_filter_button')->click();
+        $this->filterByFacet('price', $intervalLabel);
     }
 
     public function filterByTaxon(string $taxon): void
     {
-        $taxonFacet = $this->getElement('search_facets_taxon');
-        $field = $taxonFacet->findField($taxon);
-
-        if (!$field) {
-            throw new \Exception("Taxon filter option '{$taxon}' not found.");
-        }
-
-        $field->check();
-
-        if (!$this->hasElement('search_facets_filter_button')) {
-            throw new \Exception('Filter button not found on the page.');
-        }
-
-        $this->getElement('search_facets_filter_button')->click();
+        $this->filterByFacet('taxon', $taxon);
     }
 
     public function assertAttributeFacetOptions(string $attributeFilterLabel, array $expectedOptions): void

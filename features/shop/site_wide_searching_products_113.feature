@@ -96,19 +96,19 @@ Feature: Site-wide products search
       """
     And I should see 5 products in search results
 
-#  @ui
-#  Scenario: Searching products and filtering by price
-#    When I browse the search page
-#    And I search the products by "BMW" phrase in the site-wide search box
-#    And I filter by price interval "$10,000.00 - $20,000.00"
-#    Then I should see 3 products in search results
-#
-#  @ui
-#  Scenario: Searching products and filtering by taxon
-#    When I browse the search page
-#    And I search the products by "BMW" phrase in the site-wide search box
-#    And I filter by taxon "Motorbikes"
-#    Then I should see 3 products in search results
+  @ui
+  Scenario: Searching products and filtering by price
+    When I browse the search page
+    And I search the products by "BMW" phrase in the site-wide search box
+    And I filter by price interval "$10,000.00 - $20,000.00"
+    Then I should see 3 products in search results
+
+  @ui
+  Scenario: Searching products and filtering by taxon
+    When I browse the search page
+    And I search the products by "BMW" phrase in the site-wide search box
+    And I filter by taxon "Motorbikes"
+    Then I should see 3 products in search results
 
   @ui
   Scenario: Searching products and viewing car type and motorbike type select attributes aggregations
