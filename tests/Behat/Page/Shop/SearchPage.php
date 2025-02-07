@@ -129,7 +129,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             if ($labelElement && preg_replace('/\s*\(\d+\)$/', '', trim($labelElement->getText())) === $label) {
                 $queryParams['bitbag_elasticsearch_search']['facets'][$facetName][] = $checkbox->getAttribute('value');
 
-                $newUrl = sprintf('%s://%s%s?%s',
+                $newUrl = sprintf(
+                    '%s://%s%s?%s',
                     $parsedUrl['scheme'] ?? 'http',
                     $parsedUrl['host'] ?? 'localhost',
                     $parsedUrl['path'] ?? '',
@@ -137,6 +138,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
                 );
 
                 $session->visit($newUrl);
+
                 return;
             }
         }
