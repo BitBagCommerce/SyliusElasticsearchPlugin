@@ -1,0 +1,15 @@
+{% set form = hookable_metadata.context.form %}
+{% set taxon = hookable_metadata.context.taxon %}
+{% set slug = taxon.slug %}
+
+{{ form_start(form, {'action': path('bitbag_sylius_elasticsearch_plugin_shop_taxon_products', {'slug': slug})}) }}
+<div class="ui segment mb-4">
+    <div class="input-group">
+        {{ form_widget(form.name, {'attr': {'placeholder': 'bitbag_sylius_elasticsearch_plugin.ui.search_box.search_in_taxon', 'class': 'prompt'}}) }}
+
+        <button id="bitbag_elasticsearch_taxon_search" class="btn btn btn-outline-secondary btn-sm" type="submit" aria-label="search button">
+            {{ ux_icon('tabler:search') }}
+        </button>
+    </div>
+</div>
+{{ form_end(form, {'render_rest': false}) }}
