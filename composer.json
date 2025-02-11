@@ -38,11 +38,11 @@
     "robertfausk/behat-panther-extension": "^1.1",
     "sylius-labs/coding-standard": "^4.2",
     "sylius-labs/suite-tags-extension": "^0.2",
-    "symfony/browser-kit": "^6.4 || ^7.1",
-    "symfony/debug-bundle": "^6.4 || ^7.1",
-    "symfony/dotenv": "^6.4 || ^7.1",
-    "symfony/intl": "^6.4 || ^7.1",
-    "symfony/web-profiler-bundle": "^6.4 || ^7.1"
+    "symfony/browser-kit": "^7.1",
+    "symfony/debug-bundle": "^7.1",
+    "symfony/dotenv": "7.1",
+    "symfony/intl": "^7.1",
+    "symfony/web-profiler-bundle": "^7.1"
   },
   "conflict": {
     "api-platform/core": "v2.7.17",
