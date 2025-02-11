@@ -1,0 +1,8 @@
+{% set route = hookable_metadata.context.route %}
+{% set route_parameters = hookable_metadata.context.route_parameters %}
+{% set slug = app.request.get('slug') %}
+{% set order_by = hookable_metadata.configuration.order_by %}
+{% set sort = hookable_metadata.configuration.sort %}
+{% set title = hookable_metadata.configuration.title|trans %}
+
+<a class="dropdown-item" href="{{ path(route, {'slug': slug, 'order_by': order_by, 'sort': sort}|merge(route_parameters)) }}" data-text="{{ title|lower }}">{{ title }}</a>

@@ -1,0 +1,18 @@
+{% set form = hookable_metadata.context.form %}
+
+{% form_theme form '@SyliusShop/form/theme.html.twig' %}
+
+<div class="container-xl">
+    {{ form_start(form, {'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate', 'id': form.vars.id}}) }}
+        {% if form.facets is defined %}
+            <div class="bitbag-sylius-elasticsearch-plugin-facets-form">
+                {% for facet in form.facets %}
+                    {% if facet.vars.name != 'taxon' %}
+                        {{ form_row(facet) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {{ form_end(form, {render_rest: false}) }}
+</div>
