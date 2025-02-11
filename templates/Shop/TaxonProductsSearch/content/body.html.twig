@@ -1,0 +1,9 @@
+{% set form = hookable_metadata.context.search_form %}
+{% form_theme form '@SyliusShop/form/theme.html.twig' %}
+
+<div class="row mt-5">
+    {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+        <input type="hidden" name="_method" value="GET" />
+        {% hook 'body' %}
+    {{ form_end(form, {render_rest: false}) }}
+</div>

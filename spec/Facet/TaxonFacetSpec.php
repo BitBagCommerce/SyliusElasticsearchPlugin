@@ -49,6 +49,7 @@ final class TaxonFacetSpec extends ObjectBehavior
     {
         $taxon = new Taxon();
         $taxon->setCurrentLocale('en_US');
+        $taxon->setFallbackLocale('en_US');
         $taxon->setName('Taxon 1');
         $taxonRepository->findOneBy(['code' => 'taxon_1'])->shouldBeCalled()->willReturn($taxon);
 

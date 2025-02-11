@@ -1,0 +1,27 @@
+bitbag_sylius_elasticsearch_plugin:
+    ui:
+        min_price: Min price
+        max_price: Max price
+        filter_results: Filter results
+        filter: Filter
+        sort: Sort by
+        bestsellers: Bestsellers
+        newest: Newest
+        oldest: Oldest
+        most_expensive: Most expensive
+        cheapest: Cheapest
+        per_page: Per page
+        search_header: Search
+
+        search_box:
+            query:
+                placeholder: Search for products...
+            search_button:
+                label: Search
+            search_in_taxon: Search in this taxon
+
+        facet:
+            price:
+                label: Price
+            taxon:
+                label: Taxon

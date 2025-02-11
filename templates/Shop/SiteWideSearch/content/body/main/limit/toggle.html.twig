@@ -1,0 +1,4 @@
+<button type="button" class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+    <span class="text-black-50">{{ 'sylius.ui.show'|trans }}: </span>
+    {{ hookable_metadata.context.products is defined and hookable_metadata.context.products is not empty and hookable_metadata.context.products.maxPerPage is defined ? hookable_metadata.context.products.maxPerPage : 'N/A' }}
+</button>

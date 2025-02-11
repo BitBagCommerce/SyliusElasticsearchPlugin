@@ -14,7 +14,6 @@ namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
 
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
 use BitBag\SyliusElasticsearchPlugin\Model\Search;
-use BitBag\SyliusElasticsearchPlugin\Model\SearchBox;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

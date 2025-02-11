@@ -18,7 +18,8 @@
       "reviews": [],
       "name": "Mug",
       "description": "@string@",
-      "slug": "mug"
+      "slug": "mug",
+      "defaultVariant": null
     },
     {
       "productTaxons": [],
@@ -36,7 +37,8 @@
       "reviews": [],
       "name": "Mug 2",
       "description": "@string@",
-      "slug": "mug-2"
+      "slug": "mug-2",
+      "defaultVariant": null
     }
   ],
   "facets": {
