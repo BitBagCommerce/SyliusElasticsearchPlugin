@@ -4,12 +4,12 @@
     "description": "BitBag Elasticsearch plugin for Sylius.",
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.2 || ^8.3",
         "ext-json": "*",
         "friendsofsymfony/elastica-bundle": "^6.0",
         "sylius/sylius": "~2.0.0",
         "symfony/property-access": "^6.4 || ^7.1",
-        "symfony/proxy-manager-bridge": "^6.4 || ^7.1",
+        "symfony/proxy-manager-bridge": "^7.1",
         "symfony/webpack-encore-bundle": "^2.2"
     },
     "require-dev": {
