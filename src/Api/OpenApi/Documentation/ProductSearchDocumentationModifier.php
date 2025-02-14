@@ -23,12 +23,12 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
         $paths = $openApi->getPaths();
         $pathItem = $paths->getPath('/api/v2/shop/products/search');
 
-        if (!$pathItem) {
+        if (null === $pathItem) {
             return $openApi;
         }
 
         $operation = $pathItem->getGet();
-        if (!$operation) {
+        if (null === $operation) {
             return $openApi;
         }
 
@@ -37,10 +37,10 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'query',
                 'query',
                 'Search query string',
-                false,
-                false,
-                false,
-                ['type' => 'string'],
+                required: false,
+                deprecated: false,
+                allowEmptyValue: false,
+                schema: ['type' => 'string'],
                 example: 'shoes'
             ),
 
@@ -48,10 +48,10 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'limit',
                 'query',
                 'Number of items per page',
-                false,
-                false,
-                false,
-                ['type' => 'integer', 'default' => 10],
+                required: false,
+                deprecated: false,
+                allowEmptyValue: false,
+                schema: ['type' => 'integer', 'default' => 10],
                 example: 20
             ),
 
@@ -59,10 +59,10 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'page',
                 'query',
                 'Page number',
-                false,
-                false,
-                false,
-                ['type' => 'integer', 'default' => 1],
+                required: false,
+                deprecated: false,
+                allowEmptyValue: false,
+                schema: ['type' => 'integer', 'default' => 1],
                 example: 2
             ),
 
@@ -70,10 +70,10 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'order_by',
                 'query',
                 'Sort field',
-                false,
-                false,
-                false,
-                ['type' => 'string', 'enum' => ['sold_units', 'product_created_at', 'price']],
+                required: false,
+                deprecated: false,
+                allowEmptyValue: false,
+                schema: ['type' => 'string', 'enum' => ['sold_units', 'product_created_at', 'price']],
                 example: 'price'
             ),
 
@@ -81,10 +81,10 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'sort',
                 'query',
                 'Sort direction',
-                false,
-                false,
-                false,
-                ['type' => 'string', 'enum' => ['asc', 'desc']],
+                required: false,
+                deprecated: false,
+                allowEmptyValue: false,
+                schema: ['type' => 'string', 'enum' => ['asc', 'desc']],
                 example: 'asc'
             ),
 
@@ -92,10 +92,10 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'facets',
                 'query',
                 'Filter facets with dynamic keys',
-                false,
-                false,
-                false,
-                ['type' => 'object'],
+                required: false,
+                deprecated: false,
+                allowEmptyValue: false,
+                schema: ['type' => 'object'],
                 example: '{"t_shirt_material": ["100% cotton"], "t_shirt_brand": ["modern_wear"]}'
             ),
         ];
