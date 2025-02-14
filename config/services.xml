@@ -39,5 +39,10 @@
         <service id="bitbag.sylius_elasticsearch_plugin.repository.product_option_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductOptionRepository">
             <argument type="service" id="sylius.repository.product_option" />
         </service>
+
+        <service id="BitBag\SyliusElasticsearchPlugin\Api\OpenApi\Documentation\ProductSearchDocumentationModifier"
+                 decorates="api_platform.openapi.factory" public="true">
+            <argument type="service" id="BitBag\SyliusElasticsearchPlugin\Api\OpenApi\Documentation\ProductSearchDocumentationModifier.inner" />
+        </service>
     </services>
 </container>
