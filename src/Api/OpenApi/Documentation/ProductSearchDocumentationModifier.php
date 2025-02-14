@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Api\OpenApi\Documentation;
 
+use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\OpenApi;
-use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 
 final class ProductSearchDocumentationModifier implements OpenApiFactoryInterface
 {
