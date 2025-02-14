@@ -41,7 +41,6 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 deprecated: false,
                 allowEmptyValue: false,
                 schema: ['type' => 'string'],
-                example: 'shoes'
             ),
 
             new Parameter(
@@ -52,7 +51,6 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 deprecated: false,
                 allowEmptyValue: false,
                 schema: ['type' => 'integer', 'default' => 10],
-                example: 20
             ),
 
             new Parameter(
@@ -63,7 +61,6 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 deprecated: false,
                 allowEmptyValue: false,
                 schema: ['type' => 'integer', 'default' => 1],
-                example: 2
             ),
 
             new Parameter(
@@ -74,7 +71,6 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 deprecated: false,
                 allowEmptyValue: false,
                 schema: ['type' => 'string', 'enum' => ['sold_units', 'product_created_at', 'price']],
-                example: 'price'
             ),
 
             new Parameter(
@@ -85,7 +81,6 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 deprecated: false,
                 allowEmptyValue: false,
                 schema: ['type' => 'string', 'enum' => ['asc', 'desc']],
-                example: 'asc'
             ),
 
             new Parameter(
