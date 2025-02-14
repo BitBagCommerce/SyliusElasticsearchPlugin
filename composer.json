@@ -46,8 +46,7 @@
   },
   "conflict": {
     "api-platform/core": "v2.7.17",
-    "symfony/framework-bundle": "6.2.8",
-    "behat/mink-selenium2-driver": ">=1.7.0"
+    "symfony/framework-bundle": "6.2.8"
   },
   "config": {
     "sort-packages": true,
