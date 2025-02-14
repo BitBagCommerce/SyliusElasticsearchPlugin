@@ -89,9 +89,9 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 'Filter facets with dynamic keys',
                 required: false,
                 deprecated: false,
-                allowEmptyValue: false,
-                schema: ['type' => 'object'],
-                example: '{"t_shirt_material": ["100% cotton"], "t_shirt_brand": ["modern_wear"]}'
+                allowEmptyValue: true,
+                explode: true,
+                example: '[jeans_collection][]=sylius_summer_2024',
             ),
         ];
 
