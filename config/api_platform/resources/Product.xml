@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources xmlns="https://api-platform.com/schema/metadata/resources-3.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata/resources-3.0 https://api-platform.com/schema/metadata/resources-3.0.xsd">
+    <resource class="%sylius.model.product.class%">
+        <operations>
+            <operation name="elasticsearch_shop_get"
+                       class="ApiPlatform\Metadata\GetCollection"
+                       uriTemplate="/shop/products/search"
+                       paginationEnabled="false"
+                       provider="bitbag_sylius_elasticsearch_plugin.api.data_provider.product_collection"
+                       openapi="true"
+            >
+                <normalizationContext>
+                    <values>
+                        <value name="groups">
+                            <values>
+                                <value>shop:product:index</value>
+                                <value>sylius:shop:product:index</value>
+                            </values>
+                        </value>
+                    </values>
+                </normalizationContext>
+                <openapi>
+                    <parameters>
+                        <parameter name="query" in="query" description="Search query string" required="false" example="shoes" deprecated="false" allowEmptyValue="false" explode="false" style="form" allowReserved="false">
+                            <schema>
+                                <values>
+                                    <value name="type">string</value>
+                                </values>
+                            </schema>
+                        </parameter>
+                        <parameter name="limit" in="query" description="Number of items to return per page" required="false" example="10" deprecated="false" allowEmptyValue="false" explode="false" style="form" allowReserved="false">
+                            <schema>
+                                <values>
+                                    <value name="type">integer</value>
+                                    <value name="default">10</value>
+                                </values>
+                            </schema>
+                        </parameter>
+                        <parameter name="page" in="query" description="Page number" required="false" example="1" deprecated="false" allowEmptyValue="false" explode="false" style="form" allowReserved="false">
+                            <schema>
+                                <values>
+                                    <value name="type">integer</value>
+                                    <value name="default">1</value>
+                                </values>
+                            </schema>
+                        </parameter>
+                        <parameter name="order_by" in="query" description="Field to order by (sold_units, product_created_at, price)" required="false" example="product_created_at" deprecated="false" allowEmptyValue="false" explode="false" style="form" allowReserved="false">
+                            <schema>
+                                <values>
+                                    <value name="type">string</value>
+                                    <value name="enum">
+                                        <values>
+                                            <value>sold_units</value>
+                                            <value>product_created_at</value>
+                                            <value>price</value>
+                                        </values>
+                                    </value>
+                                </values>
+                            </schema>
+                        </parameter>
+                        <parameter name="sort" in="query" description="Order direction (asc, desc)" required="false" example="desc" deprecated="false" allowEmptyValue="false" explode="false" style="form" allowReserved="false">
+                            <schema>
+                                <values>
+                                    <value name="type">string</value>
+                                    <value name="enum">
+                                        <values>
+                                            <value>asc</value>
+                                            <value>desc</value>
+                                        </values>
+                                    </value>
+                                </values>
+                            </schema>
+                        </parameter>
+                        <parameter name="facets" in="query" description="Filter facets with dynamic keys" required="false" example='{"t_shirt_material": ["100% cotton"], "t_shirt_brand": ["modern_wear"]}' deprecated="false" allowEmptyValue="false" explode="true" style="deepObject" allowReserved="false">
+                            <schema>
+                                <values>
+                                    <value name="type">object</value>
+                                </values>
+                            </schema>
+                        </parameter>
+                    </parameters>
+                </openapi>
+            </operation>
+        </operations>
+    </resource>
+</resources>
