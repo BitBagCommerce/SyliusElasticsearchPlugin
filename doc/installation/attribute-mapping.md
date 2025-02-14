@@ -36,3 +36,14 @@ class ProductVariant extends BaseProductVariant implements BitBagElasticsearchPl
     // ...
 }
 ```
+
+Override `config/packages/_sylius.yaml` configuration:
+```yaml
+# config/_sylius.yaml
+
+sylius_product:
+    resources:
+        product_variant:
+            classes:
+                model: App\Entity\ProductVariant
+```
