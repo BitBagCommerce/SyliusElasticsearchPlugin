@@ -1,0 +1,20 @@
+bitbag_sylius_elasticsearch_plugin_shop_taxon_products:
+    path: /{_locale}/taxons/{slug}
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.taxon_products_search
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/TaxonProductsSearch/index.html.twig"
+    requirements:
+        slug: .+
+
+bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name:
+    path: /{_locale}/auto-complete/product
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.auto_complete_product_name
+    requirements:
+        slug: .+
+
+bitbag_sylius_elasticsearch_plugin_shop_search:
+    path: /{_locale}/search
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.site_wide_products_search
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/SiteWideSearch/index.html.twig"

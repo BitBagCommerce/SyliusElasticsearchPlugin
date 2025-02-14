@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=8.2
 ENV LC_ALL=C.UTF-8
 
 # Install basic tools
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 # Append NODE, NGINX and PHP repositories
 RUN add-apt-repository ppa:ondrej/php \
     && add-apt-repository ppa:ondrej/nginx \
-    && curl -sL https://deb.nodesource.com/setup_14.x | bash -
+    && curl -sL https://deb.nodesource.com/setup_20.x | bash -
 
 # Install required PHP extensions
 RUN apt-get update && apt-get install -y \

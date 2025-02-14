@@ -5,20 +5,10 @@ sylius_shop:
         _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$
 
 sylius_shop_payum:
-    resource: "@SyliusShopBundle/Resources/config/routing/payum.yml"
+    resource: "@SyliusPayumBundle/Resources/config/routing/integrations/sylius_shop.yaml"
 
 sylius_shop_default_locale:
     path: /
     methods: [GET]
     defaults:
-        _controller: sylius.controller.shop.locale_switch::switchAction
-
-redirect_sylius_shop_product_index:
-    path: /{_locale}/taxons/{slug}
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-    defaults:
-        route: bitbag_sylius_elasticsearch_plugin_shop_list_products
-        permanent: true
-    requirements:
-        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
-        slug: .+
+        _controller: sylius_shop.controller.locale_switch::switchAction

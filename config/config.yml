@@ -1,0 +1,31 @@
+imports:
+    - { resource: "indexes/bitbag_shop_products.yml" }
+    - { resource: "indexes/bitbag_option_taxons.yml" }
+    - { resource: "indexes/bitbag_attribute_taxons.yml" }
+    - { resource: "indexes/bitbag_shop_facets.yml" }
+    - { resource: "twig/bitbag_twig_hooks.yml" }
+
+parameters:
+    env(BITBAG_ES_INDEX_PREFIX): ""
+    env(BITBAG_ES_HOST): "localhost"
+    env(BITBAG_ES_PORT): "9200"
+    bitbag_es_index_prefix: "%env(BITBAG_ES_INDEX_PREFIX)%"
+    bitbag_es_host: "%env(BITBAG_ES_HOST)%"
+    bitbag_es_port: "%env(BITBAG_ES_PORT)%"
+
+    bitbag_es_pagination_available_page_limits: [9, 18, 36]
+    bitbag_es_pagination_default_limit: 9
+    bitbag_es_fuzziness: AUTO
+    bitbag_es_facets_auto_discover: true
+    bitbag_es_excluded_facet_attributes: []
+    bitbag_es_excluded_facet_options: []
+
+fos_elastica:
+    clients:
+        default:
+            host: "%bitbag_es_host%"
+            port: "%bitbag_es_port%"
+
+twig:
+    globals:
+        bitbag_es_pagination_available_page_limits: "%bitbag_es_pagination_available_page_limits%"

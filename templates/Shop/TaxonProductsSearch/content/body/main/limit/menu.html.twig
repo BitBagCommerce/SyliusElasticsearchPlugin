@@ -1,0 +1,9 @@
+{% set route = app.request.attributes.get('_route') %}
+{% set route_parameters = app.request.query.all|unset_elements(['order_by', 'sort', 'page']) %}
+{% set slug = app.request.get('slug') %}
+
+<div class="dropdown-menu dropdown-menu-end ">
+    {% for limit in bitbag_es_pagination_available_page_limits %}
+        <a class="dropdown-item" href="{{ path(route, {'slug': slug, 'limit': limit}|merge(route_parameters)) }}">{{ limit }}</a>
+    {% endfor %}
+</div>

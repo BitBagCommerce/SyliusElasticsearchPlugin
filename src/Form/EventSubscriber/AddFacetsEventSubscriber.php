@@ -52,13 +52,12 @@ final class AddFacetsEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $form->add(
-            'facets',
-            SearchFacetsType::class,
-            [
+        $form
+            ->add('facets', SearchFacetsType::class, [
                 'facets' => $adapter->getAggregations(),
                 'label' => false,
-            ]
-        );
+                'required' => false,
+            ])
+        ;
     }
 }

@@ -55,31 +55,17 @@ Import required config in your `config/packages/_sylius.yaml` file:
 
 imports:
     ...
-    - { resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/config.yml" }
+    - { resource: "@BitBagSyliusElasticsearchPlugin/config/config.yml" }
 ```
 
-Import routing on top of your `config/routes.yaml` file:
+Import routing on top of your `config/routes/sylius_shop.yaml` file:
+**Note.** The code presented below needs to be loaded before including the `sylius_shop` routes. Please be sure, that it's being loaded first.
 
 ```yaml
 # config/routes.yaml
 
 bitbag_sylius_elasticsearch_plugin:
-    resource: "@BitBagSyliusElasticsearchPlugin/Resources/config/routing.yml"
-```
-
-...and set up the redirection from the default Sylius shop products index page on top of your config/routes/sylius_shop.yaml file.
-```yaml
-# config/routes/sylius_shop.yaml
-
-redirect_sylius_shop_product_index:
-    path: /{_locale}/taxons/{slug}
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-    defaults:
-        route: bitbag_sylius_elasticsearch_plugin_shop_list_products
-        permanent: true
-    requirements:
-        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
-        slug: .+
+    resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"
 ```
 
 Remove the default ElasticSearch index (`app`) defined by `FOSElasticaBundle` in `config/packages/fos_elastica.yaml`:
@@ -163,12 +149,11 @@ webpack_encore:
 ### Encore functions
 Add encore functions to your templates:
 
-SyliusShopBundle:
 ```php
-{# @SyliusShopBundle/_scripts.html.twig #}
+{# @templates/shop/javascripts.html.twig #}
 {{ encore_entry_script_tags('bitbag-elasticsearch-shop', null, 'elasticsearch_shop') }}
 
-{# @SyliusShopBundle/_styles.html.twig #}
+{# @templates/shop/stylesheets.html.twig #}
 {{ encore_entry_link_tags('bitbag-elasticsearch-shop', null, 'elasticsearch_shop') }}
 ```
 
