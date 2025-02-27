@@ -7,8 +7,8 @@
     "php": "^8.2 || ^8.3",
     "ext-json": "*",
     "friendsofsymfony/elastica-bundle": "^6.0",
-    "sylius/sylius": "~2.0.0",
-    "symfony/property-access": "^7.1",
+    "sylius/sylius": "^2.0",
+    "symfony/property-access": "^6.4 || ^7.1",
     "symfony/webpack-encore-bundle": "^2.2"
   },
   "require-dev": {
@@ -38,15 +38,11 @@
     "robertfausk/behat-panther-extension": "^1.1",
     "sylius-labs/coding-standard": "^4.2",
     "sylius-labs/suite-tags-extension": "^0.2",
-    "symfony/browser-kit": "^7.1",
-    "symfony/debug-bundle": "^7.1",
-    "symfony/dotenv": "7.1",
-    "symfony/intl": "^7.1",
-    "symfony/web-profiler-bundle": "^7.1"
-  },
-  "conflict": {
-    "api-platform/core": "v2.7.17",
-    "symfony/framework-bundle": "6.2.8"
+    "symfony/browser-kit": "^6.4 || ^7.1",
+    "symfony/debug-bundle": "^6.4 || ^7.1",
+    "symfony/dotenv": "^6.4 || ^7.1",
+    "symfony/intl": "^6.4 || ^7.1",
+    "symfony/web-profiler-bundle": "^6.4 || ^7.1"
   },
   "config": {
     "sort-packages": true,
@@ -54,8 +50,7 @@
       "composer/package-versions-deprecated": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "php-http/discovery": false,
-      "phpstan/extension-installer": true,
-      "symfony/thanks": true
+      "phpstan/extension-installer": true
     }
   },
   "extra": {
