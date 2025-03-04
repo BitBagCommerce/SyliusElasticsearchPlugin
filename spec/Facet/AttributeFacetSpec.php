@@ -14,7 +14,7 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 
 final class AttributeFacetSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ConcatedNameResolverInterface $attributeNameResolver,
         AttributeInterface $attribute,
         LocaleContextInterface $localeContext
@@ -25,17 +25,17 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->beConstructedWith($attributeNameResolver, $attribute, $localeContext);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(AttributeFacet::class);
     }
 
-    function it_implements_facet_interface(): void
+    public function it_implements_facet_interface(): void
     {
         $this->shouldHaveType(FacetInterface::class);
     }
 
-    function it_returns_terms_aggregation(LocaleContextInterface $localeContext): void
+    public function it_returns_terms_aggregation(LocaleContextInterface $localeContext): void
     {
         $localeContext->getLocaleCode()->willReturn('en');
         $expectedAggregation = new Terms('');
@@ -44,7 +44,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getAggregation()->shouldBeLike($expectedAggregation);
     }
 
-    function it_returns_terms_query(LocaleContextInterface $localeContext): void
+    public function it_returns_terms_query(LocaleContextInterface $localeContext): void
     {
         $localeContext->getLocaleCode()->willReturn('en');
 
@@ -54,7 +54,7 @@ final class AttributeFacetSpec extends ObjectBehavior
         $this->getQuery($selectedBuckets)->shouldBeLike($expectedQuery);
     }
 
-    function it_returns_bucket_label_(): void
+    public function it_returns_bucket_label_(): void
     {
         $this->getBucketLabel(['key' => 'value_label', 'doc_count' => 3])->shouldReturn('Value Label (3)');
     }

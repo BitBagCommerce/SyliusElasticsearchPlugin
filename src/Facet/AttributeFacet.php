@@ -17,10 +17,10 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
+use function sprintf;
 use Sylius\Component\Attribute\AttributeType\CheckboxAttributeType;
 use Sylius\Component\Attribute\AttributeType\IntegerAttributeType;
 use Sylius\Component\Attribute\AttributeType\PercentAttributeType;
-use function sprintf;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 
@@ -45,7 +45,8 @@ final class AttributeFacet implements FacetInterface
     {
         match ($this->getProductAttribute()->getType()) {
             CheckboxAttributeType::TYPE => $selectedBuckets = array_map('boolval', $selectedBuckets),
-            PercentAttributeType::TYPE => $selectedBuckets = array_map('strval', $selectedBuckets),
+            PercentAttributeType::TYPE,
+            'float' => $selectedBuckets = array_map('floatval', $selectedBuckets),
             IntegerAttributeType::TYPE => $selectedBuckets = array_map('intval', $selectedBuckets),
             default => $selectedBuckets,
         };
@@ -68,8 +69,9 @@ final class AttributeFacet implements FacetInterface
     private function getFieldName(): string
     {
         $isKeywordAvailable = match ($this->getProductAttribute()->getType()) {
-            CheckboxAttributeType::TYPE => false,
-            PercentAttributeType::TYPE => false,
+            CheckboxAttributeType::TYPE,
+            PercentAttributeType::TYPE,
+            'float',
             IntegerAttributeType::TYPE => false,
             default => true,
         };
