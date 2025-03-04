@@ -17,6 +17,7 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
+use Sylius\Component\Attribute\AttributeType\FloatAttributeType;
 use function sprintf;
 use Sylius\Component\Attribute\AttributeType\CheckboxAttributeType;
 use Sylius\Component\Attribute\AttributeType\IntegerAttributeType;
@@ -46,7 +47,7 @@ final class AttributeFacet implements FacetInterface
         match ($this->getProductAttribute()->getType()) {
             CheckboxAttributeType::TYPE => $selectedBuckets = array_map('boolval', $selectedBuckets),
             PercentAttributeType::TYPE,
-            'float' => $selectedBuckets = array_map('floatval', $selectedBuckets),
+            FloatAttributeType::TYPE => $selectedBuckets = array_map('floatval', $selectedBuckets),
             IntegerAttributeType::TYPE => $selectedBuckets = array_map('intval', $selectedBuckets),
             default => $selectedBuckets,
         };
@@ -71,7 +72,7 @@ final class AttributeFacet implements FacetInterface
         $isKeywordAvailable = match ($this->getProductAttribute()->getType()) {
             CheckboxAttributeType::TYPE,
             PercentAttributeType::TYPE,
-            'float',
+            FloatAttributeType::TYPE,
             IntegerAttributeType::TYPE => false,
             default => true,
         };
