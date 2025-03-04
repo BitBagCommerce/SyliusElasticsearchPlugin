@@ -17,6 +17,9 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\Terms as TermsQuery;
+use Sylius\Component\Attribute\AttributeType\CheckboxAttributeType;
+use Sylius\Component\Attribute\AttributeType\IntegerAttributeType;
+use Sylius\Component\Attribute\AttributeType\PercentAttributeType;
 use function sprintf;
 use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
@@ -40,12 +43,19 @@ final class AttributeFacet implements FacetInterface
 
     public function getQuery(array $selectedBuckets): AbstractQuery
     {
+        match ($this->getProductAttribute()->getType()) {
+            CheckboxAttributeType::TYPE => $selectedBuckets = array_map('boolval', $selectedBuckets),
+            PercentAttributeType::TYPE => $selectedBuckets = array_map('strval', $selectedBuckets),
+            IntegerAttributeType::TYPE => $selectedBuckets = array_map('intval', $selectedBuckets),
+            default => $selectedBuckets,
+        };
+
         return new TermsQuery($this->getFieldName(), $selectedBuckets);
     }
 
     public function getBucketLabel(array $bucket): string
     {
-        $label = ucwords(str_replace('_', ' ', $bucket['key']));
+        $label = ucwords(str_replace('_', ' ', (string) $bucket['key']));
 
         return sprintf('%s (%s)', $label, $bucket['doc_count']);
     }
@@ -57,8 +67,15 @@ final class AttributeFacet implements FacetInterface
 
     private function getFieldName(): string
     {
+        $isKeywordAvailable = match ($this->getProductAttribute()->getType()) {
+            CheckboxAttributeType::TYPE => false,
+            PercentAttributeType::TYPE => false,
+            IntegerAttributeType::TYPE => false,
+            default => true,
+        };
+
         return sprintf(
-            '%s_%s.keyword',
+            '%s_%s' . ($isKeywordAvailable ? '.keyword' : ''),
             $this->attributeNameResolver->resolvePropertyName((string) $this->getProductAttribute()->getCode()),
             $this->localeContext->getLocaleCode()
         );

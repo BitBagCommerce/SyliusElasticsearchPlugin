@@ -21,6 +21,7 @@ final class AttributeFacetSpec extends ObjectBehavior
     ): void {
         $attributeNameResolver->resolvePropertyName('attribute_code')->willReturn('attribute_attribute_code');
         $attribute->getCode()->willReturn('attribute_code');
+        $attribute->getType()->willReturn('text');
         $this->beConstructedWith($attributeNameResolver, $attribute, $localeContext);
     }
 
