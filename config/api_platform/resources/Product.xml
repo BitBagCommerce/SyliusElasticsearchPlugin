@@ -10,7 +10,7 @@
                        uriTemplate="/shop/products/search"
                        paginationEnabled="false"
                        provider="bitbag_sylius_elasticsearch_plugin.api.data_provider.product_collection"
-                       openapi="true"
+                       openapi="false"
             >
                 <normalizationContext>
                     <values>

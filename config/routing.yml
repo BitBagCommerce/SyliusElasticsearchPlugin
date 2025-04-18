@@ -18,3 +18,12 @@ bitbag_sylius_elasticsearch_plugin_shop_search:
     defaults:
         _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.site_wide_products_search
         template: "@BitBagSyliusElasticsearchPlugin/Shop/SiteWideSearch/index.html.twig"
+
+when@dev:
+    bitbag_sylius_elasticsearch_plugin_shop_search:
+        path: /{_locale}/search
+        requirements:
+            _locale: ^(?!_profiler).+
+        defaults:
+            _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.site_wide_products_search
+            template: "@BitBagSyliusElasticsearchPlugin/Shop/SiteWideSearch/index.html.twig"
