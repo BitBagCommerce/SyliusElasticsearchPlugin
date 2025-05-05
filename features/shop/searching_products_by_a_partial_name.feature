@@ -5,7 +5,7 @@ Feature: Filtering products
     I want to be able to filter products by specific criteria
 
     Background:
-        Given the store operates on a channel named "Web-US" in "USD" currency
+        Given the store operates on a single channel in "United States"
         And the store classifies its products as "Shirts"
         And there is a product named "Loose white designer T-Shirt" in the store
         And there is a product named "Everyday white basic T-Shirt" in the store

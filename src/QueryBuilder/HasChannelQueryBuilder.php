@@ -26,10 +26,10 @@ final class HasChannelQueryBuilder implements QueryBuilderInterface
 
     public function buildQuery(array $data): ?AbstractQuery
     {
-        $channelQuery = new Terms($this->channelsProperty);
+        $channelQuery = new Terms(sprintf('%s.keyword', $this->channelsProperty));
         /** @var string $channelCode */
         $channelCode = $this->channelContext->getChannel()->getCode();
-        $channelQuery->setTerms([strtolower($channelCode)]);
+        $channelQuery->setTerms([$channelCode]);
 
         return $channelQuery;
     }

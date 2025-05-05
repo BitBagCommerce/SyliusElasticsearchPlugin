@@ -5,7 +5,7 @@ Feature: Site-wide products search
   I want to be able to search products across the entire catalog
 
   Background:
-    Given the store operates on a channel named "Web-US" in "USD" currency
+    Given the store operates on a single channel in "United States"
     And the store classifies its products as "Cars"
     And the store classifies its products as "Motorbikes"
     And the store has a select product attribute "Car Type" with values "Cabrio" and "SUV"
