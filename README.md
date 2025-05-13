@@ -90,8 +90,8 @@ We work on stable, supported and up-to-date versions of packages. We recommend y
 
 | Package       | Version         |
 |---------------|-----------------|
-| PHP           | ^8.2 || ^8.3    |
-| sylius/sylius | ^2.0            |
+| PHP           | 8.2 or 8.3      |
+| sylius/sylius | \>= 2.0         |
 | MySQL         | \>= 5.7         |
 | NodeJS        | \>= 18.x        |
 | ElasticSearch | \>= 7.x         |
