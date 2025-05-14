@@ -15,32 +15,14 @@ default:
             files_path: "%paths.base%/vendor/sylius/sylius/src/Sylius/Behat/Resources/fixtures/"
             base_url: "https://127.0.0.1:8080/"
             default_session: symfony
-            javascript_session: chrome_headless
+            javascript_session: chrome
             sessions:
                 symfony:
                     symfony: ~
-                chrome_headless:
+                chrome:
                     chrome:
                         api_url: http://127.0.0.1:9222
                         validate_certificate: false
-                chrome:
-                    selenium2:
-                        browser: chrome
-                        capabilities:
-                            browserName: chrome
-                            browser: chrome
-                            version: ""
-                            marionette: null # https://github.com/Behat/MinkExtension/pull/311
-                            chrome:
-                                switches:
-                                    - "start-fullscreen"
-                                    - "start-maximized"
-                                    - "no-sandbox"
-                            extra_capabilities:
-                                unexpectedAlertBehaviour: accept
-                firefox:
-                    selenium2:
-                        browser: firefox
             show_auto: false
 
 
