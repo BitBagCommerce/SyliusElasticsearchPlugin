@@ -111,37 +111,43 @@ There is searchbar in the header of the shop.
     <img src="doc/es_browser.png" />
 </div>
 
-You can easily modify it by overriding the `@BitBagSyliusElasticsearchPlugin/Shop/Menu/_searchForm.html.twig` template or disable it by setting:
+You can easily modify it by overriding the `@BitBagSyliusElasticsearchPlugin/Shop/Layout/Header/searchForm.html.twig` and  templates `@BitBagSyliusElasticsearchPlugin/Shop/SearchForm/searchForm.html.twig` or disable it by setting:
 ```yml
-sylius_ui:
-  events:
-    sylius.shop.layout.header.content:
-      blocks:
-        bitbag_es_search_form:
-          enabled: false
+sylius_twig_hooks:
+  hooks:
+    'sylius_shop.base.header.content':
+      search_form:
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/Layout/Header/searchForm.html.twig"
+        priority: 250
+        enabled: false
+    'sylius_shop.base.header.content.search_form':
+      content:
+        component: 'bitbag.sylius_elasticsearch_plugin:search_form'
+        props:
+          template: "@BitBagSyliusElasticsearchPlugin/Shop/SearchForm/searchForm.html.twig"
+        priority: 0
+        enabled: false
 ```
-
 ### Searching taxon products
 
-When you go now to the `/{_locale}/products-list/{taxon-slug}` page, you should see a totally new set of filters. You should see something like this:
+When you go now to the ` /{_locale}/taxons/{slug}` page, you should see a totally new set of filters. You should see something like this:
 
 <div align="center">
     <img src="doc/es_results.png" />
 </div>
 
-You might also want to refer the horizontal menu to a new product list page. Follow below instructions to do so:
+It is important that the `routing.yml` from the plugin are loaded before `sylius_shop`:
 
-1. If you haven't done it yet, create two files:
-   * `_horizontalMenu.html.twig` in `templates/bundles/SyliusShopBundle/Taxon` directory
-   * `_breadcrumb.html.twig` in `templates/bundles/SyliusShopBundle/Product/Show` directory
-2. Paste into those files content of respectively `vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/Taxon/_horizontalMenu.html.twig` and `vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/Product/Show/_breadcrumb.html.twig` files, replacing `sylius_shop_product_index` with `bitbag_sylius_elasticsearch_plugin_shop_list_products` in both of them.
-3. Clean your cache with `bin/console cache:clear` command.
-4. :tada:
+```yaml
+bitbag_sylius_elasticsearch_plugin:
+    resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"
 
-If you're using vertical menu - follow steps above with `_verticalMenu.html.twig` file instead. It's in the same directory as the `_horizontalMenu.html.twig` file.
-
-**Be aware! Elasticsearch does not handle dashes well. This plugin depends on the code field in Sylius resources. Please use underscores instead of dashes in your code fields.**
-
+sylius_shop:
+    resource: "@SyliusShopBundle/Resources/config/routing.yml"
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$
+ ```
 ### Excluding options and attributes in the filter menu
 
 You might not want to show some specific options or attributes in the menu. You can set specific parameters for that:
@@ -212,6 +218,29 @@ fos_elastica:
 
 Indexes with `bitbag_shop_product`, `bitbag_attribute_taxons` and `bitbag_option_taxons` keys are available so far.
 
+### Search fuzziness
+
+>Fuzziness in Elasticsearch is a feature that allows search queries to match terms even if there are minor typos or spelling mistakes.
+It works by calculating the Levenshtein distance (edit distance) between the query term and indexed terms, enabling the search engine to find similar words—for example, a search for “aple” can still match “apple.”
+Fuzziness is commonly used in full-text search to improve result accuracy despite small user input errors.
+
+You can set the fuzziness of the search by overriding the `bitbag_sylius_elasticsearch_plugin.query_builder.contains_name` service in your service file `(min. -> 0, max. -> 2)`:
+```xml
+<service id="bitbag_sylius_elasticsearch_plugin.query_builder.contains_name" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder">
+    <argument type="service" id="sylius.context.locale" />
+    <argument type="service" id="bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry" />
+    <argument type="string">AUTO</argument>
+</service>
+```
+
+```yaml
+    bitbag_sylius_elasticsearch_plugin.query_builder.contains_name:
+        class: BitBag\SyliusElasticsearchPlugin\QueryBuilder\ContainsNameQueryBuilder
+        arguments:
+            - '@sylius.context.locale'
+            - '@bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry'
+            - 'AUTO'
+```
 
 ## Customization
 
