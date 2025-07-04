@@ -59,6 +59,8 @@ imports:
 ```
 
 Import routing on top of your `config/routes/sylius_shop.yaml` file:
+
+#### IMPORTANT!
 **Note.** The code presented below needs to be loaded before including the `sylius_shop` routes. Please be sure, that it's being loaded first.
 
 ```yaml
