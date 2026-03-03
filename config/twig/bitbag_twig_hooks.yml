@@ -202,3 +202,19 @@ sylius_twig_hooks:
           order_by: 'price'
           sort: 'asc'
         priority: 200
+    'sylius_admin.product_attribute.create.content.form.general':
+      facet_disabled:
+        template: '@BitBagSyliusElasticsearchPlugin/admin/product_attribute/form/general/facet_disabled.html.twig'
+        priority: -100
+    'sylius_admin.product_attribute.update.content.form.general':
+      facet_disabled:
+        template: '@BitBagSyliusElasticsearchPlugin/admin/product_attribute/form/general/facet_disabled.html.twig'
+        priority: -100
+    'sylius_admin.product_option.create.content.form.sections.general':
+      facet_disabled:
+        template: '@BitBagSyliusElasticsearchPlugin/admin/product_attribute/form/general/facet_disabled.html.twig'
+        priority: -100
+    'sylius_admin.product_option.update.content.form.sections.general':
+      facet_disabled:
+        template: '@BitBagSyliusElasticsearchPlugin/admin/product_attribute/form/general/facet_disabled.html.twig'
+        priority: -100

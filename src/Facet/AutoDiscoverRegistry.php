@@ -53,7 +53,7 @@ final class AutoDiscoverRegistry implements AutoDiscoverRegistryInterface
 
     private function discoverAttributes(): void
     {
-        $attributes = $this->productAttributeRepository->findAllWithTranslations($this->localeContext->getLocaleCode());
+        $attributes = $this->productAttributeRepository->findEnabledWithTranslations($this->localeContext->getLocaleCode());
 
         /** @var AttributeInterface $attribute */
         foreach ($attributes as $attribute) {
@@ -73,7 +73,7 @@ final class AutoDiscoverRegistry implements AutoDiscoverRegistryInterface
 
     private function discoverOptions(): void
     {
-        $options = $this->productOptionRepository->findAllWithTranslations($this->localeContext->getLocaleCode());
+        $options = $this->productOptionRepository->findEnabledWithTranslations($this->localeContext->getLocaleCode());
 
         /** @var ProductOptionInterface $option */
         foreach ($options as $option) {

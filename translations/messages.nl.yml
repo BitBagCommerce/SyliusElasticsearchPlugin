@@ -24,3 +24,6 @@ bitbag_sylius_elasticsearch_plugin:
                 label: Prijs
             taxon:
                 label: Categorie
+    admin:
+        form:
+            facet_disabled: Schakel filteren uit

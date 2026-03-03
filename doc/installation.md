@@ -89,13 +89,36 @@ fos_elastica:
 ```
 
 ## Entities
-Use `BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait` and `BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface` in an overridden ProductVariant entity class.
-The configuration, depending on the mapping used, may vary.
+Use 
+
+`BitBag\SyliusElasticsearchPlugin\Model\ProductVariantTrait` 
+`BitBag\SyliusElasticsearchPlugin\Model\ProductVariantInterface` 
+`BitBag\SyliusElasticsearchPlugin\Entity\DisableFacetAwareTrait` 
+`BitBag\SyliusElasticsearchPlugin\Entity\ProductAttributeInterface` 
+`BitBag\SyliusElasticsearchPlugin\Entity\ProductOptionInterface` 
+
+in an overridden ProductVariant,ProductOption and ProductAttribute entity classes. The configuration, depending on the mapping used, may vary.
 
 ### Attribute mapping
 - [Attribute mapping configuration](installation/attribute-mapping.md)
 ### XML mapping
 - [XML mapping configuration](installation/xml-mapping.md)
+
+### Add configuration for extended product option and product attribute:
+```yaml
+sylius_product:
+  resources:
+    product_option:
+      classes:
+        model: App\Entity\Product\ProductOption
+
+sylius_attribute:
+  resources:
+    product:
+      attribute:
+        classes:
+          model: App\Entity\Product\ProductAttribute
+```
 
 ### Update installed assets with the following command:
 ```bash

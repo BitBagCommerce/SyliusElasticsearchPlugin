@@ -25,3 +25,6 @@ bitbag_sylius_elasticsearch_plugin:
                 label: Price
             taxon:
                 label: Taxon
+    admin:
+        form:
+            facet_disabled: Disable filtering

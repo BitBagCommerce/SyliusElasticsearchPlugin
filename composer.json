@@ -70,6 +70,10 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "Tests\\BitBag\\SyliusElasticsearchPlugin\\": [
+        "tests/",
+        "tests/Application/src"
+      ],
       "Tests\\BitBag\\SyliusElasticsearchPlugin\\Behat\\": "tests/Behat",
       "spec\\BitBag\\SyliusElasticsearchPlugin\\": "spec/"
     },
