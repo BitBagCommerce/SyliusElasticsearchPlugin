@@ -130,6 +130,12 @@ bin/console assets:install
 bin/console cache:clear
 ```
 
+### Finish the installation by updating the database schema and installing assets
+```bash
+bin/console doctrine:migrations:diff
+bin/console doctrine:migrations:migrate
+```
+
 ### Finally, with an elasticsearch server running, execute following command:
 ```bash
 bin/console fos:elastica:populate
