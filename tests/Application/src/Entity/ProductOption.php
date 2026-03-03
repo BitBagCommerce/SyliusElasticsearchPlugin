@@ -13,8 +13,8 @@ namespace Tests\BitBag\SyliusElasticsearchPlugin\Entity;
 
 use BitBag\SyliusElasticsearchPlugin\Entity\DisableFacetAwareTrait;
 use BitBag\SyliusElasticsearchPlugin\Entity\ProductOptionInterface;
-use Sylius\Component\Product\Model\ProductOption as BaseProductOption;
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Product\Model\ProductOption as BaseProductOption;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'sylius_product_option')]
