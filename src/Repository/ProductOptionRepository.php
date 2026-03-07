@@ -22,14 +22,16 @@ class ProductOptionRepository implements ProductOptionRepositoryInterface
     ) {
     }
 
-    public function findAllWithTranslations(?string $locale): array
+    public function findEnabledWithTranslations(?string $locale): array
     {
-        /** @var EntityRepository $queryBuilder */
-        $queryBuilder = $this->productOptionRepository;
+        /** @var EntityRepository $productAttributeRepository */
+        $productAttributeRepository = $this->productOptionRepository;
+
+        $queryBuilder = $productAttributeRepository->createQueryBuilder('o');
+        $queryBuilder->andWhere('o.facetDisabled = 0');
 
         if (null !== $locale) {
             $queryBuilder
-                ->createQueryBuilder('o')
                 ->addSelect('translation')
                 /** @phpstan-ignore-next-line phpstan can't read relationship correctly */
                 ->leftJoin('o.translations', 'translation', 'ot')
@@ -39,7 +41,6 @@ class ProductOptionRepository implements ProductOptionRepositoryInterface
         }
 
         return $queryBuilder
-            ->createQueryBuilder('o')
             ->getQuery()
             ->getResult()
         ;

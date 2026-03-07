@@ -3,16 +3,16 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\Repository;
+namespace BitBag\SyliusElasticsearchPlugin\Entity;
 
-interface ProductOptionRepositoryInterface
+use Sylius\Component\Product\Model\ProductOptionInterface as BaseProductOptionInterface;
+
+interface ProductOptionInterface extends DisableFacetAwareInterface, BaseProductOptionInterface
 {
-    public function findEnabledWithTranslations(?string $locale): array;
 }

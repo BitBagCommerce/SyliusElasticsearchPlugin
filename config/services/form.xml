@@ -80,5 +80,13 @@
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.facet.registry" />
             <argument type="service" id="fos_elastica.finder.bitbag_shop_product" />
         </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.extension.type.product_attribute" class="BitBag\SyliusElasticsearchPlugin\Form\Extension\ProductAttributeTypeExtension">
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\AdminBundle\Form\Type\ProductAttributeType" />
+        </service>
+
+        <service id="bitbag_sylius_elasticsearch_plugin.form.extension.type.product_option" class="BitBag\SyliusElasticsearchPlugin\Form\Extension\ProductOptionTypeExtension">
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\AdminBundle\Form\Type\ProductOptionType" />
+        </service>
     </services>
 </container>

@@ -30,7 +30,7 @@ final class SearchFacetsType extends AbstractType
         foreach ($options['facets'] as $facetId => $facetData) {
             $facet = $this->facetRegistry->getFacetById((string) $facetId);
             $choices = [];
-            foreach ($facetData['buckets'] as $bucket) {
+            foreach ($facetData['buckets'] ?? [] as $bucket) {
                 $choices[$facet->getBucketLabel($bucket)] = $bucket['key'];
             }
             if ([] !== $choices) {

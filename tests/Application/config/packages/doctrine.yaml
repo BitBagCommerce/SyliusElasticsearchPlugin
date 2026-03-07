@@ -12,3 +12,14 @@ doctrine:
         charset: UTF8
 
         url: '%env(resolve:DATABASE_URL)%'
+
+    orm:
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    TestApp:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: Tests\BitBag\SyliusElasticsearchPlugin

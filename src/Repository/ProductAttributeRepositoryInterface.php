@@ -16,5 +16,5 @@ interface ProductAttributeRepositoryInterface
 {
     public function getAttributeTypeByName(string $attributeName): string;
 
-    public function findAllWithTranslations(?string $locale): array;
+    public function findEnabledWithTranslations(?string $locale): array;
 }

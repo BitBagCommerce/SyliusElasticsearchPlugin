@@ -11,3 +11,6 @@ bitbag_sylius_elasticsearch_plugin:
         most_expensive: Nejdražší
         cheapest: Nejlevnější
         per_page: Na stránku
+    admin:
+        form:
+            facet_disabled: Zakázat filtrování

@@ -38,12 +38,13 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
         return $result['type'];
     }
 
-    public function findAllWithTranslations(?string $locale): array
+    public function findEnabledWithTranslations(?string $locale): array
     {
         /** @var EntityRepository $productAttributeRepository */
         $productAttributeRepository = $this->productAttributeRepository;
 
         $queryBuilder = $productAttributeRepository->createQueryBuilder('o');
+        $queryBuilder->andWhere('o.facetDisabled = 0');
 
         if (null !== $locale) {
             $queryBuilder

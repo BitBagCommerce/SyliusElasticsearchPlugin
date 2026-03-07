@@ -11,3 +11,6 @@ bitbag_sylius_elasticsearch_plugin:
         most_expensive: الأعلى سعرا
         cheapest: الأرخص
         per_page: على الصفحة
+    admin:
+        form:
+            facet_disabled: تعطيل التصفية

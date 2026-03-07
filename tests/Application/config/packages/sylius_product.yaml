@@ -1,0 +1,12 @@
+sylius_product:
+  resources:
+    product_option:
+      classes:
+        model: Tests\BitBag\SyliusElasticsearchPlugin\Entity\ProductOption
+
+sylius_attribute:
+  resources:
+    product:
+      attribute:
+        classes:
+          model: Tests\BitBag\SyliusElasticsearchPlugin\Entity\ProductAttribute
