@@ -45,5 +45,5 @@ sylius_product:
     resources:
         product_variant:
             classes:
-                model: App\Entity\ProductVariant
+                model: App\Entity\Product\ProductVariant
 ```
