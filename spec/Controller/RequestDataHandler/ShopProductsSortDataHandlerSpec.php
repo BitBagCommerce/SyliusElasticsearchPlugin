@@ -53,7 +53,7 @@ final class ShopProductsSortDataHandlerSpec extends ObjectBehavior
         $this->retrieveData([])->shouldBeEqualTo([
             'sort' => [
                 'created_at' => [
-                    'order' => SortDataHandlerInterface::SORT_ASC_INDEX,
+                    'order' => SortDataHandlerInterface::SORT_DESC_INDEX,
                     'unmapped_type' => 'keyword',
                 ],
             ],

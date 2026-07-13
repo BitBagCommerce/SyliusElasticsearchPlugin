@@ -32,7 +32,7 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
         $data = [];
 
         $orderBy = $requestData[self::ORDER_BY_INDEX] ?? $this->createdAtProperty;
-        $sort = $requestData[self::SORT_INDEX] ?? self::SORT_ASC_INDEX;
+        $sort = $requestData[self::SORT_INDEX] ?? self::SORT_DESC_INDEX;
 
         $availableSorters = [$this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
         $availableSorting = [self::SORT_ASC_INDEX, self::SORT_DESC_INDEX];
