@@ -12,14 +12,7 @@
             <argument type="service" id="sylius.repository.product_variant" />
         </service>
 
-        <service id="bitbag.sylius_elasticsearch_plugin.repository.taxon_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\TaxonRepository">
-            <argument type="service" id="sylius.repository.taxon" />
-            <argument type="service" id="sylius.repository.product" />
-            <argument>%sylius.model.product_taxon.class%</argument>
-            <argument>%sylius.model.product_attribute_value.class%</argument>
-        </service>
-
-        <service id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository">
+        <service id="bitbag.sylius_elasticsearch_plugin.repository.product_attribute_value_repository" class="BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepository" public="true">
             <argument type="service" id="sylius.repository.product_attribute_value" />
             <argument>%sylius_shop.product_grid.include_all_descendants%</argument>
         </service>

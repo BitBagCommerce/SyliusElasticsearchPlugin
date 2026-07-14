@@ -13,23 +13,19 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler;
 use BitBag\SyliusElasticsearchPlugin\Context\TaxonContextInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\DataHandlerInterface;
 use BitBag\SyliusElasticsearchPlugin\Controller\RequestDataHandler\ShopProductListDataHandler;
-use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinderInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\TaxonInterface;
 
 final class ShopProductListDataHandlerSpec extends ObjectBehavior
 {
     function let(
-        TaxonContextInterface $taxonContext,
-        ProductAttributesFinderInterface $attributesFinder
+        TaxonContextInterface $taxonContext
     ): void {
         $this->beConstructedWith(
             $taxonContext,
-            $attributesFinder,
             'name',
             'taxons',
-            'option',
-            'attribute'
+            'option'
         );
     }
 

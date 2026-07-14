@@ -1,7 +1,6 @@
 imports:
     - { resource: "indexes/bitbag_shop_products.yml" }
     - { resource: "indexes/bitbag_option_taxons.yml" }
-    - { resource: "indexes/bitbag_attribute_taxons.yml" }
     - { resource: "indexes/bitbag_shop_facets.yml" }
     - { resource: "twig/bitbag_twig_hooks.yml" }
 

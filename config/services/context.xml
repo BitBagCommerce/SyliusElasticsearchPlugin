@@ -12,10 +12,5 @@
             <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.taxon" />
             <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.product_options" />
         </service>
-
-        <service id="bitbag.sylius_elasticsearch_plugin.context.product_attributes" class="BitBag\SyliusElasticsearchPlugin\Context\ProductAttributesContext">
-            <argument type="service" id="bitbag.sylius_elasticsearch_plugin.context.taxon" />
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.finder.product_attributes" />
-        </service>
     </services>
 </container>
