@@ -206,7 +206,7 @@ By default, current indexes listen on all Doctrine events. You can override this
 ```yml
 fos_elastica:
     indexes:
-        bitbag_attribute_taxons:
+        bitbag_option_taxons:
             types:
                 default:
                     persistence:
@@ -216,7 +216,7 @@ fos_elastica:
                             delete: true
 ```
 
-Indexes with `bitbag_shop_product`, `bitbag_attribute_taxons` and `bitbag_option_taxons` keys are available so far.
+Indexes with `bitbag_shop_product` and `bitbag_option_taxons` keys are available so far.
 
 ### Search fuzziness
 

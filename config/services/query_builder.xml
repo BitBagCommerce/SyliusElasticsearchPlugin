@@ -24,10 +24,6 @@
             <argument>%bitbag_es_shop_option_taxons_property%</argument>
         </service>
 
-        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasTaxonQueryBuilder">
-            <argument>%bitbag_es_shop_attribute_taxons_property%</argument>
-        </service>
-
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_options" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasOptionsQueryBuilder" />
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.has_attributes" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\HasAttributesQueryBuilder" >
@@ -54,10 +50,6 @@
             <argument type="service" id="sylius.context.channel" />
             <argument type="service" id="sylius.context.currency.channel_aware" />
             <argument type="service" id="sylius.converter.currency" />
-        </service>
-
-        <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductAttributesByTaxonQueryBuilder">
-            <argument type="service" id="bitbag_sylius_elasticsearch_plugin.query_builder.has_attribute_taxon" />
         </service>
 
         <service id="bitbag_sylius_elasticsearch_plugin.query_builder.product_options_by_taxon" class="BitBag\SyliusElasticsearchPlugin\QueryBuilder\ProductOptionsByTaxonQueryBuilder">
