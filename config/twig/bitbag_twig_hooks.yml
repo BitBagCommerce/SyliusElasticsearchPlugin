@@ -167,6 +167,13 @@ sylius_twig_hooks:
         template: '@SyliusShop/product/index/content/body/main/filters/controls/sorting/menu.html.twig'
         priority: 0
     'bitbag.sylius_elasticsearch_plugin.taxon_products_search.index.content.body.main.filters.controls.sorting.menu':
+      position:
+        template: '@BitBagSyliusElasticsearchPlugin/Shop/TaxonProductsSearch/content/body/main/sorting/item.html.twig'
+        configuration:
+          title: 'bitbag_sylius_elasticsearch_plugin.ui.position'
+          order_by: 'taxon_position'
+          sort: 'asc'
+        priority: 700
       bestsellers:
         template: '@BitBagSyliusElasticsearchPlugin/Shop/TaxonProductsSearch/content/body/main/sorting/item.html.twig'
         configuration:
