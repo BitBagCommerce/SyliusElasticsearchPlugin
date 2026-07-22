@@ -70,7 +70,7 @@ final class ProductSearchDocumentationModifier implements OpenApiFactoryInterfac
                 required: false,
                 deprecated: false,
                 allowEmptyValue: false,
-                schema: ['type' => 'string', 'enum' => ['sold_units', 'product_created_at', 'price']],
+                schema: ['type' => 'string', 'enum' => ['relevance', 'sold_units', 'product_created_at', 'price']],
             ),
 
             new Parameter(

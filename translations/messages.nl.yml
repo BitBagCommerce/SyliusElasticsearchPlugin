@@ -5,6 +5,7 @@ bitbag_sylius_elasticsearch_plugin:
         filter_results: Filter resultaten
         filter: Filter
         sort: Sorteer op
+        relevance: Relevantie
         bestsellers: Bestsellers
         newest: Nieuwste
         oldest: Oudste

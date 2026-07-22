@@ -69,6 +69,13 @@ sylius_twig_hooks:
         template: '@SyliusShop/product/index/content/body/main/filters/controls/sorting/menu.html.twig'
         priority: 0
     'bitbag.sylius_elasticsearch_plugin.site_wide_search.index.content.body.main.filters.controls.sorting.menu':
+      relevance:
+        template: '@BitBagSyliusElasticsearchPlugin/Shop/SiteWideSearch/content/body/main/sorting/item.html.twig'
+        configuration:
+          title: 'bitbag_sylius_elasticsearch_plugin.ui.relevance'
+          order_by: 'relevance'
+          sort: 'desc'
+        priority: 700
       bestsellers:
         template: '@BitBagSyliusElasticsearchPlugin/Shop/SiteWideSearch/content/body/main/sorting/item.html.twig'
         configuration:

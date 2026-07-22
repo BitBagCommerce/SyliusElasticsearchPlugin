@@ -5,6 +5,7 @@ bitbag_sylius_elasticsearch_plugin:
         filter_results: Filtrace
         filter: Filtrovat
         sort: Řazení
+        relevance: Relevance
         bestsellers: Nejprodávanější
         newest: Nejnovější
         oldest: Nejstarší

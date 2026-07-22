@@ -6,6 +6,7 @@ bitbag_sylius_elasticsearch_plugin:
         filter: Filter
         sort: Sort by
         position: Position
+        relevance: Relevance
         bestsellers: Bestsellers
         newest: Newest
         oldest: Oldest
