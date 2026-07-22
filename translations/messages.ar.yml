@@ -5,6 +5,7 @@ bitbag_sylius_elasticsearch_plugin:
         filter_results: فلترة النتائج
         filter: فلترة
         sort: ترتيب حسب
+        relevance: الصلة
         bestsellers: الأفضل مبيعا
         newest: الأحدث
         oldest: الأقدم
