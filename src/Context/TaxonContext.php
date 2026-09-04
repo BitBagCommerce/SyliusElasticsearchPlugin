@@ -33,7 +33,7 @@ final class TaxonContext implements TaxonContextInterface
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        $slug = $request->get('slug');
+        $slug = $request->attributes->get('slug');
         $localeCode = $this->localeContext->getLocaleCode();
         /** @var TaxonInterface|null $taxon */
         $taxon = $this->taxonRepository->findOneBySlug($slug, $localeCode);

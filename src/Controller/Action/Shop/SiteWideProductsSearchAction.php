@@ -21,7 +21,7 @@ final class SiteWideProductsSearchAction extends AbstractSearchAction
 {
     public function __invoke(Request $request): Response
     {
-        $template = $request->get('template', '@BitBagSyliusElasticsearchPlugin/Shop/search.html.twig');
+        $template = $request->attributes->get('template', '@BitBagSyliusElasticsearchPlugin/Shop/search.html.twig');
         $form = $this->formFactory->create(SearchType::class);
         $form->handleRequest($request);
 

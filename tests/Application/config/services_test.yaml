@@ -1,6 +1,6 @@
 imports:
-    - { resource: "../../Behat/Resources/services.xml" }
-    - { resource: "../../../vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml" }
+    - { resource: "../../Behat/Resources/services.php" }
+    - { resource: "../../../vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.php" }
 
 # workaround needed for strange "test.client.history" problem
 # see https://github.com/FriendsOfBehat/SymfonyExtension/issues/88

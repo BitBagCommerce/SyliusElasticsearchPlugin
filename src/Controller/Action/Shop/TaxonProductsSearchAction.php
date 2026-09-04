@@ -20,14 +20,14 @@ final class TaxonProductsSearchAction extends AbstractSearchAction
 {
     public function __invoke(Request $request): Response
     {
-        $template = $request->get('template');
+        $template = $request->attributes->get('template');
         $form = $this->formFactory->create(ShopProductsFilterType::class);
         $form->handleRequest($request);
 
         $requestData = array_merge(
             $form->getData(),
             $request->query->all(),
-            ['slug' => $request->get('slug')]
+            ['slug' => $request->attributes->get('slug')]
         );
 
         if ($form->isSubmitted() && !$form->isValid()) {
