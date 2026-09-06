@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -24,7 +23,7 @@ final class ImageTransformer implements TransformerInterface
 
     public function __construct(
         private FilterService $imagineFilter,
-        private string $imagesPath = '/media/image/'
+        private string $imagesPath = '/media/image/',
     ) {
     }
 

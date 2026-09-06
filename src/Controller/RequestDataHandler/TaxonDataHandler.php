@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -17,7 +16,7 @@ final class TaxonDataHandler implements DataHandlerInterface
     public function __construct(
         private DataHandlerInterface $shopProductListDataHandler,
         private SortDataHandlerInterface $shopProductsSortDataHandler,
-        private PaginationDataHandlerInterface $paginationDataHandler
+        private PaginationDataHandlerInterface $paginationDataHandler,
     ) {
     }
 
@@ -26,7 +25,7 @@ final class TaxonDataHandler implements DataHandlerInterface
         return array_merge(
             $this->shopProductListDataHandler->retrieveData($requestData),
             $this->shopProductsSortDataHandler->retrieveData($requestData),
-            $this->paginationDataHandler->retrieveData($requestData)
+            $this->paginationDataHandler->retrieveData($requestData),
         );
     }
 }

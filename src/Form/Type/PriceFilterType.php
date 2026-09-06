@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -28,7 +27,7 @@ final class PriceFilterType extends AbstractFilterType
 
     public function __construct(
         private PriceNameResolverInterface $priceNameResolver,
-        private CurrencyContextInterface $currencyContext
+        private CurrencyContextInterface $currencyContext,
     ) {
     }
 
@@ -44,12 +43,13 @@ final class PriceFilterType extends AbstractFilterType
                         type: 'numeric',
                         message: 'bitbag_sylius_elasticsearch_plugin.min_price_numeric',
                     ),
-                    new PositiveOrZero([
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
-                    ]),
-                    new LessThan(self::MAXIMUM_PRICE_VALUE, options: [
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
-                    ]),
+                    new PositiveOrZero(
+                        message: 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
+                    ),
+                    new LessThan(
+                        self::MAXIMUM_PRICE_VALUE,
+                        message: 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
+                    ),
                 ],
             ])
             ->add($this->priceNameResolver->resolveMaxPriceName(), MoneyType::class, [
@@ -61,12 +61,13 @@ final class PriceFilterType extends AbstractFilterType
                         type: 'numeric',
                         message: 'bitbag_sylius_elasticsearch_plugin.max_price_numeric',
                     ),
-                    new PositiveOrZero([
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.max_price_positive_or_zero',
-                    ]),
-                    new LessThan(self::MAXIMUM_PRICE_VALUE, options: [
-                        'message' => 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
-                    ]),
+                    new PositiveOrZero(
+                        message: 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
+                    ),
+                    new LessThan(
+                        self::MAXIMUM_PRICE_VALUE,
+                        message: 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
+                    ),
                 ],
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {

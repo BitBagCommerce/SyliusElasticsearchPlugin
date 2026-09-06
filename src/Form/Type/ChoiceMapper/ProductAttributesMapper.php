@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -29,7 +28,7 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         private StringFormatterInterface $stringFormatter,
         private TaxonContextInterface $taxonContext,
         /** @var $attributeMapper AttributesMapperCollectorInterface[] */
-        private iterable $attributeMapper
+        private iterable $attributeMapper,
     ) {
     }
 
@@ -64,9 +63,9 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
 
             $configuration = $productAttribute->getConfiguration();
 
-            if (is_array($value)
-                && isset($configuration['choices'])
-                && is_array($configuration['choices'])
+            if (is_array($value) &&
+                isset($configuration['choices']) &&
+                is_array($configuration['choices'])
             ) {
                 foreach ($value as $singleValue) {
                     $choice = $this->stringFormatter->formatToLowercaseWithoutSpaces($singleValue);
