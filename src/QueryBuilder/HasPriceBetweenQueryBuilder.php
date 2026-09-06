@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -31,7 +30,7 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
         private ConcatedNameResolverInterface $channelPricingNameResolver,
         private ChannelContextInterface $channelContext,
         private CurrencyContextInterface $currencyContext,
-        private CurrencyConverterInterface $currencyConverter
+        private CurrencyConverterInterface $currencyConverter,
     ) {
     }
 
@@ -100,6 +99,10 @@ final class HasPriceBetweenQueryBuilder implements QueryBuilderInterface
 
     private function getDataByKey(array $data, ?string $key = null): ?string
     {
+        if (null === $key) {
+            return null;
+        }
+
         return $data[$key] ?? null;
     }
 

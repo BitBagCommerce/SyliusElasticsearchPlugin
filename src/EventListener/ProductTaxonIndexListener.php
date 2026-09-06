@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -15,20 +14,21 @@ namespace BitBag\SyliusElasticsearchPlugin\EventListener;
 use BitBag\SyliusElasticsearchPlugin\Refresher\ResourceRefresherInterface;
 use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 final class ProductTaxonIndexListener
 {
     public function __construct(
         private ResourceRefresherInterface $resourceRefresher,
-        private ObjectPersisterInterface $objectPersister
+        private ObjectPersisterInterface $objectPersister,
     ) {
     }
 
     public function updateIndex(ProductTaxonInterface $productTaxon): void
     {
-        /** @var ResourceInterface $product */
         $product = $productTaxon->getProduct();
+        if (null === $product) {
+            return;
+        }
 
         $this->resourceRefresher->refresh($product, $this->objectPersister);
     }

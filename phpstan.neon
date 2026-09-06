@@ -6,12 +6,21 @@ parameters:
 
     excludePaths:
         # Sitemap dependent providers
-        - 'src/SitemapProvider'
-        - 'src/Importer/AbstractImporter'
+        - 'src/SitemapProvider (?)'
+        - 'src/Importer/AbstractImporter (?)'
         - 'tests/Application/config/bootstrap.php'
-        - 'tests/Fixture/PageFixtureTest.php'
-        - 'src/Controller/Helper'
+        - 'tests/Fixture/PageFixtureTest.php (?)'
+        - 'src/Controller/Helper (?)'
     ignoreErrors:
         - identifier: missingType.iterableValue
         - identifier: missingType.generics
         - '#.*NodeParentInterface.*#'
+        -
+            # Public extension point meant to be `use`d in a consumer's own ProductVariant model, see doc/installation.md
+            identifier: trait.unused
+            path: src/Model/ProductVariantTrait.php
+        -
+            # The wider union is required to stay covariant with ApiPlatform\State\ProviderInterface<object>::provide(),
+            # even though this implementation never actually returns object|null.
+            identifier: return.unusedType
+            path: src/Api/DataProvider/ProductCollectionDataProvider.php

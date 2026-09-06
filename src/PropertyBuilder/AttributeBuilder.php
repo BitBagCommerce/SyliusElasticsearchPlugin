@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -32,7 +31,7 @@ final class AttributeBuilder extends AbstractBuilder
 
     public function __construct(
         private ConcatedNameResolverInterface $attributeNameResolver,
-        private StringFormatterInterface $stringFormatter
+        private StringFormatterInterface $stringFormatter,
     ) {
     }
 
@@ -43,7 +42,7 @@ final class AttributeBuilder extends AbstractBuilder
             ProductInterface::class,
             function (ProductInterface $product, Document $document): void {
                 $this->resolveProductAttributes($product, $document);
-            }
+            },
         );
     }
 
@@ -61,7 +60,7 @@ final class AttributeBuilder extends AbstractBuilder
 
     private function resolveProductAttributeValuesPerLocale(
         AttributeInterface $attribute,
-        ProductAttributeValue $productAttribute
+        ProductAttributeValue $productAttribute,
     ): array {
         $value = $productAttribute->getValue();
         if (null === $value) {
@@ -109,14 +108,14 @@ final class AttributeBuilder extends AbstractBuilder
     private function processAttribute(
         AttributeInterface $attribute,
         ProductAttributeValue $productAttribute,
-        Document $document
+        Document $document,
     ): void {
         $documentKey = $this->attributeNameResolver
             ->resolvePropertyName((string) $attribute->getCode());
 
         $valuesPerLocale = $this->resolveProductAttributeValuesPerLocale(
             $attribute,
-            $productAttribute
+            $productAttribute,
         );
 
         foreach ($valuesPerLocale as $locale => $rawValues) {
@@ -124,7 +123,7 @@ final class AttributeBuilder extends AbstractBuilder
 
             $document->set(
                 sprintf('%s_%s', $documentKey, $locale),
-                $normalized
+                $normalized,
             );
         }
     }
@@ -151,7 +150,7 @@ final class AttributeBuilder extends AbstractBuilder
         return in_array(
             $attribute->getStorageType(),
             [DateAttributeType::TYPE, DatetimeAttributeType::TYPE],
-            true
+            true,
         )
             ? ($normalized[0] ?? $normalized)
             : $normalized;

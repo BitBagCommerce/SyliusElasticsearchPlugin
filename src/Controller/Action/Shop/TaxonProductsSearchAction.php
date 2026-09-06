@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -27,7 +26,7 @@ final class TaxonProductsSearchAction extends AbstractSearchAction
         $requestData = array_merge(
             $form->getData(),
             $request->query->all(),
-            ['slug' => $request->attributes->get('slug')]
+            ['slug' => $request->attributes->get('slug')],
         );
 
         if ($form->isSubmitted() && !$form->isValid()) {

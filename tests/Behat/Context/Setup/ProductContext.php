@@ -1,10 +1,11 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -12,6 +13,7 @@ namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
+use Behat\Step\Given;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
@@ -41,14 +43,12 @@ final class ProductContext implements Context
         private FactoryInterface $productOptionValueFactory,
         private EntityManagerInterface $objectManager,
         private ProductVariantResolverInterface $defaultVariantResolver,
-        private SlugGeneratorInterface $slugGenerator
+        private SlugGeneratorInterface $slugGenerator,
     ) {
         $this->faker = \Faker\Factory::create();
     }
 
-    /**
-     * @Given there are :quantity t-shirts in the store
-     */
+    #[Given('there are :quantity t-shirts in the store')]
     public function thereAreTShirtsInTheStore(int $quantity): void
     {
         $products = [];
@@ -62,9 +62,7 @@ final class ProductContext implements Context
         $this->sharedStorage->set('products', $products);
     }
 
-    /**
-     * @Given there is a product named :productName in the store
-     */
+    #[Given('there is a product named :productName in the store')]
     public function thereIsProductNamedInTheStore(string $productName): void
     {
         $product = $this->createProduct($productName);
@@ -78,13 +76,11 @@ final class ProductContext implements Context
         $this->sharedStorage->set('products', $products);
     }
 
-    /**
-     * @Given /^(\d+) of these products are priced between ("[^"]+") and ("[^"]+")$/
-     */
+    #[Given('/^(\d+) of these products are priced between ("[^"]+") and ("[^"]+")$/')]
     public function ofTheseProductsArePricedBetweenAnd(
         int $quantity,
         int $min,
-        int $max
+        int $max,
     ): void {
         $channel = $this->sharedStorage->get('channel');
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
@@ -110,9 +106,7 @@ final class ProductContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given these products have :optionName option with values :values
-     */
+    #[Given('these products have :optionName option with values :values')]
     public function theseHaveOption(string $optionName, string $values): void
     {
         /** @var ProductOptionInterface $option */
@@ -138,13 +132,11 @@ final class ProductContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given :quantity of these products have :optionName option with :value value
-     */
+    #[Given(':quantity of these products have :optionName option with :value value')]
     public function ofTheseProductsHaveOptionWithValue(
         int $quantity,
         string $optionName,
-        string $value
+        string $value,
     ): void {
         $sumQuantity = $this->sharedStorage->has('sum_quantity') ? $this->sharedStorage->get('sum_quantity') : 0;
         $products = $this->sharedStorage->get('products');
@@ -171,7 +163,7 @@ final class ProductContext implements Context
     private function createProduct(
         string $productName,
         int $price = 100,
-        ChannelInterface $channel = null
+        ChannelInterface $channel = null,
     ): ProductInterface {
         if (null === $channel && $this->sharedStorage->has('channel')) {
             $channel = $this->sharedStorage->get('channel');
@@ -212,7 +204,7 @@ final class ProductContext implements Context
     private function addProductOption(
         ProductOptionInterface $option,
         string $value,
-        string $code
+        string $code,
     ): ProductOptionValueInterface {
         /** @var ProductOptionValueInterface $optionValue */
         $optionValue = $this->productOptionValueFactory->createNew();
@@ -242,18 +234,14 @@ final class ProductContext implements Context
         return $channelPricing;
     }
 
-    /**
-     * @Given /^(this product)'s description is:$/
-     */
+    #[Given('/^(this product)\'s description is:$/')]
     public function thisProductSDescriptionIs(ProductInterface $product, PyStringNode $description)
     {
         $product->setDescription($description->getRaw());
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given /^(this product)'s short description is:$/
-     */
+    #[Given('/^(this product)\'s short description is:$/')]
     public function thisProductSShortDescriptionIs(ProductInterface $product, PyStringNode $shortDescription)
     {
         $product->setShortDescription($shortDescription->getRaw());

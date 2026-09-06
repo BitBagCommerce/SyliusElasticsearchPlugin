@@ -9,11 +9,12 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusElasticsearchPlugin\Repository;
+use Behat\Config\Config;
 
-use Sylius\Component\Core\Model\ProductVariantInterface;
-
-interface OrderItemRepositoryInterface
-{
-    public function countByVariant(ProductVariantInterface $variant): int;
-}
+return (new Config())
+    ->import([
+        'suites/api/searching_products.php',
+        'suites/ui/filtering_products.php',
+        'suites/ui/site_wide_searching_products.php',
+    ])
+;

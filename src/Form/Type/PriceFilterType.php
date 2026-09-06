@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -28,7 +27,7 @@ final class PriceFilterType extends AbstractFilterType
 
     public function __construct(
         private PriceNameResolverInterface $priceNameResolver,
-        private CurrencyContextInterface $currencyContext
+        private CurrencyContextInterface $currencyContext,
     ) {
     }
 
@@ -47,7 +46,8 @@ final class PriceFilterType extends AbstractFilterType
                     new PositiveOrZero(
                         message: 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
                     ),
-                    new LessThan(self::MAXIMUM_PRICE_VALUE,
+                    new LessThan(
+                        self::MAXIMUM_PRICE_VALUE,
                         message: 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
                     ),
                 ],
@@ -64,7 +64,8 @@ final class PriceFilterType extends AbstractFilterType
                     new PositiveOrZero(
                         message: 'bitbag_sylius_elasticsearch_plugin.min_price_positive_or_zero',
                     ),
-                    new LessThan(self::MAXIMUM_PRICE_VALUE,
+                    new LessThan(
+                        self::MAXIMUM_PRICE_VALUE,
                         message: 'bitbag_sylius_elasticsearch_plugin.price_value_too_large',
                     ),
                 ],

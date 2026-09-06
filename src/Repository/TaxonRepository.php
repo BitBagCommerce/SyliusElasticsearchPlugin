@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -24,7 +23,7 @@ class TaxonRepository implements TaxonRepositoryInterface
         private BaseTaxonRepositoryInterface|EntityRepository $baseTaxonRepository,
         private ProductRepositoryInterface|EntityRepository $productRepository,
         private string $productTaxonEntityClass,
-        private string $productAttributeEntityClass
+        private string $productAttributeEntityClass,
     ) {
     }
 
@@ -49,7 +48,7 @@ class TaxonRepository implements TaxonRepositoryInterface
                     ->where('pav.attribute = :attribute')
                     ->getQuery()
                     ->getDQL()
-                . ')'
+                . ')',
             )
             ->setParameter(':attribute', $attribute)
             ->getQuery()

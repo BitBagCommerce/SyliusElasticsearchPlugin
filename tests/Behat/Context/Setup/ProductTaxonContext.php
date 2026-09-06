@@ -1,16 +1,18 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -23,13 +25,11 @@ final class ProductTaxonContext implements Context
     public function __construct(
         private SharedStorageInterface $sharedStorage,
         private FactoryInterface $productTaxonFactory,
-        private EntityManagerInterface $objectManager
+        private EntityManagerInterface $objectManager,
     ) {
     }
 
-    /**
-     * @Given /^these products belongs to ("[^"]+" taxon)$/
-     */
+    #[Given('/^these products belongs to ("[^"]+" taxon)$/')]
     public function theseProductsBelongsToTaxon(TaxonInterface $taxon): void
     {
         /** @var ProductInterface $product */
@@ -44,9 +44,7 @@ final class ProductTaxonContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given /^these products belongs primarily to ("[^"]+" taxon)$/
-     */
+    #[Given('/^these products belongs primarily to ("[^"]+" taxon)$/')]
     public function theseProductsBelongsPrimarilyToTaxon(TaxonInterface $taxon): void
     {
         /** @var ProductInterface $product */
@@ -64,7 +62,7 @@ final class ProductTaxonContext implements Context
     private function createProductTaxon(
         TaxonInterface $taxon,
         ProductInterface $product,
-        int $position = null
+        int $position = null,
     ): ProductTaxonInterface {
         /** @var ProductTaxonInterface $productTaxon */
         $productTaxon = $this->productTaxonFactory->createNew();

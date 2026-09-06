@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -21,7 +20,7 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 final class ChannelPricingBuilder extends AbstractBuilder
 {
     public function __construct(
-        private ConcatedNameResolverInterface $channelPricingNameResolver
+        private ConcatedNameResolverInterface $channelPricingNameResolver,
     ) {
     }
 
@@ -47,7 +46,7 @@ final class ChannelPricingBuilder extends AbstractBuilder
 
                     $document->set($propertyName, $channelPricing->getPrice());
                 }
-            }
+            },
         );
     }
 }

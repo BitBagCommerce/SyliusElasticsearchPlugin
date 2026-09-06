@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -24,10 +23,10 @@ final class ProductAttributesFinder implements ProductAttributesFinderInterface
         private QueryBuilderInterface $attributesByTaxonQueryBuilder,
         private string $taxonsProperty,
         private int $filterMax = 20,
-        ) {
+    ) {
     }
 
-    public function findByTaxon(TaxonInterface $taxon): ?array
+    public function findByTaxon(TaxonInterface $taxon): array
     {
         $data = [];
         $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());

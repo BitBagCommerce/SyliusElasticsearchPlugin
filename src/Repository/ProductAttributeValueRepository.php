@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -20,17 +19,14 @@ use Sylius\Component\Taxonomy\Model\Taxon;
 class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
     public function __construct(
-        private BaseAttributeValueRepositoryInterface $baseAttributeValueRepository,
-        private bool $includeAllDescendants
+        private BaseAttributeValueRepositoryInterface&EntityRepository $baseAttributeValueRepository,
+        private bool $includeAllDescendants,
     ) {
     }
 
     public function getUniqueAttributeValues(AttributeInterface $productAttribute, Taxon $taxon): array
     {
-        /** @var EntityRepository $baseAttributeValueRepository */
-        $baseAttributeValueRepository = $this->baseAttributeValueRepository;
-
-        $queryBuilder = $baseAttributeValueRepository->createQueryBuilder('o');
+        $queryBuilder = $this->baseAttributeValueRepository->createQueryBuilder('o');
 
         /** @var string|null $storageType */
         $storageType = $productAttribute->getStorageType();
@@ -57,6 +53,6 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
             ->setParameter('taxon', $taxon->getId())
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 }

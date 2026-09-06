@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -18,16 +17,13 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 {
     public function __construct(
-        private RepositoryInterface $productAttributeRepository
+        private RepositoryInterface&EntityRepository $productAttributeRepository,
     ) {
     }
 
     public function getAttributeTypeByName(string $attributeName): string
     {
-        /** @var EntityRepository $queryBuilder */
-        $queryBuilder = $this->productAttributeRepository;
-
-        $result = $queryBuilder
+        $result = $this->productAttributeRepository
             ->createQueryBuilder('p')
             ->select('p.type')
             ->where('p.code = :code')
@@ -40,10 +36,7 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 
     public function findAllWithTranslations(?string $locale): array
     {
-        /** @var EntityRepository $productAttributeRepository */
-        $productAttributeRepository = $this->productAttributeRepository;
-
-        $queryBuilder = $productAttributeRepository->createQueryBuilder('o');
+        $queryBuilder = $this->productAttributeRepository->createQueryBuilder('o');
 
         if (null !== $locale) {
             $queryBuilder

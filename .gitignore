@@ -7,7 +7,7 @@
 
 /tests/Application/yarn.lock
 
-/behat.yml
+/behat.php
 /phpspec.yml
 
 /vendor/

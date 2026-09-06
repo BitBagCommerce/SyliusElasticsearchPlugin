@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -24,7 +23,7 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
         private TaxonRepositoryInterface $taxonRepository,
         private string $taxonsProperty,
         private bool $includeAllDescendants,
-        private array $excludedAttributes = []
+        private array $excludedAttributes = [],
     ) {
     }
 
@@ -32,9 +31,9 @@ final class AttributeTaxonsBuilder extends AbstractBuilder
     {
         $documentAttribute = $event->getObject();
 
-        if (!$documentAttribute instanceof AttributeInterface
-            || !$documentAttribute instanceof ProductAttributeInterface
-            || in_array($documentAttribute->getCode(), $this->excludedAttributes, true)
+        if (!$documentAttribute instanceof AttributeInterface ||
+            !$documentAttribute instanceof ProductAttributeInterface ||
+            in_array($documentAttribute->getCode(), $this->excludedAttributes, true)
         ) {
             return;
         }

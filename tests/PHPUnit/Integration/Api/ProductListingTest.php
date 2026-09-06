@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -22,7 +21,7 @@ final class ProductListingTest extends JsonApiTestCase
     public function __construct(
         ?string $name = null,
         array $data = [],
-        string $dataName = ''
+        string $dataName = '',
     ) {
         parent::__construct($name, $data, $dataName);
 
@@ -37,7 +36,7 @@ final class ProductListingTest extends JsonApiTestCase
 
         $this->client->request(
             'GET',
-            '/api/v2/shop/products/search?query=mug'
+            '/api/v2/shop/products/search?query=mug',
         );
 
         $response = $this->client->getResponse();
@@ -58,7 +57,7 @@ final class ProductListingTest extends JsonApiTestCase
 
         $this->client->request(
             'GET',
-            '/api/v2/shop/products/search?query=mug&facets[color][]=red'
+            '/api/v2/shop/products/search?query=mug&facets[color][]=red',
         );
 
         $response = $this->client->getResponse();
@@ -79,7 +78,7 @@ final class ProductListingTest extends JsonApiTestCase
 
         $this->client->request(
             'GET',
-            '/api/v2/shop/products/search?query=mug&facets[color][]=red&facets[material][]=ceramic'
+            '/api/v2/shop/products/search?query=mug&facets[color][]=red&facets[material][]=ceramic',
         );
 
         $response = $this->client->getResponse();
@@ -100,7 +99,7 @@ final class ProductListingTest extends JsonApiTestCase
 
         $this->client->request(
             'GET',
-            '/api/v2/shop/products/search?query=mug&facets[color][]=red&facets[material][]=ceramic'
+            '/api/v2/shop/products/search?query=mug&facets[color][]=red&facets[material][]=ceramic',
         );
 
         $response = $this->client->getResponse();

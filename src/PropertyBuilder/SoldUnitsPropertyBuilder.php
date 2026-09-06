@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -22,7 +21,7 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
 {
     public function __construct(
         private OrderItemRepositoryInterface $orderItemRepository,
-        private string $soldUnitsProperty
+        private string $soldUnitsProperty,
     ) {
     }
 
@@ -40,7 +39,7 @@ final class SoldUnitsPropertyBuilder extends AbstractBuilder
                 }
 
                 $document->set($this->soldUnitsProperty, $soldUnits);
-            }
+            },
         );
     }
 }
