@@ -14,5 +14,11 @@
             </div>
         {% endif %}
 
+        {% if form.price is defined %}
+            <div class="bitbag-sylius-elasticsearch-plugin-price-filter">
+                {{ form_row(form.price) }}
+            </div>
+        {% endif %}
+
     {{ form_end(form, {render_rest: false}) }}
 </div>
