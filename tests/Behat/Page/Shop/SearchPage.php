@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop;
@@ -62,7 +69,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
 
         throw new ExpectationException(
             sprintf('Cannot find a product named "%s" in the search results', $product->getName()),
-            $this->getSession()
+            $this->getSession(),
         );
     }
 
@@ -70,7 +77,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
     {
         $priceIntervals = array_map(
             static fn (NodeElement $element) => trim($element->getText()),
-            $this->getElement('search_facets_price')->findAll('css', '.form-check-label')
+            $this->getElement('search_facets_price')->findAll('css', '.form-check-label'),
         );
 
         Assert::eq(
@@ -79,8 +86,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             sprintf(
                 "Expected intervals are:\n%s\nGot:\n%s",
                 print_r($expectedIntervals, true),
-                print_r($priceIntervals, true)
-            )
+                print_r($priceIntervals, true),
+            ),
         );
     }
 
@@ -93,7 +100,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
     {
         $options = array_map(
             static fn (NodeElement $element) => trim($element->getText()),
-            $this->getElement('search_facets_taxon')->findAll('css', '.form-check-label')
+            $this->getElement('search_facets_taxon')->findAll('css', '.form-check-label'),
         );
 
         Assert::eq(
@@ -102,8 +109,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
             sprintf(
                 "Expected taxon facet options are:\n%s\nGot:\n%s",
                 print_r($expectedOptions, true),
-                print_r($options, true)
-            )
+                print_r($options, true),
+            ),
         );
     }
 
@@ -135,7 +142,7 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
                     $parsedUrl['scheme'] ?? 'http',
                     $parsedUrl['host'] ?? 'localhost',
                     $parsedUrl['path'] ?? '',
-                    http_build_query($queryParams)
+                    http_build_query($queryParams),
                 );
 
                 $session->visit($newUrl);
@@ -164,13 +171,13 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         if (!$this->hasElement($element)) {
             throw new ExpectationException(
                 sprintf("Element '%s' is not defined in `getDefinedElements()`", $element),
-                $this->getSession()
+                $this->getSession(),
             );
         }
 
         $options = array_map(
             static fn (NodeElement $element) => trim($element->getText()),
-            $this->getElement($element)->findAll('css', '.form-check-label')
+            $this->getElement($element)->findAll('css', '.form-check-label'),
         );
 
         Assert::eq(
@@ -180,8 +187,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
                 "Expected \"%s\" attribute facet options are:\n%s\nGot:\n%s",
                 $attributeFilterLabel,
                 print_r($expectedOptions, true),
-                print_r($options, true)
-            )
+                print_r($options, true),
+            ),
         );
     }
 
@@ -192,13 +199,13 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
         if (!$this->hasElement($element)) {
             throw new ExpectationException(
                 sprintf("Element '%s' is not defined in `getDefinedElements()`", $element),
-                $this->getSession()
+                $this->getSession(),
             );
         }
 
         $options = array_map(
             static fn (NodeElement $element) => trim($element->getText()),
-            $this->getElement($element)->findAll('css', '.form-check-label')
+            $this->getElement($element)->findAll('css', '.form-check-label'),
         );
 
         Assert::eq(
@@ -208,8 +215,8 @@ class SearchPage extends SymfonyPage implements SearchPageInterface
                 "Expected \"%s\" option facet options are:\n%s\nGot:\n%s",
                 $optionFilterLabel,
                 print_r($expectedOptions, true),
-                print_r($options, true)
-            )
+                print_r($options, true),
+            ),
         );
     }
 }

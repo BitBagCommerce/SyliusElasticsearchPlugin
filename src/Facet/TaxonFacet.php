@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -25,7 +24,7 @@ final class TaxonFacet implements FacetInterface
 
     public function __construct(
         private TaxonRepositoryInterface $taxonRepository,
-        private string $taxonsPropertyName
+        private string $taxonsPropertyName,
     ) {
     }
 
@@ -39,7 +38,7 @@ final class TaxonFacet implements FacetInterface
 
     public function getQuery(array $selectedBuckets): AbstractQuery
     {
-        return new TermsQuery($this->getField(), $selectedBuckets);
+        return new TermsQuery($this->getField(), array_values($selectedBuckets));
     }
 
     public function getBucketLabel(array $bucket): string

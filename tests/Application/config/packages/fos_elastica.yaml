@@ -1,3 +1,0 @@
-fos_elastica:
-  clients:
-    default: { url: '%env(ELASTICSEARCH_URL)%' }

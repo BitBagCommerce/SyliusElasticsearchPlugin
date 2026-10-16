@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -19,7 +18,7 @@ use Sylius\Component\Product\Model\ProductOptionValueInterface;
 final class ProductOptionsMapper implements ProductOptionsMapperInterface
 {
     public function __construct(
-        private StringFormatterInterface $stringFormatter
+        private StringFormatterInterface $stringFormatter,
     ) {
     }
 
@@ -34,7 +33,7 @@ final class ProductOptionsMapper implements ProductOptionsMapperInterface
                 /** @var string $value */
                 $value = $productOptionValue->getValue();
                 $choices[$value] = $this->stringFormatter->formatToLowercaseWithoutSpaces($value);
-            }
+            },
         );
 
         return $choices;

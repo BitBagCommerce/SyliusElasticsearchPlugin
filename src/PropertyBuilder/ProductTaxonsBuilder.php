@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -21,7 +20,7 @@ final class ProductTaxonsBuilder extends AbstractBuilder
 {
     public function __construct(
         private ProductTaxonsMapperInterface $productTaxonsMapper,
-        private string $taxonsProperty
+        private string $taxonsProperty,
     ) {
     }
 
@@ -34,7 +33,7 @@ final class ProductTaxonsBuilder extends AbstractBuilder
                 $taxons = $this->productTaxonsMapper->mapToUniqueCodes($product);
 
                 $document->set($this->taxonsProperty, $taxons);
-            }
+            },
         );
     }
 }

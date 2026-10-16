@@ -84,17 +84,17 @@ For the full installation guide, please go **[here](doc/installation.md).**
 This plugin requires elasticsearch server running. You can install it by following the instructions on the [official website](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html).
 In plugin repository there is Docker Compose file that can be used to run Elasticsearch server.
 
-**Note:** This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version 1.x.
+**Note:** This Plugin supports ElasticSearch 8.x and 9.x (via `ruflin/elastica` 8 or 9 respectively). If you're running ElasticSearch 7, use SyliusElasticSearchPlugin in version 5.x.
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 
 | Package       | Version         |
 |---------------|-----------------|
-| PHP           | 8.2 or 8.3      |
-| sylius/sylius | \>= 2.0         |
-| MySQL         | \>= 5.7         |
-| NodeJS        | \>= 18.x        |
-| ElasticSearch | \>= 7.x         |
+| PHP           | 8.3 or 8.4      |
+| sylius/sylius | 2.2.x - 2.3.x   |
+| MySQL         | \>= 8.0         |
+| NodeJS        | \>= 22.13       |
+| ElasticSearch | 8.x - 9.x       |
 
 
 ## Usage
@@ -256,19 +256,22 @@ $ bin/console debug:container --parameters | grep bitbag
 
 
 ## Testing
+The plugin is tested with [sylius/test-application](https://github.com/Sylius/TestApplication); its plugin-specific
+configuration lives in `tests/TestApplication`.
+
 ```bash
 $ composer install
-$ cd tests/Application
-$ APP_ENV=test bin/console doctrine:database:create
-$ APP_ENV=test bin/console doctrine:schema:create
-// run elasticsearch
-$ APP_ENV=test bin/console sylius:fixtures:load
-$ APP_ENV=test bin/console fos:elastica:populate
-$ APP_ENV=test symfony server:run 127.0.0.1:8080 -d
-$ APP_ENV=test bin/console assets:install
-$ open http://localhost:8080
+$ (cd vendor/sylius/test-application && yarn install && yarn build)
+$ vendor/bin/console assets:install vendor/sylius/test-application/public
+// run elasticsearch (e.g. `docker compose up -d elasticsearch`)
+$ APP_ENV=test vendor/bin/console doctrine:database:create
+$ APP_ENV=test vendor/bin/console doctrine:schema:create
+$ APP_ENV=test vendor/bin/console sylius:fixtures:load -n
+$ APP_ENV=test vendor/bin/console fos:elastica:populate
+$ APP_ENV=test symfony server:start --port=8080 --dir=vendor/sylius/test-application/public --daemon
 $ vendor/bin/behat
 $ vendor/bin/phpspec run
+$ vendor/bin/phpunit
 ```
 
 # Functionalities 

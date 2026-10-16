@@ -1,16 +1,18 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Attribute\Factory\AttributeFactoryInterface;
@@ -28,13 +30,11 @@ final class ProductAttributeContext implements Context
         private RepositoryInterface $productAttributeRepository,
         private AttributeFactoryInterface $productAttributeFactory,
         private FactoryInterface $productAttributeValueFactory,
-        private EntityManagerInterface $objectManager
+        private EntityManagerInterface $objectManager,
     ) {
     }
 
-    /**
-     * @Given /^these products have ([^"]+) attribute "([^"]+)"$/
-     */
+    #[Given('/^these products have ([^"]+) attribute "([^"]+)"$/')]
     public function theseProductsHaveTextAttribute(string $productAttributeType, string $productAttributeName): void
     {
         $this->provideProductAttribute($productAttributeType, $productAttributeName);
@@ -42,13 +42,11 @@ final class ProductAttributeContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given /^(\d+) of these products have text attribute "([^"]+)" with "([^"]+)" value$/
-     */
+    #[Given('/^(\d+) of these products have text attribute "([^"]+)" with "([^"]+)" value$/')]
     public function ofTheseProductsHaveAttributeWithValue(
         int $quantity,
         string $productAttributeName,
-        string $value
+        string $value,
     ): void {
         $attribute = $this->provideProductAttribute('text', $productAttributeName);
 
@@ -79,7 +77,7 @@ final class ProductAttributeContext implements Context
     private function createProductAttribute(
         string $type,
         string $name,
-        ?string $code = null
+        ?string $code = null,
     ): ProductAttributeInterface {
         $productAttribute = $this->productAttributeFactory->createTyped($type);
 
@@ -94,7 +92,7 @@ final class ProductAttributeContext implements Context
     private function provideProductAttribute(
         string $type,
         string $name,
-        ?string $code = null
+        ?string $code = null,
     ): ProductAttributeInterface {
         $code = $code ?: StringInflector::nameToCode($name);
 
@@ -113,7 +111,7 @@ final class ProductAttributeContext implements Context
     private function createProductAttributeValue(
         $value,
         ProductAttributeInterface $attribute,
-        string $localeCode = 'en_US'
+        string $localeCode = 'en_US',
     ): ProductAttributeValueInterface {
         /** @var ProductAttributeValueInterface $attributeValue */
         $attributeValue = $this->productAttributeValueFactory->createNew();

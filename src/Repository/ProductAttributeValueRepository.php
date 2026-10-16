@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -20,23 +19,20 @@ use Sylius\Component\Taxonomy\Model\Taxon;
 class ProductAttributeValueRepository implements ProductAttributeValueRepositoryInterface
 {
     public function __construct(
-        private BaseAttributeValueRepositoryInterface $baseAttributeValueRepository,
-        private bool $includeAllDescendants
+        private BaseAttributeValueRepositoryInterface&EntityRepository $baseAttributeValueRepository,
+        private bool $includeAllDescendants,
     ) {
     }
 
     public function getUniqueAttributeValues(AttributeInterface $productAttribute, Taxon $taxon): array
     {
-        /** @var EntityRepository $baseAttributeValueRepository */
-        $baseAttributeValueRepository = $this->baseAttributeValueRepository;
-
-        $queryBuilder = $baseAttributeValueRepository->createQueryBuilder('o');
+        $queryBuilder = $this->baseAttributeValueRepository->createQueryBuilder('o');
 
         /** @var string|null $storageType */
         $storageType = $productAttribute->getStorageType();
 
         $queryBuilder
-            ->join('o.subject', 'p', 'WITH', 'p.enabled = 1')
+            ->join('o.subject', 'p', 'WITH', 'p.enabled = :enabled')
             ->join('p.productTaxons', 't', 'WITH', 't.product = p.id')
             ->select('o.localeCode, o.' . $storageType . ' as value')
             ->andWhere('t.taxon = :taxon');
@@ -53,10 +49,11 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
             ->andWhere('o.attribute = :attribute')
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')
+            ->setParameter('enabled', true)
             ->setParameter('attribute', $productAttribute)
             ->setParameter('taxon', $taxon->getId())
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 }

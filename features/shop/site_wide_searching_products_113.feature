@@ -166,3 +166,8 @@ Feature: Site-wide products search
   Scenario: Showing products in taxon
     When I browse products from taxon "Motorbikes"
     Then I should see the product "BMW GS"
+    And I should see the following options in the "Motorbike Type" filter of the taxon products list:
+      """
+      Enduro (2)
+      Naked (1)
+      """

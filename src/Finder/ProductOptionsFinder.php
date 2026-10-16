@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -23,14 +22,14 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
         private FinderInterface $optionsFinder,
         private QueryBuilderInterface $productOptionsByTaxonQueryBuilder,
         private string $taxonsProperty,
-        private int $filterMax = 20
+        private int $filterMax = 20,
     ) {
     }
 
-    public function findByTaxon(TaxonInterface $taxon): ?array
+    public function findByTaxon(TaxonInterface $taxon): array
     {
         $data = [];
-        $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());
+        $data[$this->taxonsProperty] = (string) $taxon->getCode();
 
         /** @var AbstractQuery $query */
         $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);

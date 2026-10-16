@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -33,7 +32,7 @@ final class AutoDiscoverRegistry implements AutoDiscoverRegistryInterface
         private LocaleContextInterface $localeContext,
         private RegistryInterface $registry,
         private array $excludedAttributes = [],
-        private array $excludedOptions = []
+        private array $excludedOptions = [],
     ) {
     }
 
@@ -59,7 +58,7 @@ final class AutoDiscoverRegistry implements AutoDiscoverRegistryInterface
         foreach ($attributes as $attribute) {
             $code = $attribute->getCode();
 
-            if (in_array($code, $this->excludedAttributes, true)) {
+            if (null === $code || in_array($code, $this->excludedAttributes, true)) {
                 continue;
             }
 
@@ -79,7 +78,7 @@ final class AutoDiscoverRegistry implements AutoDiscoverRegistryInterface
         foreach ($options as $option) {
             $code = $option->getCode();
 
-            if (in_array($code, $this->excludedOptions, true)) {
+            if (null === $code || in_array($code, $this->excludedOptions, true)) {
                 continue;
             }
 

@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -24,7 +23,7 @@ final class TaxonContext implements TaxonContextInterface
     public function __construct(
         private RequestStack $requestStack,
         private TaxonRepositoryInterface $taxonRepository,
-        private LocaleContextInterface $localeContext
+        private LocaleContextInterface $localeContext,
     ) {
     }
 
@@ -33,7 +32,7 @@ final class TaxonContext implements TaxonContextInterface
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        $slug = $request->get('slug');
+        $slug = $request->attributes->get('slug');
         $localeCode = $this->localeContext->getLocaleCode();
         /** @var TaxonInterface|null $taxon */
         $taxon = $this->taxonRepository->findOneBySlug($slug, $localeCode);

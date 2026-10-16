@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -25,7 +24,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
     public function __construct(
         private QueryBuilderInterface $queryBuilder,
         private PaginatedFinderInterface $productFinder,
-        private RegistryInterface $facetRegistry
+        private RegistryInterface $facetRegistry,
     ) {
     }
 
@@ -36,7 +35,7 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
 
         if (array_key_exists('facets', $data) && is_array($data['facets'])) {
             foreach ($data['facets'] as $facetId => $selectedBuckets) {
-                if (!$selectedBuckets) {
+                if (!is_array($selectedBuckets) || [] === $selectedBuckets) {
                     continue;
                 }
 

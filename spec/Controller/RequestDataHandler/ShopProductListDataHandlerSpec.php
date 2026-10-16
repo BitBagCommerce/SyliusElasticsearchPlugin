@@ -45,11 +45,14 @@ final class ShopProductListDataHandlerSpec extends ObjectBehavior
 
     function it_retrieves_data(
         TaxonContextInterface $taxonContext,
+        ProductAttributesFinderInterface $attributesFinder,
         TaxonInterface $taxon
     ): void {
         $taxonContext->getTaxon()->willReturn($taxon);
 
         $taxon->getCode()->willReturn('book');
+
+        $attributesFinder->findByTaxon($taxon)->willReturn([]);
 
         $this->retrieveData([
             'slug' => 'book',

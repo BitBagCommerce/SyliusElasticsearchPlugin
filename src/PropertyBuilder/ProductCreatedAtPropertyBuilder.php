@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -20,7 +19,7 @@ use Webmozart\Assert\Assert;
 final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
 {
     public function __construct(
-        private string $createdAtProperty
+        private string $createdAtProperty,
     ) {
     }
 
@@ -34,7 +33,7 @@ final class ProductCreatedAtPropertyBuilder extends AbstractBuilder
                 $createdAt = (int) $product->getCreatedAt()->format('U');
 
                 $document->set($this->createdAtProperty, $createdAt);
-            }
+            },
         );
     }
 }

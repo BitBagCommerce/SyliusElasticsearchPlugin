@@ -4,45 +4,49 @@
   "description": "BitBag Elasticsearch plugin for Sylius.",
   "license": "MIT",
   "require": {
-    "php": "^8.2 || ^8.3",
+    "php": "^8.3",
     "ext-json": "*",
-    "friendsofsymfony/elastica-bundle": "^6.0",
-    "sylius/sylius": "^2.0",
-    "symfony/property-access": "^6.4 || ^7.1",
+    "friendsofsymfony/elastica-bundle": "^7.2",
+    "ruflin/elastica": "^8.0 || ^9.0",
+    "sylius/sylius": "^2.2",
+    "symfony/property-access": "^6.4 || ^7.4 || ^8.0",
     "symfony/webpack-encore-bundle": "^2.2"
   },
   "require-dev": {
-    "behat/behat": "^3.16",
-    "behat/mink-selenium2-driver": "~1.6.0",
-    "bitbag/coding-standard": "^v2.0",
+    "behat/behat": "^3.22 || 4.0.0-alpha1",
+    "behat/mink": "^1.10 || ^1.13",
+    "behat/mink-selenium2-driver": "^1.7",
+    "bitbag/coding-standard": "^v3.0",
     "dbrekelmans/bdi": "^1.1",
-    "dmore/behat-chrome-extension": "^1.3",
     "dmore/chrome-mink-driver": "^2.7",
-    "friends-of-behat/mink": "^1.11",
-    "friends-of-behat/mink-browserkit-driver": "^1.4",
-    "friends-of-behat/mink-debug-extension": "^2.0.0",
-    "friends-of-behat/mink-extension": "^2.4",
+    "friends-of-behat/mink-browserkit-driver": "^1.6.3",
+    "friends-of-behat/mink-debug-extension": "^2.2",
+    "friends-of-behat/mink-extension": "^2.7 || 3.0.0-alpha1",
     "friends-of-behat/page-object-extension": "^0.3",
-    "friends-of-behat/suite-settings-extension": "^1.0",
-    "friends-of-behat/symfony-extension": "^2.1",
-    "friends-of-behat/variadic-extension": "^1.3",
-    "lchrusciel/api-test-case": "^5.2",
-    "phpspec/phpspec": "^7.2",
+    "friends-of-behat/symfony-extension": "^2.6.2",
+    "friends-of-behat/variadic-extension": "^1.7",
+    "lchrusciel/api-test-case": "^5.3 || ^6.0",
+    "phpspec/phpspec": "^8.3",
     "phpstan/extension-installer": "^1.0",
-    "phpstan/phpstan": "^1.8.1",
-    "phpstan/phpstan-doctrine": "1.3.69",
-    "phpstan/phpstan-strict-rules": "^1.3.0",
-    "phpstan/phpstan-webmozart-assert": "^1.2.0",
+    "phpstan/phpstan": "^2.2",
+    "phpstan/phpstan-doctrine": "^2.0",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpstan/phpstan-webmozart-assert": "^2.0",
     "phpunit/phpunit": "^10.5",
     "polishsymfonycommunity/symfony-mocker-container": "^1.0",
-    "robertfausk/behat-panther-extension": "^1.1",
+    "robertfausk/behat-panther-extension": "^1.1 || ^2.0",
+    "sylius-labs/behat-chrome-extension": "^1.5",
     "sylius-labs/coding-standard": "^4.2",
-    "sylius-labs/suite-tags-extension": "^0.2",
-    "symfony/browser-kit": "^6.4 || ^7.1",
-    "symfony/debug-bundle": "^6.4 || ^7.1",
-    "symfony/dotenv": "^6.4 || ^7.1",
-    "symfony/intl": "^6.4 || ^7.1",
-    "symfony/web-profiler-bundle": "^6.4 || ^7.1"
+    "sylius-labs/suite-tags-extension": "^0.3",
+    "sylius/test-application": "^2.2.0@alpha",
+    "symfony/browser-kit": "^6.4 || ^7.4 || ^8.0",
+    "symfony/debug-bundle": "^6.4 || ^7.4 || ^8.0",
+    "symfony/dotenv": "^6.4 || ^7.4 || ^8.0",
+    "symfony/intl": "^6.4 || ^7.4 || ^8.0",
+    "symfony/web-profiler-bundle": "^6.4 || ^7.4 || ^8.0"
+  },
+  "conflict": {
+    "slevomat/coding-standard": ">=8.23"
   },
   "config": {
     "sort-packages": true,
@@ -50,21 +54,20 @@
       "composer/package-versions-deprecated": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "php-http/discovery": false,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "symfony/runtime": true,
+      "symfony/flex": true
     }
   },
   "extra": {
+    "public-dir": "vendor/sylius/test-application/public",
     "branch-alias": {
-      "dev-master": "1.13-dev"
-    },
-    "symfony": {
-      "require": "^5.4 || ^6.0"
+      "dev-master": "6.0-dev"
     }
   },
   "autoload": {
     "psr-4": {
       "BitBag\\SyliusElasticsearchPlugin\\": "src/",
-      "Tests\\BitBag\\SyliusElasticsearchPlugin\\Application\\": "tests/Application",
       "Tests\\BitBag\\SyliusElasticsearchPlugin\\Integration\\": "tests/PHPUnit/Integration"
     }
   },
@@ -72,8 +75,7 @@
     "psr-4": {
       "Tests\\BitBag\\SyliusElasticsearchPlugin\\Behat\\": "tests/Behat",
       "spec\\BitBag\\SyliusElasticsearchPlugin\\": "spec/"
-    },
-    "classmap": ["tests/Application/Kernel.php"]
+    }
   },
   "scripts": {
     "post-install-cmd": [

@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -30,7 +29,7 @@ final class AttributeFacet implements FacetInterface
     public function __construct(
         private ConcatedNameResolverInterface $attributeNameResolver,
         private AttributeInterface $attribute,
-        private LocaleContextInterface $localeContext
+        private LocaleContextInterface $localeContext,
     ) {
     }
 
@@ -52,7 +51,7 @@ final class AttributeFacet implements FacetInterface
             default => $selectedBuckets,
         };
 
-        return new TermsQuery($this->getFieldName(), $selectedBuckets);
+        return new TermsQuery($this->getFieldName(), array_values($selectedBuckets));
     }
 
     public function getBucketLabel(array $bucket): string
@@ -80,7 +79,7 @@ final class AttributeFacet implements FacetInterface
         return sprintf(
             '%s_%s' . ($isKeywordAvailable ? '.keyword' : ''),
             $this->attributeNameResolver->resolvePropertyName((string) $this->getProductAttribute()->getCode()),
-            $this->localeContext->getLocaleCode()
+            $this->localeContext->getLocaleCode(),
         );
     }
 

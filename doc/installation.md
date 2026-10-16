@@ -18,17 +18,17 @@ ADDITIONAL
 ---
 
 ## Requirements:
-**Note:** This Plugin supports ElasticSearch 7.0 and above. If you're looking for ElasticSearch Plugin for older versions check SyliusElasticSearchPlugin in version 1.x.
+**Note:** This Plugin supports ElasticSearch 8.x and 9.x (via `ruflin/elastica` 8 or 9 respectively). If you're running ElasticSearch 7, use SyliusElasticSearchPlugin in version 5.x.
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 
 | Package       | Version         |
 |---------------|-----------------|
-| PHP           | \>=8.1          |
-| sylius/sylius | 1.12.x - 1.13.x |
-| MySQL         | \>= 5.7         |
-| NodeJS        | \>= 18.x        |
-| ElasticSearch | \>= 7.x         |
+| PHP           | \>=8.3          |
+| sylius/sylius | 2.2.x - 2.3.x   |
+| MySQL         | \>= 8.0         |
+| NodeJS        | \>= 22.13       |
+| ElasticSearch | 8.x - 9.x       |
 
 ## Composer:
 ```bash
@@ -64,10 +64,14 @@ Import routing on top of your `config/routes/sylius_shop.yaml` file:
 **Note.** The code presented below needs to be loaded before including the `sylius_shop` routes. Please be sure, that it's being loaded first.
 
 ```yaml
-# config/routes.yaml
+# config/routes/sylius_shop.yaml
 
 bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"
+
+sylius_shop:
+    resource: "@SyliusShopBundle/Resources/config/routing.yml"
+    # ...
 ```
 
 Remove the default ElasticSearch index (`app`) defined by `FOSElasticaBundle` in `config/packages/fos_elastica.yaml`:
@@ -76,7 +80,7 @@ Remove the default ElasticSearch index (`app`) defined by `FOSElasticaBundle` in
 
 fos_elastica:
     clients:
-        default: { url: '%env(ELASTICSEARCH_URL)%' }
+        default: { hosts: ['%env(ELASTICSEARCH_URL)%'] }
     indexes:
         app: ~
 ```
@@ -85,7 +89,7 @@ should become:
 ```yaml
 fos_elastica:
     clients:
-        default: { url: '%env(ELASTICSEARCH_URL)%' }
+        default: { hosts: ['%env(ELASTICSEARCH_URL)%'] }
 ```
 
 ## Entities

@@ -14,7 +14,7 @@ namespace spec\BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapper;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
@@ -40,17 +40,13 @@ final class ProductTaxonsMapperSpec extends ObjectBehavior
 
     function it_maps_to_unique_codes(
         ProductInterface $product,
-        Collection $collection,
         TaxonInterface $taxon
     ): void {
-        $taxon->getCode()->willReturn('book');
+        $taxon->getCode()->willReturn('Book');
+        $taxon->getAncestors()->willReturn(new ArrayCollection());
 
-        $taxons = new \ArrayIterator([$taxon]);
+        $product->getTaxons()->willReturn(new ArrayCollection([$taxon->getWrappedObject()]));
 
-        $collection->getIterator()->willReturn($taxons);
-
-        $product->getTaxons()->willReturn($collection);
-
-        $this->mapToUniqueCodes($product);
+        $this->mapToUniqueCodes($product)->shouldReturn(['Book']);
     }
 }

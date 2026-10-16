@@ -1,16 +1,19 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Api\Shop;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -20,13 +23,11 @@ final class ProductContext implements Context
 {
     public function __construct(
         private AbstractBrowser $client,
-        private RouterInterface $router
+        private RouterInterface $router,
     ) {
     }
 
-    /**
-     * @When I search the products by :phrase phrase
-     */
+    #[When('I search the products by :phrase phrase')]
     public function iSearchTheProductsByPhrase(string $phrase): void
     {
         $this->client->request(
@@ -34,13 +35,11 @@ final class ProductContext implements Context
             $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name', ['_locale' => 'en_US', 'query' => $phrase]),
             [],
             [],
-            ['ACCEPT' => 'application/json']
+            ['ACCEPT' => 'application/json'],
         );
     }
 
-    /**
-     * @Then I should see :productsCount products
-     */
+    #[Then('I should see :productsCount products')]
     public function iShouldSeeProducts(int $productsCount): void
     {
         /** @var Response $response */

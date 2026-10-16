@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -26,7 +25,7 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         private ProductVariantRepositoryInterface $productVariantRepository,
         private ProductTaxonsMapperInterface $productTaxonsMapper,
         private string $taxonsProperty,
-        private array $excludedOptions = []
+        private array $excludedOptions = [],
     ) {
     }
 
@@ -34,8 +33,8 @@ final class OptionTaxonsBuilder extends AbstractBuilder
     {
         $documentProductOption = $event->getObject();
 
-        if (!$documentProductOption instanceof ProductOptionInterface
-            || in_array($documentProductOption->getCode(), $this->excludedOptions, true)
+        if (!$documentProductOption instanceof ProductOptionInterface ||
+            in_array($documentProductOption->getCode(), $this->excludedOptions, true)
         ) {
             return;
         }

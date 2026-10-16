@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -22,7 +21,7 @@ final class ShopProductsFilterType extends AbstractFilterType
     public function __construct(
         private AutoDiscoverRegistryInterface $autoDiscoverRegistry,
         private string $namePropertyPrefix,
-        private ProductsFilterFacetResolverInterface $facetResolver
+        private ProductsFilterFacetResolverInterface $facetResolver,
     ) {
     }
 
@@ -36,7 +35,7 @@ final class ShopProductsFilterType extends AbstractFilterType
         $builder->addEventSubscriber(new AddFacetsEventSubscriber(
             $this->autoDiscoverRegistry,
             $this->facetResolver,
-            $this->namePropertyPrefix
+            $this->namePropertyPrefix,
         ));
     }
 }

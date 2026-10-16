@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -17,7 +16,7 @@ use Sylius\Component\Core\Model\ProductInterface;
 final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
 {
     public function __construct(
-        private bool $includeAllDescendants
+        private bool $includeAllDescendants,
     ) {
     }
 
@@ -26,11 +25,11 @@ final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
         $taxons = [];
 
         foreach ($product->getTaxons() as $taxon) {
-            $taxons[] = strtolower((string) $taxon->getCode());
+            $taxons[] = (string) $taxon->getCode();
 
             if (true === $this->includeAllDescendants) {
                 foreach ($taxon->getAncestors() as $ancestor) {
-                    $taxons[] = strtolower((string) $ancestor->getCode());
+                    $taxons[] = (string) $ancestor->getCode();
                 }
             }
         }

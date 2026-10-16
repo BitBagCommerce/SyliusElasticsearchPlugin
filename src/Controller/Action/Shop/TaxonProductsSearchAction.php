@@ -3,7 +3,6 @@
 /*
  * This file has been created by developers from BitBag.
  * Feel free to contact us once you face any issues or want to start
- * another great project.
  * You can find more information about us on https://bitbag.io and write us
  * an email on hello@bitbag.io.
  */
@@ -20,14 +19,14 @@ final class TaxonProductsSearchAction extends AbstractSearchAction
 {
     public function __invoke(Request $request): Response
     {
-        $template = $request->get('template');
+        $template = $request->attributes->get('template');
         $form = $this->formFactory->create(ShopProductsFilterType::class);
         $form->handleRequest($request);
 
         $requestData = array_merge(
             $form->getData(),
             $request->query->all(),
-            ['slug' => $request->get('slug')]
+            ['slug' => $request->attributes->get('slug')],
         );
 
         if ($form->isSubmitted() && !$form->isValid()) {
