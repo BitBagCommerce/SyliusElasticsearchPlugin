@@ -6,6 +6,16 @@ bitbag_sylius_elasticsearch_plugin_shop_taxon_products:
     requirements:
         slug: .+
 
+# Replaces Sylius' product listing, which shares the path above. Together with the route above this makes
+# the plugin's listing win regardless of whether these routes are imported before or after Sylius' shop routes.
+sylius_shop_product_index:
+    path: /{_locale}/taxons/{slug}
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.taxon_products_search
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/TaxonProductsSearch/index.html.twig"
+    requirements:
+        slug: .+
+
 bitbag_sylius_elasticsearch_plugin_shop_auto_complete_product_name:
     path: /{_locale}/auto-complete/product
     defaults:

@@ -36,6 +36,7 @@ return (new Config())
                 'bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch',
                 'sylius.behat.context.ui.shop.product',
                 'bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search',
+                'bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.taxon_products',
                 'bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.home_page',
             )
             ->withFilter(new TagFilter('@site_wide_searching_products&&@ui')),

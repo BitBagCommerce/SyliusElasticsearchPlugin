@@ -14,6 +14,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\HomepageContext;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\ProductContext;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\SearchContext;
+use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\TaxonProductsContext;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services()
@@ -31,6 +32,12 @@ return static function (ContainerConfigurator $container): void {
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search', SearchContext::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.search'),
+        ])
+    ;
+
+    $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.taxon_products', TaxonProductsContext::class)
+        ->args([
+            service('bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.taxon_products'),
         ])
     ;
 
