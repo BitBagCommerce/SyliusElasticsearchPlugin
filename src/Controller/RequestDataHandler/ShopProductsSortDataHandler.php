@@ -16,14 +16,14 @@ use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverIn
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use UnexpectedValueException;
 
-final class ShopProductsSortDataHandler implements SortDataHandlerInterface
+class ShopProductsSortDataHandler implements SortDataHandlerInterface
 {
     public function __construct(
-        private ConcatedNameResolverInterface $channelPricingNameResolver,
-        private ChannelContextInterface $channelContext,
-        private string $soldUnitsProperty,
-        private string $createdAtProperty,
-        private string $pricePropertyPrefix
+        protected ConcatedNameResolverInterface $channelPricingNameResolver,
+        protected ChannelContextInterface $channelContext,
+        protected string $soldUnitsProperty,
+        protected string $createdAtProperty,
+        protected string $pricePropertyPrefix
     ) {
     }
 
@@ -31,24 +31,43 @@ final class ShopProductsSortDataHandler implements SortDataHandlerInterface
     {
         $data = [];
 
-        $orderBy = $requestData[self::ORDER_BY_INDEX] ?? $this->createdAtProperty;
+        $orderBy = $requestData[self::ORDER_BY_INDEX] ?? $this->getDefaultOrderBy();
         $sort = $requestData[self::SORT_INDEX] ?? self::SORT_ASC_INDEX;
 
-        $availableSorters = [$this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
         $availableSorting = [self::SORT_ASC_INDEX, self::SORT_DESC_INDEX];
 
-        if (!in_array($orderBy, $availableSorters, true) || !in_array($sort, $availableSorting, true)) {
+        if (!in_array($orderBy, $this->getAvailableSorters(), true) || !in_array($sort, $availableSorting, true)) {
             throw new UnexpectedValueException();
         }
 
+        $orderBy = $this->resolveOrderByProperty($orderBy);
+
+        $data['sort'] = [$orderBy => ['order' => strtolower($sort), 'unmapped_type' => 'keyword']];
+
+        return $data;
+    }
+
+    protected function getDefaultOrderBy(): string
+    {
+        return $this->createdAtProperty;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAvailableSorters(): array
+    {
+        return [$this->soldUnitsProperty, $this->createdAtProperty, $this->pricePropertyPrefix];
+    }
+
+    protected function resolveOrderByProperty(string $orderBy): string
+    {
         if ($this->pricePropertyPrefix === $orderBy) {
             /** @var string $channelCode */
             $channelCode = $this->channelContext->getChannel()->getCode();
             $orderBy = $this->channelPricingNameResolver->resolvePropertyName($channelCode);
         }
 
-        $data['sort'] = [$orderBy => ['order' => strtolower($sort), 'unmapped_type' => 'keyword']];
-
-        return $data;
+        return $orderBy;
     }
 }
