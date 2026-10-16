@@ -64,10 +64,14 @@ Import routing on top of your `config/routes/sylius_shop.yaml` file:
 **Note.** The code presented below needs to be loaded before including the `sylius_shop` routes. Please be sure, that it's being loaded first.
 
 ```yaml
-# config/routes.yaml
+# config/routes/sylius_shop.yaml
 
 bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"
+
+sylius_shop:
+    resource: "@SyliusShopBundle/Resources/config/routing.yml"
+    # ...
 ```
 
 Remove the default ElasticSearch index (`app`) defined by `FOSElasticaBundle` in `config/packages/fos_elastica.yaml`:

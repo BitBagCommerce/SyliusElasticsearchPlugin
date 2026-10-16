@@ -1,2 +1,12 @@
 bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"
+
+# sylius/test-application imports plugin routes after Sylius' shop routes, so Sylius' product listing
+# (which shares its path with the plugin's taxon listing) would win. Point it to the plugin's listing instead.
+sylius_shop_product_index:
+    path: /{_locale}/taxons/{slug}
+    defaults:
+        _controller: bitbag_sylius_elasticsearch_plugin.controller.action.shop.taxon_products_search
+        template: "@BitBagSyliusElasticsearchPlugin/Shop/TaxonProductsSearch/index.html.twig"
+    requirements:
+        slug: .+
