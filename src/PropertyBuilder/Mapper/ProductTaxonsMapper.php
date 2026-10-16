@@ -25,11 +25,11 @@ final class ProductTaxonsMapper implements ProductTaxonsMapperInterface
         $taxons = [];
 
         foreach ($product->getTaxons() as $taxon) {
-            $taxons[] = strtolower((string) $taxon->getCode());
+            $taxons[] = (string) $taxon->getCode();
 
             if (true === $this->includeAllDescendants) {
                 foreach ($taxon->getAncestors() as $ancestor) {
-                    $taxons[] = strtolower((string) $ancestor->getCode());
+                    $taxons[] = (string) $ancestor->getCode();
                 }
             }
         }

@@ -32,7 +32,7 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
         $storageType = $productAttribute->getStorageType();
 
         $queryBuilder
-            ->join('o.subject', 'p', 'WITH', 'p.enabled = 1')
+            ->join('o.subject', 'p', 'WITH', 'p.enabled = :enabled')
             ->join('p.productTaxons', 't', 'WITH', 't.product = p.id')
             ->select('o.localeCode, o.' . $storageType . ' as value')
             ->andWhere('t.taxon = :taxon');
@@ -49,6 +49,7 @@ class ProductAttributeValueRepository implements ProductAttributeValueRepository
             ->andWhere('o.attribute = :attribute')
             ->groupBy('o.' . $storageType)
             ->addGroupBy('o.localeCode')
+            ->setParameter('enabled', true)
             ->setParameter('attribute', $productAttribute)
             ->setParameter('taxon', $taxon->getId())
             ->getQuery()

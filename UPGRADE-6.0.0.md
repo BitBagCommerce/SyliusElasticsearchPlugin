@@ -36,3 +36,17 @@
 5. The plugin's Behat configuration has been migrated from `behat.yml.dist` to `behat.dist.php`, and its suites and
    services from YAML/XML to PHP (`tests/Behat/Resources/suites.php`, `tests/Behat/Resources/services.php`).
    Step definitions now use PHP attributes instead of annotations.
+
+6. Taxon codes are no longer lowercased when indexed (`product_taxons`, `option_taxons`) or queried
+   (`ShopProductListDataHandler`, `ProductAttributesFinder`, `ProductOptionsFinder`, `ProductTaxonsMapper`).
+   They are now stored and matched exactly as defined in Sylius. This fixes taxon facet labels on case-sensitive
+   databases (e.g. PostgreSQL) and attribute filters for taxons with mixed-case codes.
+
+   Rebuild the indexes after upgrading:
+
+    ```bash
+    bin/console fos:elastica:populate
+    ```
+
+   If you customised any of the classes above or query `product_taxons` / `option_taxons` / `attribute_taxons`
+   yourself, stop lowercasing the taxon codes you pass in.

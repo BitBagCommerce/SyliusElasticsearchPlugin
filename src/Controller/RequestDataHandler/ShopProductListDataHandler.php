@@ -35,7 +35,7 @@ final class ShopProductListDataHandler implements DataHandlerInterface
         $taxon = $this->taxonContext->getTaxon();
 
         $data[$this->namePropertyPrefix] = (string) $requestData[$this->namePropertyPrefix];
-        $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());
+        $data[$this->taxonsProperty] = (string) $taxon->getCode();
         $data['taxon'] = $taxon;
         $data = array_merge(
             $data,

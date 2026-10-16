@@ -42,11 +42,11 @@ final class ProductTaxonsMapperSpec extends ObjectBehavior
         ProductInterface $product,
         TaxonInterface $taxon
     ): void {
-        $taxon->getCode()->willReturn('book');
+        $taxon->getCode()->willReturn('Book');
         $taxon->getAncestors()->willReturn(new ArrayCollection());
 
         $product->getTaxons()->willReturn(new ArrayCollection([$taxon->getWrappedObject()]));
 
-        $this->mapToUniqueCodes($product)->shouldReturn(['book']);
+        $this->mapToUniqueCodes($product)->shouldReturn(['Book']);
     }
 }

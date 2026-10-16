@@ -29,7 +29,7 @@ final class ProductOptionsFinder implements ProductOptionsFinderInterface
     public function findByTaxon(TaxonInterface $taxon): array
     {
         $data = [];
-        $data[$this->taxonsProperty] = strtolower((string) $taxon->getCode());
+        $data[$this->taxonsProperty] = (string) $taxon->getCode();
 
         /** @var AbstractQuery $query */
         $query = $this->productOptionsByTaxonQueryBuilder->buildQuery($data);
