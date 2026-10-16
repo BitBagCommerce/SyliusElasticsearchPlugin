@@ -34,12 +34,14 @@ final class ListProductsByPartialNameAction
     {
         $itemsResponse = ItemsResponse::createEmpty();
 
-        if (null === $request->query->get('query')) {
+        $query = $request->query->getString('query');
+
+        if ('' === $query) {
             return new JsonResponse($itemsResponse->toArray());
         }
 
         /** @var array $products */
-        $products = $this->namedProductsFinder->findByNamePart($request->query->get('query'));
+        $products = $this->namedProductsFinder->findByNamePart($query);
 
         /** @var ProductInterface $product */
         foreach ($products as $product) {

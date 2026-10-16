@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\Api\RequestDataHandler\RequestDataHandler;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -21,5 +21,6 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.shop_products_sort'),
             service('bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination'),
-        ]);
+        ])
+    ;
 };

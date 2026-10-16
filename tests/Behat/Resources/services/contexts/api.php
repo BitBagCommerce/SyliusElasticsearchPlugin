@@ -9,18 +9,20 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Api\Shop\ProductContext;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
-        ->public();
+        ->public()
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.api.shop.product', ProductContext::class)
         ->args([
             service('bitbag.test.client'),
             service('router.default'),
-        ]);
+        ])
+    ;
 };

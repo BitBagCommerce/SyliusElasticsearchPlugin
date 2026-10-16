@@ -9,8 +9,8 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\HomepageContext;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\ProductContext;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\SearchContext;
@@ -18,21 +18,25 @@ use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Ui\Shop\SearchContext;
 return static function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
-        ->public();
+        ->public()
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.product', ProductContext::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.product.index'),
             service('sylius.behat.shared_storage'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.search', SearchContext::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.search'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.ui.shop.home_page', HomepageContext::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.home_page'),
-        ]);
+        ])
+    ;
 };

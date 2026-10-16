@@ -9,8 +9,8 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ElasticsearchContext;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductAttributeContext;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductContext;
@@ -19,7 +19,8 @@ use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Context\Setup\ProductTaxonConte
 return static function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
-        ->public();
+        ->public()
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.setup.product', ProductContext::class)
         ->args([
@@ -32,7 +33,8 @@ return static function (ContainerConfigurator $container): void {
             service('doctrine.orm.entity_manager'),
             service('sylius.resolver.product_variant.default'),
             service('sylius.generator.slug'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_attribute', ProductAttributeContext::class)
         ->args([
@@ -41,17 +43,20 @@ return static function (ContainerConfigurator $container): void {
             service('sylius.factory.product_attribute'),
             service('sylius.factory.product_attribute_value'),
             service('doctrine.orm.entity_manager'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.setup.product_taxon', ProductTaxonContext::class)
         ->args([
             service('sylius.behat.shared_storage'),
             service('sylius.factory.product_taxon'),
             service('doctrine.orm.entity_manager'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.setup.elasticsearch', ElasticsearchContext::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.behat.populate'),
-        ]);
+        ])
+    ;
 };

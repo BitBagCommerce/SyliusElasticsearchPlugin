@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop\SiteWideProductsSearchAction;
 use BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop\TaxonProductsSearchAction;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -25,7 +25,8 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.finder.shop_products'),
             service('twig'),
         ])
-        ->tag('controller.service_arguments');
+        ->tag('controller.service_arguments')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.controller.action.shop.site_wide_products_search', SiteWideProductsSearchAction::class)
         ->args([
@@ -34,5 +35,6 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.finder.search_products'),
             service('twig'),
         ])
-        ->tag('controller.service_arguments');
+        ->tag('controller.service_arguments')
+    ;
 };

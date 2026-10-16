@@ -1,7 +1,7 @@
 <?php
 
 const NODE_MODULES_FOLDER_NAME = 'node_modules';
-const PATH_TO_NODE_MODULES = 'tests' . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR . 'node_modules';
+const PATH_TO_NODE_MODULES = 'vendor' . DIRECTORY_SEPARATOR . 'sylius' . DIRECTORY_SEPARATOR . 'test-application' . DIRECTORY_SEPARATOR . 'node_modules';
 
 /* cannot use `file_exists` or `stat` as gives false on symlinks if target path does not exist yet */
 if (@lstat(NODE_MODULES_FOLDER_NAME))

@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolver;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\PriceNameResolver;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistry;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\SearchPropertyNameResolverRegistryInterface;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -23,37 +23,44 @@ return static function (ContainerConfigurator $container): void {
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.name', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_name_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.option', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_option_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.attribute', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_attribute_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.channel_pricing', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_product_price_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.price', PriceNameResolver::class)
         ->args([
             '%bitbag_es_shop_product_price_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.description', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_description_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.short_description', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_short_description_property_prefix%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry', SearchPropertyNameResolverRegistry::class)
         ->call('addPropertyNameResolver', [
@@ -64,12 +71,14 @@ return static function (ContainerConfigurator $container): void {
         ])
         ->call('addPropertyNameResolver', [
             service('bitbag_sylius_elasticsearch_plugin.property_name_resolver.description'),
-        ]);
+        ])
+    ;
 
     $services->alias(SearchPropertyNameResolverRegistryInterface::class, 'bitbag_sylius_elasticsearch_plugin.search_property_name_resolver_registry');
 
     $services->set('bitbag_sylius_elasticsearch_plugin.property_name_resolver.taxon_position', ConcatedNameResolver::class)
         ->args([
             '%bitbag_es_shop_taxon_position_property_prefix%',
-        ]);
+        ])
+    ;
 };

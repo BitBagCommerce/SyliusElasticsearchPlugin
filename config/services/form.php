@@ -10,8 +10,6 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\Form\Resolver\FacetsResolver;
 use BitBag\SyliusElasticsearchPlugin\Form\Resolver\ProductsFilterFacetResolver;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ChoiceMapper\AttributesMapper\AttributesTypeDateMapper;
@@ -26,12 +24,16 @@ use BitBag\SyliusElasticsearchPlugin\Form\Type\ProductOptionsFilterType;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchFacetsType;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\SearchType;
 use BitBag\SyliusElasticsearchPlugin\Form\Type\ShopProductsFilterType;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.name_filter', NameFilterType::class)
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.product_options_filter', ProductOptionsFilterType::class)
         ->args([
@@ -39,7 +41,8 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.property_name_resolver.option'),
             service('bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_options'),
         ])
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_filter', ProductAttributesFilterType::class)
         ->args([
@@ -48,14 +51,16 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes'),
             '%bitbag_es_excluded_filter_attributes%',
         ])
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.price_filter', PriceFilterType::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.property_name_resolver.price'),
             service('sylius.context.currency.channel_aware'),
         ])
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.shop_products_filter', ShopProductsFilterType::class)
         ->args([
@@ -63,12 +68,14 @@ return static function (ContainerConfigurator $container): void {
             '%bitbag_es_shop_name_property_prefix%',
             service('bitbag_sylius_elasticsearch_plugin.form.resolver.facet_resolver'),
         ])
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_options', ProductOptionsMapper::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.string_formatter'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.choice_mapper.product_attributes', ProductAttributesMapper::class)
         ->args([
@@ -77,41 +84,49 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag.sylius_elasticsearch_plugin.string_formatter'),
             service('bitbag.sylius_elasticsearch_plugin.context.taxon'),
             tagged_iterator('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.search', SearchType::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.facet.auto_registry'),
             service('bitbag_sylius_elasticsearch_plugin.form.resolver.site_wide_facet_resolver'),
         ])
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.type.search.facets', SearchFacetsType::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.facet.registry'),
         ])
-        ->tag('form.type');
+        ->tag('form.type')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.mapper.type.date', AttributesTypeDateMapper::class)
-        ->tag('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper');
+        ->tag('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.mapper.type.date_time', AttributesTypeDateTimeMapper::class)
-        ->tag('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper');
+        ->tag('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.mapper.type.percent', AttributesTypePercentMapper::class)
-        ->tag('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper');
+        ->tag('bitbag_sylius_elasticsearch_plugin.form.type.product_attributes_mapper')
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.resolver.facet_resolver', ProductsFilterFacetResolver::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.query_builder.taxon_facets'),
             service('bitbag_sylius_elasticsearch_plugin.facet.registry'),
             service('fos_elastica.finder.bitbag_shop_product'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.form.resolver.site_wide_facet_resolver', FacetsResolver::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_facets'),
             service('bitbag_sylius_elasticsearch_plugin.facet.registry'),
             service('fos_elastica.finder.bitbag_shop_product'),
-        ]);
+        ])
+    ;
 };

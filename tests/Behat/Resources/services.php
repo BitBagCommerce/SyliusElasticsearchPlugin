@@ -9,8 +9,8 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Service\Populate;
 
 return static function (ContainerConfigurator $container): void {
@@ -18,7 +18,8 @@ return static function (ContainerConfigurator $container): void {
 
     $services = $container->services()
         ->defaults()
-        ->public();
+        ->public()
+    ;
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.populate', Populate::class)
         ->args([
@@ -27,7 +28,8 @@ return static function (ContainerConfigurator $container): void {
             service('fos_elastica.pager_provider_registry'),
             service('fos_elastica.pager_persister_registry'),
             service('fos_elastica.resetter'),
-        ]);
+        ])
+    ;
 
     $services->alias('bitbag.test.client', 'test.client');
     $services->alias('bitbag.test.client.history', 'test.client.history');

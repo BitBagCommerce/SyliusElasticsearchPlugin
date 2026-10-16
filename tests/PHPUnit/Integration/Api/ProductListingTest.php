@@ -115,7 +115,7 @@ final class ProductListingTest extends JsonApiTestCase
 
     private function populateElasticsearch(): void
     {
-        $process = new Process(['tests/Application/bin/console', 'fos:elastica:populate']);
+        $process = new Process(['vendor/bin/console', 'fos:elastica:populate']);
         $process->run();
 
         if (!$process->isSuccessful()) {

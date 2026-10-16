@@ -1,3 +1,0 @@
-fos_elastica:
-  clients:
-    default: { hosts: ['%env(ELASTICSEARCH_URL)%'] }

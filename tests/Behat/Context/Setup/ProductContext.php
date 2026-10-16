@@ -163,7 +163,7 @@ final class ProductContext implements Context
     private function createProduct(
         string $productName,
         int $price = 100,
-        ChannelInterface $channel = null,
+        ?ChannelInterface $channel = null,
     ): ProductInterface {
         if (null === $channel && $this->sharedStorage->has('channel')) {
             $channel = $this->sharedStorage->get('channel');
@@ -224,7 +224,7 @@ final class ProductContext implements Context
         $this->sharedStorage->set('product', $product);
     }
 
-    private function createChannelPricingForChannel(int $price, ChannelInterface $channel = null): ChannelPricingInterface
+    private function createChannelPricingForChannel(int $price, ?ChannelInterface $channel = null): ChannelPricingInterface
     {
         /** @var ChannelPricingInterface $channelPricing */
         $channelPricing = $this->channelPricingFactory->createNew();

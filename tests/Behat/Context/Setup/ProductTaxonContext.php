@@ -62,7 +62,7 @@ final class ProductTaxonContext implements Context
     private function createProductTaxon(
         TaxonInterface $taxon,
         ProductInterface $product,
-        int $position = null,
+        ?int $position = null,
     ): ProductTaxonInterface {
         /** @var ProductTaxonInterface $productTaxon */
         $productTaxon = $this->productTaxonFactory->createNew();

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/8.5/phpunit.xsd"
+         colors="true"
+         bootstrap="vendor/sylius/test-application/config/bootstrap.php">
+    <testsuites>
+        <testsuite name="BitBag SyliusElesticsearchPlugin Test Suite">
+            <directory>tests/PHPUnit</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <ini name="error_reporting" value="-1" />
+
+        <server name="IS_DOCTRINE_ORM_SUPPORTED" value="true"/>
+        <server name="KERNEL_CLASS" value="Sylius\TestApplication\Kernel"/>
+        <server name="EXPECTED_RESPONSES_DIR" value="tests\Responses\json"/>
+        <env name="APP_ENV" value="test"/>
+        <env name="SHELL_VERBOSITY" value="-1" />
+
+    </php>
+</phpunit>

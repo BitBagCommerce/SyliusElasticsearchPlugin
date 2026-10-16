@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\Api\Resolver\FacetsResolver;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -23,5 +23,6 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_products'),
             service('bitbag_sylius_elasticsearch_plugin.facet.registry'),
             service('fos_elastica.finder.bitbag_shop_product'),
-        ]);
+        ])
+    ;
 };

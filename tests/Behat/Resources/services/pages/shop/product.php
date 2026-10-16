@@ -9,8 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Tests\BitBag\SyliusElasticsearchPlugin\Behat\Page\Shop\Product\IndexPage;
 
 return static function (ContainerConfigurator $container): void {
@@ -18,5 +17,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set('bitbag.sylius_elasticsearch_plugin.behat.context.page.shop.product.index', IndexPage::class)
         ->parent('sylius.behat.page.shop.product.index')
-        ->private();
+        ->private()
+    ;
 };

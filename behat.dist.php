@@ -10,15 +10,19 @@ use DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension;
 use FriendsOfBehat\MinkDebugExtension\ServiceContainer\MinkDebugExtension;
 use FriendsOfBehat\SymfonyExtension\ServiceContainer\SymfonyExtension;
 use FriendsOfBehat\VariadicExtension\ServiceContainer\VariadicExtension;
+use Robertfausk\Behat\PantherExtension\ServiceContainer\PantherExtension;
+
+$syliusSuitesPath = 'vendor/sylius/sylius/src/Sylius/Behat/Resources/config/suites';
 
 return (new Config())
     ->import([
-        'vendor/sylius/sylius/src/Sylius/Behat/Resources/config/suites.php',
+        is_file(__DIR__ . '/' . $syliusSuitesPath . '.php') ? $syliusSuitesPath . '.php' : $syliusSuitesPath . '.yml',
         'tests/Behat/Resources/suites.php',
     ])
     ->withProfile(
         (new Profile('default'))
         ->withExtension(new Extension(ChromeExtension::class))
+        ->withExtension(new Extension(PantherExtension::class))
         ->withExtension(new Extension(MinkDebugExtension::class, [
             'directory' => 'etc/build',
             'clean_start' => false,
@@ -26,52 +30,69 @@ return (new Config())
         ]))
         ->withExtension(new Extension(MinkExtension::class, [
             'files_path' => '%paths.base%/vendor/sylius/sylius/src/Sylius/Behat/Resources/fixtures/',
-            'base_url' => 'https://127.0.0.1:8080/',
+            'base_url' => 'http://127.0.0.1:8080/',
             'default_session' => 'symfony',
-            'javascript_session' => 'chrome_headless',
+            'javascript_session' => 'panther',
             'sessions' => [
                 'symfony' => [
                     'symfony' => null,
                 ],
-                'chrome_headless' => [
+                'chromedriver' => [
                     'chrome' => [
                         'api_url' => 'http://127.0.0.1:9222',
                         'validate_certificate' => false,
                     ],
                 ],
-                'chrome' => [
-                    'selenium2' => [
-                        'browser' => 'chrome',
-                        'capabilities' => [
-                            'browserName' => 'chrome',
-                            'browser' => 'chrome',
-                            'version' => '',
-                            'marionette' => null, // https://github.com/Behat/MinkExtension/pull/311
-                            'chrome' => [
-                                'switches' => [
-                                    'start-fullscreen',
-                                    'start-maximized',
-                                    'no-sandbox',
-                                ],
+                'chrome_headless_second_session' => [
+                    'chrome' => [
+                        'api_url' => 'http://127.0.0.1:9222',
+                        'validate_certificate' => false,
+                    ],
+                ],
+                'panther' => [
+                    'panther' => [
+                        'manager_options' => [
+                            'connection_timeout_in_ms' => 5000,
+                            'request_timeout_in_ms' => 120000,
+                            'chromedriver_arguments' => [
+                                '--log-path=etc/build/chromedriver.log',
+                                '--verbose',
                             ],
-                            'extra_capabilities' => [
+                            'capabilities' => [
+                                'acceptSslCerts' => true,
+                                'acceptInsecureCerts' => true,
                                 'unexpectedAlertBehaviour' => 'accept',
                             ],
                         ],
-                    ],
-                ],
-                'firefox' => [
-                    'selenium2' => [
-                        'browser' => 'firefox',
+                        'options' => [
+                            'webServerDir' => '%paths.base%/vendor/sylius/test-application/public',
+                            'browser_arguments' => [
+                                '--window-size=1200,1000',
+                                '--headless',
+                                '--no-sandbox',
+                                '--disable-dev-shm-usage',
+                                '--disable-gpu',
+                                '--disable-infobars',
+                                '--disable-features=TranslateUI',
+                                '--disable-translate',
+                                '--disable-popup-blocking',
+                                '--disable-blink-features=AutomationControlled',
+                                '--disable-component-extensions-with-background-pages',
+                                '--disable-background-networking',
+                                '--disable-dev-tools',
+                                '--disable-extensions',
+                                '--disable-password-manager-leak-detection',
+                            ],
+                        ],
                     ],
                 ],
             ],
             'show_auto' => false,
         ]))
         ->withExtension(new Extension(SymfonyExtension::class, [
-            'bootstrap' => 'tests/Application/config/bootstrap.php',
+            'bootstrap' => 'vendor/sylius/test-application/config/bootstrap.php',
             'kernel' => [
-                'class' => \Tests\BitBag\SyliusElasticsearchPlugin\Application\Kernel::class,
+                'class' => 'Sylius\TestApplication\Kernel',
             ],
         ]))
         ->withExtension(new Extension(VariadicExtension::class)),

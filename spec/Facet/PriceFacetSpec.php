@@ -14,6 +14,8 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Bundle\MoneyBundle\Formatter\MoneyFormatterInterface;
 use Sylius\Component\Core\Context\ShopperContextInterface;
 use Sylius\Component\Core\Model\Channel;
+use Sylius\Component\Currency\Converter\CurrencyConverterInterface;
+use Sylius\Component\Currency\Model\Currency;
 
 final class PriceFacetSpec extends ObjectBehavior
 {
@@ -22,15 +24,20 @@ final class PriceFacetSpec extends ObjectBehavior
     function let(
         ConcatedNameResolverInterface $channelPricingNameResolver,
         MoneyFormatterInterface $moneyFormatter,
-        ShopperContextInterface $shopperContext
+        ShopperContextInterface $shopperContext,
+        CurrencyConverterInterface $currencyConverter
     ): void {
+        $currency = new Currency();
+        $currency->setCode('USD');
         $channel = new Channel();
         $channel->setCode('web_us');
+        $channel->setBaseCurrency($currency);
         $shopperContext->getChannel()->willReturn($channel);
         $this->beConstructedWith(
             $channelPricingNameResolver,
             $moneyFormatter,
             $shopperContext,
+            $currencyConverter,
             $this->interval
         );
     }
@@ -69,9 +76,12 @@ final class PriceFacetSpec extends ObjectBehavior
 
     function it_returns_money_formatted_bucket_label(
         MoneyFormatterInterface $moneyFormatter,
-        ShopperContextInterface $shopperContext
+        ShopperContextInterface $shopperContext,
+        CurrencyConverterInterface $currencyConverter
     ): void {
         $shopperContext->getCurrencyCode()->willReturn('USD');
+        $currencyConverter->convert(1000000, 'USD', 'USD')->willReturn(1000000);
+        $currencyConverter->convert(2000000, 'USD', 'USD')->willReturn(2000000);
         $shopperContext->getLocaleCode()->willReturn('en_US');
         $moneyFormatter->format(1000000, 'USD', 'en_US')->shouldBeCalled()->willReturn('$10,000.00');
         $moneyFormatter->format(2000000, 'USD', 'en_US')->shouldBeCalled()->willReturn('$20,000.00');

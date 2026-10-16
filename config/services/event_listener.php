@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\EventListener\OrderProductsListener;
 use BitBag\SyliusElasticsearchPlugin\EventListener\ProductTaxonIndexListener;
 use BitBag\SyliusElasticsearchPlugin\EventListener\ResourceIndexListener;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -51,14 +51,16 @@ return static function (ContainerConfigurator $container): void {
         ->tag('kernel.event_listener', ['event' => 'sylius.product.post_delete', 'method' => 'updateIndex'])
         ->tag('kernel.event_listener', ['event' => 'sylius.product_variant.post_create', 'method' => 'updateIndex'])
         ->tag('kernel.event_listener', ['event' => 'sylius.product_variant.post_update', 'method' => 'updateIndex'])
-        ->tag('kernel.event_listener', ['event' => 'sylius.product_variant.post_delete', 'method' => 'updateIndex']);
+        ->tag('kernel.event_listener', ['event' => 'sylius.product_variant.post_delete', 'method' => 'updateIndex'])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.event_listener.product_taxon_index', ProductTaxonIndexListener::class)
         ->args([
             service('bitbag.sylius_elasticsearch_plugin.refresher.resource'),
             service('fos_elastica.object_persister.bitbag_shop_product'),
         ])
-        ->tag('doctrine.orm.entity_listener', ['event' => 'postUpdate', 'method' => 'updateIndex', 'entity' => '%sylius.model.product_taxon.class%']);
+        ->tag('doctrine.orm.entity_listener', ['event' => 'postUpdate', 'method' => 'updateIndex', 'entity' => '%sylius.model.product_taxon.class%'])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.event_listener.order_products', OrderProductsListener::class)
         ->public()
@@ -66,5 +68,6 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag.sylius_elasticsearch_plugin.refresher.resource'),
             service('fos_elastica.object_persister.bitbag_shop_product'),
         ])
-        ->tag('kernel.event_listener', ['event' => 'sylius.order.post_complete', 'method' => 'updateOrderProducts']);
+        ->tag('kernel.event_listener', ['event' => 'sylius.order.post_complete', 'method' => 'updateOrderProducts'])
+    ;
 };

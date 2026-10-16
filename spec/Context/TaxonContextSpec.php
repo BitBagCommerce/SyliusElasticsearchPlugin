@@ -44,10 +44,9 @@ final class TaxonContextSpec extends ObjectBehavior
         RequestStack $requestStack,
         TaxonRepositoryInterface $taxonRepository,
         LocaleContextInterface $localeContext,
-        Request $request,
         TaxonInterface $taxon
     ): void {
-        $request->get('slug')->willReturn('book');
+        $request = new Request(attributes: ['slug' => 'book']);
 
         $requestStack->getCurrentRequest()->willReturn($request);
 
@@ -61,10 +60,9 @@ final class TaxonContextSpec extends ObjectBehavior
     function it_throws_taxon_not_found_exception_if_taxon_is_null(
         RequestStack $requestStack,
         TaxonRepositoryInterface $taxonRepository,
-        LocaleContextInterface $localeContext,
-        Request $request
+        LocaleContextInterface $localeContext
     ): void {
-        $request->get('slug')->willReturn('book');
+        $request = new Request(attributes: ['slug' => 'book']);
 
         $requestStack->getCurrentRequest()->willReturn($request);
 

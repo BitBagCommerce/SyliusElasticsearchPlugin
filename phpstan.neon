@@ -4,13 +4,6 @@ parameters:
     paths:
         - src
 
-    excludePaths:
-        # Sitemap dependent providers
-        - 'src/SitemapProvider (?)'
-        - 'src/Importer/AbstractImporter (?)'
-        - 'tests/Application/config/bootstrap.php'
-        - 'tests/Fixture/PageFixtureTest.php (?)'
-        - 'src/Controller/Helper (?)'
     ignoreErrors:
         - identifier: missingType.iterableValue
         - identifier: missingType.generics

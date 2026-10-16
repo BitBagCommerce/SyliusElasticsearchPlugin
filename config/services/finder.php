@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\Finder\NamedProductsFinder;
 use BitBag\SyliusElasticsearchPlugin\Finder\ProductAttributesFinder;
 use BitBag\SyliusElasticsearchPlugin\Finder\ProductOptionsFinder;
 use BitBag\SyliusElasticsearchPlugin\Finder\ShopProductsFinder;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -24,21 +24,24 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_products'),
             service('fos_elastica.finder.bitbag_shop_product'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.finder.shop_products', ShopProductsFinder::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.query_builder.taxon_products'),
             service('fos_elastica.finder.bitbag_shop_product'),
             service('bitbag_sylius_elasticsearch_plugin.facet.registry'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.finder.search_products', ShopProductsFinder::class)
         ->args([
             service('bitbag_sylius_elasticsearch_plugin.query_builder.site_wide_products'),
             service('fos_elastica.finder.bitbag_shop_product'),
             service('bitbag_sylius_elasticsearch_plugin.facet.registry'),
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.finder.product_options', ProductOptionsFinder::class)
         ->args([
@@ -46,7 +49,8 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.query_builder.product_options_by_taxon'),
             '%bitbag_es_shop_option_taxons_property%',
             '%bitbag_es_filter_options_max%',
-        ]);
+        ])
+    ;
 
     $services->set('bitbag_sylius_elasticsearch_plugin.finder.product_attributes', ProductAttributesFinder::class)
         ->args([
@@ -54,5 +58,6 @@ return static function (ContainerConfigurator $container): void {
             service('bitbag_sylius_elasticsearch_plugin.query_builder.product_attributes_by_taxon'),
             '%bitbag_es_shop_attribute_taxons_property%',
             '%bitbag_es_filter_attributes_max%',
-        ]);
+        ])
+    ;
 };

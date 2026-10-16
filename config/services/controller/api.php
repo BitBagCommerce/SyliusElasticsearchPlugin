@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
 use BitBag\SyliusElasticsearchPlugin\Controller\Action\Api\ListProductsByPartialNameAction;
 use BitBag\SyliusElasticsearchPlugin\Transformer\Product\ChannelPricingTransformer;
 use BitBag\SyliusElasticsearchPlugin\Transformer\Product\ImageTransformer;
 use BitBag\SyliusElasticsearchPlugin\Transformer\Product\SlugTransformer;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -27,5 +27,6 @@ return static function (ContainerConfigurator $container): void {
             service(ChannelPricingTransformer::class),
             service(ImageTransformer::class),
         ])
-        ->tag('controller.service_arguments');
+        ->tag('controller.service_arguments')
+    ;
 };
