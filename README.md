@@ -136,7 +136,7 @@ When you go now to the ` /{_locale}/taxons/{slug}` page, you should see a totall
     <img src="doc/es_results.png" />
 </div>
 
-It is important that the `routing.yml` from the plugin are loaded before `sylius_shop`. The `_locale` requirement is needed, otherwise the `/{_locale}/taxons/{slug}` route also matches admin URLs like `/admin/taxons/new` and returns 404:
+It is important that the `routing.yml` from the plugin are loaded before `sylius_shop`:
 
 ```yaml
 bitbag_sylius_elasticsearch_plugin:

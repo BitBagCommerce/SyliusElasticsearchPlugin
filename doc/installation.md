@@ -63,8 +63,6 @@ Import routing on top of your `config/routes/sylius_shop.yaml` file:
 #### IMPORTANT!
 **Note.** The code presented below needs to be loaded before including the `sylius_shop` routes. Please be sure, that it's being loaded first.
 
-The `_locale` requirement is needed, otherwise the `/{_locale}/taxons/{slug}` route also matches admin URLs like `/admin/taxons/new` and returns 404.
-
 ```yaml
 # config/routes/sylius_shop.yaml
 
