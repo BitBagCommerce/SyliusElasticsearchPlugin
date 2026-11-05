@@ -68,6 +68,8 @@ Import routing on top of your `config/routes/sylius_shop.yaml` file:
 
 bitbag_sylius_elasticsearch_plugin:
     resource: "@BitBagSyliusElasticsearchPlugin/config/routing.yml"
+    requirements:
+        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$
 
 sylius_shop:
     resource: "@SyliusShopBundle/Resources/config/routing.yml"
