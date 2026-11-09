@@ -15,6 +15,7 @@ parameters:
 
     bitbag_es_pagination_available_page_limits: [9, 18, 36]
     bitbag_es_pagination_default_limit: 9
+    bitbag_es_pagination_max_result_window: 10000
     bitbag_es_fuzziness: AUTO
     bitbag_es_facets_auto_discover: true
     bitbag_es_excluded_facet_attributes: []

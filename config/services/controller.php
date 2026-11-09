@@ -35,6 +35,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set('bitbag_sylius_elasticsearch_plugin.controller.request_data_handler.pagination', PaginationDataHandler::class)
         ->args([
             '%bitbag_es_pagination_default_limit%',
+            '%bitbag_es_pagination_available_page_limits%',
+            '%bitbag_es_pagination_max_result_window%',
         ])
     ;
 
