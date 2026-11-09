@@ -17,7 +17,9 @@ use BitBag\SyliusElasticsearchPlugin\Facet\RegistryInterface;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use Pagerfanta\Exception\OutOfRangeCurrentPageException;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ShopProductsFinder implements ShopProductsFinderInterface
 {
@@ -55,7 +57,11 @@ final class ShopProductsFinder implements ShopProductsFinderInterface
         }
 
         if (null !== $data[PaginationDataHandlerInterface::PAGE_INDEX]) {
-            $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
+            try {
+                $products->setCurrentPage($data[PaginationDataHandlerInterface::PAGE_INDEX]);
+            } catch (OutOfRangeCurrentPageException $exception) {
+                throw new NotFoundHttpException('Product page not found.', $exception);
+            }
         }
 
         return $products;

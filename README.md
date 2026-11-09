@@ -256,6 +256,13 @@ $ bin/console debug:container | grep bitbag_sylius_elasticsearch_plugin
 $ bin/console debug:container --parameters | grep bitbag
 ```
 
+Product page sizes are restricted to `bitbag_es_pagination_available_page_limits`;
+invalid sizes fall back to `bitbag_es_pagination_default_limit`. Invalid page numbers
+return HTTP 400, while pages outside the available results return HTTP 404.
+Set `bitbag_es_pagination_max_result_window` to match your Elasticsearch index's
+`index.max_result_window` setting (10000 by default). This parameter does not change
+the index setting itself.
+
 
 ## Testing
 The plugin is tested with [sylius/test-application](https://github.com/Sylius/TestApplication); its plugin-specific
